@@ -28,10 +28,10 @@ class UneController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate([
-            'titre1'      =>  ['required', 'string', 'max:40'],
-            'titre2'      =>  ['required', 'string', 'max:35'],
-            'message'    =>  ['required', 'string'],
-            'image'      =>  ['image', 'nullable', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:2048'],
+            'titre1' => ['required', 'string', 'max:40'],
+            'titre2' => ['required', 'string', 'max:35'],
+            'message' => ['required', 'string'],
+            'image' => ['image', 'nullable', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:2048'],
 
         ]);
 
@@ -45,13 +45,12 @@ class UneController extends Controller
             $imagePath = null;
         }
 
-
         $une = new Une([
-            'titre1'     => $data['titre1'],
-            'titre2'     => $data['titre2'],
-            'message'   => $data['message'],
-            'users_id'  => auth()->user()->id,
-            'image'     => $imagePath
+            'titre1' => $data['titre1'],
+            'titre2' => $data['titre2'],
+            'message' => $data['message'],
+            'users_id' => auth()->user()->id,
+            'image' => $imagePath,
         ]);
 
         $une->save();
@@ -64,11 +63,11 @@ class UneController extends Controller
     public function update(Request $request, $id)
     {
         $data = request()->validate([
-            'titre1'      =>  ['required', 'string', 'max:40'],
-            'titre2'      =>  ['required', 'string', 'max:35'],
-            'message'    =>  ['required', 'string'],
-            'image'      =>  ['image', 'nullable', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:2048'],
-            'video'    =>  ['nullable', 'string'],
+            'titre1' => ['required', 'string', 'max:40'],
+            'titre2' => ['required', 'string', 'max:35'],
+            'message' => ['required', 'string'],
+            'image' => ['image', 'nullable', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:2048'],
+            'video' => ['nullable', 'string'],
 
         ]);
 
@@ -86,12 +85,12 @@ class UneController extends Controller
         }
 
         $une->update([
-            'titre1'     => $data['titre1'],
-            'titre2'     => $data['titre2'],
-            'message'   => $data['message'],
-            'video'   => $data['video'],
-            'users_id'  => auth()->user()->id,
-            'image'     => $imagePath
+            'titre1' => $data['titre1'],
+            'titre2' => $data['titre2'],
+            'message' => $data['message'],
+            'video' => $data['video'],
+            'users_id' => auth()->user()->id,
+            'image' => $imagePath,
         ]);
 
         $une->save();
@@ -104,7 +103,7 @@ class UneController extends Controller
     public function destroy($id)
     {
 
-        $Une   = Une::find($id);
+        $Une = Une::find($id);
 
         $Une->delete();
 
@@ -128,13 +127,13 @@ class UneController extends Controller
 
             foreach ($alunes as $alune) {
                 $alune->update([
-                    'status' => null
+                    'status' => null,
                 ]);
 
                 $alune->save();
             }
             $une->update([
-                'status' => 'Une'
+                'status' => 'Une',
             ]);
 
             $une->save();
@@ -143,5 +142,20 @@ class UneController extends Controller
 
             return redirect()->back();
         }
+    }
+    public function suprimeralaUne(Request $request)
+    {
+
+        $une = Une::findOrFail(request('suprimerdelaune'));
+
+        $une->update([
+            'status' => null,
+        ]);
+
+        $une->save();
+
+        Alert::success('Publication enlevée !');
+
+        return redirect()->back();
     }
 }

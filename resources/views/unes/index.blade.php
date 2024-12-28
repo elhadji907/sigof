@@ -95,6 +95,14 @@
                                                             <button type="submit" class="dropdown-item une_confirm">Mettre
                                                                 à la une</button>
                                                         </form>
+                                                        <form action="{{ route('suprimeralaunes') }}" method="post">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <input type="hidden" name="suprimerdelaune" id="suprimerdelaune"
+                                                                value="{{ $une->id }}">
+                                                            <button type="submit" class="dropdown-item une_confirm">Enlever
+                                                                de la une</button>
+                                                        </form>
                                                     </ul>
                                                 </div>
                                             </span>
@@ -127,7 +135,7 @@
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <label for="titre1" class="form-label">Titre 1<span
                                             class="text-danger mx-1">*</span></label>
-                                    <textarea name="titre1" rows="1" class="form-control form-control-sm @error('titre1') is-invalid @enderror"
+                                    <textarea name="titre1" rows="1" maxlength="15" class="form-control form-control-sm @error('titre1') is-invalid @enderror"
                                         placeholder="Titre 1">{{ old('titre1') }}</textarea>
                                     @error('titre1')
                                         <span class="invalid-feedback" role="alert">
@@ -139,7 +147,7 @@
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <label for="titre2" class="form-label">Titre 2<span
                                             class="text-danger mx-1">*</span></label>
-                                    <textarea name="titre2" rows="1" class="form-control form-control-sm @error('titre2') is-invalid @enderror"
+                                    <textarea name="titre2" rows="1" maxlength="20" class="form-control form-control-sm @error('titre2') is-invalid @enderror"
                                         placeholder="Titre 2">{{ old('titre2') }}</textarea>
                                     @error('titre2')
                                         <span class="invalid-feedback" role="alert">
@@ -205,7 +213,7 @@
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="titre1" class="form-label">Titre 1<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <textarea name="titre1" rows="1" class="form-control form-control-sm @error('titre1') is-invalid @enderror"
+                                        <textarea name="titre1" rows="1" maxlength="20" class="form-control form-control-sm @error('titre1') is-invalid @enderror"
                                             placeholder="Titre1">{{ $une->titre1 ?? old('titre1') }}</textarea>
                                         @error('titre1')
                                             <span class="invalid-feedback" role="alert">
@@ -216,7 +224,7 @@
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="titre2" class="form-label">Titre 2<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <textarea name="titre2" rows="1" class="form-control form-control-sm @error('titre2') is-invalid @enderror"
+                                        <textarea name="titre2" rows="1" maxlength="20" class="form-control form-control-sm @error('titre2') is-invalid @enderror"
                                             placeholder="Titre 2">{{ $une->titre2 ?? old('titre2') }}</textarea>
                                         @error('titre2')
                                             <span class="invalid-feedback" role="alert">
@@ -296,6 +304,10 @@
             }, */
             "order": [
                 [0, 'asc']
+            ],
+            "lengthMenu": [
+                [5, 10, 25, 50, 100, -1],
+                [5, 10, 25, 50, 100, "Tout"]
             ],
             language: {
                 "sProcessing": "Traitement en cours...",

@@ -405,6 +405,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/postes/{poste}', [PosteController::class, 'show'])->name('postes.show');
 
         Route::put('/alaunes', [UneController::class, 'alaUne'])->name('alaunes');
+        Route::put('/suprimeralaunes', [UneController::class, 'suprimeralaUne'])->name('suprimeralaunes');
         Route::put('/uneContacts', [ContactController::class, 'uneContacts'])->name('uneContacts');
 
         Route::put('observations/{id}', [OperateurController::class, 'observations'])->name('observations');
