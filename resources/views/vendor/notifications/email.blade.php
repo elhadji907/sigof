@@ -39,12 +39,8 @@
 @if (! empty($salutation))
 {{ $salutation }}
 @else
-@lang('Bonjour'),<br>
-{{ __("Nous vous remercions chaleureusement pour votre inscription et l'intérêt que vous portez à l'ONFP. Vous avez désormais accès à l'ensemble de nos services en ligne, ainsi qu'à nos formations et offres variées.
-L’équipe Digital est à votre disposition pour vous guider dans toutes vos démarches et répondre à toutes vos questions. Vous pouvez nous joindre par email à contact@onfp.sn ou par téléphone au (+221) 33 827 92 51.
-Nous restons à l'écoute de vos suggestions et besoins, afin de vous offrir un service optimal et adapté.
-Bien cordialement,
-L’équipe Digital de l'ONFP") }}
+@lang('Merci'),<br>
+{{ __("Vous pouvez nous joindre par email à contact@onfp.sn ou par téléphone au (+221) 33 827 92 51.") }}
 @endif
 
 {{-- Subcopy --}}

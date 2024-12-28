@@ -38,13 +38,14 @@ return [
         
         'backup' => [
             'driver' => 'local',
-            'root' => storage_path('app/backups/'),
+            'root' => storage_path('app/backups'),
             'throw' => false,
         ],
 
         'public' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/backups'),
+            /* 'root' => storage_path('app/public/backups'), */
+            'root' => storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
