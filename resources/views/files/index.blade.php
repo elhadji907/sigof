@@ -58,7 +58,7 @@
                                     <th>Sigle</th>
                                     <th>File</th>
                                     <th>User</th>
-                                    <th width="2%" class="text-center" scope="col">#</th>
+                                    {{-- <th width="2%" class="text-center" scope="col">#</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -72,16 +72,16 @@
                                             @if (!empty($file?->file))
                                                 <a class="btn btn-default btn-sm" title="télécharger le fichier joint"
                                                     target="_blank" href="{{ asset($file?->getFichier()) }}">
-                                                    <i class="bi bi-download"></i>
+                                                    <i class="bi bi-file-earmark"></i>
                                                 </a>
                                             @endif
                                         </td>
-                                        <td>{{ $file?->user?->firstname . ' ' . $file?->user?->name }}
+                                        <td>{{ $file?->user?->firstname . ' ' . $file?->user?->name. ' - ' . $file?->user?->username }}
                                             @if (!empty($file?->user?->cin))
                                                 {{ ' (' . $file?->user?->cin . ')' }}
                                             @endif
                                         </td>
-                                        <td style="text-align: center;">
+                                        {{-- <td style="text-align: center;">
                                             <span class="d-flex mt-2 align-items-baseline"><a href="#"
                                                     class="btn btn-warning btn-sm mx-1" title="Voir détails">
                                                     <i class="bi bi-eye"></i></a>
@@ -107,7 +107,7 @@
                                                     </ul>
                                                 </div>
                                             </span>
-                                        </td>
+                                        </td> --}}
 
                                     </tr>
                                 @endforeach

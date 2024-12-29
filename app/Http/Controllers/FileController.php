@@ -31,9 +31,9 @@ class FileController extends Controller
         ]);
 
         $file = File::where('id', $request->legende)
-            ->where('users_id', Auth::user()->id)
+            ->where('users_id', $id)
             ->firstOrFail();
-
+            
         // Check if the file is valid
         if ($request->file('file')->isValid()) {
             // Store the file in the 'uploads' directory on the 'public' disk

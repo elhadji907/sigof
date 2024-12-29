@@ -164,16 +164,15 @@
                                     </p>
 
                                     <div class="row">
-                                        <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3 label">
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
                                             Informations personnelles
                                         </div>
-                                        <div class="col-12 col-md-9 col-lg-9 col-sm-12 col-xs-12 col-xxl-9">
+                                        <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                             @if (
                                                 !empty(Auth::user()?->operateur) &&
                                                     !empty(Auth::user()?->username) &&
                                                     !empty(Auth::user()?->ninea) &&
                                                     !empty(Auth::user()?->rccm) &&
-                                                    !empty(Auth::user()?->email_responsable) &&
                                                     !empty(Auth::user()?->fonction_responsable) &&
                                                     !empty(Auth::user()?->email))
                                                 <span class="badge bg-success text-white">Complètes</span>
@@ -185,10 +184,10 @@
                                     </div>
 
                                     <div class="row">
-                                        <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3 label">
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
                                             Fichiers joints
                                         </div>
-                                        <div class="col-12 col-md-9 col-lg-9 col-sm-12 col-xs-12 col-xxl-9">
+                                        <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                             @if (!empty($user_cin))
                                                 <span class="badge bg-primary text-white">Valide</span>
                                             @else
@@ -199,50 +198,59 @@
                                     </div>
 
 
-                                    @if(!empty(Auth::user()?->username))
+                                    @if (!empty(Auth::user()?->username))
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Sigle</div>
-                                            <div class="col-lg-9 col-md-8">{{ Auth::user()?->username }}</div>
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Sigle
+                                            </div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                {{ Auth::user()?->username }}</div>
                                         </div>
                                     @endif
-                                    @if(!empty(Auth::user()?->operateur))
+                                    @if (!empty(Auth::user()?->operateur))
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Opérateur</div>
-                                            <div class="col-lg-9 col-md-8">{{ Auth::user()?->operateur }}</div>
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
+                                                Opérateur</div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                {{ Auth::user()?->operateur }}</div>
                                         </div>
                                     @endif
 
-                                    @if(!empty(Auth::user()?->email))
+                                    @if (!empty(Auth::user()?->email))
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Email</div>
-                                            <div class="col-lg-9 col-md-8"><a
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Email
+                                            </div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8"><a
                                                     href="mailto:{{ Auth::user()?->email }}">{{ Auth::user()?->email }}</a>
                                             </div>
                                         </div>
                                     @endif
 
-                                    @if(!empty(Auth::user()?->telephone))
+                                    @if (!empty(Auth::user()?->telephone))
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Téléphone</div>
-                                            <div class="col-lg-9 col-md-8"><a
-                                                    href="tel:+221{{ Auth::user()?->fixe }}">{{ Auth::user()?->fixe }}</a> /
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
+                                                Téléphone</div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8"><a
+                                                    href="tel:+221{{ Auth::user()?->fixe }}">{{ Auth::user()?->fixe }}</a>
+                                                /
                                                 <a
                                                     href="tel:+221{{ Auth::user()?->telephone }}">{{ Auth::user()?->telephone }}</a>
                                             </div>
                                         </div>
                                     @endif
 
-                                    @if(!empty(Auth::user()?->adresse))
+                                    @if (!empty(Auth::user()?->adresse))
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Adresse</div>
-                                            <div class="col-lg-9 col-md-8">{{ Auth::user()?->adresse }}</div>
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
+                                                Adresse</div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                {{ Auth::user()?->adresse }}</div>
                                         </div>
                                     @endif
 
-                                    {{-- @if(!empty(Auth::user()?->web))
+                                    {{-- @if (!empty(Auth::user()?->web))
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Site web</div>
-                                            <div class="col-lg-9 col-md-8"><a href="{{ Auth::user()?->web }}" class="web"
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Site web</div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8"><a href="{{ Auth::user()?->web }}" class="web"
                                                     target="_blank"><i class="bi bi-globe" title="site web"></i></a></div>
                                         </div>
                                     @endif --}}
@@ -251,87 +259,99 @@
 
                                     <h5 class="card-title">Responsable</h5>
 
-                                    @if(!empty(Auth::user()?->cin))
+                                    @if (!empty(Auth::user()?->cin))
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">CIN</div>
-                                            <div class="col-lg-9 col-md-8">{{ Auth::user()?->cin }}</div>
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">CIN
+                                            </div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                {{ Auth::user()?->cin }}</div>
                                         </div>
                                     @endif
 
-                                    @if(!empty(Auth::user()?->civilite))
+                                    @if (!empty(Auth::user()?->civilite))
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Civilité</div>
-                                            <div class="col-lg-9 col-md-8">{{ Auth::user()?->civilite }}</div>
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
+                                                Civilité</div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                {{ Auth::user()?->civilite }}</div>
                                         </div>
                                     @endif
 
-                                    @if(!empty(Auth::user()?->firstname))
+                                    @if (!empty(Auth::user()?->firstname))
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Prénom</div>
-                                            <div class="col-lg-9 col-md-8">{{ Auth::user()?->firstname }}</div>
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
+                                                Prénom</div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                {{ Auth::user()?->firstname }}</div>
                                         </div>
                                     @endif
 
-                                    @if(!empty(Auth::user()?->name))
+                                    @if (!empty(Auth::user()?->name))
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Nom</div>
-                                            <div class="col-lg-9 col-md-8">{{ Auth::user()?->name }}</div>
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Nom
+                                            </div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                {{ Auth::user()?->name }}</div>
                                         </div>
                                     @endif
 
-                                    {{-- @if(!empty(Auth::user()?->date_naissance))
+                                    {{-- @if (!empty(Auth::user()?->date_naissance))
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Date naissance</div>
-                                            <div class="col-lg-9 col-md-8">
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Date naissance</div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 {{ Auth::user()?->date_naissance->format('d-m-Y') }}
                                             </div>
                                         </div>
                                     @endif
 
-                                    @if(!empty(Auth::user()?->lieu_naissance))
+                                    @if (!empty(Auth::user()?->lieu_naissance))
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Lieu naissance</div>
-                                            <div class="col-lg-9 col-md-8">{{ Auth::user()?->lieu_naissance }}</div>
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Lieu naissance</div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">{{ Auth::user()?->lieu_naissance }}</div>
                                         </div>
                                     @endif --}}
 
-                                    {{-- @if(!empty(Auth::user()?->situation_familiale))
+                                    {{-- @if (!empty(Auth::user()?->situation_familiale))
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Situation familiale</div>
-                                            <div class="col-lg-9 col-md-8">{{ Auth::user()?->situation_familiale }}</div>
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Situation familiale</div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">{{ Auth::user()?->situation_familiale }}</div>
                                         </div>
                                     @endif
 
-                                    @if(!empty(Auth::user()?->situation_professionnelle))
+                                    @if (!empty(Auth::user()?->situation_professionnelle))
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Situation profes.</div>
-                                            <div class="col-lg-9 col-md-8">{{ Auth::user()?->situation_professionnelle }}
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Situation profes.</div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">{{ Auth::user()?->situation_professionnelle }}
                                             </div>
                                         </div>
                                     @endif --}}
 
-                                    @if(!empty(Auth::user()?->telephone))
+                                    @if (!empty(Auth::user()?->telephone))
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Téléphone</div>
-                                            <div class="col-lg-9 col-md-8"><a
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
+                                                Téléphone</div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8"><a
                                                     href="tel:+221{{ Auth::user()?->telephone }}">{{ Auth::user()?->telephone }}</a>
                                             </div>
                                         </div>
                                     @endif
 
-                                    @if(!empty(Auth::user()?->email_responsable))
+                                    @if (!empty(Auth::user()?->email_responsable))
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Email</div>
-                                            <div class="col-lg-9 col-md-8"><a
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Email
+                                            </div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8"><a
                                                     href="mailto:{{ Auth::user()?->email_responsable }}">{{ Auth::user()?->email_responsable }}</a>
                                             </div>
                                         </div>
                                     @endif
 
-                                    @if(!empty(Auth::user()?->fonction_responsable))
+                                    @if (!empty(Auth::user()?->fonction_responsable))
                                         <div class="row">
-                                            <div class="col-lg-3 col-md-4 label">Fonction</div>
-                                            <div class="col-lg-9 col-md-8">{{ Auth::user()?->fonction_responsable }}
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
+                                                Fonction</div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                {{ Auth::user()?->fonction_responsable }}
                                             </div>
                                         </div>
                                     @endif
@@ -597,7 +617,7 @@
                                             <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email<span
                                                     class="text-danger mx-1">*</span></label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="email" type="email"
+                                                <input name="email" type="email" readonly
                                                     class="form-control form-control-sm @error('email') is-invalid @enderror"
                                                     id="Email" value="{{ $user->email ?? old('email') }}"
                                                     autocomplete="email" placeholder="Adresse e-mail">
@@ -613,10 +633,11 @@
                                             <label for="fixe" class="col-md-4 col-lg-3 col-form-label">Téléphone
                                                 fixe<span class="text-danger mx-1">*</span></label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="fixe" type="fixe"
+                                                <input name="fixe" type="number" min="0" minlength="9"
+                                                    maxlength="9"
                                                     class="form-control form-control-sm @error('fixe') is-invalid @enderror"
                                                     id="fixe" value="{{ $user->fixe ?? old('fixe') }}"
-                                                    autocomplete="fixe" placeholder="N° de téléphone fixe">
+                                                    autocomplete="fixe" placeholder="7xxxxxxxx">
                                                 @error('fixe')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -625,16 +646,16 @@
                                             </div>
                                         </div>
 
-
                                         {{-- Telephone portable --}}
                                         <div class="row mb-3">
                                             <label for="telephone" class="col-md-4 col-lg-3 col-form-label">Téléphone
                                                 portable<span class="text-danger mx-1">*</span></label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="telephone" type="text"
+                                                <input name="telephone" type="number" min="0" minlength="9"
+                                                    maxlength="9"
                                                     class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                                     id="telephone" value="{{ $user->telephone ?? old('telephone') }}"
-                                                    autocomplete="telephone" placeholder="N° de téléphone">
+                                                    autocomplete="telephone" placeholder="7xxxxxxxx">
                                                 @error('telephone')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -828,14 +849,15 @@
                                         {{-- telephone_parent --}}
                                         <div class="row mb-3">
                                             <label for="telephone_parent"
-                                                class="col-md-4 col-lg-3 col-form-label">Téléphone responsable<span
+                                                class="col-md-4 col-lg-3 col-form-label">Téléphone<span
                                                     class="text-danger mx-1">*</span></label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="telephone_parent" type="text"
+                                                <input name="telephone_parent" type="number" min="0"
+                                                    minlength="9" maxlength="9"
                                                     class="form-control form-control-sm @error('telephone_parent') is-invalid @enderror"
                                                     id="telephone_parent"
                                                     value="{{ $user->telephone_parent ?? old('telephone_parent') }}"
-                                                    autocomplete="telephone_parent" placeholder="N° de téléphone">
+                                                    autocomplete="telephone_parent" placeholder="7xxxxxxxx">
                                                 @error('telephone_parent')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -846,8 +868,7 @@
 
                                         {{-- Email --}}
                                         <div class="row mb-3">
-                                            <label for="email" class="col-md-4 col-lg-3 col-form-label">Email<span
-                                                    class="text-danger mx-1">*</span></label>
+                                            <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="email_responsable" type="text"
                                                     class="form-control form-control-sm @error('email_responsable') is-invalid @enderror"
@@ -1131,8 +1152,7 @@
                                                                 </a>
                                                             </td>
                                                             <td class="text-center">
-                                                                <form action="{{ route('fileDestroy') }}"
-                                                                    method="post">
+                                                                <form action="{{ route('fileDestroy') }}" method="post">
                                                                     @csrf
                                                                     @method('put')
                                                                     <input type="hidden" name="idFile"
@@ -1150,14 +1170,15 @@
                                         </div>
                                     </div>
 
-                                    <form method="post" action="{{ route('files.update', $user->id) }}"
+                                    <form method="post" action="{{ route('files.update', $user?->id) }}"
                                         enctype="multipart/form-data">
                                         @csrf
                                         @method('patch')
 
                                         <h5 class="card-title">{{ __("Ajouter d'autres fichiers") }}</h5>
-                                        <span style="color:red;"><b><u>NB</u></b> : </span> <span>Seule l'acte ou arrêté de
-                                            création</span> <span style="color:red;"> est obligatoire</span>
+                                        <span style="color:red;"><b><u>NB</u></b> : </span> <span>Seuls l'acte ou l'arrêté
+                                            de création, ainsi que le NINEA ou le registre de commerce,</span> <span
+                                            style="color:red;"> sont exigés</span>.
                                         <div class="row mb-3 mt-3">
                                             <label for="legende"
                                                 class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Légende<span

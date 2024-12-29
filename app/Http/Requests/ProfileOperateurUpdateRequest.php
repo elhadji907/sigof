@@ -29,7 +29,7 @@ class ProfileOperateurUpdateRequest extends FormRequest
             'ninea'                     => ['required', 'string', Rule::unique(User::class)->ignore($this->user()->id)],
             'image'                     => ['sometimes', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'email'                     => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
-            'email_responsable'         => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
+            'email_responsable'         => ['nullable', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
             'telephone'                 => ['required', 'string', 'max:9', 'min:9'],
             'telephone_parent'          => ['required', 'string', 'max:9', 'min:9'],
             'adresse'                   => ['required', 'string', 'max:255'],

@@ -50,7 +50,7 @@ class ProfileController extends Controller
 
         $count_projets = Individuelle::join('projets', 'projets.id', 'individuelles.projets_id')
             ->select('projets.*')
-            ->where('individuelles.users_id',  $user->id)
+            ->where('individuelles.users_id', $user->id)
             ->where('individuelles.projets_id', '!=', null)
             ->where('projets.statut', 'ouvert')
             ->orwhere('projets.statut', 'fermer')
@@ -58,7 +58,7 @@ class ProfileController extends Controller
             ->get();
 
         $individuelles = Individuelle::where('users_id', $user->id)
-            ->where('projets_id',  null)
+            ->where('projets_id', null)
             ->get();
 
         $collectives = Collective::where('users_id', $user->id)
@@ -71,13 +71,6 @@ class ProfileController extends Controller
                     ->where('file', '!=', null)
                     ->distinct()
                     ->get();
-
-                $user_files = File::where('users_id', $user->id)
-                    ->where('file', null)
-                    ->where('sigle', 'AC')
-                    ->distinct()
-                    ->get()
-                    ->unique('sigle');
 
                 $usercin = File::where('users_id', $user->id)
                     ->where('file', '!=', null)
@@ -183,7 +176,7 @@ class ProfileController extends Controller
             $image->save();
 
             $request->user()->update([
-                'image' => $imagePath
+                'image' => $imagePath,
             ]);
         }
 

@@ -10,6 +10,22 @@
             </li>
         @endcan
 
+        @can('post-view')
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ url('postes') }}">
+                    <i class="bi bi-file-post"></i>
+                    <span>Actualités</span>
+                </a>
+            </li>
+        @endcan
+        @can('une-view')
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ url('unes') }}">
+                    <i class="bi bi-book"></i>
+                    <span>A la une</span>
+                </a>
+            </li>
+        @endcan
         @can('courrier-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#courrier-nav" data-bs-toggle="collapse" href="#">
@@ -365,27 +381,11 @@
                 </a>
             </li>
         @endcan
-        @can('post-view')
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('postes') }}">
-                    <i class="bi bi-file-post"></i>
-                    <span>Actualités</span>
-                </a>
-            </li>
-        @endcan
-        @can('une-view')
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('unes') }}">
-                    <i class="bi bi-book"></i>
-                    <span>A la une</span>
-                </a>
-            </li>
-        @endcan
         @can('contact-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ url('contacts') }}">
                     <i class="bi bi-envelope"></i>
-                    <span>Contact</span>
+                    <span>Contactez-nous</span>
                 </a>
             </li>
         @endcan
@@ -393,15 +393,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ url('antennes') }}">
                     <i class="bi bi-people"></i>
-                    <span>Antennes</span>
-                </a>
-            </li>
-        @endcan
-        @can('user-view')
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('user') }}">
-                    <i class="bi bi-person-plus"></i>
-                    <span>Gestion utilisateurs</span>
+                    <span>Nos antennes</span>
                 </a>
             </li>
         @endcan
@@ -423,29 +415,6 @@
                             <span>Collectives</span>
                         </a>
                     </li>
-                </ul>
-            </li>
-        @endcan
-        @can('role-view')
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#autorisation-nav" data-bs-toggle="collapse"
-                    href="#">
-                    <i class="bi bi-key"></i><span>{{ __("Contrôle d'accès") }}</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="autorisation-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('roles') }}">
-                            <span>Roles</span>
-                        </a>
-                    </li>
-                    @can('permission-view')
-                        <li class="nav-item">
-                            <a class="nav-link collapsed" href="{{ url('permissions') }}">
-                                <span>Permissions</span>
-                            </a>
-                        </li>
-                    @endcan
                 </ul>
             </li>
         @endcan
@@ -560,6 +529,38 @@
             </li>
         @endcan
 
+        @can('user-view')
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="{{ url('user') }}">
+                    <i class="bi bi-person-plus"></i>
+                    <span>Gestion utilisateurs</span>
+                </a>
+            </li>
+        @endcan
+        
+        @can('role-view')
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#autorisation-nav" data-bs-toggle="collapse"
+                    href="#">
+                    <i class="bi bi-key"></i><span>{{ __("Contrôle d'accès") }}</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="autorisation-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('roles') }}">
+                            <span>Roles</span>
+                        </a>
+                    </li>
+                    @can('permission-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('permissions') }}">
+                                <span>Permissions</span>
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcan
     </ul>
 
 </aside>
