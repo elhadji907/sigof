@@ -454,17 +454,16 @@
                                                                             (e-mail)</button>
                                                                     </form>
                                                                 @endcan
-                                                                
+
                                                                 <hr>
-                                                                
-                                                                <form
-                                                                action="{{ route('suivreTous', $formation?->id) }}"
-                                                                method="post">
-                                                                @csrf
-                                                                @method('PUT')
-                                                                <button
-                                                                    class="show_confirm_suivi btn btn-sm mx-1">Suivre tous</button>
-                                                            </form>
+
+                                                                <form action="{{ route('suivreTous', $formation?->id) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method('PUT')
+                                                                    <button class="show_confirm_suivi btn btn-sm mx-1">Suivre
+                                                                        tous</button>
+                                                                </form>
                                                             </ul>
                                                         </div>
                                                     </span>
@@ -1202,101 +1201,111 @@
                         enctype="multipart/form-data" class="row g-3">
                         @csrf
                         @method('patch')
-                        <div class="modal-header" id="EditAttestationsModalLabel{{ $individuelle->id }}">
-                            <h5 class="modal-title">Retrait attestation de
+                        {{-- <div class="modal-header" id="EditAttestationsModalLabel{{ $individuelle->id }}">
+                            <h5 class="modal-title">Retrait {{ $individuelle?->formation?->type_certification }} de
                                 {{ $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}
                             </h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
+                        </div> --}}
+
+                        <div class="card-header text-center bg-gradient-default">
+                            <h4 class="h4 text-black mb-0">
+                                {{ 'RETRAIT ' . strtoupper($individuelle?->formation?->type_certification) }}</h4>
                         </div>
                         <div class="modal-body">
-                            <input type="hidden" name="id" value="{{ $individuelle->id }}">
-                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                <div class="row g-3">
-                                    <label for="retrait" class="form-label">Choisir<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <div class="col-6 col-md-6 col-lg-6 col-sm-6 col-xs-6 col-xxl-6">
-                                        <label class="form-check-label" for="moi">
-                                            Moi même
-                                        </label>
-                                        <input type="radio" name="moi" value="moi"
-                                            class="form-check-input @error('moi') is-invalid @enderror">
-                                        @error('moi')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                    <div class="col-6 col-md-6 col-lg-6 col-sm-6 col-xs-6 col-xxl-6">
-                                        <label class="form-check-label" for="autre">
-                                            Autre
-                                        </label>
-                                        <input type="radio" name="autre" value="autre"
-                                            class="form-check-input @error('autre') is-invalid @enderror">
-                                        @error('autre')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
+                            <div class="row g-3">
+                                <input type="hidden" name="id" value="{{ $individuelle->id }}">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="row g-3">
+                                        <div>
+                                            {{ 'Bénéficiaire : ' . $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}
+                                        </div>
+                                        <hr>
+                                        <label for="retrait" class="form-label">Qui va retirer le diplôme ?<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <div class="col-6 col-md-6 col-lg-6 col-sm-6 col-xs-6 col-xxl-6">
+                                            <label class="form-check-label" for="moi">
+                                                Le propriétaire
+                                            </label>
+                                            <input type="radio" name="name" value="moi"
+                                                class="form-check-input @error('moi') is-invalid @enderror">
+                                            @error('moi')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-6 col-md-6 col-lg-6 col-sm-6 col-xs-6 col-xxl-6">
+                                            <label class="form-check-label" for="autre">
+                                                Autre personne
+                                            </label>
+                                            <input type="radio" name="name" value="autre"
+                                                class="form-check-input @error('autre') is-invalid @enderror">
+                                            @error('autre')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 pt-3">
+                                    <label for="date_retrait" class="form-label">Date retrait<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="date" name="date_retrait"
+                                        value="{{ date('d-m-Y') ?? old('date_retrait') }}"
+                                        class="datepicker form-control form-control-sm @error('date_retrait') is-invalid @enderror"
+                                        id="date_retrait" placeholder="jj/mm/aaaa">
+                                    @error('date_retrait')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <br>
+                                <label for="form-label">Si autre personne</label>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="cin" class="form-label">N° CIN</label>
+                                    <input minlength="13" maxlength="14" type="text" name="cin"
+                                        value="{{ old('cin') }}"
+                                        class="form-control form-control-sm @error('cin') is-invalid @enderror"
+                                        placeholder="Numéro carte d'identité nationale">
+                                    @error('cin')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" name="name" value="{{ old('name') }}"
+                                        class="form-control form-control-sm @error('name') is-invalid @enderror"
+                                        placeholder="Prénom et NOM">
+                                    @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="commentaires" class="form-label">Commentaires</label>
+                                    <input type="text" maxlength="150" name="commentaires"
+                                        value="{{ old('commentaires') }}"
+                                        class="form-control form-control-sm @error('commentaires') is-invalid @enderror"
+                                        placeholder="Un petit commentaire...">
+                                    @error('commentaires')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
                             </div>
-                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 pt-3">
-                                <label for="date_retrait" class="form-label">Date retrait<span
-                                        class="text-danger mx-1">*</span></label>
-                                <input type="date" name="date_retrait"
-                                    value="{{ date('d-m-Y') ?? old('date_retrait') }}"
-                                    class="datepicker form-control form-control-sm @error('date_retrait') is-invalid @enderror"
-                                    id="date_retrait" placeholder="jj/mm/aaaa">
-                                @error('date_retrait')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary btn-sm"
+                                    data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary btn-sm">Valider</button>
                             </div>
-                            <hr>
-                            <label for="form-label">Si autre</label>
-                            <hr>
-                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                <label for="cin" class="form-label">N° CIN</label>
-                                <input minlength="13" maxlength="14" type="text" name="cin"
-                                    value="{{ old('cin') }}"
-                                    class="form-control form-control-sm @error('cin') is-invalid @enderror"
-                                    placeholder="Numéro carte d'identité nationale">
-                                @error('cin')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" name="name" value="{{ old('name') }}"
-                                    class="form-control form-control-sm @error('name') is-invalid @enderror"
-                                    placeholder="Prénom et NOM">
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                <label for="commentaires" class="form-label">Commentaires</label>
-                                <input type="text" maxlength="150" name="commentaires"
-                                    value="{{ old('commentaires') }}"
-                                    class="form-control form-control-sm @error('commentaires') is-invalid @enderror"
-                                    placeholder="Un petit commentaire...">
-                                @error('commentaires')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                Valider</button>
                         </div>
                     </form>
                 </div>

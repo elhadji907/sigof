@@ -1685,6 +1685,7 @@
                                 aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
+                            <div class="row g-3">
                             <input type="hidden" name="id" value="{{ $listecollective->id }}">
                             <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                 <div class="row g-3">
@@ -1698,6 +1699,7 @@
                                     </div>
 
                                 </div>
+                            </div>
                             </div>
                         </div>
                         {{-- <div class="modal-footer">
@@ -1721,24 +1723,35 @@
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('patch')
-                            <div class="modal-header" id="EditAttestationsModalLabel{{ $listecollective->id }}">
+                            {{-- <div class="modal-header" id="EditAttestationsModalLabel{{ $listecollective->id }}">
                                 <h5 class="modal-title">Retrait attestation de
                                     {{ $listecollective?->civilite . ' ' . $listecollective?->prenom . ' ' . $listecollective?->nom }}
                                 </h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
-                            </div>
+                            </div> --}}
+                            
+                        <div class="card-header text-center bg-gradient-default">
+                            <h4 class="h4 text-black mb-0">
+                                {{ 'RETRAIT ' . strtoupper($formation?->type_certification) }}</h4>
+                        </div>
                             <div class="modal-body">
+                                <div class="row g-3">
                                 <input type="hidden" name="id" value="{{ $listecollective->id }}">
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <div class="row g-3">
-                                        <label for="retrait" class="form-label">Choisir<span
+                                        <div class="row g-3">
+                                            <div>
+                                                {{ 'Bénéficiaire : ' . $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}
+                                            </div>
+                                        <hr>
+                                        <label for="retrait" class="form-label">Qui va retirer le diplôme ?<span
                                                 class="text-danger mx-1">*</span></label>
                                         <div class="col-6 col-md-6 col-lg-6 col-sm-6 col-xs-6 col-xxl-6">
                                             <label class="form-check-label" for="moi">
-                                                Moi même
+                                                Le propriétaire
                                             </label>
-                                            <input type="radio" name="moi" value="moi"
+                                            <input type="radio" name="name" value="moi"
                                                 class="form-check-input @error('moi') is-invalid @enderror">
                                             @error('moi')
                                                 <span class="invalid-feedback" role="alert">
@@ -1748,9 +1761,9 @@
                                         </div>
                                         <div class="col-6 col-md-6 col-lg-6 col-sm-6 col-xs-6 col-xxl-6">
                                             <label class="form-check-label" for="autre">
-                                                Autre
+                                                Autre personne
                                             </label>
-                                            <input type="radio" name="autre" value="autre"
+                                            <input type="radio" name="name" value="autre"
                                                 class="form-check-input @error('autre') is-invalid @enderror">
                                             @error('autre')
                                                 <span class="invalid-feedback" role="alert">
@@ -1773,9 +1786,8 @@
                                         </span>
                                     @enderror
                                 </div>
-                                <hr>
-                                <label for="form-label">Si autre</label>
-                                <hr>
+                                <br>
+                                <label for="form-label">Si autre personne</label>
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="cin" class="form-label">N° CIN</label>
                                     <input minlength="13" maxlength="14" type="text" name="cin"
@@ -1813,9 +1825,9 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                    Valider</button>
+                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary btn-sm">Valider</button>
+                            </div>
                             </div>
                         </form>
                     </div>

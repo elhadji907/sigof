@@ -1647,12 +1647,12 @@ class FormationController extends Controller
     public function updateAttestations(Request $request)
     {
         $date_retrait = date_format(date_create($request->date_retrait), 'd/m/Y');
+
         $request->validate([
-            'date_retrait' => 'required',
-            'date',
+            'date_retrait' => 'required','date', 'min:10', 'max:10', 'date_format:Y-m-d',
         ]);
-        if ($request->input('moi') == 'moi') {
-            $retrait_diplome = 'retiré par son propriétaire le ' . $date_retrait;
+        if ($request->input('name') == 'moi') {
+            $retrait_diplome = 'le propriétaire le ' . $date_retrait;
         } else {
             $request->validate([
                 'cin' => 'required',
@@ -1696,8 +1696,8 @@ class FormationController extends Controller
             'date_retrait' => 'required',
             'date',
         ]);
-        if ($request->input('moi') == 'moi') {
-            $retrait_diplome = 'retiré par son propriétaire le ' . $date_retrait;
+        if ($request->input('name') == 'moi') {
+            $retrait_diplome = 'le propriétaire le ' . $date_retrait;
         } else {
             $request->validate([
                 'cin' => 'required',
