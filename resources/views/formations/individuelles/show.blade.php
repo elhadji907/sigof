@@ -964,15 +964,21 @@
                                                                 <span>{{ $individuelle?->note_obtenue }}</span>
                                                             </td>
                                                             <td style="text-align: center; vertical-align: middle;">
-                                                                @if (isset($individuelle?->retrait_diplome))
-                                                                    <button type="button"
+                                                                @if (!empty($individuelle?->retrait_diplome))
+                                                                    {{-- <button type="button"
                                                                         class="btn btn-outline-success btn-sm"
                                                                         data-bs-toggle="modal"
                                                                         data-bs-target="#EditShowModal{{ $individuelle?->id }}">
-                                                                        <i class="bi bi-eye" title="Attestation"></i>
-                                                                    </button>
-                                                                    {{-- @else
-                                                                        <span>retiré par {{ $individuelle?->retrait_diplome }}</span> --}}
+                                                                        <i class="bi bi-check-circle text-success" title="diplome retiré"></i>
+                                                                    </button> --}}
+
+                                                                    <a href="#" data-bs-toggle="modal"
+                                                                        data-bs-target="#EditShowModal{{ $individuelle?->id }}"><i
+                                                                            class="bi bi-check-circle text-success"
+                                                                            title="diplome retiré"></i></a>
+                                                                @else
+                                                                    <i class="bi bi-x text-danger"
+                                                                        title="diplome non retiré"></i>
                                                                 @endif
                                                             </td>
                                                             <td style="text-align: center; vertical-align: middle;">
@@ -1228,7 +1234,7 @@
                                             <label class="form-check-label" for="moi">
                                                 Le propriétaire
                                             </label>
-                                            <input type="radio" name="name" value="moi"
+                                            <input type="radio" name="personne" value="moi"
                                                 class="form-check-input @error('moi') is-invalid @enderror">
                                             @error('moi')
                                                 <span class="invalid-feedback" role="alert">
@@ -1238,9 +1244,9 @@
                                         </div>
                                         <div class="col-6 col-md-6 col-lg-6 col-sm-6 col-xs-6 col-xxl-6">
                                             <label class="form-check-label" for="autre">
-                                                Autre personne
+                                                Une autre personne
                                             </label>
-                                            <input type="radio" name="name" value="autre"
+                                            <input type="radio" name="personne" value="autre"
                                                 class="form-check-input @error('autre') is-invalid @enderror">
                                             @error('autre')
                                                 <span class="invalid-feedback" role="alert">
@@ -1322,12 +1328,18 @@
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('patch') --}}
-                    <div class="modal-header" id="EditShowModalLabel{{ $individuelle->id }}">
+                    {{-- <div class="modal-header" id="EditShowModalLabel{{ $individuelle->id }}">
                         <h5 class="modal-title">Attestation de
                             {{ $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
+                    </div> --}}
+
+                    <div class="card-header text-center bg-gradient-default">
+                        <h4 class="h4 text-black mb-0">
+                            {{ strtoupper($individuelle?->formation?->type_certification) . ' de ' . $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}
+                        </h4>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id" value="{{ $individuelle->id }}">
@@ -1337,7 +1349,7 @@
                                         class="text-danger mx-1">*</span></label>
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label class="form-check-label" for="moi">
-                                        {{ $individuelle?->retrait_diplome }}
+                                        {{ 'Retrait effectué par ' . $individuelle?->retrait_diplome }}
                                     </label>
 
                                 </div>

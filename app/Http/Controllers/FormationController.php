@@ -6,7 +6,6 @@ use App\Models\Choixoperateur;
 use App\Models\Collective;
 use App\Models\Collectivemodule;
 use App\Models\Departement;
-use App\Models\Direction;
 use App\Models\Domaine;
 use App\Models\Evaluateur;
 use App\Models\Formation;
@@ -24,7 +23,6 @@ use App\Models\Referentiel;
 use App\Models\Region;
 use App\Models\Statut;
 use App\Models\TypesFormation;
-use App\Models\Validationcollective;
 use App\Models\Validationformation;
 use App\Models\Validationindividuelle;
 use Dompdf\Dompdf;
@@ -65,10 +63,9 @@ class FormationController extends Controller
             ->where('statut', '!=', 'supprimer')
             ->count();
 
-
         $qrcode = QrCode::size(200)->generate("tel:+221776994173");
         $today = date('Y-m-d');
-        $count_today = Formation::where("created_at", "LIKE",  "{$today}%")->count();
+        $count_today = Formation::where("created_at", "LIKE", "{$today}%")->count();
 
         $modules = Module::orderBy("created_at", "desc")->get();
         $departements = Departement::orderBy("created_at", "desc")->get();
@@ -78,7 +75,6 @@ class FormationController extends Controller
         $programmes = Programme::orderBy("created_at", "desc")->get();
         $choixoperateurs = Choixoperateur::orderBy("created_at", "desc")->get();
         $types_formations = TypesFormation::orderBy("created_at", "desc")->get();
-
 
         $anneeEnCours = date('Y');
         $annee = date('y');
@@ -102,22 +98,22 @@ class FormationController extends Controller
         } else {
             $numFormation = $annee . "0001";
 
-            $numFormation   =   'F' . $numFormation;
+            $numFormation = 'F' . $numFormation;
 
             $longueur = strlen($numFormation);
 
             if ($longueur <= 1) {
-                $numFormation   =   strtoupper("00000" . $numFormation);
+                $numFormation = strtoupper("00000" . $numFormation);
             } elseif ($longueur >= 2 && $longueur < 3) {
-                $numFormation   =   strtoupper("0000" . $numFormation);
+                $numFormation = strtoupper("0000" . $numFormation);
             } elseif ($longueur >= 3 && $longueur < 4) {
-                $numFormation   =   strtoupper("000" . $numFormation);
+                $numFormation = strtoupper("000" . $numFormation);
             } elseif ($longueur >= 4 && $longueur < 5) {
-                $numFormation   =   strtoupper("00" . $numFormation);
+                $numFormation = strtoupper("00" . $numFormation);
             } elseif ($longueur >= 5 && $longueur < 6) {
-                $numFormation   =   strtoupper("0" . $numFormation);
+                $numFormation = strtoupper("0" . $numFormation);
             } else {
-                $numFormation   =   strtoupper($numFormation);
+                $numFormation = strtoupper($numFormation);
             }
         }
 
@@ -153,7 +149,6 @@ class FormationController extends Controller
         );
     }
 
-
     public function create()
     {
         return view("formations.create");
@@ -162,14 +157,14 @@ class FormationController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            "code"                  =>   "required|string|min:7|max:8|unique:formations,code",
-            "name"                  =>   "required|string|unique:formations,name",
-            "departement"           =>   "required|string",
-            "lieu"                  =>   "required|string",
-            "type_certification"    =>   "required|string",
-            "types_formation"       =>   "required|string",
-            "date_debut"            =>   "nullable|date|min:10|max:10|date_format:Y-m-d",
-            "date_fin"              =>   "nullable|date|min:10|max:10|date_format:Y-m-d",
+            "code" => "required|string|min:7|max:8|unique:formations,code",
+            "name" => "required|string|unique:formations,name",
+            "departement" => "required|string",
+            "lieu" => "required|string",
+            "type_certification" => "required|string",
+            "types_formation" => "required|string",
+            "date_debut" => "nullable|date|min:10|max:10|date_format:Y-m-d",
+            "date_fin" => "nullable|date|min:10|max:10|date_format:Y-m-d",
         ]);
 
         /* $mois = date('m');
@@ -188,25 +183,24 @@ class FormationController extends Controller
         $longueur = strlen($count_formation);
 
         if ($longueur == 1) {
-            $code_formation   =   strtolower("000" . $count_formation);
+        $code_formation   =   strtolower("000" . $count_formation);
         } elseif ($longueur >= 2 && $longueur < 3) {
-            $code_formation   =   strtolower("00" . $count_formation);
+        $code_formation   =   strtolower("00" . $count_formation);
         } elseif ($longueur >= 3 && $longueur < 4) {
-            $code_formation   =   strtolower("0" . $count_formation);
+        $code_formation   =   strtolower("0" . $count_formation);
         } else {
-            $code_formation   =   strtolower($count_formation);
+        $code_formation   =   strtolower($count_formation);
         }
 
         if ($types_formation->name == "individuelle") {
-            $for = "F";
-            $fin = "I";
+        $for = "F";
+        $fin = "I";
         } else {
-            $for = "F";
-            $fin = "C";
+        $for = "F";
+        $fin = "C";
         }
 
         $code_formation = $for . '' . $annee . '' . $code_formation . '' . $fin; */
-
 
         $anneeEnCours = date('Y');
         $annee = date('y');
@@ -230,22 +224,22 @@ class FormationController extends Controller
         } else {
             $numFormation = $annee . "0001";
 
-            $numFormation   =   'F' . $numFormation;
+            $numFormation = 'F' . $numFormation;
 
             $longueur = strlen($numFormation);
 
             if ($longueur <= 1) {
-                $numFormation   =   strtoupper("00000" . $numFormation);
+                $numFormation = strtoupper("00000" . $numFormation);
             } elseif ($longueur >= 2 && $longueur < 3) {
-                $numFormation   =   strtoupper("0000" . $numFormation);
+                $numFormation = strtoupper("0000" . $numFormation);
             } elseif ($longueur >= 3 && $longueur < 4) {
-                $numFormation   =   strtoupper("000" . $numFormation);
+                $numFormation = strtoupper("000" . $numFormation);
             } elseif ($longueur >= 4 && $longueur < 5) {
-                $numFormation   =   strtoupper("00" . $numFormation);
+                $numFormation = strtoupper("00" . $numFormation);
             } elseif ($longueur >= 5 && $longueur < 6) {
-                $numFormation   =   strtoupper("0" . $numFormation);
+                $numFormation = strtoupper("0" . $numFormation);
             } else {
-                $numFormation   =   strtoupper($numFormation);
+                $numFormation = strtoupper($numFormation);
             }
         }
 
@@ -257,13 +251,13 @@ class FormationController extends Controller
         /* $rand = $fic . '' . $mois . $annee . $rand; */
 
         /*   $this->validate($request, [
-            "name"                  =>   "required|string|unique:formations,name,except,id",
-            "departement"           =>   "required|string",
-            "lieu"                  =>   "required|string",
-            "type_certification"  =>   "required|string",
-            "titre"                 =>   "nullable|string",
-            "date_debut"            =>   "nullable|date",
-            "date_fin"              =>   "nullable|date",
+        "name"                  =>   "required|string|unique:formations,name,except,id",
+        "departement"           =>   "required|string",
+        "lieu"                  =>   "required|string",
+        "type_certification"  =>   "required|string",
+        "titre"                 =>   "nullable|string",
+        "date_debut"            =>   "nullable|date",
+        "date_fin"              =>   "nullable|date",
         ]); */
 
         if (!empty($request->input('prevue_h'))) {
@@ -276,7 +270,6 @@ class FormationController extends Controller
         } else {
             $prevue_f = null;
         }
-
 
         $effectif_prevu = $prevue_h + $prevue_f;
 
@@ -311,44 +304,42 @@ class FormationController extends Controller
         }
 
         $formation = new Formation([
-            "code"                  =>   $request->input('code'),
-            "name"                  =>   $request->input('name'),
-            "regions_id"            =>   $departement->region->id,
-            "departements_id"       =>   $departement->id,
-            "lieu"                  =>   $request->input('lieu'),
+            "code" => $request->input('code'),
+            "name" => $request->input('name'),
+            "regions_id" => $departement->region->id,
+            "departements_id" => $departement->id,
+            "lieu" => $request->input('lieu'),
             /* "modules_id"            =>   $request->input('module'), */
-            "operateurs_id"         =>   $request->input('operateur'),
-            "types_formations_id"   =>   $types_formation->id,
-            "type_certification"  =>   $request->input('type_certification'),
+            "operateurs_id" => $request->input('operateur'),
+            "types_formations_id" => $types_formation->id,
+            "type_certification" => $request->input('type_certification'),
             /* "numero_convention"     =>   $request->input('numero_convention'), */
             /* "titre"                 =>   $request->input('titre'), */
-            "date_debut"            =>   $date_debut,
-            "date_fin"              =>   $date_fin,
-            "effectif_prevu"        =>   $effectif_prevu,
-            "prevue_h"              =>   $prevue_h,
-            "prevue_f"              =>   $prevue_f,
-            "frais_operateurs"      =>   $frais_operateurs,
+            "date_debut" => $date_debut,
+            "date_fin" => $date_fin,
+            "effectif_prevu" => $effectif_prevu,
+            "prevue_h" => $prevue_h,
+            "prevue_f" => $prevue_f,
+            "frais_operateurs" => $frais_operateurs,
             /* "lettre_mission"        =>   $request->input('lettre_mission'), */
-            "frais_add"             =>   $frais_add,
-            "autes_frais"           =>   $autes_frais,
-            "projets_id"            =>   $request->input('projet'),
-            "programmes_id"         =>   $request->input('programme'),
-            "choixoperateurs_id"    =>   $request->input('choixoperateur'),
-            "statut"                =>   "nouvelle",
-            "annee"                 =>   $anneeEnCours,
+            "frais_add" => $frais_add,
+            "autes_frais" => $autes_frais,
+            "projets_id" => $request->input('projet'),
+            "programmes_id" => $request->input('programme'),
+            "choixoperateurs_id" => $request->input('choixoperateur'),
+            "statut" => "nouvelle",
+            "annee" => $anneeEnCours,
 
         ]);
 
         $formation->save();
 
-
         $statut = new Statut([
-            "statut"                =>   "nouvelle",
-            "formations_id"         =>   $formation->id,
+            "statut" => "nouvelle",
+            "formations_id" => $formation->id,
         ]);
 
         $statut->save();
-
 
         Alert::success("Bravo !", "La formation a été créée avec succès.");
 
@@ -365,7 +356,7 @@ class FormationController extends Controller
         $choixoperateurs = Choixoperateur::orderBy("created_at", "desc")->get();
         $referentiels = Referentiel::get();
         $evaluateurs = Evaluateur::get();
-        $onfpevaluateurs  = Onfpevaluateur::get();
+        $onfpevaluateurs = Onfpevaluateur::get();
 
         return view(
             "formations.update",
@@ -388,20 +379,20 @@ class FormationController extends Controller
         $formation = Formation::findOrFail($id);
 
         $this->validate($request, [
-            "code"                  =>   "required|string|unique:formations,code,{$formation->id}",
-            "name"                  =>   "required|string|unique:formations,name,{$formation->id}",
-            "departement"           =>   "required|string",
-            "lieu"                  =>   "required|string",
-            "type_certification"   =>    "required|string",
-            "titre"                 =>   "nullable|string",
-            "date_debut"            =>   "nullable|date|min:10|max:10|date_format:Y-m-d",
-            "date_convention"       =>   "nullable|date|min:10|max:10|date_format:Y-m-d",
-            "date_lettre"           =>   "nullable|date|min:10|max:10|date_format:Y-m-d",
-            "date_fin"              =>   "nullable|date|min:10|max:10|date_format:Y-m-d",
-            "lettre_mission"        =>   "nullable|string",
-            "annee"                 =>   "nullable|numeric",
-            "file_convention"       =>  ['sometimes', 'file', 'mimes:pdf', 'max:2048'],
-            "detf-file"             =>  ['sometimes', 'file', 'mimes:pdf', 'max:2048']
+            "code" => "required|string|unique:formations,code,{$formation->id}",
+            "name" => "required|string|unique:formations,name,{$formation->id}",
+            "departement" => "required|string",
+            "lieu" => "required|string",
+            "type_certification" => "required|string",
+            "titre" => "nullable|string",
+            "date_debut" => "nullable|date|min:10|max:10|date_format:Y-m-d",
+            "date_convention" => "nullable|date|min:10|max:10|date_format:Y-m-d",
+            "date_lettre" => "nullable|date|min:10|max:10|date_format:Y-m-d",
+            "date_fin" => "nullable|date|min:10|max:10|date_format:Y-m-d",
+            "lettre_mission" => "nullable|string",
+            "annee" => "nullable|numeric",
+            "file_convention" => ['sometimes', 'file', 'mimes:pdf', 'max:2048'],
+            "detf-file" => ['sometimes', 'file', 'mimes:pdf', 'max:2048'],
         ]);
 
         if (!empty($request->input('prevue_h'))) {
@@ -435,9 +426,7 @@ class FormationController extends Controller
             $type = null;
         }
 
-
         if (request('file_convention')) {
-
 
             $filePath = request('file_convention')->store('conventions', 'public');
 
@@ -456,14 +445,13 @@ class FormationController extends Controller
             $fileNameToStore = 'conventions/' . $filename . '' . time() . '.' . $extension;
 
             $formation->update([
-                'file_convention'             =>      $filePath,
+                'file_convention' => $filePath,
             ]);
 
             $formation->save();
         }
 
         if (request('detf_file')) {
-
 
             $filePath = request('detf_file')->store('detfs', 'public');
 
@@ -482,7 +470,7 @@ class FormationController extends Controller
             $fileNameToStore = 'detfs/' . $filename . '' . time() . '.' . $extension;
 
             $formation->update([
-                'detf_file'             =>      $filePath,
+                'detf_file' => $filePath,
             ]);
 
             $formation->save();
@@ -545,41 +533,40 @@ class FormationController extends Controller
             $onfpevaluateur = null;
         }
 
-
         $formation->update([
-            "code"                  =>   $request->input('code'),
-            "name"                  =>   $request->input('name'),
-            "regions_id"            =>   $request->input('region'),
-            "departements_id"       =>   $request->input('departement'),
-            "lieu"                  =>   $request->input('lieu'),
-            "types_formations_id"   =>   $request->input('types_formation'),
-            "type_certification"    =>   $request->input('type_certification'),
-            "numero_convention"     =>   $request->input('numero_convention'),
-            "titre"                 =>   $titre,
-            "type_certificat"       =>   $type,
-            "date_debut"            =>   $date_debut,
-            "date_fin"              =>   $date_fin,
-            "date_convention"       =>   $date_convention,
-            "date_lettre"           =>   $date_lettre,
-            "effectif_prevu"        =>   $effectif_prevu,
-            "prevue_h"              =>   $prevue_h,
-            "prevue_f"              =>   $prevue_f,
-            "frais_operateurs"      =>   $frais_operateurs,
-            "frais_add"             =>   $frais_add,
-            "autes_frais"           =>   $autes_frais,
-            "projets_id"            =>   $projet?->id,
-            "lettre_mission"        =>   $request->input('lettre_mission'),
-            "programmes_id"         =>   $request->input('programme'),
-            "choixoperateurs_id"    =>   $request->input('choixoperateur'),
-            "referentiels_id"       =>   $referentiel_id,
-            "annee"                 =>   $request->input('annee'),
-            "membres_jury"          =>   $request->input('membres_jury'),
-            "frais_evaluateur"      =>   $frais_evaluateur,
-            "recommandations"       =>   $request->input('recommandations'),
-            "date_pv"               =>   $date_pv,
+            "code" => $request->input('code'),
+            "name" => $request->input('name'),
+            "regions_id" => $request->input('region'),
+            "departements_id" => $request->input('departement'),
+            "lieu" => $request->input('lieu'),
+            "types_formations_id" => $request->input('types_formation'),
+            "type_certification" => $request->input('type_certification'),
+            "numero_convention" => $request->input('numero_convention'),
+            "titre" => $titre,
+            "type_certificat" => $type,
+            "date_debut" => $date_debut,
+            "date_fin" => $date_fin,
+            "date_convention" => $date_convention,
+            "date_lettre" => $date_lettre,
+            "effectif_prevu" => $effectif_prevu,
+            "prevue_h" => $prevue_h,
+            "prevue_f" => $prevue_f,
+            "frais_operateurs" => $frais_operateurs,
+            "frais_add" => $frais_add,
+            "autes_frais" => $autes_frais,
+            "projets_id" => $projet?->id,
+            "lettre_mission" => $request->input('lettre_mission'),
+            "programmes_id" => $request->input('programme'),
+            "choixoperateurs_id" => $request->input('choixoperateur'),
+            "referentiels_id" => $referentiel_id,
+            "annee" => $request->input('annee'),
+            "membres_jury" => $request->input('membres_jury'),
+            "frais_evaluateur" => $frais_evaluateur,
+            "recommandations" => $request->input('recommandations'),
+            "date_pv" => $date_pv,
             /* "evaluateurs_id"        =>   $request->input('evaluateur'), */
-            "onfpevaluateurs_id"    =>   $onfpevaluateur,
-            "attestation"           =>   $request->statut,
+            "onfpevaluateurs_id" => $onfpevaluateur,
+            "attestation" => $request->statut,
 
         ]);
 
@@ -592,11 +579,11 @@ class FormationController extends Controller
 
     public function show($id)
     {
-        $formation          = Formation::findOrFail($id);
-        $type_formation     = $formation->types_formation->name;
-        $operateur          = $formation->operateur;
-        $module             = $formation->module;
-        $ingenieur          = $formation->ingenieur;
+        $formation = Formation::findOrFail($id);
+        $type_formation = $formation->types_formation->name;
+        $operateur = $formation->operateur;
+        $module = $formation->module;
+        $ingenieur = $formation->ingenieur;
 
         $count_demandes = count($formation->individuelles);
 
@@ -656,7 +643,7 @@ class FormationController extends Controller
 
     public function destroy($id)
     {
-        $formation   = Formation::find($id);
+        $formation = Formation::find($id);
 
         if (!empty($formation->types_formation->name) && $formation->types_formation->name == "collective") {
             foreach ($formation->listecollectives as $liste) {
@@ -666,7 +653,7 @@ class FormationController extends Controller
                 return redirect()->back();
             } else {
                 $formation->update([
-                    "code"       =>   $formation->code . '/' . $formation->id,
+                    "code" => $formation->code . '/' . $formation->id,
                 ]);
 
                 $formation->save();
@@ -683,7 +670,7 @@ class FormationController extends Controller
                 return redirect()->back();
             } else {
                 $formation->update([
-                    "code"       =>   $formation->code . '/' . $formation->id,
+                    "code" => $formation->code . '/' . $formation->id,
                 ]);
 
                 $formation->save();
@@ -693,15 +680,14 @@ class FormationController extends Controller
             }
         } else {
             $formation->update([
-                "statut"       =>   "supprimer",
+                "statut" => "supprimer",
             ]);
 
             $formation->save();
 
-
             $statut = new Statut([
-                "statut"                =>   "supprimer",
-                "formations_id"         =>   $formation->id,
+                "statut" => "supprimer",
+                "formations_id" => $formation->id,
             ]);
 
             $statut->save();
@@ -719,26 +705,26 @@ class FormationController extends Controller
         $region = Region::findOrFail($idlocalite);
 
         /* $individuelles = Individuelle::where('regions_id', $idlocalite)
-            ->where('modules_id', $idmodule)
-            ->where('statut', 'accepter')
-            ->orWhere('statut', 'retirer')
-            ->orWhere('statut', 'programmer')
-            ->get(); */
+        ->where('modules_id', $idmodule)
+        ->where('statut', 'accepter')
+        ->orWhere('statut', 'retirer')
+        ->orWhere('statut', 'programmer')
+        ->get(); */
         /* $individuelles = Individuelle::where('regions_id', $idlocalite)
-            ->where('statut', 'attente')
-            ->orWhere('statut', 'retirer')
-            ->orWhere('statut', 'programmer')
-            ->get(); */
+        ->where('statut', 'attente')
+        ->orWhere('statut', 'retirer')
+        ->orWhere('statut', 'programmer')
+        ->get(); */
 
         /* $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
-            ->select('individuelles.*')
-            ->where('modules.name', 'LIKE', "%{$module->name}%")
-            ->where('regions_id', $idlocalite)
-            ->where('statut', 'attente')
-            ->orWhere('statut', 'retirer')
-            ->orWhere('statut', 'retenu')
-            ->orWhere('statut', 'programmer')
-            ->get(); */
+        ->select('individuelles.*')
+        ->where('modules.name', 'LIKE', "%{$module->name}%")
+        ->where('regions_id', $idlocalite)
+        ->where('statut', 'attente')
+        ->orWhere('statut', 'retirer')
+        ->orWhere('statut', 'retenu')
+        ->orWhere('statut', 'programmer')
+        ->get(); */
         /* dd($localite->nom); */
 
         $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
@@ -786,7 +772,7 @@ class FormationController extends Controller
     public function giveformationdemandeurs($idformation, $idmodule, $idlocalite, Request $request)
     {
         $request->validate([
-            'individuelles' => ['required']
+            'individuelles' => ['required'],
         ]);
 
         $formation = Formation::findOrFail($idformation);
@@ -799,17 +785,17 @@ class FormationController extends Controller
             foreach ($request->individuelles as $individuelle) {
                 $individuelle = Individuelle::findOrFail($individuelle);
                 $individuelle->update([
-                    "formations_id"      =>  $idformation,
-                    "statut"             =>  'retenu',
+                    "formations_id" => $idformation,
+                    "statut" => 'retenu',
                 ]);
 
                 $individuelle->save();
             }
 
             $validated_by = new Validationindividuelle([
-                'validated_id'       =>      Auth::user()->id,
-                'action'             =>      'retenu',
-                'individuelles_id'   =>      $individuelle->id
+                'validated_id' => Auth::user()->id,
+                'action' => 'retenu',
+                'individuelles_id' => $individuelle->id,
             ]);
 
             $validated_by->save();
@@ -820,38 +806,38 @@ class FormationController extends Controller
         return redirect()->back();
     }
 
-    public function giveindisponibles($idformation,  Request $request)
+    public function giveindisponibles($idformation, Request $request)
     {
         $request->validate([
-            'motif' => ['required']
+            'motif' => ['required'],
         ]);
 
         $individuelle = Individuelle::findOrFail($request->input('individuelleid'));
-        $formation   = Formation::findOrFail($idformation);
+        $formation = Formation::findOrFail($idformation);
 
         if ($formation->statut == 'terminer' && $individuelle->note_obtenue > 0) {
             Alert::warning('Avertissement !', 'Ce demandeur ne peut pas être retiré.');
         } else {
             $individuelle->update([
-                "formations_id"      =>  null,
-                "statut"             =>  'retirer',
+                "formations_id" => null,
+                "statut" => 'retirer',
             ]);
 
             $individuelle->save();
 
             $indisponible = new Indisponible([
-                "motif"             => $request->input('motif'),
-                "individuelles_id"  => $request->input('individuelleid'),
-                "formations_id"     => $idformation,
+                "motif" => $request->input('motif'),
+                "individuelles_id" => $request->input('individuelleid'),
+                "formations_id" => $idformation,
             ]);
 
             $indisponible->save();
 
             $validated_by = new Validationindividuelle([
-                'validated_id'       =>      Auth::user()->id,
-                'action'             =>      'retirer',
-                'motif'              =>      $request->input('motif') . ', pour la formation : ' . $formation->name,
-                'individuelles_id'   =>      $individuelle->id
+                'validated_id' => Auth::user()->id,
+                'action' => 'retirer',
+                'motif' => $request->input('motif') . ', pour la formation : ' . $formation->name,
+                'individuelles_id' => $individuelle->id,
             ]);
 
             $validated_by->save();
@@ -861,22 +847,22 @@ class FormationController extends Controller
         return redirect()->back();
     }
 
-    public function givecollectiveindisponibles($idformation,  Request $request)
+    public function givecollectiveindisponibles($idformation, Request $request)
     {
         $request->validate([
-            'motif' => ['required']
+            'motif' => ['required'],
         ]);
 
         $listecollective = Listecollective::findOrFail($request->input('listecollectiveid'));
-        $formation   = Formation::findOrFail($idformation);
+        $formation = Formation::findOrFail($idformation);
 
         if ($formation->statut == 'terminer' && $listecollective->note_obtenue > 0) {
             Alert::warning('Avertissement !', 'Ce demandeur ne peut pas être retiré.');
         } else {
             $listecollective->update([
-                "formations_id"      =>  null,
-                "statut"             =>  'retirer',
-                "motif_rejet"        =>  $request->motif,
+                "formations_id" => null,
+                "statut" => 'retirer',
+                "motif_rejet" => $request->motif,
             ]);
 
             $listecollective->save();
@@ -886,12 +872,11 @@ class FormationController extends Controller
         return redirect()->back();
     }
 
-    public function giveremiseAttestations($idformation,  Request $request)
+    public function giveremiseAttestations($idformation, Request $request)
     {
         $request->validate([
-            'statut' => ['required']
+            'statut' => ['required'],
         ]);
-
 
         $formation = Formation::findOrFail($request->input('formationid'));
 
@@ -899,7 +884,7 @@ class FormationController extends Controller
             Alert::warning('Action impossible !', 'La formation n\'est pas encore achevée.');
         } else {
             $formation->update([
-                "attestation"             =>  $request->statut,
+                "attestation" => $request->statut,
             ]);
 
             $formation->save();
@@ -907,7 +892,6 @@ class FormationController extends Controller
         Alert::success('Attestations ' . $request->statut);
         return redirect()->back();
     }
-
 
     public function addformationoperateurs($idformation, $idmodule, $idlocalite)
     {
@@ -919,11 +903,11 @@ class FormationController extends Controller
         $operateurs = Operateur::get();
 
         /* $operateurmodules   =   DB::table('operateurmodules')
-            ->where('module', $modulename)
-            ->pluck('module', 'module')
-            ->all(); */
+        ->where('module', $modulename)
+        ->pluck('module', 'module')
+        ->all(); */
 
-        $operateurmodules   =   Operateurmodule::where('module', 'LIKE', "%{$modulename}%")->where('statut', 'agréer')->get();
+        $operateurmodules = Operateurmodule::where('module', 'LIKE', "%{$modulename}%")->where('statut', 'agréer')->get();
 
         $operateurFormation = DB::table('formations')
             ->where('operateurs_id', $formation->operateurs_id)
@@ -936,13 +920,13 @@ class FormationController extends Controller
     public function giveformationoperateurs($idformation, $idmodule, $idlocalite, Request $request)
     {
         $request->validate([
-            'operateur' => ['required']
+            'operateur' => ['required'],
         ]);
 
         $formation = Formation::findOrFail($idformation);
 
         $formation->update([
-            "operateurs_id"      =>  $request->input('operateur'),
+            "operateurs_id" => $request->input('operateur'),
         ]);
 
         $formation->save();
@@ -961,7 +945,7 @@ class FormationController extends Controller
 
         $operateurs = Operateur::get();
 
-        $operateurmodules   =   Operateurmodule::where('module', $modulename)->where('statut', 'agréer')->get();
+        $operateurmodules = Operateurmodule::where('module', $modulename)->where('statut', 'agréer')->get();
 
         $operateurFormation = DB::table('formations')
             ->where('operateurs_id', $formation->operateurs_id)
@@ -974,13 +958,13 @@ class FormationController extends Controller
     public function giveformationcollectiveoperateurs($idformation, $idcollectivemodule, $idlocalite, Request $request)
     {
         $request->validate([
-            'operateur' => ['required']
+            'operateur' => ['required'],
         ]);
 
         $formation = Formation::findOrFail($idformation);
 
         $formation->update([
-            "operateurs_id"      =>  $request->input('operateur'),
+            "operateurs_id" => $request->input('operateur'),
         ]);
 
         $formation->save();
@@ -1009,13 +993,13 @@ class FormationController extends Controller
     public function giveformationmodules($idformation, Request $request)
     {
         $request->validate([
-            'module' => ['required']
+            'module' => ['required'],
         ]);
 
         $formation = Formation::findOrFail($idformation);
 
         $formation->update([
-            "modules_id"      =>  $request->input('module'),
+            "modules_id" => $request->input('module'),
         ]);
 
         $formation->save();
@@ -1061,17 +1045,16 @@ class FormationController extends Controller
         return view("formations.add-ingenieur", compact('formation', 'ingenieurs', 'ingenieur', 'ingenieurFormation', 'domaines'));
     }
 
-
     public function giveformationingenieurs($idformation, Request $request)
     {
         $request->validate([
-            'ingenieur' => ['required']
+            'ingenieur' => ['required'],
         ]);
 
         $formation = Formation::findOrFail($idformation);
 
         $formation->update([
-            "ingenieurs_id"      =>  $request->input('ingenieur'),
+            "ingenieurs_id" => $request->input('ingenieur'),
         ]);
 
         $formation->save();
@@ -1085,15 +1068,15 @@ class FormationController extends Controller
     {
         $formation = Formation::findOrFail($idformation);
         /* $collectives = Collective::where('statut_demande', 'accepter')
-            ->orwhere('statut_demande', 'retenu')
-            ->get(); */
+        ->orwhere('statut_demande', 'retenu')
+        ->get(); */
 
         /* $admis_h_count = Individuelle::join('users', 'users.id', 'individuelles.users_id')
-            ->select('individuelles.*')
-            ->where('formations_id', $formation->id)
-            ->where('users.civilite', "M.")
-            ->where('note_obtenue', '>=', '12')
-            ->count(); */
+        ->select('individuelles.*')
+        ->where('formations_id', $formation->id)
+        ->where('users.civilite', "M.")
+        ->where('note_obtenue', '>=', '12')
+        ->count(); */
 
         $collectivemodules = Collectivemodule::join('collectives', 'collectives.id', 'collectivemodules.collectives_id')
             ->select('collectivemodules.*')
@@ -1102,9 +1085,9 @@ class FormationController extends Controller
             ->get();
 
         /* $collectiveFormation = DB::table('collectives')
-            ->where('formations_id', $idformation)
-            ->pluck('formations_id', 'formations_id')
-            ->all(); */
+        ->where('formations_id', $idformation)
+        ->pluck('formations_id', 'formations_id')
+        ->all(); */
 
         $collectiveModule = DB::table('collectivemodules')
             ->where('formations_id', $idformation)
@@ -1112,10 +1095,10 @@ class FormationController extends Controller
             ->all();
 
         /* $collectiveFormationCheck = DB::table('collectives')
-            ->where('formations_id', '!=', null)
-            ->where('formations_id', '!=', $idformation)
-            ->pluck('formations_id', 'formations_id')
-            ->all(); */
+        ->where('formations_id', '!=', null)
+        ->where('formations_id', '!=', $idformation)
+        ->pluck('formations_id', 'formations_id')
+        ->all(); */
 
         $collectiveModuleCheck = DB::table('collectivemodules')
             ->where('formations_id', '!=', null)
@@ -1134,11 +1117,10 @@ class FormationController extends Controller
         );
     }
 
-
     public function giveformationcollectives($idformation, Request $request)
     {
         $request->validate([
-            'collectivemodule' => ['required']
+            'collectivemodule' => ['required'],
         ]);
 
         $collectivemodule = Collectivemodule::findOrFail($request->collectivemodule);
@@ -1154,15 +1136,15 @@ class FormationController extends Controller
                 $collectivemoduleformation = Collectivemodule::findOrFail($request->collectivemoduleformation);
 
                 $collectivemoduleformation->update([
-                    "formations_id"      =>  null,
-                    "statut"             =>  'attente',
+                    "formations_id" => null,
+                    "statut" => 'attente',
                 ]);
 
                 $collectivemoduleformation->save();
 
                 $collectivemodule->update([
-                    "formations_id"      =>  $idformation,
-                    "statut"             =>  'retenu',
+                    "formations_id" => $idformation,
+                    "statut" => 'retenu',
                 ]);
 
                 $collectivemodule->save();
@@ -1173,8 +1155,8 @@ class FormationController extends Controller
             }
         } else {
             $collectivemodule->update([
-                "formations_id"      =>  $idformation,
-                "statut"             =>  'retenu',
+                "formations_id" => $idformation,
+                "statut" => 'retenu',
             ]);
 
             $collectivemodule->save();
@@ -1185,46 +1167,45 @@ class FormationController extends Controller
         }
 
         /* foreach ($formation->listecollectives as $liste) {
-        }
-    
+    }
 
-        if (!empty($liste)) {
-            Alert::warning('Attention !', 'des bénéficiaires sont déjà sélectionnés');
+    if (!empty($liste)) {
+    Alert::warning('Attention !', 'des bénéficiaires sont déjà sélectionnés');
 
-            return redirect()->back();
-        } elseif (isset($request->collectivemoduleformation) && $request->collectivemoduleformation != $collectivemodule->id) {
-            $collectivemoduleformation = Collectivemodule::findOrFail($request->collectivemoduleformation);
+    return redirect()->back();
+    } elseif (isset($request->collectivemoduleformation) && $request->collectivemoduleformation != $collectivemodule->id) {
+    $collectivemoduleformation = Collectivemodule::findOrFail($request->collectivemoduleformation);
 
-            $collectivemoduleformation->update([
-                "formations_id"      =>  null,
-                "statut"             =>  'attente',
-            ]);
+    $collectivemoduleformation->update([
+    "formations_id"      =>  null,
+    "statut"             =>  'attente',
+    ]);
 
-            $collectivemoduleformation->save();
-        }
+    $collectivemoduleformation->save();
+    }
 
-        $collectivemodule->update([
-            "formations_id"      =>  $idformation,
-            "statut"             =>  'retenu',
-        ]);
+    $collectivemodule->update([
+    "formations_id"      =>  $idformation,
+    "statut"             =>  'retenu',
+    ]);
 
-        $collectivemodule->save();
+    $collectivemodule->save();
 
-        Alert::success('Fait !', 'ajouté avec succès');
+    Alert::success('Fait !', 'ajouté avec succès');
 
-        return redirect()->back(); */
+    return redirect()->back(); */
     }
 
     public function givemoduleformationcollectives($idformation, Request $request)
     {
         $request->validate([
-            'collectivemodule' => ['required']
+            'collectivemodule' => ['required'],
         ]);
 
         $formation = Formation::findOrFail($idformation);
 
         $formation->update([
-            "collectivemodules_id"      =>  $request->input("collectivemodule"),
+            "collectivemodules_id" => $request->input("collectivemodule"),
         ]);
 
         $formation->save();
@@ -1234,17 +1215,16 @@ class FormationController extends Controller
         return redirect()->back();
     }
 
-
     public function givemoduleformations($idformation, $idlocalite, Request $request)
     {
         $request->validate([
-            'module' => ['required']
+            'module' => ['required'],
         ]);
 
         $formation = Formation::findOrFail($idformation);
 
         $formation->update([
-            "modules_id"      =>  $request->input('module'),
+            "modules_id" => $request->input('module'),
         ]);
 
         $formation->save();
@@ -1273,7 +1253,7 @@ class FormationController extends Controller
         } else {
 
             /* if ($formation->statut == 'terminer') {
-                Alert::warning('Désolé !', 'Cette formation a déjà été exécutée.');
+            Alert::warning('Désolé !', 'Cette formation a déjà été exécutée.');
             } else */
 
             if ($formation->statut == 'annuler') {
@@ -1312,40 +1292,40 @@ class FormationController extends Controller
                 }
 
                 /* $recales = Individuelle::where('formations_id', $formation->id)
-                    ->where('note_obtenue', '<', '12')
-                    ->get();
+                ->where('note_obtenue', '<', '12')
+                ->get();
 
                 $admis_h_count = Individuelle::join('users', 'users.id', 'individuelles.users_id')
-                    ->select('individuelles.*')
-                    ->where('formations_id', $formation->id)
-                    ->where('users.civilite', "M.")
-                    ->where('note_obtenue', '>=', '12')
-                    ->count();
+                ->select('individuelles.*')
+                ->where('formations_id', $formation->id)
+                ->where('users.civilite', "M.")
+                ->where('note_obtenue', '>=', '12')
+                ->count();
 
                 $admis_f_count = Individuelle::join('users', 'users.id', 'individuelles.users_id')
-                    ->select('individuelles.*')
-                    ->where('formations_id', $formation->id)
-                    ->where('users.civilite', "Mme")
-                    ->where('note_obtenue', '>=', '12')
-                    ->count(); */
+                ->select('individuelles.*')
+                ->where('formations_id', $formation->id)
+                ->where('users.civilite', "Mme")
+                ->where('note_obtenue', '>=', '12')
+                ->count(); */
 
                 $formes_total = $formes_h_count + $formes_f_count;
 
                 $formation->update([
-                    'statut'              => 'terminer',
-                    'forme_h'             => $formes_h_count,
-                    'forme_f'             => $formes_f_count,
-                    'total'               => $formes_total,
-                    'nbre_admis'          => $admis,
-                    'validated_by'        =>  Auth::user()->firstname . ' ' . Auth::user()->name,
+                    'statut' => 'terminer',
+                    'forme_h' => $formes_h_count,
+                    'forme_f' => $formes_f_count,
+                    'total' => $formes_total,
+                    'nbre_admis' => $admis,
+                    'validated_by' => Auth::user()->firstname . ' ' . Auth::user()->name,
                 ]);
 
                 $formation->save();
 
                 $validated_by = new Validationformation([
-                    'validated_id'       =>       Auth::user()->id,
-                    'action'             =>      'terminer',
-                    'formations_id'      =>      $formation->id
+                    'validated_id' => Auth::user()->id,
+                    'action' => 'terminer',
+                    'formations_id' => $formation->id,
                 ]);
 
                 $validated_by->save();
@@ -1359,7 +1339,7 @@ class FormationController extends Controller
     }
     public function formationcollectiveTerminer(Request $request)
     {
-        $formation   = Formation::findOrFail($request->input('id'));
+        $formation = Formation::findOrFail($request->input('id'));
 
         $count = $formation->listecollectives->count();
 
@@ -1372,16 +1352,16 @@ class FormationController extends Controller
                 Alert::warning('Désolez !', 'formation en cours...');
             } else {
                 $formation->update([
-                    'statut'             => 'démarrer',
-                    'validated_by'       =>  Auth::user()->firstname . ' ' . Auth::user()->name,
+                    'statut' => 'démarrer',
+                    'validated_by' => Auth::user()->firstname . ' ' . Auth::user()->name,
                 ]);
 
                 $formation->save();
 
                 $validated_by = new Validationformation([
-                    'validated_id'       =>       Auth::user()->id,
-                    'action'             =>      'démarrer',
-                    'formations_id'      =>      $formation->id
+                    'validated_id' => Auth::user()->id,
+                    'action' => 'démarrer',
+                    'formations_id' => $formation->id,
                 ]);
 
                 $validated_by->save();
@@ -1397,7 +1377,7 @@ class FormationController extends Controller
     {
 
         $request->validate([
-            'notes' => ['required']
+            'notes' => ['required'],
         ]);
 
         $individuelles = $request->individuelles;
@@ -1425,9 +1405,9 @@ class FormationController extends Controller
 
             if ($individuelle->formation->statut == 'terminer') {
                 $individuelle->update([
-                    "note_obtenue"       =>  $value,
-                    "appreciation"       =>  $appreciation,
-                    "statut"             =>  'former',
+                    "note_obtenue" => $value,
+                    "appreciation" => $appreciation,
+                    "statut" => 'former',
                 ]);
             } else {
                 Alert::warning('Désolé !', 'La formation n\'est pas encore achevée.');
@@ -1437,9 +1417,9 @@ class FormationController extends Controller
             $individuelle->save();
 
             $validated_by = new Validationindividuelle([
-                'validated_id'       =>      Auth::user()->id,
-                'action'             =>      'former',
-                'individuelles_id'   =>      $individuelle->id
+                'validated_id' => Auth::user()->id,
+                'action' => 'former',
+                'individuelles_id' => $individuelle->id,
             ]);
 
             $validated_by->save();
@@ -1453,7 +1433,7 @@ class FormationController extends Controller
     public function givenotedemandeursCollective($idformation, Request $request)
     {
         $request->validate([
-            'notes' => ['required']
+            'notes' => ['required'],
         ]);
 
         $listecollectives = $request->listecollectives;
@@ -1480,9 +1460,9 @@ class FormationController extends Controller
             }
 
             $listecollective->update([
-                "note_obtenue"       =>  $value,
-                "appreciation"       =>  $appreciation,
-                "statut"             =>  'former',
+                "note_obtenue" => $value,
+                "appreciation" => $appreciation,
+                "statut" => 'former',
             ]);
 
             $listecollective->save();
@@ -1490,7 +1470,7 @@ class FormationController extends Controller
             $collectivemodule = $listecollective->collectivemodule;
 
             $collectivemodule->update([
-                "statut"             =>  'former',
+                "statut" => 'former',
             ]);
 
             $collectivemodule->save();
@@ -1498,16 +1478,16 @@ class FormationController extends Controller
             $collective = $collectivemodule->collective;
 
             $collective->update([
-                "statut_demande"      =>  'former',
+                "statut_demande" => 'former',
             ]);
 
             $collective->save();
         }
 
         /*  $validated_by = new Validationindividuelle([
-            'validated_id'       =>      Auth::user()->id,
-            'action'             =>      'terminer',
-            'listecollectives_id'   =>      $listecollective->id
+        'validated_id'       =>      Auth::user()->id,
+        'action'             =>      'terminer',
+        'listecollectives_id'   =>      $listecollective->id
         ]);
 
         $validated_by->save(); */
@@ -1521,14 +1501,14 @@ class FormationController extends Controller
     {
         $request->validate([
             'suivi_dossier' => ['required', 'string'],
-            'date_suivi' => ['required', 'date']
+            'date_suivi' => ['required', 'date'],
         ]);
 
         $formation = Formation::findOrFail($request->input('id'));
 
         $formation->update([
-            "suivi_dossier"    =>  $request->input('suivi_dossier'),
-            "date_suivi"       =>  $request->input('date_suivi'),
+            "suivi_dossier" => $request->input('suivi_dossier'),
+            "date_suivi" => $request->input('date_suivi'),
         ]);
 
         $formation->save();
@@ -1541,15 +1521,15 @@ class FormationController extends Controller
     public function updateMembresJury(Request $request)
     {
         $request->validate([
-            'membres_jury'              => ['nullable', 'string'],
-            'evaluateur'                => ['required', 'string'],
-            'numero_convention'         => ['required', 'string'],
-            'frais_evaluateur'          => ['required', 'string'],
-            'type_certificat'           => ['nullable', 'string'],
-            'recommandations'           => ['nullable', 'string'],
-            'titre'                     => ['nullable', 'string'],
-            'date_pv'                   => ['required', 'date', 'min:10', 'max:10', 'date_format:Y-m-d'],
-            'date_convention'           => ['required', 'date', 'min:10', 'max:10', 'date_format:Y-m-d'],
+            'membres_jury' => ['nullable', 'string'],
+            'evaluateur' => ['required', 'string'],
+            'numero_convention' => ['required', 'string'],
+            'frais_evaluateur' => ['required', 'string'],
+            'type_certificat' => ['nullable', 'string'],
+            'recommandations' => ['nullable', 'string'],
+            'titre' => ['nullable', 'string'],
+            'date_pv' => ['required', 'date', 'min:10', 'max:10', 'date_format:Y-m-d'],
+            'date_convention' => ['required', 'date', 'min:10', 'max:10', 'date_format:Y-m-d'],
         ]);
 
         $formation = Formation::findOrFail($request->input('id'));
@@ -1583,18 +1563,18 @@ class FormationController extends Controller
         }
 
         $formation->update([
-            "membres_jury"                  =>  $request->input('membres_jury'),
-            "numero_convention"             =>  $request->input('numero_convention'),
-            "frais_evaluateur"              =>  $request->input('frais_evaluateur'),
-            "type_certification"            =>  $request->input('type_certification'),
-            "type_certificat"               =>  $type,
-            "titre"                         =>  $titre,
-            "recommandations"               =>  $request->input('recommandations'),
-            "date_pv"                       =>  $date_pv,
-            "date_convention"               =>  $date_convention,
-            "evaluateurs_id"                =>  $request->input('evaluateur'),
-            "onfpevaluateurs_id"            =>  $request->input('onfpevaluateur'),
-            "referentiels_id"               =>  $referentiel_id,
+            "membres_jury" => $request->input('membres_jury'),
+            "numero_convention" => $request->input('numero_convention'),
+            "frais_evaluateur" => $request->input('frais_evaluateur'),
+            "type_certification" => $request->input('type_certification'),
+            "type_certificat" => $type,
+            "titre" => $titre,
+            "recommandations" => $request->input('recommandations'),
+            "date_pv" => $date_pv,
+            "date_convention" => $date_convention,
+            "evaluateurs_id" => $request->input('evaluateur'),
+            "onfpevaluateurs_id" => $request->input('onfpevaluateur'),
+            "referentiels_id" => $referentiel_id,
         ]);
 
         $formation->save();
@@ -1608,13 +1588,13 @@ class FormationController extends Controller
     {
         $request->validate([
             'observations' => 'required',
-            'string'
+            'string',
         ]);
 
         $individuelle = Individuelle::findOrFail($request->input('id'));
 
         $individuelle->update([
-            "observations"       =>  $request->input('observations'),
+            "observations" => $request->input('observations'),
         ]);
 
         $individuelle->save();
@@ -1628,13 +1608,13 @@ class FormationController extends Controller
     {
         $request->validate([
             'observations' => 'required',
-            'string'
+            'string',
         ]);
 
         $listecollective = Listecollective::findOrFail($request->input('id'));
 
         $listecollective->update([
-            "observations"       =>  $request->input('observations'),
+            "observations" => $request->input('observations'),
         ]);
 
         $listecollective->save();
@@ -1649,9 +1629,11 @@ class FormationController extends Controller
         $date_retrait = date_format(date_create($request->date_retrait), 'd/m/Y');
 
         $request->validate([
-            'date_retrait' => 'required','date', 'min:10', 'max:10', 'date_format:Y-m-d',
+            'date_retrait' => 'required', 'date', 'min:10', 'max:10', 'date_format:Y-m-d',
+            'personne' => 'required',
         ]);
-        if ($request->input('name') == 'moi') {
+
+        if ($request->input('personne') == 'moi') {
             $retrait_diplome = 'le propriétaire le ' . $date_retrait;
         } else {
             $request->validate([
@@ -1663,9 +1645,9 @@ class FormationController extends Controller
                 'string',
                 'observations' => 'nullable',
                 'string',
-                'max:50'
+                'max:50',
             ]);
-            $retrait_diplome = 'retiré par ' . $request->input('name') . ' le ' . $date_retrait . ' n° cin : ' . $request->input('cin');
+            $retrait_diplome = 'retiré par ' . $request->input('personne') . ' le ' . $date_retrait . ' n° cin : ' . $request->input('cin');
         }
 
         $commentaires = $request->input('commentaires');
@@ -1674,11 +1656,10 @@ class FormationController extends Controller
             $retrait_diplome = $retrait_diplome . '; ' . $commentaires;
         }
 
-
         $individuelle = Individuelle::findOrFail($request->input('id'));
 
         $individuelle->update([
-            "retrait_diplome"       =>  $retrait_diplome,
+            "retrait_diplome" => $retrait_diplome,
         ]);
 
         $individuelle->save();
@@ -1693,10 +1674,10 @@ class FormationController extends Controller
         $date_retrait = date_format(date_create($request->date_retrait), 'd/m/Y');
 
         $request->validate([
-            'date_retrait' => 'required',
-            'date',
+            'date_retrait' => 'required', 'date', 'min:10', 'max:10', 'date_format:Y-m-d',
+            'personne' => 'required',
         ]);
-        if ($request->input('name') == 'moi') {
+        if ($request->input('personne') == 'moi') {
             $retrait_diplome = 'le propriétaire le ' . $date_retrait;
         } else {
             $request->validate([
@@ -1708,9 +1689,9 @@ class FormationController extends Controller
                 'string',
                 'observations' => 'nullable',
                 'string',
-                'max:50'
+                'max:50',
             ]);
-            $retrait_diplome = 'retiré par ' . $request->input('name') . ' le ' . $date_retrait . ' n° cin : ' . $request->input('cin');
+            $retrait_diplome = 'retiré par ' . $request->input('personne') . ' le ' . $date_retrait . ' n° cin : ' . $request->input('cin');
         }
 
         $commentaires = $request->input('commentaires');
@@ -1719,11 +1700,10 @@ class FormationController extends Controller
             $retrait_diplome = $retrait_diplome . '; ' . $commentaires;
         }
 
-
         $listecollective = Listecollective::findOrFail($request->input('id'));
 
         $listecollective->update([
-            "retrait_diplome"       =>  $retrait_diplome,
+            "retrait_diplome" => $retrait_diplome,
         ]);
 
         $listecollective->save();
@@ -1744,7 +1724,6 @@ class FormationController extends Controller
         $options = $dompdf->getOptions();
         $options->setDefaultFont('Formation');
         $dompdf->setOptions($options);
-
 
         $dompdf->loadHtml(view('formations.individuelles.fichesuivi', compact(
             'formation',
@@ -1787,7 +1766,6 @@ class FormationController extends Controller
             $options->setDefaultFont('Formation');
             $dompdf->setOptions($options);
 
-
             $dompdf->loadHtml(view('formations.individuelles.pvevaluation', compact(
                 'formation',
                 'title',
@@ -1802,11 +1780,11 @@ class FormationController extends Controller
             $dompdf->render();
 
             /*  $anne = date('d');
-        $anne = $anne . ' ' . date('m');
-        $anne = $anne . ' ' . date('Y');
-        $anne = $anne . ' à ' . date('H') . 'h';
-        $anne = $anne . ' ' . date('i') . 'min';
-        $anne = $anne . ' ' . date('s') . 's'; */
+            $anne = $anne . ' ' . date('m');
+            $anne = $anne . ' ' . date('Y');
+            $anne = $anne . ' à ' . date('H') . 'h';
+            $anne = $anne . ' ' . date('i') . 'min';
+            $anne = $anne . ' ' . date('s') . 's'; */
 
             $name = 'PV Evaluation de la formation en  ' . $formation->name . ', code ' . $formation->code . '.pdf';
 
@@ -1835,7 +1813,6 @@ class FormationController extends Controller
             $options->setDefaultFont('Formation');
             $dompdf->setOptions($options);
 
-
             $dompdf->loadHtml(view('formations.individuelles.pvevaluation-vierge', compact(
                 'formation',
                 'title',
@@ -1850,11 +1827,11 @@ class FormationController extends Controller
             $dompdf->render();
 
             /*  $anne = date('d');
-        $anne = $anne . ' ' . date('m');
-        $anne = $anne . ' ' . date('Y');
-        $anne = $anne . ' à ' . date('H') . 'h';
-        $anne = $anne . ' ' . date('i') . 'min';
-        $anne = $anne . ' ' . date('s') . 's'; */
+            $anne = $anne . ' ' . date('m');
+            $anne = $anne . ' ' . date('Y');
+            $anne = $anne . ' à ' . date('H') . 'h';
+            $anne = $anne . ' ' . date('i') . 'min';
+            $anne = $anne . ' ' . date('s') . 's'; */
 
             $name = 'PV Evaluation de la formation en  ' . $formation->name . ', code ' . $formation->code . '.pdf';
 
@@ -1877,7 +1854,6 @@ class FormationController extends Controller
         $options = $dompdf->getOptions();
         $options->setDefaultFont('Formation');
         $dompdf->setOptions($options);
-
 
         $dompdf->loadHtml(view('formations.collectives.fichesuivicol', compact(
             'formation',
@@ -1912,7 +1888,6 @@ class FormationController extends Controller
             $options->setDefaultFont('Formation');
             $dompdf->setOptions($options);
 
-
             $dompdf->loadHtml(view('formations.collectives.pvevaluationcol', compact(
                 'formation',
                 'title',
@@ -1935,7 +1910,6 @@ class FormationController extends Controller
             return redirect()->back();
         }
     }
-
 
     public function addformationdemandeurscollectives($idformation, $idcollectivemodule, $idlocalite)
     {
@@ -1964,7 +1938,7 @@ class FormationController extends Controller
     public function giveformationdemandeurscollectives($idformation, $idcollectivemodule, $idlocalite, Request $request)
     {
         $request->validate([
-            'listecollectives' => ['required']
+            'listecollectives' => ['required'],
         ]);
 
         $formation = Formation::findOrFail($idformation);
@@ -1977,8 +1951,8 @@ class FormationController extends Controller
             $listecollectiveformations = Listecollective::where('formations_id', $idformation)->get();
             foreach ($listecollectiveformations as $key => $listecollectiveformation) {
                 $listecollectiveformation->update([
-                    "formations_id"      =>  null,
-                    "statut"             =>  'attente',
+                    "formations_id" => null,
+                    "statut" => 'attente',
                 ]);
                 $listecollectiveformation->save();
             }
@@ -1987,17 +1961,17 @@ class FormationController extends Controller
                 $listecollective = Listecollective::findOrFail($listecollective);
 
                 $listecollective->update([
-                    "formations_id"      =>  $idformation,
-                    "statut"             =>  'retenu',
+                    "formations_id" => $idformation,
+                    "statut" => 'retenu',
                 ]);
 
                 $listecollective->save();
             }
 
             /*  $validated_by = new Validationcollective([
-                'validated_id'       =>      Auth::user()->id,
-                'action'             =>      'retenu',
-                'collectives_id'   =>      $listecollective->id
+            'validated_id'       =>      Auth::user()->id,
+            'action'             =>      'retenu',
+            'collectives_id'   =>      $listecollective->id
             ]);
 
             $validated_by->save(); */
@@ -2007,7 +1981,6 @@ class FormationController extends Controller
 
         return redirect()->back();
     }
-
 
     public function lettreEvaluation(Request $request)
     {
@@ -2039,14 +2012,12 @@ class FormationController extends Controller
             // Render the HTML as PDF
             $dompdf->render();
 
-
-
             /*  $anne = date('d');
-        $anne = $anne . ' ' . date('m');
-        $anne = $anne . ' ' . date('Y');
-        $anne = $anne . ' à ' . date('H') . 'h';
-        $anne = $anne . ' ' . date('i') . 'min';
-        $anne = $anne . ' ' . date('s') . 's'; */
+            $anne = $anne . ' ' . date('m');
+            $anne = $anne . ' ' . date('Y');
+            $anne = $anne . ' à ' . date('H') . 'h';
+            $anne = $anne . ' ' . date('i') . 'min';
+            $anne = $anne . ' ' . date('s') . 's'; */
 
             $name = 'Lettre de mission évaluation formation en  ' . $formation->name . ', code ' . $formation->code . '.pdf';
 
@@ -2148,14 +2119,12 @@ class FormationController extends Controller
             // Render the HTML as PDF
             $dompdf->render();
 
-
-
             /*  $anne = date('d');
-        $anne = $anne . ' ' . date('m');
-        $anne = $anne . ' ' . date('Y');
-        $anne = $anne . ' à ' . date('H') . 'h';
-        $anne = $anne . ' ' . date('i') . 'min';
-        $anne = $anne . ' ' . date('s') . 's'; */
+            $anne = $anne . ' ' . date('m');
+            $anne = $anne . ' ' . date('Y');
+            $anne = $anne . ' à ' . date('H') . 'h';
+            $anne = $anne . ' ' . date('i') . 'min';
+            $anne = $anne . ' ' . date('s') . 's'; */
 
             $name = 'Attestation de bonne execution ' . $formation->name . ', code ' . $formation->code . '.pdf';
 
@@ -2181,7 +2150,7 @@ class FormationController extends Controller
             'to_date' => 'required|date',
         ]);
 
-        $now =  Carbon::now()->format('H:i:s');
+        $now = Carbon::now()->format('H:i:s');
 
         $from_date = date_format(date_create($request->from_date), 'd/m/Y');
 
@@ -2249,7 +2218,7 @@ class FormationController extends Controller
             'to_date' => 'required|date',
         ]);
 
-        $now =  Carbon::now()->format('H:i:s');
+        $now = Carbon::now()->format('H:i:s');
 
         $from_date = date_format(date_create($request->from_date), 'd/m/Y');
 
@@ -2259,14 +2228,14 @@ class FormationController extends Controller
             $module = Module::where('name', $request->module)->first();
             $region = Region::where('nom', $request->region)->first();
             $projet = Projet::where('nom', $request->projet)->first();
-            $title_region_module = ' dans la région de ' . $request->region .  ' en ' . $request->module . ', ' . $projet?->type_projet . ' ' . $projet?->sigle;
+            $title_region_module = ' dans la région de ' . $request->region . ' en ' . $request->module . ', ' . $projet?->type_projet . ' ' . $projet?->sigle;
 
             $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
                 ->where('individuelles.statut', 'former')
                 ->where('individuelles.modules_id', 'LIKE', "%{$module?->id}%")
-                ->where('individuelles.regions_id',  $region?->id)
-                ->where('individuelles.projets_id',  $projet?->id)
+                ->where('individuelles.regions_id', $region?->id)
+                ->where('individuelles.projets_id', $projet?->id)
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
                 ->get();
         } elseif (isset($request->region)) {
@@ -2276,7 +2245,7 @@ class FormationController extends Controller
             $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
                 ->where('individuelles.statut', 'former')
-                ->where('individuelles.regions_id',  $region?->id)
+                ->where('individuelles.regions_id', $region?->id)
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
                 ->get();
         } elseif (isset($request->projet)) {
@@ -2286,7 +2255,7 @@ class FormationController extends Controller
             $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
                 ->where('individuelles.statut', 'former')
-                ->where('individuelles.projets_id',  $projet?->id)
+                ->where('individuelles.projets_id', $projet?->id)
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
                 ->get();
         } elseif (isset($request->module)) {
@@ -2345,7 +2314,7 @@ class FormationController extends Controller
             'to_date' => 'required|date',
         ]);
 
-        $now =  Carbon::now()->format('H:i:s');
+        $now = Carbon::now()->format('H:i:s');
 
         $from_date = date_format(date_create($request->from_date), 'd/m/Y');
 
@@ -2432,7 +2401,7 @@ class FormationController extends Controller
             'to_date' => 'required|date',
         ]);
 
-        $now =  Carbon::now()->format('H:i:s');
+        $now = Carbon::now()->format('H:i:s');
 
         $from_date = date_format(date_create($request->from_date), 'd/m/Y');
 
@@ -2441,13 +2410,13 @@ class FormationController extends Controller
         if (isset($request->module) && isset($request->region)) {
             $module = Module::where('name', $request->module)->first();
             $region = Region::where('nom', $request->region)->first();
-            $title_region_module = ' dans la région de ' . $request->region .  ' en ' . $request->module;
+            $title_region_module = ' dans la région de ' . $request->region . ' en ' . $request->module;
 
             $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
                 ->where('individuelles.statut', 'former')
                 ->where('individuelles.modules_id', 'LIKE', "%{$module?->id}%")
-                ->where('individuelles.regions_id',  $region?->id)
+                ->where('individuelles.regions_id', $region?->id)
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
                 ->get();
         } elseif (isset($request->region)) {
@@ -2457,7 +2426,7 @@ class FormationController extends Controller
             $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
                 ->where('individuelles.statut', 'former')
-                ->where('individuelles.regions_id',  $region?->id)
+                ->where('individuelles.regions_id', $region?->id)
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
                 ->get();
         } elseif (isset($request->module)) {
@@ -2512,7 +2481,7 @@ class FormationController extends Controller
         $individuelle = Individuelle::findOrFail($id);
 
         $individuelle->update([
-            'suivi' => 'suivi'
+            'suivi' => 'suivi',
         ]);
 
         $individuelle->save();
@@ -2527,7 +2496,7 @@ class FormationController extends Controller
         $individuelle = Individuelle::findOrFail($id);
 
         $individuelle->update([
-            'suivi' => null
+            'suivi' => null,
         ]);
 
         $individuelle->save();
@@ -2542,7 +2511,7 @@ class FormationController extends Controller
         $formation = Formation::findOrFail($id);
         foreach ($formation->individuelles as $individuelle) {
             $individuelle->update([
-                'suivi' => 'suivi'
+                'suivi' => 'suivi',
             ]);
 
             $individuelle->save();
@@ -2562,7 +2531,7 @@ class FormationController extends Controller
         $individuelle = Individuelle::findOrFail($request->id);
 
         $individuelle->update([
-            'informations_suivi' => $request->informations_suivi
+            'informations_suivi' => $request->informations_suivi,
         ]);
 
         $individuelle->save();
@@ -2577,7 +2546,7 @@ class FormationController extends Controller
         $listecollective = Listecollective::findOrFail($id);
 
         $listecollective->update([
-            'suivi' => 'suivi'
+            'suivi' => 'suivi',
         ]);
 
         $listecollective->save();
@@ -2592,7 +2561,7 @@ class FormationController extends Controller
 
         foreach ($formation->listecollectives as $listecollective) {
             $listecollective->update([
-                'suivi' => 'suivi'
+                'suivi' => 'suivi',
             ]);
 
             $listecollective->save();
@@ -2603,15 +2572,13 @@ class FormationController extends Controller
         return redirect()->back();
     }
 
-
     public function nepasSuivreCol(Request $request, $id)
     {
         $listecollective = Listecollective::findOrFail($id);
 
         $listecollective->update([
-            'suivi' => null
+            'suivi' => null,
         ]);
-
 
         $listecollective->save();
 
@@ -2629,7 +2596,7 @@ class FormationController extends Controller
         $individuelle = Listecollective::findOrFail($request->id);
 
         $individuelle->update([
-            'informations_suivi' => $request->informations_suivi
+            'informations_suivi' => $request->informations_suivi,
         ]);
 
         $individuelle->save();
@@ -2641,16 +2608,16 @@ class FormationController extends Controller
 
     /*     public function reports(Request $request)
     {
-        $title = 'rapports formations';
-        return view('formations.rapports', compact(
-            'title'
-        ));
+    $title = 'rapports formations';
+    return view('formations.rapports', compact(
+    'title'
+    ));
     } */
     public function generateReport(Request $request)
     {
         $this->validate($request, [
-            'annee'     => 'required|numeric',
-            'statut'    => 'required|string',
+            'annee' => 'required|numeric',
+            'statut' => 'required|string',
         ]);
 
         if ($request->statut == 'Tous') {
