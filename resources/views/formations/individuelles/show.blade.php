@@ -77,6 +77,12 @@
 
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
+                                        data-bs-target="#emargement-overview">Émargement
+                                    </button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab"
                                         data-bs-target="#evaluation-overview">Évaluation
                                     </button>
                                 </li>
@@ -788,7 +794,7 @@
                         </div>
                         {{-- Evaluation --}}
                         <div class="tab-content pt-2">
-                            <div class="tab-pane fade module-overview pt-3" id="evaluation-overview">
+                            <div class="tab-pane fade module-overview" id="evaluation-overview">
                                 @isset($module)
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <form method="post"
@@ -823,7 +829,8 @@
                                                             <th>NOM</th>
                                                             <th>Date naissance</th>
                                                             <th>Lieu de naissance</th>
-                                                            <th class="text-center">Note<span class="text-danger mx-1">*</span></th>
+                                                            <th class="text-center">Note<span
+                                                                    class="text-danger mx-1">*</span></th>
                                                             <th class="text-center">Observations</th>
                                                             {{-- <th class="col"><i class="bi bi-gear"></i></th> --}}
                                                         </tr>
@@ -898,6 +905,50 @@
                                 @endisset
                             </div>
                         </div>
+                        {{-- Emargement --}}
+                        <div class="tab-content pt-2">
+                            <div class="tab-pane fade module-overview" id="emargement-overview">
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h1 class="card-title">Émargements</h1>
+                                        <h5 class="card-title">
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#ajouterJours{{ $formation->id }}">ajouter
+                                            </button>
+                                        </h5>
+                                    </div>
+                                    <div class="row g-3">
+                                        <table class="table table-bordered table-hover datatables"
+                                            id="table-evaluation">
+                                            <thead>
+                                                <tr>
+                                                    <th>N°</th>
+                                                    <th>Jours</th>
+                                                    <th>Date</th>
+                                                    <th>Observations</th>
+                                                    <th class="col"><i class="bi bi-gear"></i></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php $i = 1; ?>
+                                                @foreach ($emargements as $emargement)
+                                                    <tr>
+                                                        <td>{{ $i++ }}</td>
+                                                        <td>{{ $emargement->jour }}</td>
+                                                        <td>{{ $emargement->date->format('d/m/Y') }}</td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         {{-- Retrait attestation --}}
                         <div class="tab-content pt-2">
                             <div class="tab-pane fade attestation-overview pt-1" id="retrait-attestation-overview">
@@ -1116,7 +1167,8 @@
                         @enderror
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-secondary btn-sm"
+                            data-bs-dismiss="modal">Fermer</button>
                         <button type="submit" class="btn btn-primary btn-sm"><i
                                 class="bi bi-arrow-right-circle"></i>
                             Valider</button>
@@ -1416,6 +1468,7 @@
             </div>
         </div>
     </div>
+
     {{-- Membres du jury --}}
     <div class="modal fade" id="EditMembresJuryModal{{ $formation->id }}" tabindex="-1" role="dialog"
         aria-labelledby="EditMembresJuryModalLabel{{ $formation->id }}" aria-hidden="true">
@@ -1679,6 +1732,61 @@
             </div>
         </div>
     </div>
+
+    {{-- Jours formation --}}
+    <div class="modal fade" id="ajouterJours{{ $formation->id }}" tabindex="-1" role="dialog"
+        aria-labelledby="ajouterJoursLabel{{ $formation->id }}" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <form method="post" action="{{ route('formations.ajouterJours') }}" enctype="multipart/form-data"
+                    class="row g-3">
+                    @csrf
+                    @method('patch')
+                    <div class="card-header text-center bg-gradient-default">
+                        <h1 class="h4 text-black mb-0">AJOUTER JOUR</h1>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="idformation" value="{{ $formation->id }}">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                <div class="mb-3">
+                                    <label>Jour<span class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="jour" value="{{ old('jour') }}"
+                                        class="form-control form-control-sm @error('jour') is-invalid @enderror"
+                                        id="jour" placeholder="Jour 1">
+                                    @error('jour')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                <div class="mb-3">
+                                    <label>Date<span class="text-danger mx-1">*</span></label>
+                                    <input type="date" name="date" value="{{ old('date') }}"
+                                        class="datepicker form-control form-control-sm @error('date') is-invalid @enderror"
+                                        id="date" placeholder="jj/mm/aaaa">
+                                    @error('date')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn btn-sm"
+                            data-bs-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-primary btn btn-sm"><i class="bi bi-printer"></i>
+                            Ajouter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </section>
 @endsection
 {{-- @push('scripts')

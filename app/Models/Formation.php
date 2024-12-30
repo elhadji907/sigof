@@ -488,4 +488,9 @@ class Formation extends Model
 	{
 		return $this->hasMany(Listecollective::class, 'formations_id');
 	}
+
+	public function emargements()
+    {
+        return $this->hasMany(Emargement::class, 'formations_id');
+    }
 }

@@ -263,6 +263,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::patch('/updateObservations', [FormationController::class, 'updateObservations'])->name('individuelles.updateObservations');
         Route::patch('/updateAgentSuivi', [FormationController::class, 'updateAgentSuivi'])->name('formations.updateAgentSuivi');
         Route::patch('/updateMembresJury', [FormationController::class, 'updateMembresJury'])->name('formations.updateMembresJury');
+        Route::patch('/ajouterJours', [FormationController::class, 'ajouterJours'])->name('formations.ajouterJours');
         Route::patch('/updateObservationsCollective', [FormationController::class, 'updateObservationsCollective'])->name('listecollectives.updateObservationsCollective');
         Route::patch('/updateAttestations', [FormationController::class, 'updateAttestations'])->name('individuelles.updateAttestations');
         Route::patch('/updateAttestationsCol', [FormationController::class, 'updateAttestationsCol'])->name('individuelles.updateAttestationsCol');

@@ -25,6 +25,7 @@ use App\Models\Statut;
 use App\Models\TypesFormation;
 use App\Models\Validationformation;
 use App\Models\Validationindividuelle;
+use App\Models\Emargement;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -584,6 +585,7 @@ class FormationController extends Controller
         $operateur = $formation->operateur;
         $module = $formation->module;
         $ingenieur = $formation->ingenieur;
+        $emargements = $formation->emargements->unique('jour');
 
         $count_demandes = count($formation->individuelles);
 
@@ -637,6 +639,7 @@ class FormationController extends Controller
                 "collectiveModule",
                 "collectiveModuleCheck",
                 "referentiels",
+                "emargements",
             )
         );
     }
@@ -2642,5 +2645,30 @@ class FormationController extends Controller
         $conventions = Formation::where('numero_convention', '!=', null)->get();
 
         return view('formations.convention', compact('conventions'));
+    }
+
+    public function ajouterJours(Request $request)
+    {
+
+        $formation = Formation::findOrFail($request->idformation);
+
+        $this->validate($request, [
+            'jour' => "required|string|unique:emargements,jour,{$formation->id}",
+            'date' => 'required|date|min:10|max:10|date_format:Y-m-d',
+        ]);
+
+        foreach ($formation->individuelles as $key => $individuelle) {
+            $emargement = Emargement::create([
+                'jour' => $request->jour,
+                'date' => $request->date,
+                'formations_id' => $request->idformation,
+                'individuelles_id' => $individuelle->id,
+
+            ]);
+        }
+        
+        Alert::success('Enregistrement réussi !');
+
+        return redirect()->back();
     }
 }
