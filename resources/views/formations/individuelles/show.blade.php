@@ -780,7 +780,6 @@
                                                     @endforeach
                                                 </tbody>
                                             </table>
-                                            </table>
                                         </div>
                                     @endisset
                                 </div>

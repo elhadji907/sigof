@@ -90,8 +90,8 @@
                                             @endforeach --}}
                                         </td>
                                         <td class="text-center">
-                                            <a href="{{ route('demandesIndividuelle') }}" class="btn btn-success btn-sm"
-                                                title="voir"><i class="bi bi-eye"></i></a>
+                                            <a href="{{ route('demandesIndividuelle') }}" title="voir"><i
+                                                    class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
                                     <tr>
@@ -110,8 +110,8 @@
                                             @endforeach --}}
                                         </td>
                                         <td class="text-center">
-                                            <a href="{{ route('demandesCollective') }}" class="btn btn-success btn-sm"
-                                                title="voir"><i class="bi bi-eye"></i></a>
+                                            <a href="{{ route('demandesCollective') }}" title="voir"><i
+                                                    class="bi bi-eye"></i></a>
                                         </td>
                                     </tr>
                                     {{-- <tr>
@@ -122,6 +122,13 @@
                                                     class="bi bi-eye"></i></a>
                                         </td>
                                     </tr> --}}
+                                    <tr>
+                                        <td class="text-primary">Formations</td>
+                                        <td class="text-center">{{ $formations }}</td>                                        
+                                        <td class="text-center">
+                                            <a href="{{ route('mesformations') }}" title="voir"><i class="bi bi-eye"></i></a>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
 
@@ -186,7 +193,8 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#files">Fichiers</button>
+                                    <button class="nav-link" data-bs-toggle="tab"
+                                        data-bs-target="#files">Fichiers</button>
                                 </li>
 
                             </ul>

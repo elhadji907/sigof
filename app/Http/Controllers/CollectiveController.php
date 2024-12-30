@@ -499,7 +499,7 @@ class CollectiveController extends Controller
             return redirect()->back();
         }
     }
-    public function demandesCollective()
+    public function demandesCollective(Request $request)
     {
         $departements = Departement::orderBy("created_at", "desc")->get();
         $modules = Module::orderBy("created_at", "desc")->get();

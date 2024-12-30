@@ -61,6 +61,8 @@ class ProfileController extends Controller
             ->where('projets_id', null)
             ->get();
 
+        $formations = $individuelles->where('formations_id', '!=', null)->count();
+
         $collectives = Collective::where('users_id', $user->id)
             ->get();
 
@@ -97,6 +99,7 @@ class ProfileController extends Controller
                     'projets' => $projets,
                     'count_projets' => $count_projets,
                     'individuelles' => $individuelles,
+                    'formations' => $formations,
                     'collectives' => $collectives,
                     'files' => $files,
                     'user_files' => $user_files,

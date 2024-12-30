@@ -248,6 +248,8 @@ Route::group(['middleware' => ['XSS']], function () {
 
         Route::get('/demandesCollectives', [CollectiveController::class, 'demandesCollective'])->name('demandesCollective');
 
+        Route::get('/mesformations', [IndividuelleController::class, 'mesformations'])->name('mesformations');
+
         Route::post('/autocomplete/fetch', [OperateurController::class, 'fetch'])->name('autocomplete.fetch');
         Route::post('/autocomplete/fetchModuleOperateur', [OperateurController::class, 'fetchModuleOperateur'])->name('autocomplete.fetchModuleOperateur');
 

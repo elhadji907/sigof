@@ -954,7 +954,7 @@ class IndividuelleController extends Controller
         return view("individuelles.validationsrejetmessage", compact('individuelle'));
     }
 
-    public function demandesIndividuelle()
+    public function demandesIndividuelle(Request $request)
     {
         $departements = Departement::orderBy("created_at", "desc")->get();
         $modules = Module::orderBy("created_at", "desc")->get();
@@ -1323,5 +1323,16 @@ class IndividuelleController extends Controller
             "individuelles.feminin",
             compact('individuelles', 'departements', 'modules', 'title')
         );
+    }
+
+    public function mesformations(Request $request)
+    {
+        $user = Auth::user();
+
+        $individuelles = $user->individuelles->where('formations_id', '!=', null);
+
+        $formation_count = $individuelles->count();
+
+        return view("individuelles.show-formation", compact("formation_count", "individuelles"));
     }
 }
