@@ -186,9 +186,9 @@
                     <td colspan="2"><b>{{ __('Code: ') }}</b> {{ $formation?->code }}
                     </td>
                     <td colspan="3"><b>{{ __('Niveau qualification: ') }}</b>
-                        {{ $formation?->niveau_qualification }}
+                        {{ $formation?->type_certification }}
                     </td>
-                    <td colspan="6"><b>{{ __('Titre: ') }}</b> {{ $formation?->titre }}
+                    <td colspan="6"><b>{{ __('Titre: ') }}</b> {{ $formation?->titre ?? ($formation?->referentiel?->titre ?? old('titre')) }}
                     </td>
                 </tr>
                 <tr class="heading">

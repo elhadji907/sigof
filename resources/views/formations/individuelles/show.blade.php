@@ -823,8 +823,8 @@
                                                             <th>NOM</th>
                                                             <th>Date naissance</th>
                                                             <th>Lieu de naissance</th>
-                                                            <th>Note<span class="text-danger mx-1">*</span></th>
-                                                            <th>Observations</th>
+                                                            <th class="text-center">Note<span class="text-danger mx-1">*</span></th>
+                                                            <th class="text-center">Observations</th>
                                                             {{-- <th class="col"><i class="bi bi-gear"></i></th> --}}
                                                         </tr>
                                                     </thead>
@@ -841,7 +841,7 @@
                                                                 <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}
                                                                 </td>
                                                                 <td>{{ $individuelle?->user->lieu_naissance }}</td>
-                                                                <td><input type="number"
+                                                                <td class="text-center"><input type="number"
                                                                         value="{{ $individuelle?->note_obtenue }}"
                                                                         name="notes[]" placeholder="note" step="0.01"
                                                                         min="0" max="20">
@@ -936,8 +936,8 @@
                                                         <th>Lieu de naissance</th>
                                                         <th class="text-center">Note<span
                                                                 class="text-danger mx-1">*</span></th>
-                                                        <th>Diplôme</th>
-                                                        <th class="col"><i class="bi bi-gear"></i></th>
+                                                        <th class="text-center">Diplôme</th>
+                                                        <th class="text-center"><i class="bi bi-gear"></i></th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
