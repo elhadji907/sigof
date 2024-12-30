@@ -345,9 +345,9 @@
                                         <label for="date_quitus" class="form-label">Date visa quitus<span
                                                 class="text-danger mx-1">*</span></label>
 
-                                        <input type="text" name="date_quitus" value="{{ old('date_quitus') }}"
-                                            class="form-control form-control-sm @error('date_quitus') is-invalid @enderror"
-                                            id="date_quitus" placeholder="dd-mm-aaaa">
+                                        <input type="date" name="date_quitus" value="{{ old('date_quitus') }}"
+                                            class="datepicker form-control form-control-sm @error('date_quitus') is-invalid @enderror"
+                                            id="date_quitus" placeholder="jj/mm/aaaa">
                                         @error('date_quitus')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -647,10 +647,10 @@
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="date_quitus" class="form-label">Date visa quitus<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="date_quitus"
-                                            value="{{ $operateur?->debut_quitus?->format('d-m-Y') ?? old('date_quitus') }}"
-                                            class="form-control form-control-sm @error('date_quitus') is-invalid @enderror"
-                                            id="date_quitus" placeholder="dd-mm-aaaa">
+                                        <input type="date" name="date_quitus"
+                                            value="{{ $operateur?->debut_quitus?->format('Y-m-d') ?? old('date_quitus') }}"
+                                            class="datepicker form-control form-control-sm @error('date_quitus') is-invalid @enderror"
+                                            id="date_quitus" placeholder="jj/mm/aaaa">
                                         @error('date_quitus')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>

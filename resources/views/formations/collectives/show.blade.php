@@ -1878,14 +1878,14 @@
                             <option value="{{ $formation?->attestation ?? old('statut') }}">
                                 {{ $formation?->attestation ?? old('statut') }}
                             </option>
-                            <option value="disponibles">
-                                disponibles
-                            </option>
                             <option value="En cours">
                                 En cours
                             </option>
-                            <option value="retirés">
-                                retirers
+                            <option value="disponible">
+                                disponible
+                            </option>
+                            <option value="retiré">
+                                retiré
                             </option>
                         </select>
                         @error('statut')

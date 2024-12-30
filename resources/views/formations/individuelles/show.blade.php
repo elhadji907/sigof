@@ -1099,14 +1099,14 @@
                             <option value="{{ $formation?->attestation ?? old('statut') }}">
                                 {{ $formation?->attestation ?? old('statut') }}
                             </option>
-                            <option value="disponibles">
-                                disponibles
-                            </option>
                             <option value="En cours">
                                 En cours
                             </option>
-                            <option value="retirés">
-                                retirers
+                            <option value="disponible">
+                                disponible
+                            </option>
+                            <option value="retiré">
+                                retiré
                             </option>
                         </select>
                         @error('statut')
@@ -1116,7 +1116,7 @@
                         @enderror
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
                         <button type="submit" class="btn btn-primary btn-sm"><i
                                 class="bi bi-arrow-right-circle"></i>
                             Valider</button>
@@ -1259,7 +1259,7 @@
                                     <label for="date_retrait" class="form-label">Date retrait<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="date" name="date_retrait"
-                                        value="{{ date('d-m-Y') ?? old('date_retrait') }}"
+                                        value="{{ date('Y-m-d') ?? old('date_retrait') }}"
                                         class="datepicker form-control form-control-sm @error('date_retrait') is-invalid @enderror"
                                         id="date_retrait" placeholder="jj/mm/aaaa">
                                     @error('date_retrait')
@@ -1396,7 +1396,7 @@
                         </div>
                         <div class="form-floating mb-3">
                             <input type="date" name="date_suivi"
-                                value="{{ $formation?->date_suivi?->format('d-m-Y') ?? old('date_suivi') }}"
+                                value="{{ $formation?->date_suivi?->format('Y-m-d') ?? old('date_suivi') }}"
                                 class="datepicker form-control form-control-sm @error('date_suivi') is-invalid @enderror"
                                 id="date_suivi" placeholder="jj/mm/aaaa">
                             @error('date_suivi')
@@ -1457,7 +1457,7 @@
                                 <div class="mb-3">
                                     <label>Date convention<span class="text-danger mx-1">*</span></label>
                                     <input type="date" name="date_convention"
-                                        value="{{ $formation?->date_convention?->format('d-m-Y') ?? old('date_convention') }}"
+                                        value="{{ $formation?->date_convention?->format('Y-m-d') ?? old('date_convention') }}"
                                         class="datepicker form-control form-control-sm @error('date_convention') is-invalid @enderror"
                                         id="date_convention" placeholder="jj/mm/aaaa">
                                     @error('date_convention')
@@ -1471,7 +1471,7 @@
                                 <div class="mb-3">
                                     <label>Date évaluation<span class="text-danger mx-1">*</span></label>
                                     <input type="date" name="date_pv"
-                                        value="{{ $formation?->date_pv?->format('d-m-Y') ?? old('date_pv') }}"
+                                        value="{{ $formation?->date_pv?->format('Y-m-d') ?? old('date_pv') }}"
                                         class="datepicker form-control form-control-sm @error('date_pv') is-invalid @enderror"
                                         id="date_pv" placeholder="jj/mm/aaaa">
                                     @error('date_pv')

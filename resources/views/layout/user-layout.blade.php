@@ -139,6 +139,14 @@
             border-radius: 25% 10%;
         }
 
+        .cours {
+            background-color: #6C757D;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+        }
+
         .accepter {
             background-color: #0D6EFD;
             color: white;
@@ -158,6 +166,15 @@
         }
 
         .new {
+            background-color: #0DCAF0;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
+        .retiré {
             background-color: #0DCAF0;
             color: white;
             padding: 4px 8px;
@@ -203,6 +220,15 @@
         }
 
         .ouvert {
+            background-color: #0DCAF0;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
+        .disponible {
             background-color: #0DCAF0;
             color: white;
             padding: 4px 8px;

@@ -170,8 +170,8 @@
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-4 col-lg-4">
-                                                <div class="label">Date délivrance quitus</div>
-                                                <div>{{ $operateur?->debut_quitus?->diffForHumans() }}</div>
+                                                <div class="label">Durée quitus</div>
+                                                <div>{{ $operateur?->debut_quitus?->diffForHumans(['parts' => 3, 'join' => ', ']) }}</div>
                                             </div>
                                         </form>
                                         <form method="post" action="#" enctype="multipart/form-data" class="row">

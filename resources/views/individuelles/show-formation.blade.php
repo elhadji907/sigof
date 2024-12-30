@@ -30,7 +30,7 @@
                                         <th width='5%'>Modules</th>
                                         <th width='17%'>Type certification</th>
                                         <th width='5%' class="text-center">Statut</th>
-                                        <th width='8%'>Diplômes</th>
+                                        <th width='8%' class="text-center">Diplômes</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -46,13 +46,14 @@
                                             <td class="text-center"><a><span
                                                         class="{{ $individuelle->formation?->statut }}">{{ $individuelle->formation?->statut }}</span></a>
                                             </td>
-                                            <td></td>
+                                            <td class="text-center"><span
+                                                class="{{ $individuelle->formation?->attestation }}">{{ $individuelle?->formation?->attestation }}</span></td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         @else
-                            <div class="alert alert-info">Vous n'avez aucune demande individuelle pour le moment !!
+                            <div class="alert alert-info">Vous n'avez bénéficié d'aucune formation pour le moment !!
                             </div>
                         @endif
                     </div>

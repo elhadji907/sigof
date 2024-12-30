@@ -41,7 +41,6 @@
                                     !empty(Auth::user()?->username) &&
                                     !empty(Auth::user()?->ninea) &&
                                     !empty(Auth::user()?->rccm) &&
-                                    !empty(Auth::user()?->email_responsable) &&
                                     !empty(Auth::user()?->fonction_responsable) &&
                                     !empty(Auth::user()?->email))
                                 <button type="button" class="btn btn-info btn-sm">
@@ -59,10 +58,10 @@
                                 !empty(Auth::user()?->username) &&
                                 !empty(Auth::user()?->ninea) &&
                                 !empty(Auth::user()?->rccm) &&
-                                !empty(Auth::user()?->email_responsable) &&
                                 !empty(Auth::user()?->fonction_responsable) &&
                                 !empty(Auth::user()?->email))
-                            <h5 class="card-title">Aucune demande operateur pour le moment !</h5>
+                            <div class="alert alert-info">Vous n'avez aucune demande agrément pour le moment !!
+                            </div>
                         @else
                             <h5 class="card-title">Informations personnelles : <a href="{{ route('profil') }}"><span
                                         class="badge bg-warning text-white">Incomplètes</span></a>, cliquez <a
