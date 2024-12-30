@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Formations')
+@section('title', 'SIGOF - Formations')
 @section('space-work')
 
     <div class="pagetitle">
@@ -171,10 +171,8 @@
                                                     class="bi bi-three-dots"></i></a>
                                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                 <li>
-                                                    <button type="button" class="dropdown-item btn btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#generate_rapportFormation"></i>Rechercher
-                                                        plus</button>
+                                                    <button type="button" class="dropdown-item btn btn-sm" data-bs-toggle="modal"
+                                                        data-bs-target="#generate_rapportFormation"></i>Générer suivi-convention</button>
                                                 </li>
                                             </ul>
                                         </div>
@@ -966,7 +964,7 @@
         new DataTable('#table-formations', {
             layout: {
                 topStart: {
-                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                    buttons: ['excel', 'pdf', 'print'],
                 }
             },
             "order": [

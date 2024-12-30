@@ -71,6 +71,7 @@
                 </ul>
             </li>
         @endcan
+        
         @can('demande-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#demande-nav" data-bs-toggle="collapse" href="#">
@@ -105,6 +106,7 @@
                 </ul>
             </li>
         @endcan
+
         @can('demandeur-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#demandeurs-nav" data-bs-toggle="collapse" href="#">
@@ -116,7 +118,6 @@
                             <span>Individuelles</span>
                         </a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ route('demandesCollective') }}">
                             <span>Collectives</span>
@@ -125,6 +126,7 @@
                 </ul>
             </li>
         @endcan
+
         @can('devenir-operateur-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#demandeurs-operateur-nav" data-bs-toggle="collapse"
@@ -141,6 +143,7 @@
                 </ul>
             </li>
         @endcan
+
         @can('operateur-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#operateur-nav" data-bs-toggle="collapse" href="#">
@@ -176,10 +179,10 @@
                             </a>
                         </li>
                     @endcan
-
                 </ul>
             </li>
         @endcan
+
         @can('formation-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#formations-nav" data-bs-toggle="collapse" href="#">
@@ -187,7 +190,6 @@
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="formations-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('formations') }}">
                             <span>Formations</span>
@@ -200,6 +202,7 @@
                             </a>
                         </li>
                     @endcan
+
                     @can('evaluateur-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('evaluateurs') }}">
@@ -207,6 +210,7 @@
                             </a>
                         </li>
                     @endcan
+
                     @can('evaluateur-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('onfpevaluateurs') }}">
@@ -214,6 +218,7 @@
                             </a>
                         </li>
                     @endcan
+
                     @can('formation-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ route('showConventions') }}">
@@ -236,6 +241,7 @@
                             <span>Localités</span>
                         </a>
                     </li>
+
                     @can('region-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('regions') }}">
@@ -264,13 +270,13 @@
                 </ul>
             </li>
         @endcan
+
         @can('employe-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#employes-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-people"></i><span>Gestion employés</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="employes-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('/employes') }}">
                             <span>Employés</span>
@@ -283,6 +289,7 @@
                             </a>
                         </li>
                     @endcan
+
                     @can('categorie-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('/categories') }}">
@@ -290,6 +297,7 @@
                             </a>
                         </li>
                     @endcan
+
                     @can('fonction-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('/fonctions') }}">
@@ -297,6 +305,7 @@
                             </a>
                         </li>
                     @endcan
+
                     @can('loi-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('/lois') }}">
@@ -304,6 +313,7 @@
                             </a>
                         </li>
                     @endcan
+
                     @can('decret-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('/decrets') }}">
@@ -311,6 +321,7 @@
                             </a>
                         </li>
                     @endcan
+
                     @can('pv-recrutement-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('/procesverbals') }}">
@@ -318,6 +329,7 @@
                             </a>
                         </li>
                     @endcan
+
                     @can('decision')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('/decisions') }}">
@@ -325,6 +337,7 @@
                             </a>
                         </li>
                     @endcan
+
                     @can('article-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('/articles') }}">
@@ -332,6 +345,7 @@
                             </a>
                         </li>
                     @endcan
+
                     @can('nommination-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('/nomminations') }}">
@@ -339,10 +353,10 @@
                             </a>
                         </li>
                     @endcan
-
                 </ul>
             </li>
         @endcan
+
         @can('module-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#modules-nav" data-bs-toggle="collapse" href="#">
@@ -373,6 +387,7 @@
                 </ul>
             </li>
         @endcan
+
         @can('projet-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ url('projets') }}">
@@ -381,6 +396,7 @@
                 </a>
             </li>
         @endcan
+
         @can('contact-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ url('contacts') }}">
@@ -389,6 +405,7 @@
                 </a>
             </li>
         @endcan
+
         @can('antenne-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ url('antennes') }}">
@@ -397,6 +414,7 @@
                 </a>
             </li>
         @endcan
+
         @can('rapport-suivi-formes-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#suivi-formes-nav" data-bs-toggle="collapse"
@@ -418,6 +436,7 @@
                 </ul>
             </li>
         @endcan
+
         @can('rapport-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#rapport-nav" data-bs-toggle="collapse" href="#">
@@ -464,6 +483,7 @@
                             </a>
                         </li>
                     @endcan
+
                     @can('rapport-depart-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ route('departs.rapport') }}">
@@ -507,6 +527,7 @@
                 </ul>
             </li>
         @endcan
+
         @can('file-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('files.index') }}">
@@ -514,6 +535,7 @@
                 </a>
             </li>
         @endcan
+
         @can('convention-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('conventions.index') }}">
@@ -521,6 +543,7 @@
                 </a>
             </li>
         @endcan
+
         @can('referentiel-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ route('referentiels.index') }}">
@@ -537,7 +560,7 @@
                 </a>
             </li>
         @endcan
-        
+
         @can('role-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#autorisation-nav" data-bs-toggle="collapse"
@@ -562,5 +585,4 @@
             </li>
         @endcan
     </ul>
-
 </aside>

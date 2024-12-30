@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Liste des permissions')
+@section('title', 'SIGOF - Liste des permissions')
 @section('space-work')
     <div class="pagetitle">
         <nav>
