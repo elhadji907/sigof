@@ -1,3 +1,4 @@
+@can('file-show')
 @extends('layout.user-layout')
 @section('title', 'ONFP - Liste des fichiers')
 @section('space-work')
@@ -268,3 +269,4 @@
         });
     </script>
 @endpush
+@endcan
