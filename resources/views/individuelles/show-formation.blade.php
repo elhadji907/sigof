@@ -24,11 +24,10 @@
                                 <thead>
                                     <tr>
                                         <th width='6%' class="text-center">Code</th>
-                                        <th width='15%'>Type formation</th>
                                         <th>Bénéficiaires</th>
                                         <th width='15%'>Localité</th>
-                                        <th width='5%'>Modules</th>
-                                        <th width='17%'>Type certification</th>
+                                        <th width='20%'>Modules</th>
+                                        <th width='10%'>Type certification</th>
                                         <th width='5%' class="text-center">Statut</th>
                                         <th width='8%' class="text-center">Diplômes</th>
                                     </tr>
@@ -38,7 +37,6 @@
                                     @foreach ($individuelles as $individuelle)
                                         <tr>
                                             <td style="text-align: center">{{ $individuelle?->formation?->code }}</td>
-                                            <td>{{ $individuelle->formation->types_formation?->name }}</td>
                                             <td>{{ $individuelle->formation?->name }}</td>
                                             <td>{{ $individuelle->formation->departement?->region?->nom }}</td>
                                             <td>{{ $individuelle->formation?->module?->name }}</td>

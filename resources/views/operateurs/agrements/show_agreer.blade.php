@@ -39,18 +39,43 @@
                                         <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                 class="bi bi-three-dots"></i></a>
                                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                            <li>
-                                                <form action="{{ route('lettreAgrement') }}" method="post" target="_blank">
-                                                    @csrf
-                                                    <input type="hidden" name="id"
-                                                        value="{{ $commissionagrement->id }}">
-                                                    <input type="hidden" name="value2" value="50">
-                                                    <input type="hidden" name="value1" value="0">
-                                                    <button type="submit" class="dropdown-item btn btn-sm">De 01 à
-                                                        50</button>
-                                                </form>
-                                            </li>
-                                            <li>
+                                            @if (!empty($decoupage))
+                                                <?php $i = 1; ?>
+                                                <?php $value_1 = 0; ?>
+                                                <?php $value_2 = 50; ?>
+                                                @foreach ($operateurs as $operateur)
+                                                    <li>
+                                                        <form action="{{ route('lettreAgrement') }}" method="post"
+                                                            target="_blank">
+                                                            @csrf
+                                                            <input type="hidden" name="id"
+                                                                value="{{ $commissionagrement->id }}">
+                                                            <input type="hidden" name="value2"
+                                                                value="{{ $value_2 }}">
+                                                            <input type="hidden" name="value1"
+                                                                value="{{ $value_1 }}">
+                                                            <button type="submit" class="dropdown-item btn btn-sm">Lettre
+                                                                agrément {{ $i++ }}</button>
+                                                        </form>
+                                                    </li>
+                                                    <?php $value_1 = $value_1 + 50; ?>
+                                                    <?php $value_2 = $value_2 + 50; ?>
+                                                @endforeach
+                                            @else
+                                                <li>
+                                                    <form action="{{ route('lettreAgrement') }}" method="post"
+                                                        target="_blank">
+                                                        @csrf
+                                                        <input type="hidden" name="id"
+                                                            value="{{ $commissionagrement->id }}">
+                                                        <input type="hidden" name="value2" value="50">
+                                                        <input type="hidden" name="value1" value="0">
+                                                        <button type="submit" class="dropdown-item btn btn-sm">Lettres
+                                                            agréments</button>
+                                                    </form>
+                                                </li>
+                                            @endif
+                                            {{-- <li>
                                                 <form action="{{ route('lettreAgrement') }}" method="post" target="_blank">
                                                     @csrf
                                                     <input type="hidden" name="id"
@@ -84,7 +109,7 @@
                                                     <button type="submit" class="dropdown-item btn btn-sm">De 150 à
                                                         {{ count($commissionagrement->operateurs) }}</button>
                                                 </form>
-                                            </li>
+                                            </li> --}}
                                             {{-- <li>
                                                 <form action="{{ route('lettreAgrement') }}" method="post"
                                                     target="_blank">

@@ -109,7 +109,7 @@
         <b>REPUBLIQUE DU SENEGAL<br></b>
         Un Peuple - Un But - Une Foi<br>
         <b>********<br>
-            MINISTERE DE LA FORMATION PROFESSIONNELLE<br>
+            MINISTERE DE LA FORMATION PROFESSIONNELLE ET TECHNIQUE<br>
             ********<br>
             <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/logo-onfp.jpg'))) }}"
                 style="width: 100%; max-width: 300px" />
@@ -117,7 +117,7 @@
     </h6>
     <h4 style="text-align: center;">FICHE DE SYNTHESE DU DOSSIER D'AGREMENT
         {{ 'DU ' . $commission?->date?->format('d/m/Y') }}</h4>
-    @foreach ($commission?->operateurs as $operateur)
+    @foreach ($operateurs as $operateur)
         <div class="invoice-box">
             <table class="table table-responsive">
                 <thead>

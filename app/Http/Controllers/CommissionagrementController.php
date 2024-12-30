@@ -16,27 +16,28 @@ class CommissionagrementController extends Controller
     public function index()
     {
         $commissionagrements = Commissionagrement::get();
+
         return view('operateurs.commissionagrements.index', compact('commissionagrements'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'commission'    =>  'required|string|unique:commissionagrements,commission,except,id',
-            'session'       =>  'required|string',
-            'annee'         =>  'required|string',
-            'description'   =>  'nullable|string',
-            'lieu'          =>  'nullable|string',
+            'commission' => 'required|string|unique:commissionagrements,commission,except,id',
+            'session' => 'required|string',
+            'annee' => 'required|string',
+            'description' => 'nullable|string',
+            'lieu' => 'nullable|string',
 
         ]);
 
         $commissionagrement = new Commissionagrement([
 
-            'commission'    =>  $request->input('commission'),
-            'session'       =>  $request->input('session'),
-            'description'   =>  $request->input('description'),
-            'lieu'          =>  $request->input('lieu'),
-            'annee'         =>  $request->input('annee'),
+            'commission' => $request->input('commission'),
+            'session' => $request->input('session'),
+            'description' => $request->input('description'),
+            'lieu' => $request->input('lieu'),
+            'annee' => $request->input('annee'),
 
         ]);
 
@@ -49,23 +50,23 @@ class CommissionagrementController extends Controller
     public function update(Request $request, $id)
     {
         $commissionagrement = Commissionagrement::findOrFail($id);
-        
+
         $request->validate([
-            'commission'    =>  ["required", "string", "unique:commissionagrements,commission,{$id}"],
-            'session'       =>  'required|string',
-            'date'          =>  'nullable|date',
-            'lieu'          =>  'nullable|string',
-            'annee'         =>  'required|string',
+            'commission' => ["required", "string", "unique:commissionagrements,commission,{$id}"],
+            'session' => 'required|string',
+            'date' => 'nullable|date',
+            'lieu' => 'nullable|string',
+            'annee' => 'required|string',
 
         ]);
 
         $commissionagrement->update([
-            'commission'    =>  $request->input('commission'),
-            'session'       =>  $request->input('session'),
-            'date'          =>  $request->input('date'),
-            'description'   =>  $request->input('description'),
-            'lieu'          =>  $request->input('lieu'),
-            'annee'         =>  $request->input('annee'),
+            'commission' => $request->input('commission'),
+            'session' => $request->input('session'),
+            'date' => $request->input('date'),
+            'description' => $request->input('description'),
+            'lieu' => $request->input('lieu'),
+            'annee' => $request->input('annee'),
 
         ]);
 
@@ -80,34 +81,49 @@ class CommissionagrementController extends Controller
     {
         $commissionagrement = Commissionagrement::findOrFail($id);
 
-        $operateurs = Operateur::where('commissionagrements_id', $commissionagrement->id)
+        $operateurs = Operateur::where('commissionagrements_id', $id)
             ->where('statut_agrement', '!=', 'non retenu')
             ->get();
 
-        $operateurs_agreer_count = Operateur::where('commissionagrements_id', $commissionagrement->id)
+        $operateur_count = $operateurs->count();
+
+        if (!empty($operateur_count) && $operateur_count > 50) {
+            $decoupage = ($operateur_count / 50);
+        } else {
+            $decoupage = null;
+        }
+
+        $operateurs_agreer_count = Operateur::where('commissionagrements_id', $id)
             ->where('statut_agrement', 'agréer')
             ->count();
 
-        $operateurs_reserve_count = Operateur::where('commissionagrements_id', $commissionagrement->id)
+        $operateurs_reserve_count = Operateur::where('commissionagrements_id', $id)
             ->where('statut_agrement', 'sous réserve')
             ->count();
 
-        $operateurs_rejeter_count = Operateur::where('commissionagrements_id', $commissionagrement->id)
+        $operateurs_rejeter_count = Operateur::where('commissionagrements_id', $id)
             ->where('statut_agrement', 'rejeter')
             ->count();
 
         /*  $operateurAgrement = DB::table('operateurs')
-            ->where('commissionagrements_id', $commissionagrement->id)
-            ->pluck('id', 'id')
-            ->all();
+        ->where('commissionagrements_id', $commissionagrement->id)
+        ->pluck('id', 'id')
+        ->all();
 
         $operateurAgrementCheck = DB::table('operateurs')
-            ->where('commissionagrements_id', '!=', null)
-            ->where('commissionagrements_id', '!=', $id)
-            ->pluck('id', 'id')
-            ->all(); */
+        ->where('commissionagrements_id', '!=', null)
+        ->where('commissionagrements_id', '!=', $id)
+        ->pluck('id', 'id')
+        ->all(); */
 
-        return view('operateurs.commissionagrements.show', compact('commissionagrement', 'operateurs', 'operateurs_agreer_count', 'operateurs_reserve_count', 'operateurs_rejeter_count'));
+        return view('operateurs.commissionagrements.show',
+            compact('commissionagrement',
+                'operateurs',
+                'decoupage',
+                'operateurs_agreer_count',
+                'operateurs_reserve_count',
+                'operateurs_rejeter_count'
+            ));
     }
 
     public function destroy($id)
@@ -121,35 +137,35 @@ class CommissionagrementController extends Controller
     public function givecommisionagrement(Request $request, $idcommissionagrement)
     {
         $request->validate([
-            'operateurs' => ['required']
+            'operateurs' => ['required'],
         ]);
 
         $operateur_deja_retenus = Operateur::where('commissionagrements_id', $idcommissionagrement)->get();
 
         /*   foreach ($operateur_deja_retenus as $key => $value) {
 
-            $value->update([
-                "commissionagrements_id"        =>  null,
-            ]);
+        $value->update([
+        "commissionagrements_id"        =>  null,
+        ]);
 
-            $value->save();
+        $value->save();
         } */
 
         foreach ($request->operateurs as $operateur) {
             $operateur = Operateur::findOrFail($operateur);
 
             $operateur->update([
-                "commissionagrements_id" =>  $idcommissionagrement,
-                "statut_agrement"        =>  'attente',
+                "commissionagrements_id" => $idcommissionagrement,
+                "statut_agrement" => 'attente',
             ]);
 
             $operateur->save();
 
             $historiqueagrement = new Historiqueagrement([
-                'operateurs_id'              =>   $operateur->id,
-                'commissionagrements_id'     =>   $idcommissionagrement,
-                'statut'                     =>   'attente',
-                'validated_id'               =>   Auth::user()->id,
+                'operateurs_id' => $operateur->id,
+                'commissionagrements_id' => $idcommissionagrement,
+                'statut' => 'attente',
+                'validated_id' => Auth::user()->id,
 
             ]);
 
@@ -181,7 +197,11 @@ class CommissionagrementController extends Controller
             ->pluck('id', 'id')
             ->all();
 
-        return view('operateurs.commissionagrements.add_op_commsions', compact('commissionagrement', 'operateurs', 'operateurAgrement', 'operateurAgrementCheck'));
+        return view('operateurs.commissionagrements.add_op_commsions',
+            compact('commissionagrement',
+                'operateurs',
+                'operateurAgrement',
+                'operateurAgrementCheck'));
     }
 
     public function showAgreer($id)
@@ -191,6 +211,14 @@ class CommissionagrementController extends Controller
         $operateurs = Operateur::where('commissionagrements_id', $commissionagrement->id)
             ->where('statut_agrement', 'agréer')
             ->get();
+
+        $operateur_count = $operateurs->count();
+
+        if (!empty($operateur_count) && $operateur_count > 50) {
+            $decoupage = ($operateur_count / 50);
+        } else {
+            $decoupage = null;
+        }
 
         $operateurmodules = Operateurmodule::join('operateurs', 'operateurs.id', 'operateurmodules.operateurs_id')
             ->select('operateurmodules.*')
@@ -207,7 +235,12 @@ class CommissionagrementController extends Controller
             ->distinct('module')
             ->count('module');
 
-        return view('operateurs.agrements.show_agreer', compact('operateurs', 'commissionagrement', 'operateurmodules', 'count_operateurmodules_distinct'));
+        return view('operateurs.agrements.show_agreer',
+            compact('operateurs',
+                'commissionagrement',
+                'operateurmodules',
+                'count_operateurmodules_distinct',
+                'decoupage'));
     }
 
     public function showReserve($id)
@@ -225,7 +258,10 @@ class CommissionagrementController extends Controller
             ->where('operateurmodules.statut', "sous réserve")
             ->get();
 
-        return view('operateurs.agrements.show_reserve', compact('operateurs', 'commissionagrement', 'operateurmodules'));
+        return view('operateurs.agrements.show_reserve',
+            compact('operateurs',
+                'commissionagrement',
+                'operateurmodules'));
     }
 
     public function showRejeter($id)
@@ -236,6 +272,8 @@ class CommissionagrementController extends Controller
             ->where('statut_agrement', 'rejeter')
             ->get();
 
-        return view('operateurs.agrements.show_rejeter', compact('operateurs', 'commissionagrement'));
+        return view('operateurs.agrements.show_rejeter',
+            compact('operateurs',
+                'commissionagrement'));
     }
 }

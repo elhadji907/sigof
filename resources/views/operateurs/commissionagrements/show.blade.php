@@ -149,6 +149,49 @@
                                         class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                 <p> | {{ $commissionagrement?->commission }}</p>
                             </span>
+                            <span class="d-flex align-items-baseline">
+                                <a href="#" class="btn btn-secondary btn-sm" title="Générer">Fiches de synthèse</a>
+                                <div class="filter">
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                            class="bi bi-three-dots"></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                        @if (!empty($decoupage))
+                                            <?php $i = 1; ?>
+                                            <?php $value_1 = 0; ?>
+                                            <?php $value_2 = 50; ?>
+                                            @foreach ($operateurs as $operateur)
+                                                <li>
+                                                    <form action="{{ route('ficheSynthese') }}" method="post"
+                                                        target="_blank">
+                                                        @csrf
+                                                        <input type="hidden" name="id"
+                                                            value="{{ $commissionagrement->id }}">
+                                                        <input type="hidden" name="value2" value="{{ $value_2 }}">
+                                                        <input type="hidden" name="value1" value="{{ $value_1 }}">
+                                                        <button type="submit" class="dropdown-item btn btn-sm">Fiche de
+                                                            synthèse {{ $i++ }}</button>
+                                                    </form>
+                                                </li>
+                                                <?php $value_1 = $value_1 + 50; ?>
+                                                <?php $value_2 = $value_2 + 50; ?>
+                                            @endforeach
+                                        @else
+                                            <li>
+                                                <form action="{{ route('ficheSynthese') }}" method="post"
+                                                    target="_blank">
+                                                    @csrf
+                                                    <input type="hidden" name="id"
+                                                        value="{{ $commissionagrement->id }}">
+                                                    <input type="hidden" name="value2" value="50">
+                                                    <input type="hidden" name="value1" value="0">
+                                                    <button type="submit" class="dropdown-item btn btn-sm">Fiche de
+                                                        synthèse</button>
+                                                </form>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </div>
+                            </span>
                             <h5 class="card-title">
                                 <a href="{{ route('addopCommission', ['id' => $commissionagrement->id]) }}"
                                     class="btn btn-success btn-sm" title="ajouter"><i class="bi bi-plus"></i></a>
@@ -159,57 +202,56 @@
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('PUT') --}}
-                            <div class="row mb-0">
-                                <div class="form-check col-md-12 pt-5">
-                                    <table class="table datatables align-middle" id="table-operateurs">
-                                        <thead>
-                                            <tr>
-                                                @can('afficher-dossier-operateur')
-                                                    <th width="5%" class="text-center">Dossier</th>
-                                                @endcan
-                                                <th width="15%">N° agrément</th>
-                                                <th width="50%">Opérateurs</th>
-                                                <th width="10%">Sigle</th>
-                                                <th class="text-center">Modules</th>
-                                                <th width="15%" class="text-center">Statut</th>
-                                                <th><i class="bi bi-gear"></i></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php $i = 1; ?>
-                                            @foreach ($operateurs as $operateur)
-                                                @isset($operateur?->numero_agrement)
-                                                    <tr>
-                                                        @can('afficher-dossier-operateur')
-                                                            <td class="text-center">{{ $operateur?->numero_dossier }}</td>
-                                                        @endcan
-                                                        <td>{{ $operateur?->numero_agrement }}</td>
-                                                        <td>{{ $operateur?->user?->operateur }}</td>
-                                                        <td>{{ $operateur?->user?->username }}</td>
-                                                        <td style="text-align: center;">
-                                                            @foreach ($operateur?->operateurmodules as $operateurmodule)
-                                                                @if ($loop->last)
-                                                                    <a href="#"><span
-                                                                            class="badge bg-info">{{ $loop->count }}</span></a>
-                                                                @endif
-                                                            @endforeach
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <span
-                                                                class="{{ $operateur->statut_agrement }}">{{ $operateur->statut_agrement }}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="d-flex align-items-baseline"><a
-                                                                    href="{{ route('agrements', ['id' => $operateur?->id]) }}"
-                                                                    class="btn btn-primary btn-sm"
-                                                                    title="voir détails"><i class="bi bi-eye"></i></a>
-                                                                <div class="filter">
-                                                                    <a class="icon" href="#"
-                                                                        data-bs-toggle="dropdown"><i
-                                                                            class="bi bi-three-dots"></i></a>
-                                                                    <ul
-                                                                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                        {{--  <li>
+                        <div class="row mb-0">
+                            <div class="form-check col-md-12 pt-5">
+                                <table class="table datatables align-middle" id="table-operateurs">
+                                    <thead>
+                                        <tr>
+                                            @can('afficher-dossier-operateur')
+                                                <th width="5%" class="text-center">Dossier</th>
+                                            @endcan
+                                            <th width="15%">N° agrément</th>
+                                            <th width="50%">Opérateurs</th>
+                                            <th width="10%">Sigle</th>
+                                            <th class="text-center">Modules</th>
+                                            <th width="15%" class="text-center">Statut</th>
+                                            <th><i class="bi bi-gear"></i></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $i = 1; ?>
+                                        @foreach ($operateurs as $operateur)
+                                            @isset($operateur?->numero_agrement)
+                                                <tr>
+                                                    @can('afficher-dossier-operateur')
+                                                        <td class="text-center">{{ $operateur?->numero_dossier }}</td>
+                                                    @endcan
+                                                    <td>{{ $operateur?->numero_agrement }}</td>
+                                                    <td>{{ $operateur?->user?->operateur }}</td>
+                                                    <td>{{ $operateur?->user?->username }}</td>
+                                                    <td style="text-align: center;">
+                                                        @foreach ($operateur?->operateurmodules as $operateurmodule)
+                                                            @if ($loop->last)
+                                                                <a href="#"><span
+                                                                        class="badge bg-info">{{ $loop->count }}</span></a>
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <span
+                                                            class="{{ $operateur->statut_agrement }}">{{ $operateur->statut_agrement }}</span>
+                                                    </td>
+                                                    <td>
+                                                        <span class="d-flex align-items-baseline"><a
+                                                                href="{{ route('agrements', ['id' => $operateur?->id]) }}"
+                                                                class="btn btn-primary btn-sm" title="voir détails"><i
+                                                                    class="bi bi-eye"></i></a>
+                                                            <div class="filter">
+                                                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                        class="bi bi-three-dots"></i></a>
+                                                                <ul
+                                                                    class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                    {{--  <li>
                                                                             <button type="button"
                                                                                 class="dropdown-item btn btn-sm mx-1"
                                                                                 data-bs-toggle="modal"
@@ -218,32 +260,31 @@
                                                                                 Modifier
                                                                             </button>
                                                                         </li> --}}
-                                                                        <form
-                                                                            action="{{ route('retirerOperateur', ['id' => $operateur->id]) }}"
-                                                                            method="post">
-                                                                            @csrf
-                                                                            @method('PUT')
-                                                                            <button
-                                                                                class="show_confirm_retirer btn btn-sm mx-1"><i
-                                                                                    class="bi bi-reply-fill"
-                                                                                    title="Retirer"></i>&nbsp;Retirer</button>
-                                                                        </form>
-                                                                       
-                                                                    </ul>
-                                                                </div>
-                                                            </span>
-                                                        </td>
-                                                    </tr>
-                                                @endisset
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                        {{-- </form> --}}
+                                                                    <form
+                                                                        action="{{ route('retirerOperateur', ['id' => $operateur->id]) }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        @method('PUT')
+                                                                        <button class="show_confirm_retirer btn btn-sm mx-1"><i
+                                                                                class="bi bi-reply-fill"
+                                                                                title="Retirer"></i>&nbsp;Retirer</button>
+                                                                    </form>
+
+                                                                </ul>
+                                                            </div>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            @endisset
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                            {{-- </form> --}}
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
 @endsection
 @push('scripts')
