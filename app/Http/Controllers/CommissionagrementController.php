@@ -212,14 +212,6 @@ class CommissionagrementController extends Controller
             ->where('statut_agrement', 'agréer')
             ->get();
 
-        $operateur_count = $operateurs->count();
-
-        if (!empty($operateur_count) && $operateur_count > 50) {
-            $decoupage = ($operateur_count / 50);
-        } else {
-            $decoupage = null;
-        }
-
         $operateurmodules = Operateurmodule::join('operateurs', 'operateurs.id', 'operateurmodules.operateurs_id')
             ->select('operateurmodules.*')
             ->where('operateurs.statut_agrement', "agréer")
@@ -239,8 +231,8 @@ class CommissionagrementController extends Controller
             compact('operateurs',
                 'commissionagrement',
                 'operateurmodules',
-                'count_operateurmodules_distinct',
-                'decoupage'));
+                'count_operateurmodules_distinct'
+            ));
     }
 
     public function showReserve($id)

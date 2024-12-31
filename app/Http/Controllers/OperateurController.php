@@ -1432,7 +1432,11 @@ class OperateurController extends Controller
     {
         $commission = Commissionagrement::find($request->input('id'));
 
-        $operateurs = Operateur::offset($request->value1)->limit($request->value2)->where('statut_agrement', '!=', 'non retenu')
+       /*  $operateurs = Operateur::offset($request->value1)->limit($request->value2)->where('statut_agrement', '!=', 'non retenu')
+            ->where('commissionagrements_id', $request->input('id'))
+            ->get(); */
+
+        $operateurs = Operateur::where('statut_agrement', '!=', 'non retenu')
             ->where('commissionagrements_id', $request->input('id'))
             ->get();
 
@@ -1469,7 +1473,11 @@ class OperateurController extends Controller
             ->where('commissionagrements_id', $request->input('id'))
             ->count();
 
-        $operateurs = Operateur::offset($request->value1)->limit($request->value2)->where('statut_agrement', 'agréer')
+        /* $operateurs = Operateur::offset($request->value1)->limit($request->value2)->where('statut_agrement', 'agréer')
+            ->where('commissionagrements_id', $request->input('id'))
+            ->get(); */
+
+        $operateurs = Operateur::where('statut_agrement', 'agréer')
             ->where('commissionagrements_id', $request->input('id'))
             ->get();
 
