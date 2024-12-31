@@ -43,7 +43,7 @@
                                                 <?php $i = 1; ?>
                                                 <?php $value_1 = 0; ?>
                                                 <?php $value_2 = 50; ?>
-                                                @foreach ($operateurs as $operateur)
+                                                @foreach ($decoupage_operateurs as $operateur)
                                                     <li>
                                                         <form action="{{ route('lettreAgrement') }}" method="post"
                                                             target="_blank">
