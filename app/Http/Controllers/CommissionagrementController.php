@@ -87,19 +87,10 @@ class CommissionagrementController extends Controller
 
         $operateur_count = $operateurs->count();
 
-        $skip = 50;
-        $limit = $operateur_count - $skip;
-
         if (!empty($operateur_count) && $operateur_count > 50) {
             $decoupage = ($operateur_count / 50);
-            $decoupage_operateurs = Operateur::skip($skip)->take($limit)->where('statut_agrement', '!=', 'non retenu')
-                ->where('commissionagrements_id', $id)
-                ->get();
         } else {
             $decoupage = null;
-            $decoupage_operateurs = Operateur::where('commissionagrements_id', $id)
-                ->where('statut_agrement', '!=', 'non retenu')
-                ->get();
         }
 
         $operateurs_agreer_count = Operateur::where('commissionagrements_id', $id)
@@ -131,8 +122,7 @@ class CommissionagrementController extends Controller
                 'decoupage',
                 'operateurs_agreer_count',
                 'operateurs_reserve_count',
-                'operateurs_rejeter_count',
-                'decoupage_operateurs'
+                'operateurs_rejeter_count'
             ));
     }
 
@@ -224,18 +214,9 @@ class CommissionagrementController extends Controller
 
         $operateur_count = $operateurs->count();
 
-        $skip = 50;
-        $limit = $operateur_count - $skip;
-
         if (!empty($operateur_count) && $operateur_count > 50) {
             $decoupage = ($operateur_count / 50);
-            $decoupage_operateurs = Operateur::skip($skip)->take($limit)->where('statut_agrement', 'agréer')
-                ->where('commissionagrements_id', $commissionagrement->id)
-                ->get();
         } else {
-            $decoupage_operateurs = Operateur::where('statut_agrement', 'agréer')
-                ->where('commissionagrements_id', $commissionagrement->id)
-                ->get();
             $decoupage = null;
         }
 
@@ -259,7 +240,6 @@ class CommissionagrementController extends Controller
                 'commissionagrement',
                 'operateurmodules',
                 'count_operateurmodules_distinct',
-                'decoupage_operateurs',
                 'decoupage'));
     }
 

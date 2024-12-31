@@ -159,7 +159,7 @@
                                             <?php $i = 1; ?>
                                             <?php $value_1 = 0; ?>
                                             <?php $value_2 = 50; ?>
-                                            @foreach ($decoupage_operateurs as $operateur)
+                                            @foreach ($operateurs as $operateur)
                                                 <li>
                                                     <form action="{{ route('ficheSynthese') }}" method="post"
                                                         target="_blank">

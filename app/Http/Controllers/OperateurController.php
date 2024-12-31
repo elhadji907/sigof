@@ -1436,23 +1436,6 @@ class OperateurController extends Controller
             ->where('commissionagrements_id', $request->input('id'))
             ->get();
 
-        $operateur_count = $operateurs->count();
-
-        $skip = 50;
-        $limit = $operateur_count - $skip;
-
-        if (!empty($operateur_count) && $operateur_count > 50) {
-            $decoupage = ($operateur_count / 50);
-            $decoupage_operateurs = Operateur::skip($skip)->take($limit)->where('statut_agrement', '!=', 'non retenu')
-                ->where('commissionagrements_id', $commission->id)
-                ->get();
-        } else {
-            $decoupage_operateurs = Operateur::where('statut_agrement', '!=', 'non retenu')
-                ->where('commissionagrements_id', $commission->id)
-                ->get();
-            $decoupage = null;
-        }
-
         $title = 'Fiche de synthèse ' . $commission?->commission . ' du ' . $commission?->date?->translatedFormat('l d F Y') . ' à ' . $commission?->lieu;
 
         $dompdf = new Dompdf();
@@ -1461,7 +1444,6 @@ class OperateurController extends Controller
 
         $dompdf->loadHtml(view('operateurs.fichesynthese',
             compact(
-                'decoupage_operateurs',
                 'commission',
                 'operateurs',
                 'title'
@@ -1491,23 +1473,6 @@ class OperateurController extends Controller
             ->where('commissionagrements_id', $request->input('id'))
             ->get();
 
-        $operateur_count = $operateurs->count();
-
-        $skip = 1;
-        $limit = $operateur_count - $skip;
-
-        if (!empty($operateur_count) && $operateur_count > 1) {
-            $decoupage = ($operateur_count / 1);
-            $decoupage_operateurs = Operateur::skip($skip)->take($limit)->where('statut_agrement', 'agréer')
-                ->where('commissionagrements_id', $commissionagrement->id)
-                ->get();
-        } else {
-            $decoupage_operateurs = Operateur::where('statut_agrement', 'agréer')
-                ->where('commissionagrements_id', $commissionagrement->id)
-                ->get();
-            $decoupage = null;
-        }
-
         $title = 'Lettres agrément opérateurs, ' . $commission?->commission . ' du ' . $commission?->date?->translatedFormat('l d F Y') . ' à ' . $commission?->lieu;
 
         $dompdf = new Dompdf();
@@ -1516,7 +1481,6 @@ class OperateurController extends Controller
 
         $dompdf->loadHtml(view('operateurs.lettreagrement',
             compact(
-                'decoupage_operateurs',
                 'operateurs',
                 'title'
             )));
