@@ -103,7 +103,13 @@ class IndividuelleController extends Controller
         $pourcentage_hommes = ($masculin / $individuelles->count()) * 100;
         $pourcentage_femmes = ($feminin / $individuelles->count()) * 100;
 
-        return view("individuelles.index", compact("pourcentage_femmes", "pourcentage_hommes", "rejeter", "terminer", "retenue", "nouvelle", "attente", "individuelles", "modules", "departements", "count_today", 'janvier', 'fevrier', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout', 'septembre', 'octobre', 'novembre', 'decembre', 'annee', 'annee_lettre', 'masculin', 'feminin'));*/
+        return view("individuelles.index", compact("pourcentage_femmes",
+        "pourcentage_hommes", "rejeter", "terminer", "retenue", "nouvelle",
+        "attente", "individuelles", "modules", "departements", "count_today",
+        'janvier', 'fevrier', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout',
+        'septembre', 'octobre', 'novembre', 'decembre', 'annee', 'annee_lettre',
+        'masculin', 'feminin'));*/
+
         return view(
             "individuelles.index",
             compact('individuelles', 'departements', 'modules', 'title')
@@ -1075,7 +1081,6 @@ class IndividuelleController extends Controller
 
         $departements = Departement::orderBy("created_at", "DESC")->get();
         /* $modules = Module::orderBy("created_at", "desc")->get(); */
-
         return view('individuelles.index', compact(
             'individuelles',
             'departements',
@@ -1334,5 +1339,286 @@ class IndividuelleController extends Controller
         $formation_count = $individuelles->count();
 
         return view("individuelles.show-formation", compact("formation_count", "individuelles"));
+    }
+
+    public function demandesdg(Request $request)
+    {
+
+        $total_count = Individuelle::get();
+        $total_count = number_format($total_count->count(), 0, ',', ' ');
+
+        $dakar = Region::where('nom', 'Dakar')->first();
+        $thies = Region::orwhere('nom', 'THIES')->first();
+        $dakarid = $dakar->id;
+        $thiesid = $thies->id;
+
+        $individuelles = Individuelle::where('regions_id', $dakarid)->orwhere('regions_id', $thiesid)->limit(500)
+            ->latest()
+            ->get();
+
+        $count_demandeur = number_format($individuelles?->count(), 0, ',', ' ');
+
+        if ($count_demandeur < "1") {
+            $title = 'aucune demande individuelle';
+        } elseif ($count_demandeur == "1") {
+            $title = $count_demandeur . ' demande individuelle trouvée ';
+        } else {
+            $title = $count_demandeur . ' demandes trouvées';
+        }
+
+        $departements = Departement::orderBy("created_at", "DESC")->get();
+        $modules = Module::orderBy("created_at", "desc")->get();
+        return view(
+            "individuelles.index",
+            compact('individuelles', 'departements', 'modules', 'title')
+        );
+    }
+
+    public function demandeszig(Request $request)
+    {
+
+        $total_count = Individuelle::get();
+        $total_count = number_format($total_count->count(), 0, ',', ' ');
+
+        $ziguinchor = Region::where('nom', 'ZIGUINCHOR')->first();
+        $kolda = Region::orwhere('nom', 'KOLDA')->first();
+        $sedhiou = Region::orwhere('nom', 'SEDHIOU')->first();
+        $ziguinchorid = $ziguinchor->id;
+        $koldaid = $kolda->id;
+        $sedhiouid = $sedhiou->id;
+
+        $individuelles = Individuelle::where('regions_id', $ziguinchorid)
+        /* ->orwhere('regions_id', $koldaid)
+        ->orwhere('regions_id', $sedhiouid) */
+            ->limit(500)
+            ->latest()
+            ->get();
+
+        $count_demandeur = number_format($individuelles?->count(), 0, ',', ' ');
+
+        if ($count_demandeur < "1") {
+            $title = 'aucune demande individuelle';
+        } elseif ($count_demandeur == "1") {
+            $title = $count_demandeur . ' demande individuelle trouvée ';
+        } else {
+            $title = $count_demandeur . ' demandes trouvées';
+        }
+
+        $departements = Departement::orderBy("created_at", "DESC")->get();
+        $modules = Module::orderBy("created_at", "desc")->get();
+        return view(
+            "individuelles.index",
+            compact('individuelles', 'departements', 'modules', 'title')
+        );
+    }
+
+    public function demandeskd(Request $request)
+    {
+
+        $total_count = Individuelle::get();
+        $total_count = number_format($total_count->count(), 0, ',', ' ');
+
+        $ziguinchor = Region::where('nom', 'ZIGUINCHOR')->first();
+        $kolda = Region::orwhere('nom', 'KOLDA')->first();
+        $sedhiou = Region::orwhere('nom', 'SEDHIOU')->first();
+        $ziguinchorid = $ziguinchor->id;
+        $koldaid = $kolda->id;
+        $sedhiouid = $sedhiou->id;
+
+        $individuelles = Individuelle::orwhere('regions_id', $koldaid)
+            ->orwhere('regions_id', $sedhiouid)
+            ->limit(500)
+            ->latest()
+            ->get();
+
+        $count_demandeur = number_format($individuelles?->count(), 0, ',', ' ');
+
+        if ($count_demandeur < "1") {
+            $title = 'aucune demande individuelle';
+        } elseif ($count_demandeur == "1") {
+            $title = $count_demandeur . ' demande individuelle trouvée ';
+        } else {
+            $title = $count_demandeur . ' demandes trouvées';
+        }
+
+        $departements = Departement::orderBy("created_at", "DESC")->get();
+        $modules = Module::orderBy("created_at", "desc")->get();
+        return view(
+            "individuelles.index",
+            compact('individuelles', 'departements', 'modules', 'title')
+        );
+    }
+
+    public function demandeskl(Request $request)
+    {
+
+        $total_count = Individuelle::get();
+        $total_count = number_format($total_count->count(), 0, ',', ' ');
+
+        $kaolack = Region::orwhere('nom', 'KAOLACK')->first();
+        $kaffrine = Region::orwhere('nom', 'KAFFRINE')->first();
+        $fatick = Region::where('nom', 'FATICK')->first();
+
+        $kaolackid = $kaolack->id;
+        $kaffrineid = $kaffrine->id;
+        $fatickid = $fatick->id;
+
+        $individuelles = Individuelle::orwhere('regions_id', $kaolackid)
+            ->orwhere('regions_id', $kaffrineid)
+            ->orwhere('regions_id', $fatickid)
+            ->limit(500)
+            ->latest()
+            ->get();
+
+        $count_demandeur = number_format($individuelles?->count(), 0, ',', ' ');
+
+        if ($count_demandeur < "1") {
+            $title = 'aucune demande individuelle';
+        } elseif ($count_demandeur == "1") {
+            $title = $count_demandeur . ' demande individuelle trouvée ';
+        } else {
+            $title = $count_demandeur . ' demandes trouvées';
+        }
+
+        $departements = Departement::orderBy("created_at", "DESC")->get();
+        $modules = Module::orderBy("created_at", "desc")->get();
+        return view(
+            "individuelles.index",
+            compact('individuelles', 'departements', 'modules', 'title')
+        );
+    }
+
+    public function demandessl(Request $request)
+    {
+        $total_count = Individuelle::get();
+        $total_count = number_format($total_count->count(), 0, ',', ' ');
+
+        $saintlouis = Region::orwhere('nom', 'SAINT LOUIS')->first();
+        $louga = Region::orwhere('nom', 'LOUGA')->first();
+
+        $saintlouisid = $saintlouis->id;
+        $lougaid = $louga->id;
+
+        $individuelles = Individuelle::orwhere('regions_id', $saintlouisid)
+            ->orwhere('regions_id', $lougaid)
+            ->limit(500)
+            ->latest()
+            ->get();
+
+        $count_demandeur = number_format($individuelles?->count(), 0, ',', ' ');
+
+        if ($count_demandeur < "1") {
+            $title = 'aucune demande individuelle';
+        } elseif ($count_demandeur == "1") {
+            $title = $count_demandeur . ' demande individuelle trouvée ';
+        } else {
+            $title = $count_demandeur . ' demandes trouvées';
+        }
+
+        $departements = Departement::orderBy("created_at", "DESC")->get();
+        $modules = Module::orderBy("created_at", "desc")->get();
+        return view(
+            "individuelles.index",
+            compact('individuelles', 'departements', 'modules', 'title')
+        );
+    }
+
+    public function demandeskg(Request $request)
+    {
+        $total_count = Individuelle::get();
+        $total_count = number_format($total_count->count(), 0, ',', ' ');
+
+        $kedougou = Region::orwhere('nom', 'KEDOUGOU')->first();
+        $tambacounda = Region::orwhere('nom', 'TAMBACOUNDA')->first();
+
+        $kedougouid = $kedougou->id;
+        $tambacoundaid = $tambacounda->id;
+
+        $individuelles = Individuelle::orwhere('regions_id', $kedougouid)
+            ->orwhere('regions_id', $tambacoundaid)
+            ->limit(500)
+            ->latest()
+            ->get();
+
+        $count_demandeur = number_format($individuelles?->count(), 0, ',', ' ');
+
+        if ($count_demandeur < "1") {
+            $title = 'aucune demande individuelle';
+        } elseif ($count_demandeur == "1") {
+            $title = $count_demandeur . ' demande individuelle trouvée ';
+        } else {
+            $title = $count_demandeur . ' demandes trouvées';
+        }
+
+        $departements = Departement::orderBy("created_at", "DESC")->get();
+        $modules = Module::orderBy("created_at", "desc")->get();
+        return view(
+            "individuelles.index",
+            compact('individuelles', 'departements', 'modules', 'title')
+        );
+    }
+
+    public function demandesmt(Request $request)
+    {
+        $total_count = Individuelle::get();
+        $total_count = number_format($total_count->count(), 0, ',', ' ');
+
+        $matam = Region::orwhere('nom', 'MATAM')->first();
+
+        $matamid = $matam->id;
+
+        $individuelles = Individuelle::orwhere('regions_id', $matamid)
+            ->limit(500)
+            ->latest()
+            ->get();
+
+        $count_demandeur = number_format($individuelles?->count(), 0, ',', ' ');
+
+        if ($count_demandeur < "1") {
+            $title = 'aucune demande individuelle';
+        } elseif ($count_demandeur == "1") {
+            $title = $count_demandeur . ' demande individuelle trouvée ';
+        } else {
+            $title = $count_demandeur . ' demandes trouvées';
+        }
+
+        $departements = Departement::orderBy("created_at", "DESC")->get();
+        $modules = Module::orderBy("created_at", "desc")->get();
+        return view(
+            "individuelles.index",
+            compact('individuelles', 'departements', 'modules', 'title')
+        );
+    }
+
+    public function demandesdl(Request $request)
+    {
+        $total_count = Individuelle::get();
+        $total_count = number_format($total_count->count(), 0, ',', ' ');
+
+        $diourbel = Region::orwhere('nom', 'DIOURBEL')->first();
+
+        $diourbelid = $diourbel->id;
+
+        $individuelles = Individuelle::orwhere('regions_id', $diourbelid)
+            ->limit(500)
+            ->latest()
+            ->get();
+
+        $count_demandeur = number_format($individuelles?->count(), 0, ',', ' ');
+
+        if ($count_demandeur < "1") {
+            $title = 'aucune demande individuelle';
+        } elseif ($count_demandeur == "1") {
+            $title = $count_demandeur . ' demande individuelle trouvée ';
+        } else {
+            $title = $count_demandeur . ' demandes trouvées';
+        }
+
+        $departements = Departement::orderBy("created_at", "DESC")->get();
+        $modules = Module::orderBy("created_at", "desc")->get();
+        return view(
+            "individuelles.index",
+            compact('individuelles', 'departements', 'modules', 'title')
+        );
     }
 }

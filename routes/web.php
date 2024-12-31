@@ -425,6 +425,14 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::put('/resetuserPassword/{id}', [UserController::class, 'resetuserPassword'])->name('resetuserPassword');
 
         Route::get('backup', [UserController::class, 'backup'])->name('backup');
+        Route::get('demandesdg', [IndividuelleController::class, 'demandesdg'])->name('demandesdg');
+        Route::get('demandeszig', [IndividuelleController::class, 'demandeszig'])->name('demandeszig');
+        Route::get('demandeskd', [IndividuelleController::class, 'demandeskd'])->name('demandeskd');
+        Route::get('demandeskl', [IndividuelleController::class, 'demandeskl'])->name('demandeskl');
+        Route::get('demandessl', [IndividuelleController::class, 'demandessl'])->name('demandessl');
+        Route::get('demandeskg', [IndividuelleController::class, 'demandeskg'])->name('demandeskg');
+        Route::get('demandesmt', [IndividuelleController::class, 'demandesmt'])->name('demandesmt');
+        Route::get('demandesdl', [IndividuelleController::class, 'demandesdl'])->name('demandesdl');
 
         /* Vues ressouces */
         Route::resource('/users', UserController::class);

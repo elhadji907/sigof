@@ -71,14 +71,14 @@
                 </ul>
             </li>
         @endcan
-        
+
         @can('demande-view')
             <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#demande-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-folder-plus"></i><span>Gestion demandeurs</span><i
+                <a class="nav-link collapsed" data-bs-target="#demande--ind-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-folder-plus"></i><span>Demandes individuelles</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
-                <ul id="demande-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <ul id="demande--ind-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     @can('individuelle-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('individuelles') }}">
@@ -86,7 +86,56 @@
                             </a>
                         </li>
                     @endcan
-
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('demandesdg') }}">
+                            <span>Direction générale</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('demandeskl') }}">
+                            <span>Antenne Kaolack</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('demandeskd') }}">
+                            <span>Antenne Kolda</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('demandessl') }}">
+                            <span>Antenne Saint Louis</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('demandeskg') }}">
+                            <span>Antenne Kédougou</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('demandesmt') }}">
+                            <span>Antenne Matam</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('demandesdl') }}">
+                            <span>Antenne Diourbel</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('demandeszig') }}">
+                            <span>Antenne Ziguinchor</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        @endcan
+        @can('demande-view')
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#demande-col-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-folder-plus"></i><span>Demandes collectives</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="demande-col-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     @can('collective-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('collectives') }}">
@@ -94,15 +143,6 @@
                             </a>
                         </li>
                     @endcan
-
-                    @can('pcharge-view')
-                        <li class="nav-item">
-                            <a class="nav-link collapsed" href="#">
-                                <span>Demandes prise en charge</span>
-                            </a>
-                        </li>
-                    @endcan
-
                 </ul>
             </li>
         @endcan
