@@ -24,9 +24,9 @@
                 title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
             <p> | Tableau de bord</p>
         </span>
-        @if (!empty($formes))
+        {{-- @if (!empty($formes))
             <span class="page-title badge bg-primary">{{ $title }}</span>
-        @endif
+        @endif --}}
         @can('rapport-formes-view')
             <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
                 data-bs-target="#generate_rapport_module_region"></i>Générer rapport</button>
@@ -41,6 +41,7 @@
                     </div> --}}
                     <div class="card">
                         <div class="card-body">
+                            <h5 class="card-title">{{ $title }}</h5>
                             <div class="table-responsive">
                                 <table class="table datatables align-middle" id="table-formes">
                                     <thead>

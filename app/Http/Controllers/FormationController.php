@@ -7,6 +7,7 @@ use App\Models\Collective;
 use App\Models\Collectivemodule;
 use App\Models\Departement;
 use App\Models\Domaine;
+use App\Models\Emargement;
 use App\Models\Evaluateur;
 use App\Models\Formation;
 use App\Models\Indisponible;
@@ -25,7 +26,6 @@ use App\Models\Statut;
 use App\Models\TypesFormation;
 use App\Models\Validationformation;
 use App\Models\Validationindividuelle;
-use App\Models\Emargement;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -2227,11 +2227,10 @@ class FormationController extends Controller
 
         $to_date = date_format(date_create($request->to_date), 'd/m/Y');
 
-        if (isset($request->module) && isset($request->region) && isset($request->projet)) {
+        if (!empty($request->module) && !empty($request->region) && !empty($request->projet)) {
             $module = Module::where('name', $request->module)->first();
             $region = Region::where('nom', $request->region)->first();
-            $projet = Projet::where('nom', $request->projet)->first();
-            $title_region_module = ' dans la région de ' . $request->region . ' en ' . $request->module . ', ' . $projet?->type_projet . ' ' . $projet?->sigle;
+            $projet = Projet::where('name', $request->projet)->first();
 
             $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
@@ -2241,9 +2240,8 @@ class FormationController extends Controller
                 ->where('individuelles.projets_id', $projet?->id)
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
                 ->get();
-        } elseif (isset($request->region)) {
+        } elseif (!empty($request->region)) {
             $region = Region::where('nom', $request->region)->first();
-            $title_region_module = ' dans la région de ' . $request->region;
 
             $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
@@ -2251,9 +2249,8 @@ class FormationController extends Controller
                 ->where('individuelles.regions_id', $region?->id)
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
                 ->get();
-        } elseif (isset($request->projet)) {
+        } elseif (!empty($request->projet)) {
             $projet = Projet::where('sigle', $request->projet)->first();
-            $title_region_module = $projet?->type_projet . ' ' . $projet?->sigle;
 
             $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
@@ -2261,9 +2258,8 @@ class FormationController extends Controller
                 ->where('individuelles.projets_id', $projet?->id)
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
                 ->get();
-        } elseif (isset($request->module)) {
+        } elseif (!empty($request->module)) {
             $module = Module::where('name', $request->module)->first();
-            $title_region_module = ' en ' . $request->module;
 
             $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
@@ -2272,7 +2268,6 @@ class FormationController extends Controller
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), array($request->from_date, $request->to_date))
                 ->get();
         } else {
-            $title_region_module = '';
             $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
                 ->where('individuelles.statut', 'former')
@@ -2283,25 +2278,31 @@ class FormationController extends Controller
         $count = $formes->count();
 
         if ($from_date == $to_date) {
-            if (isset($count) && $count < "1") {
-                $title = 'aucun bénéficiaire formé le ' . $from_date . ' ' . $title_region_module;
-            } elseif (isset($count) && $count == "1") {
-                $title = $count . ' bénéficiaire formé le ' . $from_date . ' ' . $title_region_module;
+            if (!empty($count) && $count < "1") {
+                $title = 'aucun bénéficiaire formé le ' . $from_date;
+            } elseif (!empty($count) && $count == "1") {
+                $title = $count . ' bénéficiaire formé le ' . $from_date;
             } else {
-                $title = $count . ' bénéficiaires formé le ' . $from_date . ' ' . $title_region_module;
+                $title = $count . ' bénéficiaires formé le ' . $from_date;
             }
         } else {
-            if (isset($count) && $count < "1") {
-                $title = 'aucun bénéficiaire formé entre entre le ' . $from_date . ' et le ' . $to_date . ' ' . $title_region_module;
-            } elseif (isset($count) && $count == "1") {
-                $title = $count . ' bénéficiaire formé entre entre le ' . $from_date . ' et le ' . $to_date . ' ' . $title_region_module;
+            if (!empty($count) && $count < "1") {
+                $title = 'aucun bénéficiaire formé dans la période du ' . $from_date . ' au ' . $to_date;
+            } elseif (!empty($count) && $count == "1") {
+                $title = $count . ' bénéficiaire formé dans la période du ' . $from_date . ' au ' . $to_date;
             } else {
-                $title = $count . ' bénéficiaires formés entre entre le ' . $from_date . ' et le ' . $to_date . ' ' . $title_region_module;
+                $title = $count . ' bénéficiaires formés dans la période du ' . $from_date . ' au ' . $to_date;
             }
         }
 
         $regions = Region::get();
         $projets = Projet::get();
+
+        if ($request->module) {
+            $title = $request->module . ' : ' . $title;
+        } else {
+            $title = $title;
+        }
 
         return view('formes.rapports', compact(
             'formes',
@@ -2351,11 +2352,11 @@ class FormationController extends Controller
             }
         } else {
             if (isset($count) && $count < "1") {
-                $title = 'aucun bénéficiaire formé entre entre le ' . $from_date . ' et le ' . $to_date;
+                $title = 'aucun bénéficiaire formé dans la période ' . $from_date . ' au ' . $to_date;
             } elseif (isset($count) && $count == "1") {
-                $title = $count . ' bénéficiaire formé entre entre le ' . $from_date . ' et le ' . $to_date;
+                $title = $count . ' bénéficiaire formé dans la période ' . $from_date . ' au ' . $to_date;
             } else {
-                $title = $count . ' bénéficiaires formés entre entre le ' . $from_date . ' et le ' . $to_date;
+                $title = $count . ' bénéficiaires formés dans la période ' . $from_date . ' au ' . $to_date;
             }
         }
 
@@ -2463,11 +2464,11 @@ class FormationController extends Controller
             }
         } else {
             if (isset($count) && $count < "1") {
-                $title = 'aucun bénéficiaire formé entre entre le ' . $from_date . ' et le ' . $to_date . ' ' . $title_region_module;
+                $title = 'aucun bénéficiaire formé entre le ' . $from_date . ' et le ' . $to_date . ' ' . $title_region_module;
             } elseif (isset($count) && $count == "1") {
-                $title = $count . ' bénéficiaire formé entre entre le ' . $from_date . ' et le ' . $to_date . ' ' . $title_region_module;
+                $title = $count . ' bénéficiaire formé entre le ' . $from_date . ' et le ' . $to_date . ' ' . $title_region_module;
             } else {
-                $title = $count . ' bénéficiaires formés entre entre le ' . $from_date . ' et le ' . $to_date . ' ' . $title_region_module;
+                $title = $count . ' bénéficiaires formés entre le ' . $from_date . ' et le ' . $to_date . ' ' . $title_region_module;
             }
         }
 
@@ -2666,7 +2667,7 @@ class FormationController extends Controller
 
             ]);
         }
-        
+
         Alert::success('Enregistrement réussi !');
 
         return redirect()->back();

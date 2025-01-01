@@ -35,7 +35,7 @@
                 @if (!empty($formes))
                     <div class="card">
                         <div class="card-body">
-                            <span class="page-title">{{ $title }}</span>
+                            <h5 class="card-title">{{ $title }}</h5>
                             <div class="table-responsive">
                                 <table class="table datatables align-middle" id="table-formes">
                                     <thead>

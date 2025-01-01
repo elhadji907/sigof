@@ -1401,8 +1401,10 @@ class OperateurController extends Controller
         }
 
         $regions = Region::orderBy("created_at", "desc")->get();
+        $module_statuts = Operateurmodule::get()->unique('statut');
 
         return view('operateurs.rapports', compact(
+            'module_statuts',
             'operateurs',
             'title',
             'regions'
@@ -1432,9 +1434,9 @@ class OperateurController extends Controller
     {
         $commission = Commissionagrement::find($request->input('id'));
 
-       /*  $operateurs = Operateur::offset($request->value1)->limit($request->value2)->where('statut_agrement', '!=', 'non retenu')
-            ->where('commissionagrements_id', $request->input('id'))
-            ->get(); */
+        /*  $operateurs = Operateur::offset($request->value1)->limit($request->value2)->where('statut_agrement', '!=', 'non retenu')
+        ->where('commissionagrements_id', $request->input('id'))
+        ->get(); */
 
         $operateurs = Operateur::where('statut_agrement', '!=', 'non retenu')
             ->where('commissionagrements_id', $request->input('id'))
@@ -1474,8 +1476,8 @@ class OperateurController extends Controller
             ->count();
 
         /* $operateurs = Operateur::offset($request->value1)->limit($request->value2)->where('statut_agrement', 'agréer')
-            ->where('commissionagrements_id', $request->input('id'))
-            ->get(); */
+        ->where('commissionagrements_id', $request->input('id'))
+        ->get(); */
 
         $operateurs = Operateur::where('statut_agrement', 'agréer')
             ->where('commissionagrements_id', $request->input('id'))
