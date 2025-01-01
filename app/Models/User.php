@@ -200,6 +200,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Employee::class, 'users_id')->latest()->latest();
     }
 
+    public function ingenieur()
+    {
+        return $this->hasOne(Ingenieur::class, 'users_id')->latest()->latest();
+    }
+
     public function etablissement()
     {
         return $this->hasOne(Etablissement::class, 'users_id');

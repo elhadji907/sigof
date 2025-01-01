@@ -133,100 +133,83 @@
             aria-labelledby="generate_rapport_module_regionLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Générer rapport formés</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="card-header text-center bg-gradient-default">
+                        <h1 class="h4 text-black mb-0">Générer rapport</h1>
                     </div>
                     <form method="post" action="{{ route('formes.rapport') }}">
                         @csrf
                         <div class="modal-body">
                             <div class="row g-3">
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                    <div class="row">
-                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <div class="form-group">
-                                                <label for="from_date" class="form-label">De<span
-                                                        class="text-danger mx-1">*</span></label>
-                                                <input type="date" name="from_date"
-                                                    class="form-control form-control-sm @error('from_date') is-invalid @enderror from_date">
-                                            </div>
-                                            @error('from_date')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <div class="form-group">
-                                                <label for="from_date" class="form-label">À<span
-                                                        class="text-danger mx-1">*</span></label>
-                                                <input type="date" name="to_date"
-                                                    class="form-control form-control-sm @error('to_date') is-invalid @enderror to_date">
-                                            </div>
-                                            @error('to_date')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <div class="form-group">
-                                                <label for="module" class="form-label">Module</label>
-                                                <input type="text" name="module" value="{{ old('module_name') }}"
-                                                    class="form-control form-control-sm @error('module_name') is-invalid @enderror"
-                                                    id="module_name" placeholder="Nom du module" autofocus>
-                                                <div id="countryList"></div>
-                                                {{ csrf_field() }}
-                                                @error('module')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <div>{{ $message }}</div>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <div class="form-group">
-                                                <label for="region" class="form-label">Région</label>
-                                                <select name="region"
-                                                    class="form-select  @error('region') is-invalid @enderror"
-                                                    aria-label="Select" id="select-field-region-module-rapport"
-                                                    data-placeholder="Choisir la région">
-                                                    <option value="">Toutes</option>
-                                                    @foreach ($regions as $region)
-                                                        <option value="{{ $region->nom }}">
-                                                            {{ $region->nom }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                @error('region')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <div>{{ $message }}</div>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <div class="form-group">
-                                                <label for="projet" class="form-label">Projet</label>
-                                                <select name="projet"
-                                                    class="form-select  @error('projet') is-invalid @enderror"
-                                                    aria-label="Select" id="select-field-projet-module-rapport"
-                                                    data-placeholder="Choisir projet">
-                                                    <option value="">Toutes</option>
-                                                    @foreach ($projets as $projet)
-                                                        <option value="{{ $projet->sigle }}">
-                                                            {{ $projet->sigle }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                @error('projet')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <div>{{ $message }}</div>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <label for="from_date" class="form-label">De<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="date" name="from_date"
+                                        class="form-control form-control-sm @error('from_date') is-invalid @enderror from_date">
+                                    @error('from_date')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="from_date" class="form-label">À<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="date" name="to_date"
+                                        class="form-control form-control-sm @error('to_date') is-invalid @enderror to_date">
+                                    @error('to_date')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="module" class="form-label">Module</label>
+                                    <input type="text" name="module" value="{{ old('module_name') }}"
+                                        class="form-control form-control-sm @error('module_name') is-invalid @enderror"
+                                        id="module_name" placeholder="Nom du module" autofocus>
+                                    <div id="countryList"></div>
+                                    {{ csrf_field() }}
+                                    @error('module')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="region" class="form-label">Région</label>
+                                    <select name="region" class="form-select  @error('region') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-region-module-rapport"
+                                        data-placeholder="Choisir la région">
+                                        <option value="">Toutes</option>
+                                        @foreach ($regions as $region)
+                                            <option value="{{ $region->nom }}">
+                                                {{ $region->nom }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('region')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="projet" class="form-label">Projet</label>
+                                    <select name="projet" class="form-select  @error('projet') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-projet-module-rapport"
+                                        data-placeholder="Choisir projet">
+                                        <option value="">Toutes</option>
+                                        @foreach ($projets as $projet)
+                                            <option value="{{ $projet->sigle }}">
+                                                {{ $projet->sigle }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('projet')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>
@@ -252,8 +235,6 @@
                                 <h5 class="modal-title">
                                     {{ $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}
                                 </h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
                             </div>
                             <form method="post" action="#">
                                 @csrf
@@ -281,10 +262,6 @@
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary btn-sm"
                                         data-bs-dismiss="modal">Fermer</button>
-                                    {{-- <div class="text-center">
-                                    <button type="submit"
-                                        class="btn btn-primary btn-block submit_rapport btn-sm">Enregistrer</button>
-                                </div> --}}
                                 </div>
                             </form>
                         </div>

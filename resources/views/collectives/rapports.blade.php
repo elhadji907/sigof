@@ -100,80 +100,68 @@
             aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Générer rapport demandes collectives</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="card-header text-center bg-gradient-default">
+                        <h1 class="h4 text-black mb-0">Générer rapport</h1>
                     </div>
                     <form method="post" action="{{ route('collectives.rapport') }}">
                         @csrf
                         <div class="modal-body">
                             <div class="row g-3">
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                    <div class="row">
-                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <div class="form-group">
-                                                <label for="from_date" class="form-label">De<span
-                                                        class="text-danger mx-1">*</span></label>
-                                                <input type="date" name="from_date"
-                                                    class="form-control form-control-sm @error('from_date') is-invalid @enderror from_date">
-                                            </div>
-                                            @error('from_date')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <div class="form-group">
-                                                <label for="to_date" class="form-label">À<span
-                                                        class="text-danger mx-1">*</span></label>
-                                                <input type="date" name="to_date"
-                                                    class="form-control form-control-sm @error('to_date') is-invalid @enderror to_date">
-                                            </div>
-                                            @error('to_date')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
-                                                </span>
-                                            @enderror
-                                        </div>
+                                    <label for="from_date" class="form-label">De<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="date" name="from_date"
+                                        class="form-control form-control-sm @error('from_date') is-invalid @enderror from_date">
+                                    @error('from_date')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="to_date" class="form-label">À<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="date" name="to_date"
+                                        class="form-control form-control-sm @error('to_date') is-invalid @enderror to_date">
+                                    @error('to_date')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
 
-                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <label for="statut" class="form-label">Statut juridique</label>
-                                            <div class="form-group">
-                                                <select name="statut"
-                                                    class="form-select  @error('statut') is-invalid @enderror"
-                                                    aria-label="Select" id="select-field-statut-collective"
-                                                    data-placeholder="Choisir statut">
-                                                    <option value="{{ old('statut') }}">
-                                                        {{ old('statut') }}
-                                                    </option>
-                                                    <option value="GIE">
-                                                        GIE
-                                                    </option>
-                                                    <option value="Association">
-                                                        Association
-                                                    </option>
-                                                    <option value="Entreprise">
-                                                        Entreprise
-                                                    </option>
-                                                    <option value="Institution publique">
-                                                        Institution publique
-                                                    </option>
-                                                    <option value="Institution privée">
-                                                        Institution privée
-                                                    </option>
-                                                    <option value="Autre">
-                                                        Autre
-                                                    </option>
-                                                </select>
-                                            </div>
-                                            @error('statut')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="statut" class="form-label">Statut juridique</label>
+                                    <select name="statut" class="form-select  @error('statut') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-statut-collective"
+                                        data-placeholder="Choisir statut">
+                                        <option value="{{ old('statut') }}">
+                                            {{ old('statut') }}
+                                        </option>
+                                        <option value="GIE">
+                                            GIE
+                                        </option>
+                                        <option value="Association">
+                                            Association
+                                        </option>
+                                        <option value="Entreprise">
+                                            Entreprise
+                                        </option>
+                                        <option value="Institution publique">
+                                            Institution publique
+                                        </option>
+                                        <option value="Institution privée">
+                                            Institution privée
+                                        </option>
+                                        <option value="Autre">
+                                            Autre
+                                        </option>
+                                    </select>
+                                    @error('statut')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary btn-sm"

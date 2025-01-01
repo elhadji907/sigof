@@ -626,32 +626,16 @@
                 aria-labelledby="addEmployeLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        {{--  <div class="pt-0 pb-0">
-                <h5 class="card-title text-center pb-0 fs-4">Enregistrement</h5>
-                <p class="text-center small">enregister un nouveau courrier arrivé</p>
-            </div> --}}
-
-                        <div class="modal-header">
-                            <h5 class="modal-title">Enregistrer cette utilisateur comme employé</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                        <div class="card-header text-center bg-gradient-default">
+                            <h1 class="h4 text-black mb-0">Devenir employé</h1>
                         </div>
                         <form method="post" action="{{ route('users.update', $user->id) }}"
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
                             @method('patch')
-
                             <input name="employe" type="hidden" value="1">
-                            {{--  <div class="modal-header">
-                    <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une nouvelle
-                        demande
-                        individuelle</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                        aria-label="Close"></button>
-                </div> --}}
                             <div class="modal-body">
                                 <div class="row g-3">
-
                                     <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                         <label for="cin" class="form-label">CIN<span
                                                 class="text-danger mx-1">*</span></label>
@@ -701,10 +685,10 @@
 
 
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
+                                        <button type="button" class="btn btn-secondary btn-sm"
                                             data-bs-dismiss="modal">Fermer</button>
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                            <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
                                         </div>
                                     </div>
                                 </div>

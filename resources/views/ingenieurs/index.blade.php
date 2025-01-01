@@ -4,7 +4,7 @@
     @can('ingenieur-view')
         <section class="section register">
             <div class="row justify-content-center">
-                <div class="col-12 col-md-12 col-lg-10">
+                <div class="col-12 col-md-12 col-lg-12">
                     <div class="pagetitle">
                         {{-- <h1>Data Tables</h1> --}}
                         <nav>
@@ -43,9 +43,8 @@
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a> --}}
                                 @can('ingenieur-create')
-                                    <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                        data-bs-target="#AddingenieurModal">
-                                        <i class="bi bi-person-plus" title="Ajouter"></i>
+                                    <button type="button" class="btn btn-primary btn-sm float-end btn-rounded" data-bs-toggle="modal"
+                                        data-bs-target="#AddingenieurModal">Ajouter
                                     </button>
                                 @endcan
                             </div>

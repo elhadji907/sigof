@@ -82,7 +82,8 @@
                                                 @can('rapport-suivi-formes-view')
                                                     <td>
                                                         @if (empty($listecollective?->suivi))
-                                                            <form action="{{ route('SuivreFormesCol', $listecollective?->id) }}"
+                                                            <form
+                                                                action="{{ route('SuivreFormesCol', $listecollective?->id) }}"
                                                                 method="post">
                                                                 @csrf
                                                                 @method('PUT')
@@ -111,58 +112,47 @@
             aria-labelledby="generate_rapport_module_regionLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Générer rapport formés</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="card-header text-center bg-gradient-default">
+                        <h1 class="h4 text-black mb-0">Générer rapport</h1>
                     </div>
                     <form method="post" action="{{ route('formesCollective.rapport') }}">
                         @csrf
                         <div class="modal-body">
                             <div class="row g-3">
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                    <div class="row">
-                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <div class="form-group">
-                                                <label for="from_date" class="form-label">De<span
-                                                        class="text-danger mx-1">*</span></label>
-                                                <input type="date" name="from_date"
-                                                    class="form-control form-control-sm @error('from_date') is-invalid @enderror from_date">
-                                            </div>
-                                            @error('from_date')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <div class="form-group">
-                                                <label for="from_date" class="form-label">À<span
-                                                        class="text-danger mx-1">*</span></label>
-                                                <input type="date" name="to_date"
-                                                    class="form-control form-control-sm @error('to_date') is-invalid @enderror to_date">
-                                            </div>
-                                            @error('to_date')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <div class="form-group">
-                                                <label for="module" class="form-label">Module</label>
-                                                <input type="text" name="module" value="{{ old('module_name') }}"
-                                                    class="form-control form-control-sm @error('module_name') is-invalid @enderror"
-                                                    id="module_name" placeholder="Nom du module" autofocus>
-                                                <div id="countryList"></div>
-                                                {{ csrf_field() }}
-                                                @error('module')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <div>{{ $message }}</div>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <label for="from_date" class="form-label">De<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="date" name="from_date"
+                                        class="form-control form-control-sm @error('from_date') is-invalid @enderror from_date">
+                                    @error('from_date')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="from_date" class="form-label">À<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="date" name="to_date"
+                                        class="form-control form-control-sm @error('to_date') is-invalid @enderror to_date">
+                                    @error('to_date')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="module" class="form-label">Module</label>
+                                    <input type="text" name="module" value="{{ old('module_name') }}"
+                                        class="form-control form-control-sm @error('module_name') is-invalid @enderror"
+                                        id="module_name" placeholder="Nom du module" autofocus>
+                                    <div id="countryList"></div>
+                                    {{ csrf_field() }}
+                                    @error('module')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                         </div>

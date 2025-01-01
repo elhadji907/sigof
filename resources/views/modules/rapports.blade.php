@@ -102,89 +102,77 @@
             aria-labelledby="generate_rappor_module_regionLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Générer rapport modules demandés</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="card-header text-center bg-gradient-default">
+                        <h1 class="h4 text-black mb-0">Générer rapport</h1>
                     </div>
                     <form method="post" action="{{ route('modules.rapport') }}">
                         @csrf
                         <div class="modal-body">
                             <div class="row g-3">
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                    <div class="row">
-                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <div class="form-group">
-                                                <label for="module" class="form-label">Module<span
-                                                        class="text-danger mx-1">*</span></label>
-                                                <input type="text" name="module" value="{{ old('module_name') }}"
-                                                    class="form-control form-control-sm @error('module_name') is-invalid @enderror"
-                                                    id="module_name" placeholder="module..." autofocus>
-                                                <div id="countryList"></div>
-                                                {{ csrf_field() }}
-                                                @error('module')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <div>{{ $message }}</div>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <div class="form-group">
-                                                <label for="region" class="form-label">Région<span
-                                                        class="text-danger mx-1">*</span></label>
-                                                <select name="region"
-                                                    class="form-select  @error('region') is-invalid @enderror"
-                                                    aria-label="Select" id="select-field-region-module-rapport"
-                                                    data-placeholder="Choisir la région">
-                                                    <option value="">Toutes</option>
-                                                    @foreach ($regions as $region)
-                                                        <option value="{{ $region->id }}">
-                                                            {{ $region->nom }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                @error('region')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <div>{{ $message }}</div>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <div class="form-group">
-                                                <label for="region" class="form-label">Statut<span
-                                                        class="text-danger mx-1">*</span></label>
-                                                <select name="statut"
-                                                    class="form-select form-select-sm @error('statut') is-invalid @enderror"
-                                                    aria-label="Select" id="select-field-statut-rappo"
-                                                    data-placeholder="Choisir statut">
-                                                    <option value="{{ old('statut') }}">
-                                                        {{ old('statut') }}
-                                                    </option>
-                                                    <option value="nouvelle">
-                                                        nouvelle
-                                                    </option>
-                                                    <option value="attente">
-                                                        attente
-                                                    </option>
-                                                    <option value="retenu">
-                                                        retenu
-                                                    </option>
-                                                    <option value="former">
-                                                        former
-                                                    </option>
-                                                    <option value="rejeter">
-                                                        rejeter
-                                                    </option>
-                                                </select>
-                                                @error('statut')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <div>{{ $message }}</div>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <label for="module" class="form-label">Module<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="module" value="{{ old('module_name') }}"
+                                        class="form-control form-control-sm @error('module_name') is-invalid @enderror"
+                                        id="module_name" placeholder="module..." autofocus>
+                                    <div id="countryList"></div>
+                                    {{ csrf_field() }}
+                                    @error('module')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="region" class="form-label">Région<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="region" class="form-select  @error('region') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-region-module-rapport"
+                                        data-placeholder="Choisir la région">
+                                        <option value="">Toutes</option>
+                                        @foreach ($regions as $region)
+                                            <option value="{{ $region->id }}">
+                                                {{ $region->nom }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('region')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="region" class="form-label">Statut<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="statut"
+                                        class="form-select form-select-sm @error('statut') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-statut-rappo"
+                                        data-placeholder="Choisir statut">
+                                        <option value="{{ old('statut') }}">
+                                            {{ old('statut') }}
+                                        </option>
+                                        <option value="nouvelle">
+                                            nouvelle
+                                        </option>
+                                        <option value="attente">
+                                            attente
+                                        </option>
+                                        <option value="retenu">
+                                            retenu
+                                        </option>
+                                        <option value="former">
+                                            former
+                                        </option>
+                                        <option value="rejeter">
+                                            rejeter
+                                        </option>
+                                    </select>
+                                    @error('statut')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary btn-sm"

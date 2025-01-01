@@ -1,7 +1,6 @@
 @extends('layout.user-layout')
 @section('title', 'ONFP - Liste des employes')
 @section('space-work')
-
     <div class="pagetitle">
         <nav>
             <ol class="breadcrumb">

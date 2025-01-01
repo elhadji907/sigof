@@ -33,6 +33,7 @@ class CreateIngenieursTable extends Migration
             $table->string('specialite', 200)->nullable();
             $table->timestamp('date')->nullable();
             $table->string('items1', 200)->nullable();
+            $table->unsignedInteger('users_id')->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();
         });

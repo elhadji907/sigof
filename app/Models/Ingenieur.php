@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $matricule
  * @property string $name
  * @property string $initiale
+ * @property int $users_id
  * @property string|null $telephone
  * @property string|null $email
  * @property string|null $fonction
@@ -35,6 +36,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Collection|Formation[] $formations
  * @property Collection|Programme[] $programmes
  * @property Collection|Projet[] $projets
+ * @property User $user
  *
  * @package App\Models
  */
@@ -50,6 +52,10 @@ class Ingenieur extends Model
 		'date'
 	];
 
+	protected $casts = [
+		'users_id' => 'int',
+	];
+
 	protected $fillable = [
 		'uuid',
 		'matricule',
@@ -61,6 +67,7 @@ class Ingenieur extends Model
 		'specialite',
 		'date',
 		'items1',
+		'users_id',
 	];
 
 	public function collectives()
@@ -83,5 +90,9 @@ class Ingenieur extends Model
 		return $this->belongsToMany(Projet::class, 'projetsingenieurs', 'ingenieurs_id', 'projets_id')
 					->withPivot('id', 'deleted_at')
 					->withTimestamps();
+	}
+	public function user()
+	{
+		return $this->belongsTo(User::class, 'users_id');
 	}
 }
