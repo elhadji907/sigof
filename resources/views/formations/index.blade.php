@@ -191,7 +191,7 @@
                                     <th>Bénéficiaires</th>
                                     <th width='15%'>Localité</th>
                                     <th width='5%'>Modules</th>
-                                    <th width='17%'>Type certification</th>
+                                    <th width='17%'>Niveau qualification</th>
                                     {{-- <th>Niveau qualification</th> --}}
                                     {{-- <th>Effectif</th> --}}
                                     <th width='5%' class="text-center">Statut</th>
