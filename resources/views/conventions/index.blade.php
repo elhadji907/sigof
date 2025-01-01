@@ -103,13 +103,12 @@
                 </div>
             </div>
             <div class="modal fade" id="AddConvModal" tabindex="-1">
-                <div class="modal-dialog modal-xl">
+                <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <form method="post" action="{{ url('conventions') }}" enctype="multipart/form-data" class="row g-3">
                             @csrf
-                            <div class="modal-header">
-                                <h5 class="modal-title">Ajouter une nouvelle convention</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="card-header text-center bg-gradient-default">
+                                <h1 class="h4 text-black mb-0">Ajouter une nouvelle convention</h1>
                             </div>
                             <div class="modal-body">
                                 <div class="row g-3">
@@ -117,7 +116,7 @@
                                     <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                         <label for="convention" class="form-label">Covention<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <textarea name="name" id="convention" rows="1"
+                                        <textarea name="name" id="convention" rows="2"
                                             class="form-control form-control-sm @error('convention') is-invalid @enderror" placeholder="Covention">{{ old('convention') }}</textarea>
                                         @error('convention')
                                             <span class="invalid-feedback" role="alert">
@@ -140,15 +139,14 @@
             @foreach ($conventions as $convention)
                 <div class="modal fade" id="EditFileModal{{ $convention?->id }}" tabindex="-1" role="dialog"
                     aria-labelledby="EditFileModalLabel{{ $convention?->id }}" aria-hidden="true">
-                    <div class="modal-dialog modal-xl">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <form method="post" action="{{ route('conventions.update', $convention?->id) }}"
                                 enctype="multipart/form-data" class="row g-3">
                                 @csrf
                                 @method('patch')
-                                <div class="modal-header" id="EditFileModalLabel{{ $convention?->id }}">
-                                    <h5 class="modal-title">Modification de la convention {{ $convention?->intitule }}
-                                    </h5>
+                                <div class="card-header text-center bg-gradient-default">
+                                    <h1 class="h4 text-black mb-0">Modification convention</h1>
                                 </div>
                                 <div class="modal-body">
                                     <input type="hidden" name="id" value="{{ $convention?->id }}">
@@ -156,7 +154,7 @@
                                     <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                         <label for="convention" class="form-label">Convention<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <textarea name="name" id="convention" rows="1"
+                                        <textarea name="name" id="convention" rows="2"
                                             class="form-control form-control-sm @error('convention') is-invalid @enderror" placeholder="Convention">{{ $convention?->name ?? old('convention') }}</textarea>
                                         @error('convention')
                                             <span class="invalid-feedback" role="alert">

@@ -230,7 +230,7 @@
                                 <p>
                                     <span>
                                         <b>TYPE DE CERTIFICATION DÉLIVRÉE </b> :
-                                        {{ $formation?->niveau_qualification }}
+                                        {{ $formation?->type_certification }}
                                     </span>
                                 </p>
 

@@ -707,42 +707,16 @@ class FormationController extends Controller
         $module = Module::findOrFail($idmodule);
         $region = Region::findOrFail($idlocalite);
 
-        /* $individuelles = Individuelle::where('regions_id', $idlocalite)
-        ->where('modules_id', $idmodule)
-        ->where('statut', 'accepter')
-        ->orWhere('statut', 'retirer')
-        ->orWhere('statut', 'programmer')
-        ->get(); */
-        /* $individuelles = Individuelle::where('regions_id', $idlocalite)
-        ->where('statut', 'attente')
-        ->orWhere('statut', 'retirer')
-        ->orWhere('statut', 'programmer')
-        ->get(); */
-
-        /* $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
-        ->select('individuelles.*')
-        ->where('modules.name', 'LIKE', "%{$module->name}%")
-        ->where('regions_id', $idlocalite)
-        ->where('statut', 'attente')
-        ->orWhere('statut', 'retirer')
-        ->orWhere('statut', 'retenu')
-        ->orWhere('statut', 'programmer')
-        ->get(); */
-        /* dd($localite->nom); */
-
         $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
             ->join('regions', 'regions.id', 'individuelles.regions_id')
             ->select('individuelles.*')
             ->where('individuelles.projets_id', $formation?->projets_id)
             ->where('modules.name', 'LIKE', "%{$module->name}%")
             ->where('regions.nom', $region->nom)
-            ->where('modules.name', 'LIKE', "%{$module->name}%")
-            ->where('statut', 'attente')
-            ->orwhere('statut', 'retirer')
-            ->orwhere('statut', 'retenu')
+            ->where('individuelles.statut', 'attente')
+            ->orwhere('individuelles.statut', 'retirer')
+            ->orwhere('individuelles.statut', 'retenu')
             ->get();
-
-        /* dd($individuelles); */
 
         $candidatsretenus = Individuelle::where('formations_id', $idformation)
             ->get();

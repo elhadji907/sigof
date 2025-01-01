@@ -1093,25 +1093,29 @@
                         enctype="multipart/form-data" class="row">
                         @csrf
                         @method('PUT')
-                        <div class="modal-header">
-                            <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Retirer demandeur</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                        <div class="card-header text-center bg-gradient-default">
+                            <h1 class="h4 text-black mb-0">Retirer demandeur</h1>
                         </div>
                         <div class="modal-body">
-                            <input type="hidden" name="individuelleid" value="{{ $individuelle->id }}">
-                            <label for="motif" class="form-label">Justification du retrait</label>
-                            <textarea name="motif" id="motif" rows="5"
-                                class="form-control form-control-sm @error('motif') is-invalid @enderror"
-                                placeholder="Expliquer les raisons du retrait de ce bénéficiaire">{{ old('motif') }}</textarea>
-                            @error('motif')
-                                <span class="invalid-feedback" role="alert">
-                                    <div>{{ $message }}</div>
-                                </span>
-                            @enderror
+                            <div class="row g-3">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <input type="hidden" name="individuelleid" value="{{ $individuelle->id }}">
+                                    <label for="motif" class="form-label">Justification du retrait<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <textarea name="motif" id="motif" rows="5"
+                                        class="form-control form-control-sm @error('motif') is-invalid @enderror"
+                                        placeholder="Expliquer les raisons du retrait de ce bénéficiaire">{{ old('motif') }}</textarea>
+                                    @error('motif')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                data-bs-dismiss="modal">Fermer</button>
                             <button type="submit" class="btn btn-danger btn-sm"><i
                                     class="bi bi-arrow-right-circle"></i>
                                 Retirer</button>
@@ -1427,10 +1431,8 @@
                     enctype="multipart/form-data" class="row g-3">
                     @csrf
                     @method('patch')
-                    <div class="modal-header" id="EditAgentSuiviModalLabel{{ $formation->id }}">
-                        <h5 class="modal-title">Ajouter un agent de suivi</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                    <div class="card-header text-center bg-gradient-default">
+                        <h1 class="h4 text-black mb-0">Ajouter un agent de suivi</h1>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id" value="{{ $formation->id }}">
@@ -1460,9 +1462,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                        <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                            Vavilider</button>
+                        <button type="button" class="btn btn-secondary btn-sm"
+                            data-bs-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Vavilider</button>
                     </div>
                 </form>
             </div>

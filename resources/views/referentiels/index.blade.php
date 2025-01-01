@@ -118,9 +118,8 @@
                     <div class="modal-content">
                         <form method="post" action="{{ url('referentiels') }}" enctype="multipart/form-data" class="row g-3">
                             @csrf
-                            <div class="modal-header">
-                                <h5 class="modal-title">Ajouter un nouveau référentiel</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="card-header text-center bg-gradient-default">
+                                <h1 class="h4 text-black mb-0">Ajouter un nouveau référentiel</h1>
                             </div>
                             <div class="modal-body">
                                 <div class="row g-3">
@@ -150,8 +149,7 @@
                                     </div>
 
                                     <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                        <label for="categorie" class="form-label">Catégorie<span
-                                                class="text-danger mx-1">*</span></label>
+                                        <label for="categorie" class="form-label">Catégorie</label>
                                         <textarea name="categorie" id="category" rows="1"
                                             class="form-control form-control-sm @error('categorie') is-invalid @enderror" placeholder="Catégorie">{{ old('categorie') }}</textarea>
                                         @error('categorie')
@@ -162,8 +160,7 @@
                                     </div>
 
                                     <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                        <label for="convention" class="form-label">Convention<span
-                                                class="text-danger mx-1">*</span></label>
+                                        <label for="convention" class="form-label">Convention</label>
                                         <select name="convention"
                                             class="form-select  @error('convention') is-invalid @enderror" aria-label="Select"
                                             id="select-field-convention" data-placeholder="Choisir convention">
@@ -182,8 +179,7 @@
                                     </div>
 
                                     <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                        <label for="reference" class="form-label">Référence<span
-                                                class="text-danger mx-1">*</span></label>
+                                        <label for="reference" class="form-label">Référence</label>
                                         <textarea name="reference" id="reference" rows="2"
                                             class="form-control form-control-sm @error('reference') is-invalid @enderror" placeholder="Référence">{{ old('reference') }}</textarea>
                                         @error('reference')

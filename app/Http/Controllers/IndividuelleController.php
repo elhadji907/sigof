@@ -667,7 +667,12 @@ class IndividuelleController extends Controller
         $modules = Module::orderBy("created_at", "desc")->get();
         $projets = Projet::orderBy("created_at", "desc")->get();
 
-        foreach (Auth::user()->roles as $key => $role) {
+        foreach (Auth::user()->roles as $role) {
+            if (!empty($role?->name) && ($role?->name != 'super-admin')
+                && ($role?->name != 'Employe') && ($role?->name != 'admin')
+                && ($role?->name != 'DIOF') && ($role?->name != 'DEC')) {
+                $this->authorize('update', $individuelle);
+            }
         }
 
         if ($individuelle->projet && $individuelle->projet->statut != 'ouvert') {
