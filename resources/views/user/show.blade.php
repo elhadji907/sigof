@@ -210,14 +210,21 @@
                                                     employé</button>
                                             </form> --}}
 
-                                            @if (isset($user->employee))
-                                                <span class="badge bg-info">cet utilisateur est un employé</span>
+                                            @if (!empty($user->employee))
+                                                <span class="text-success">cet utilisateur est un employé</span>
                                             @else
                                                 <button type="button" class="btn btn-outline-success btn-sm float-end"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#addEmploye{{ $user?->id }}"
-                                                    title="Ajouter à la base de données des employés">
-                                                    Employé</button>
+                                                    data-bs-toggle="modal" data-bs-target="#addEmploye"
+                                                    title="Ajouter employé">
+                                                    Devenir employé</button>
+                                            @endif
+                                            @if (!empty($user->ingenieur))
+                                                <span class="text-info">cet utilisateur est un ingénieur</span>
+                                            @else
+                                                <button type="button" class="btn btn-outline-secondary btn-sm float-end"
+                                                    data-bs-toggle="modal" data-bs-target="#addIngenieur"
+                                                    title="Ajouter comme ingénieur">
+                                                    Devenir ingénieur</button>
                                             @endif
                                         </div>
                                         <!-- Profile Edit Form -->
@@ -620,83 +627,144 @@
 
             </div>
         </div>
-        @if (isset($user->employee))
-        @else
-            <div class="modal fade" id="addEmploye{{ $user?->id }}" tabindex="-1" role="dialog"
-                aria-labelledby="addEmployeLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="card-header text-center bg-gradient-default">
-                            <h1 class="h4 text-black mb-0">Devenir employé</h1>
-                        </div>
-                        <form method="post" action="{{ route('users.update', $user->id) }}"
-                            enctype="multipart/form-data" class="row g-3">
-                            @csrf
-                            @method('patch')
-                            <input name="employe" type="hidden" value="1">
-                            <div class="modal-body">
-                                <div class="row g-3">
-                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                        <label for="cin" class="form-label">CIN<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="cin" value="{{ $user->cin ?? old('cin') }}"
-                                            class="form-control form-control-sm @error('cin') is-invalid @enderror"
-                                            id="cin" placeholder="cin">
-                                        @error('cin')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
+        <div class="modal fade" id="addEmploye" tabindex="-1" role="dialog" aria-labelledby="addEmployeLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="card-header text-center bg-gradient-default">
+                        <h1 class="h4 text-black mb-0">Devenir employé</h1>
+                    </div>
+                    <form method="post" action="{{ route('users.update', $user->id) }}" enctype="multipart/form-data"
+                        class="row g-3">
+                        @csrf
+                        @method('patch')
+                        <input name="employe" type="hidden" value="1">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="cin" class="form-label">CIN<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="cin" value="{{ $user->cin ?? old('cin') }}"
+                                        class="form-control form-control-sm @error('cin') is-invalid @enderror"
+                                        id="cin" placeholder="cin">
+                                    @error('cin')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
 
-                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                        <label for="matricule" class="form-label">Matricule</label>
-                                        <input type="text" name="matricule"
-                                            value="{{ $employe->matricule ?? old('matricule') }}"
-                                            class="form-control form-control-sm @error('matricule') is-invalid @enderror"
-                                            id="matricule" placeholder="matricule">
-                                        @error('matricule')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="matricule" class="form-label">Matricule</label>
+                                    <input type="text" name="matricule"
+                                        value="{{ $employe->matricule ?? old('matricule') }}"
+                                        class="form-control form-control-sm @error('matricule') is-invalid @enderror"
+                                        id="matricule" placeholder="matricule">
+                                    @error('matricule')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
 
-                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                        <label for="direction" class="form-label">Direction<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <select name="direction"
-                                            class="form-select @error('direction') is-invalid @enderror"
-                                            aria-label="Select" id="select-field" data-placeholder="Choisir direction">
-                                            <option value="{{ $user?->employee?->direction?->id }}">
-                                                {{ $user?->employee?->direction?->name }}
-                                            </option>
-                                            @foreach ($directions as $direction)
-                                                <option value="{{ $direction?->id }}">
-                                                    {{ $direction?->name ?? old('direction') }}</option>
-                                            @endforeach
-                                        </select>
-                                        @error('direction')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="direction" class="form-label">Direction<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="direction" class="form-select @error('direction') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-directionn"
+                                        data-placeholder="Choisir direction">
+                                        <option value="{{ $user?->employee?->direction?->id }}">
+                                            {{ $user?->employee?->direction?->name }}
+                                        </option>
+                                        @foreach ($directions as $direction)
+                                            <option value="{{ $direction?->id }}">
+                                                {{ $direction?->name ?? old('direction') }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('direction')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
 
 
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary btn-sm"
-                                            data-bs-dismiss="modal">Fermer</button>
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
-                                        </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-sm"
+                                        data-bs-dismiss="modal">Fermer</button>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-        @endif
+        </div>
+        {{-- Devenir igénieur --}}
+        <div class="modal fade" id="addIngenieur" tabindex="-1" role="dialog" aria-labelledby="addIngenieurLabel"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="card-header text-center bg-gradient-default">
+                        <h1 class="h4 text-black mb-0">Devenir ingénieur</h1>
+                    </div>
+                    <form method="post" action="{{ route('users.update', $user->id) }}" enctype="multipart/form-data"
+                        class="row g-3">
+                        @csrf
+                        @method('patch')
+                        <input name="ingenieur" type="hidden" value="1">
+                        <div class="modal-body">
+                            <div class="row g-3">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="initiale" class="form-label">Initiale<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="initiale"
+                                        value="{{ $employe->initiale ?? old('initiale') }}"
+                                        class="form-control form-control-sm @error('initiale') is-invalid @enderror"
+                                        id="initiale" placeholder="initiale">
+                                    @error('initiale')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="fonction" class="form-label">Fonction<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <select name="fonction" class="form-select @error('fonction') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-field-fonction"
+                                        data-placeholder="Choisir fonction">
+                                        <option value="{{ $user?->fonction?->name ?? old('fonction') }}">
+                                            {{ $user?->fonction?->name ?? old('fonction') }}
+                                        </option>
+                                        @foreach ($fonctions as $fonction)
+                                            <option value="{{ $fonction?->name }}">
+                                                {{ $fonction?->name ?? old('fonction') }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('fonction')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-sm"
+                                        data-bs-dismiss="modal">Fermer</button>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </section>
 @endsection

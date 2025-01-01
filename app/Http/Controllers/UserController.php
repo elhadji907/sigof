@@ -8,13 +8,14 @@ use App\Models\Depart;
 use App\Models\Departement;
 use App\Models\Direction;
 use App\Models\Employee;
+use App\Models\Fonction;
 use App\Models\Individuelle;
 use App\Models\Interne;
 use App\Models\Module;
 use App\Models\Operateur;
-use App\Models\Projet;
 use App\Models\Region;
 use App\Models\User;
+use App\Models\Ingenieur;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -34,13 +35,13 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        /* $this->middleware(['role:super-admin|admin|DIOF|DEC|DPP']);
+        $this->middleware(['role:super-admin|admin|DIOF|DEC|DPP']);
         $this->middleware("permission:user-view", ["only" => ["index"]]);
         $this->middleware("permission:user-create", ["only" => ["create", "store"]]);
         $this->middleware("permission:user-update", ["only" => ["update", "edit"]]);
         $this->middleware("permission:user-show", ["only" => ["show"]]);
         $this->middleware("permission:user-delete", ["only" => ["destroy"]]);
-        $this->middleware("permission:give-role-permissions", ["only" => ["givePermissionsToRole"]]); */
+        $this->middleware("permission:give-role-permissions", ["only" => ["givePermissionsToRole"]]);
     }
 
     public function homePage()
@@ -67,8 +68,6 @@ class UserController extends Controller
         $roles = Role::orderBy('created_at', 'desc')->get();
         /* return view("home-page", compact("total_user", 'roles', 'total_arrive', 'total_depart', 'total_individuelle')); */
 
-
-
         /* $individuelles = Individuelle::skip(0)->take(1000)->get(); */
         $individuelles = Individuelle::get();
         $departements = Departement::orderBy("created_at", "desc")->get();
@@ -77,7 +76,7 @@ class UserController extends Controller
         $today = date('Y-m-d');
         $annee = date('Y');
         $annee_lettre = 'Diagramme à barres, année: ' . date('Y');
-        $count_today = Individuelle::where("created_at", "LIKE",  "{$today}%")->count();
+        $count_today = Individuelle::where("created_at", "LIKE", "{$today}%")->count();
 
         $janvier = DB::table('individuelles')->whereMonth("created_at", "01")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
         $fevrier = DB::table('individuelles')->whereMonth("created_at", "02")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
@@ -240,7 +239,7 @@ class UserController extends Controller
             $image->save();
 
             $user->update([
-                'image' => $imagePath
+                'image' => $imagePath,
             ]);
         }
 
@@ -280,14 +279,15 @@ class UserController extends Controller
         if ($request->input('employe') == "1") {
             $this->validate($request, [
                 /* "matricule"           => ['nullable', 'string', 'min:8', 'max:8',Rule::unique(Employee::class)], */
-                "matricule"           => ['nullable', 'string', 'min:8', 'max:8', "unique:employees,matricule,Null,{$user?->employee?->id},deleted_at,NULL"],
+                "matricule" => ['nullable', 'string', 'min:8', 'max:8', "unique:employees,matricule,Null,{$user?->employee?->id},deleted_at,NULL"],
                 /* 'cin'                 => ['required', 'string', 'min:13', 'max:15',Rule::unique(User::class)], */
-                'direction'           => ['required', 'string'],
+                'direction' => ['required', 'string'],
             ]);
+
             Employee::create([
-                'users_id'      => $user?->id,
+                'users_id' => $user?->id,
                 /* 'cin'           => $request?->input('employe'), */
-                'matricule'     => $request?->input('matricule'),
+                'matricule' => $request?->input('matricule'),
                 'directions_id' => $request?->input('direction'),
             ]);
             Alert::success('Effectuée ! ', 'employé ajouté');
@@ -295,21 +295,46 @@ class UserController extends Controller
             $user->assignRole('Employe');
 
             return Redirect::back();
+
+        } elseif ($request->input('ingenieur') == "1") {
+            $this->validate($request, [
+                "initiale" => ['required', 'string', 'min:2', 'max:5', "unique:ingenieurs,initiale,Null,{$user?->ingenieur?->id},deleted_at,NULL"],
+                'fonction' => ['required', 'string'],
+            ]);
+            
+
+            $ingenieur = Ingenieur::create([
+                "users_id" => $user?->id,
+                "name" => $user?->firstname . ' ' . $user?->name,
+                "initiale" => $request->input("initiale"),
+                "fonction" => $request->input("fonction"),
+                "email" => $user?->email,
+                "telephone" => $user?->telephone,
+            ]);
+
+            $ingenieur->save();
+
+            Alert::success('Effectuée ! ', 'ingénieur ajouté');
+
+            $user->assignRole('Ingenieur');
+
+            return Redirect::back();
+
         } else {
 
             $this->validate($request, [
-                'civilite'         => ['nullable', 'string', 'max:10'],
-                'username'         => ["required", "string", "max:25", Rule::unique(User::class)->ignore($id)],
-                "cin"              => ["nullable", "string", "min:12", "max:14", Rule::unique(User::class)->ignore($id)],
-                'firstname'        => ['required', 'string', 'max:150'],
-                'name'             => ['required', 'string', 'max:50'],
-                'date_naissance'   => ['date', 'nullable', 'max:10', 'min:10', 'date_format:Y-m-d'],
-                'lieu_naissance'   => ['string', 'nullable'],
-                'image'            => ['image', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-                'telephone'        => ['required', 'string', 'max:25', 'min:9'],
-                'adresse'          => ['required', 'string', 'max:255'],
-                'roles.*'          => ['string', 'max:255', 'nullable', 'max:255'],
-                "email"            => ["lowercase", 'email', "max:255", Rule::unique(User::class)->ignore($id)],
+                'civilite' => ['nullable', 'string', 'max:10'],
+                'username' => ["required", "string", "max:25", Rule::unique(User::class)->ignore($id)],
+                "cin" => ["nullable", "string", "min:12", "max:14", Rule::unique(User::class)->ignore($id)],
+                'firstname' => ['required', 'string', 'max:150'],
+                'name' => ['required', 'string', 'max:50'],
+                'date_naissance' => ['date', 'nullable', 'max:10', 'min:10', 'date_format:Y-m-d'],
+                'lieu_naissance' => ['string', 'nullable'],
+                'image' => ['image', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+                'telephone' => ['required', 'string', 'max:25', 'min:9'],
+                'adresse' => ['required', 'string', 'max:255'],
+                'roles.*' => ['string', 'max:255', 'nullable', 'max:255'],
+                "email" => ["lowercase", 'email', "max:255", Rule::unique(User::class)->ignore($id)],
             ]);
 
             if (!empty($request->date_naissance)) {
@@ -339,32 +364,31 @@ class UserController extends Controller
                 $image->save();
 
                 $user->update([
-                    'image' => $imagePath
+                    'image' => $imagePath,
                 ]);
             }
 
             $user->update([
-                'civilite'                  =>  $request->civilite,
-                'username'                  =>  $request->username,
-                'cin'                       =>  $request->cin,
-                'firstname'                 =>  $request->firstname,
-                'name'                      =>  $request->name,
-                'date_naissance'            =>  $date_naissance,
-                'lieu_naissance'            =>  $request->lieu_naissance,
-                'situation_familiale'       =>  $request->situation_familiale,
-                'situation_professionnelle' =>  $request->situation_professionnelle,
-                'email'                     =>  $request->email,
-                'telephone'                 =>  $request->telephone,
-                'adresse'                   =>  $request->adresse,
-                'twitter'                   =>  $request->twitter,
-                'facebook'                  =>  $request->facebook,
-                'instagram'                 =>  $request->instagram,
-                'linkedin'                  =>  $request->linkedin,
-                'updated_by'                =>  Auth::user()->id,
+                'civilite' => $request->civilite,
+                'username' => $request->username,
+                'cin' => $request->cin,
+                'firstname' => $request->firstname,
+                'name' => $request->name,
+                'date_naissance' => $date_naissance,
+                'lieu_naissance' => $request->lieu_naissance,
+                'situation_familiale' => $request->situation_familiale,
+                'situation_professionnelle' => $request->situation_professionnelle,
+                'email' => $request->email,
+                'telephone' => $request->telephone,
+                'adresse' => $request->adresse,
+                'twitter' => $request->twitter,
+                'facebook' => $request->facebook,
+                'instagram' => $request->instagram,
+                'linkedin' => $request->linkedin,
+                'updated_by' => Auth::user()->id,
             ]);
 
             $user->syncRoles($request->roles);
-
 
             Alert::success('Effectuée ! ', 'Mise à jour effectuée');
 
@@ -400,9 +424,9 @@ class UserController extends Controller
         $roles = Role::pluck('name', 'name')->all();
         $userRoles = $user->roles->pluck('name', 'name')->all();
         $directions = Direction::orderBy('created_at', 'desc')->get();
+        $fonctions = Fonction::orderBy('created_at', 'desc')->get();
 
-
-        return view("user.show", compact("user", "user_create_name", "user_update_name", "roles", "userRoles", "directions"));
+        return view("user.show", compact("user", "user_create_name", "user_update_name", "roles", "userRoles", "directions", "fonctions"));
     }
 
     public function destroy($userId)
@@ -460,7 +484,7 @@ class UserController extends Controller
                 'to_date' => 'required|date',
             ]);
 
-            $now =  Carbon::now()->format('H:i:s');
+            $now = Carbon::now()->format('H:i:s');
 
             $from_date = date_format(date_create($request->from_date), 'd/m/Y');
 
@@ -512,7 +536,7 @@ class UserController extends Controller
                 'to_date' => 'required|date',
             ]);
 
-            $now =  Carbon::now()->format('H:i:s');
+            $now = Carbon::now()->format('H:i:s');
 
             $from_date = date_format(date_create($request->from_date), 'd/m/Y');
 
@@ -588,9 +612,9 @@ class UserController extends Controller
 
             /* dd($users);
 
-             $admins = User::whereHas('roles', function($q) use ($role){$q->whereIn('role.name', $role);})->get();
+            $admins = User::whereHas('roles', function($q) use ($role){$q->whereIn('role.name', $role);})->get();
 
-             dd($admins); */
+            dd($admins); */
 
             $count = $users->count();
 
@@ -613,7 +637,7 @@ class UserController extends Controller
             $operateurs = Operateur::join('operateurmodules', 'operateurs.id', 'operateurmodules.operateurs_id')
                 ->select('operateurs.*')
                 ->where('statut_agrement', 'LIKE', "%{$request->statut}%")
-                ->where('regions_id',  "{$request->region}")
+                ->where('regions_id', "{$request->region}")
                 ->where('operateurmodules.module', 'LIKE', "%{$request->module}%")
                 ->distinct()
                 ->get();
@@ -674,11 +698,11 @@ class UserController extends Controller
     public function generateReport(Request $request)
     {
         $this->validate($request, [
-            'cin'               => 'nullable|string',
-            'name'              => 'nullable|string',
-            'firstname'         => 'nullable|string',
-            'telephone'         => 'nullable|string',
-            'email'             => 'nullable|email',
+            'cin' => 'nullable|string',
+            'name' => 'nullable|string',
+            'firstname' => 'nullable|string',
+            'telephone' => 'nullable|string',
+            'email' => 'nullable|email',
         ]);
 
         if ($request?->cin == null && $request->firstname == null && $request->telephone == null && $request->name == null && $request->email == null) {
@@ -704,7 +728,6 @@ class UserController extends Controller
             $title = $count . ' utilisateurs trouvées';
         }
 
-
         $roles = Role::pluck('name', 'name')->all();
         $departements = Departement::orderBy("created_at", "DESC")->get();
         /* $modules = Module::orderBy("created_at", "desc")->get(); */
@@ -717,28 +740,30 @@ class UserController extends Controller
         ));
     }
 
-    public function resetuserPassword(Request $request, $id){
-        
+    public function resetuserPassword(Request $request, $id)
+    {
+
         $request->validate([
-            'password'              => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
-        
+
         $user = User::findOrFail($id);
-        
+
         $user->update([
             'password' => Hash::make($request->password),
         ]);
-        
+
         Alert::success('Succès !', 'Votre mot de passe a été réinitialisé avec succès.');
 
         return Redirect::back();
 
     }
 
-    public function backup(Request $request) {
-        
+    public function backup(Request $request)
+    {
+
         Artisan::call('database:backup');
-        
+
         Alert::success('Sauvegarde réussie !', 'Waw.');
 
         return Redirect::back();

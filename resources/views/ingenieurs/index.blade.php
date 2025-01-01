@@ -138,26 +138,12 @@
             <div class="modal fade" id="AddingenieurModal" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        {{-- <form method="POST" action="{{ route('addingenieur') }}">
-                        @csrf --}}
                         <form method="post" action="{{ url('ingenieurs') }}" enctype="multipart/form-data" class="row g-3">
                             @csrf
-                            <div class="modal-header">
-                                <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i>Ajouter un ingénieur</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <div class="card-header text-center bg-gradient-default">
+                                <h1 class="h4 text-black mb-0">Ajouter ingénieur</h1>
                             </div>
                             <div class="modal-body">
-                                {{-- <div class="form-floating mb-3">
-                                <input type="text" name="matricule" value="{{ old('matricule') }}"
-                                    class="form-control form-control-sm @error('matricule') is-invalid @enderror"
-                                    id="matricule" placeholder="Matricule" autofocus>
-                                @error('matricule')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                                <label for="floatingInput">Matricule</label>
-                            </div> --}}
                                 <div class="form-floating mb-3">
                                     <input type="text" name="name" value="{{ old('name') }}"
                                         class="form-control form-control-sm @error('name') is-invalid @enderror" id="name"
@@ -180,17 +166,6 @@
                                     @enderror
                                     <label for="floatingInput">Initiale<span class="text-danger mx-1">*</span></label>
                                 </div>
-                                {{-- <div class="form-floating mb-3">
-                                <input type="text" name="specialite" value="{{ old('specialite') }}"
-                                    class="form-control form-control-sm @error('specialite') is-invalid @enderror"
-                                    id="specialite" placeholder="specialite">
-                                @error('specialite')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                                <label for="floatingInput">Spécialité</label>
-                            </div> --}}
                                 <div class="form-floating mb-3">
                                     <input type="text" name="fonction" value="{{ old('fonction') }}"
                                         class="form-control form-control-sm @error('fonction') is-invalid @enderror"
@@ -226,8 +201,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary btn-sm">
                                     Enregistrer</button>
                             </div>
                         </form>
@@ -246,26 +221,11 @@
                                 enctype="multipart/form-data" class="row g-3">
                                 @csrf
                                 @method('patch')
-                                <div class="modal-header" id="EditingenieurModalLabel{{ $ingenieur->id }}">
-                                    <h5 class="modal-title"><i class="bi bi-pencil" title="Ajouter"></i> Modifier ingénieur
-                                    </h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
+                                <div class="card-header text-center bg-gradient-default">
+                                    <h1 class="h4 text-black mb-0">Modifier ingénieur</h1>
                                 </div>
                                 <input type="hidden" name="id" value="{{ $ingenieur->id }}">
                                 <div class="modal-body">
-                                    {{-- <div class="form-floating mb-3">
-                                    <input type="text" name="matricule"
-                                        value="{{ $ingenieur->matricule ?? old('matricule') }}"
-                                        class="form-control form-control-sm @error('matricule') is-invalid @enderror"
-                                        id="matricule" placeholder="Matricule" autofocus>
-                                    @error('matricule')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                    <label for="floatingInput">Matricule</label>
-                                </div> --}}
                                     <div class="form-floating mb-3">
                                         <input type="text" name="name" value="{{ $ingenieur->name ?? old('name') }}"
                                             class="form-control form-control-sm @error('name') is-invalid @enderror"
@@ -289,18 +249,6 @@
                                         @enderror
                                         <label for="floatingInput">Initiale<span class="text-danger mx-1">*</span></label>
                                     </div>
-                                    {{-- <div class="form-floating mb-3">
-                                    <input type="text" name="specialite"
-                                        value="{{ $ingenieur->specialite ?? old('specialite') }}"
-                                        class="form-control form-control-sm @error('specialite') is-invalid @enderror"
-                                        id="specialite" placeholder="specialite">
-                                    @error('specialite')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                    <label for="floatingInput">Spécialité</label>
-                                </div> --}}
                                     <div class="form-floating mb-3">
                                         <input type="text" name="fonction"
                                             value="{{ $ingenieur->fonction ?? old('fonction') }}"
@@ -338,9 +286,8 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                        Modifier</button>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                    <button type="submit" class="btn btn-primary btn-sm">Modifier</button>
                                 </div>
                             </form>
                         </div>
