@@ -585,7 +585,8 @@ class FormationController extends Controller
         $operateur = $formation->operateur;
         $module = $formation->module;
         $ingenieur = $formation->ingenieur;
-        $emargements = $formation->emargements->unique('jour');
+        /* $emargements = $formation->emargements->unique('jour'); */
+        $emargements = $formation->emargements;
 
         $count_demandes = count($formation->individuelles);
 
@@ -2628,11 +2629,22 @@ class FormationController extends Controller
         $formation = Formation::findOrFail($request->idformation);
 
         $this->validate($request, [
-            'jour' => "required|string|unique:emargements,jour,{$formation->id}",
-            'date' => 'required|date|min:10|max:10|date_format:Y-m-d',
+            'jour' => "required|numeric",
+            /* 'date' => 'nullable|date|min:10|max:10|date_format:Y-m-d', */
         ]);
 
-        foreach ($formation->individuelles as $key => $individuelle) {
+        $nbre_jours = $request->jour;
+        $i = 1;
+
+        for ($i = 1; $i <= $nbre_jours; $i++) {
+            $emargement = Emargement::create([
+                'jour' => 'Jour '.$i,
+                'formations_id' => $request->idformation,
+
+            ]);
+        }
+
+        /* foreach ($formation->individuelles as $key => $individuelle) {
             $emargement = Emargement::create([
                 'jour' => $request->jour,
                 'date' => $request->date,
@@ -2640,7 +2652,7 @@ class FormationController extends Controller
                 'individuelles_id' => $individuelle->id,
 
             ]);
-        }
+        } */
 
         Alert::success('Enregistrement réussi !');
 

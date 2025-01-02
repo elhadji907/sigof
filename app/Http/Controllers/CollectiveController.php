@@ -334,7 +334,7 @@ class CollectiveController extends Controller
         $collective = Collective::findOrFail($id);
         $user_id = $collective?->users_id;
         
-        $this->authorize('update', $collective);
+        /* $this->authorize('update', $collective); */
 
         $this->validate($request, [
             "name"                  => ["required", "string", Rule::unique('collectives')->where(function ($query) {
@@ -452,7 +452,7 @@ class CollectiveController extends Controller
     {
         $collective = Collective::findOrFail($id);
 
-        $this->authorize('view', $collective);
+       /*  $this->authorize('view', $collective); */
 
         $listecollective = Listecollective::where('collectives_id', $id)->first();
 

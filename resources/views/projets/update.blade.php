@@ -70,7 +70,7 @@
                                             <label for="date_signature" class="form-label">Date signature<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="date" name="date_signature"
-                                                value="{{ $projet->date_signature->format('d-m-d') ?? old('date_signature') }}"
+                                                value="{{ $projet->date_signature->format('Y-m-d') ?? old('date_signature') }}"
                                                 class="datepicker form-control form-control-sm @error('date_signature') is-invalid @enderror"
                                                 id="date_signature" placeholder="jj/mm/aaaa">
                                             @error('date_signature')
@@ -112,7 +112,7 @@
                                             <label for="debut" class="form-label">Date début<span
                                                 class="text-danger mx-1">*</span></label>
                                             <input type="date" name="debut"
-                                                value="{{ $projet->debut?->format('d-m-d') ?? old('debut') }}"
+                                                value="{{ $projet->debut?->format('Y-m-d') ?? old('debut') }}"
                                                 class="datepicker form-control form-control-sm @error('debut') is-invalid @enderror"
                                                 id="debut" placeholder="jj/mm/aaaa">
                                             @error('debut')
@@ -126,7 +126,7 @@
                                             <label for="fin" class="form-label">Date fin<span
                                                 class="text-danger mx-1">*</span></label>
                                             <input type="date" name="fin"
-                                                value="{{ $projet?->fin?->format('d-m-d') ?? old('fin') }}"
+                                                value="{{ $projet?->fin?->format('Y-m-d') ?? old('fin') }}"
                                                 class="datepicker form-control form-control-sm @error('fin') is-invalid @enderror"
                                                 id="fin" placeholder="jj/mm/aaaa">
                                             @error('fin')
@@ -192,7 +192,7 @@
                                         <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="date_ouverture" class="form-label">Date ouverture</label>
                                             <input type="date" name="date_ouverture"
-                                                value="{{ $projet->date_ouverture?->format('d-m-d') ?? old('date_ouverture') }}"
+                                                value="{{ $projet->date_ouverture?->format('Y-m-d') ?? old('date_ouverture') }}"
                                                 class="datepicker form-control form-control-sm @error('date_ouverture') is-invalid @enderror"
                                                 id="date_ouverture" placeholder="jj/mm/aaaa">
                                             @error('date_ouverture')
@@ -205,7 +205,7 @@
                                         <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="date_fermeture" class="form-label">Date ferméture</label>
                                             <input type="date" name="date_fermeture"
-                                                value="{{ $projet?->date_fermeture?->format('d-m-d') ?? old('date_fermeture') }}"
+                                                value="{{ $projet?->date_fermeture?->format('Y-m-d') ?? old('date_fermeture') }}"
                                                 class="datepicker form-control form-control-sm @error('date_fermeture') is-invalid @enderror"
                                                 id="date_fermeture" placeholder="jj/mm/aaaa">
                                             @error('date_fermeture')

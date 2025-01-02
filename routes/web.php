@@ -55,6 +55,7 @@ use App\Http\Controllers\ProjetlocaliteController;
 use App\Http\Controllers\ProjetmoduleController;
 use App\Http\Controllers\ReferentielController;
 use App\Http\Controllers\RegionController;
+use App\Http\Controllers\EmargementController;
 
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SecteurController;
@@ -493,6 +494,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::resource('/postes', PosteController::class);
         Route::resource('/unes', UneController::class);
         Route::resource('/antennes', AntenneController::class);
+        Route::resource('/emargements', EmargementController::class);
     });
     Route::resource('/contacts', ContactController::class);
 });

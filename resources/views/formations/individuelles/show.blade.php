@@ -910,7 +910,7 @@
                             <div class="tab-pane fade module-overview" id="emargement-overview">
                                 <div class="col-12 col-md-12 col-lg-12 mb-0">
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <h1 class="card-title">Émargements</h1>
+                                        <h1 class="card-title">Feuilles de présence</h1>
                                         <h5 class="card-title">
                                             <button type="button" class="btn btn-outline-primary btn-sm"
                                                 data-bs-toggle="modal"
@@ -923,11 +923,12 @@
                                             id="table-evaluation">
                                             <thead>
                                                 <tr>
-                                                    <th>N°</th>
-                                                    <th>Jours</th>
-                                                    <th>Date</th>
+                                                    <th width="5%">N°</th>
+                                                    <th width="10%">Jours</th>
+                                                    <th width="10%">Date</th>
                                                     <th>Observations</th>
-                                                    <th class="col"><i class="bi bi-gear"></i></th>
+                                                    <th width="5%" class="text-center"><i class="bi bi-gear"></i>
+                                                    </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -935,10 +936,46 @@
                                                 @foreach ($emargements as $emargement)
                                                     <tr>
                                                         <td>{{ $i++ }}</td>
-                                                        <td>{{ $emargement->jour }}</td>
-                                                        <td>{{ $emargement->date->format('d/m/Y') }}</td>
-                                                        <td></td>
-                                                        <td></td>
+                                                        <td>{{ $emargement?->jour }}</td>
+                                                        <td>{{ $emargement?->date?->format('d/m/Y') }}</td>
+                                                        <td>{{ $emargement?->observations }}</td>
+                                                        <td class="text-center">
+                                                            <span class="d-flex mt-2 align-items-baseline"><a
+                                                                    href="{{ route('emargements.show', $emargement->id) }}"
+                                                                    class="btn btn-warning btn-sm mx-1"
+                                                                    title="Voir détails">
+                                                                    <i class="bi bi-eye"></i></a>
+                                                                <div class="filter">
+                                                                    <a class="icon" href="#"
+                                                                        data-bs-toggle="dropdown"><i
+                                                                            class="bi bi-three-dots"></i></a>
+                                                                    <ul
+                                                                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                        <li>
+                                                                            <button type="button"
+                                                                                class="dropdown-item btn btn-sm mx-1"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#EditEmargementModal{{ $emargement->id }}">
+                                                                                <i class="bi bi-pencil"
+                                                                                    title="Modifier"></i> Modifier
+                                                                            </button>
+                                                                        </li>
+                                                                        <li>
+                                                                            <form
+                                                                                action="{{ url('emargements', $emargement->id) }}"
+                                                                                method="post">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit"
+                                                                                    class="dropdown-item show_confirm"><i
+                                                                                        class="bi bi-trash"></i>Supprimer</button>
+                                                                            </form>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </span>
+                                                            </span>
+                                                        </td>
                                                     </tr>
                                                 @endforeach
                                             </tbody>
@@ -1224,10 +1261,8 @@
                         enctype="multipart/form-data" class="row g-3">
                         @csrf
                         @method('patch')
-                        <div class="modal-header" id="EditDemandeurModalLabel{{ $individuelle->id }}">
-                            <h5 class="modal-title">Ajouter un commentaire ou une observation</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                        <div class="card-header text-center bg-gradient-default">
+                            <h1 class="h4 text-black mb-0">Ajouter un commentaire ou observation</h1>
                         </div>
                         <div class="modal-body">
                             <input type="hidden" name="id" value="{{ $individuelle->id }}">
@@ -1243,8 +1278,9 @@
                             @enderror
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-printer"></i>
                                 Valider</button>
                         </div>
                     </form>
@@ -1738,7 +1774,7 @@
     {{-- Jours formation --}}
     <div class="modal fade" id="ajouterJours{{ $formation->id }}" tabindex="-1" role="dialog"
         aria-labelledby="ajouterJoursLabel{{ $formation->id }}" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <form method="post" action="{{ route('formations.ajouterJours') }}" enctype="multipart/form-data"
                     class="row g-3">
@@ -1749,21 +1785,21 @@
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="idformation" value="{{ $formation->id }}">
-                        <div class="row">
-                            <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                                <div class="mb-3">
-                                    <label>Jour<span class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="jour" value="{{ old('jour') }}"
-                                        class="form-control form-control-sm @error('jour') is-invalid @enderror"
-                                        id="jour" placeholder="Jour 1">
-                                    @error('jour')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
+                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                            <div class="mb-3">
+                                <label>Nombre de jours<span class="text-danger mx-1">*</span></label>
+                                <input type="number" min="1" max="150" name="jour"
+                                    value="{{ old('jour') }}"
+                                    class="form-control form-control-sm @error('jour') is-invalid @enderror"
+                                    id="jour" placeholder="Nombre de jour">
+                                @error('jour')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
                             </div>
-                            <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                        </div>
+                        {{-- <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                 <div class="mb-3">
                                     <label>Date<span class="text-danger mx-1">*</span></label>
                                     <input type="date" name="date" value="{{ old('date') }}"
@@ -1775,8 +1811,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                            </div>
-                        </div>
+                            </div> --}}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn btn-sm"
@@ -1788,7 +1823,76 @@
             </div>
         </div>
     </div>
-
+    @foreach ($emargements as $emargement)
+        <div class="modal fade" id="EditEmargementModal{{ $emargement->id }}" tabindex="-1" role="dialog"
+            aria-labelledby="EditEmargementModalLabel{{ $emargement->id }}" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    {{-- <form method="POST" action="{{ route('updateRegion') }}">
+                    @csrf --}}
+                    <form method="post" action="{{ route('emargements.update', $emargement->id) }}"
+                        enctype="multipart/form-data" class="row g-3">
+                        @csrf
+                        @method('patch')
+                        <div class="card-header text-center bg-gradient-default">
+                            <h1 class="h4 text-black mb-0">Modification {{ $emargement?->jour }}</h1>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="idformation" value="{{ $formation->id }}">
+                            <div class="row">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="mb-3">
+                                        <label>Jour<span class="text-danger mx-1">*</span></label>
+                                        <input type="text" name="jour"
+                                            value="{{ $emargement?->jour ?? old('jour') }}"
+                                            class="form-control form-control-sm @error('jour') is-invalid @enderror"
+                                            id="jour" placeholder="Nombre de jour">
+                                        @error('jour')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <div class="mb-3">
+                                        <label>Date<span class="text-danger mx-1">*</span></label>
+                                        <input type="date" name="date" value="{{ $emargement?->date?->format('Y-m-d') ?? old('date') }}"
+                                            class="datepicker form-control form-control-sm @error('date') is-invalid @enderror"
+                                            id="date" placeholder="jj/mm/aaaa">
+                                        @error('date')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="mb-3">
+                                        <label>Observations<span class="text-danger mx-1">*</span></label>
+                                        <textarea name="observations" id="observations" cols="30" rows="3s"
+                                            class="form-control form-control-sm @error('observations') is-invalid @enderror" placeholder="observations"
+                                            autofocus>{{ $emargement?->observations ?? old('observations') }}</textarea>
+                                        @error('observations')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-printer"></i>
+                                Modifier</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endforeach
 </section>
 @endsection
 {{-- @push('scripts')

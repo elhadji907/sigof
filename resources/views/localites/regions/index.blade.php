@@ -105,9 +105,6 @@
                                                             class="bi bi-three-dots"></i></a>
                                                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                         <li>
-                                                            {{-- <a class="dropdown-item btn btn-sm mx-1"
-                                                                href="{{ url('regions/' . $region->id . '/edit') }}"
-                                                                class="mx-1"><i class="bi bi-pencil"></i> Modifier</a> --}}
                                                             <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                 data-bs-toggle="modal"
                                                                 data-bs-target="#EditRegionModal{{ $region->id }}">

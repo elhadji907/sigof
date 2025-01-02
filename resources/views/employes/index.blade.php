@@ -30,9 +30,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="pt-2">
-                            <a href="{{ route('employes.create') }}" class="btn btn-primary float-end btn-rounded"><i
-                                    class="fas fa-plus"></i>
-                                <i class="bi bi-person-plus" title="Ajouter"></i> </a>
+                            <a href="{{ route('employes.create') }}" class="btn btn-primary float-end btn-rounded btn-sm"><i
+                                    class="fas fa-plus"></i>Ajouter</a>
                         </div>
                         <h5 class="card-title">Employés</h5>
                         {{-- <p>Le tableau de tous les employés.</p> --}}

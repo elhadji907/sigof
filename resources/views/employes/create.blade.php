@@ -295,7 +295,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                                    <button type="submit" class="btn btn-primary btn-sm">Ajouter</button>
                                 </div>
                             </form>
 

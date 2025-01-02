@@ -61,7 +61,7 @@
                                 @foreach ($projets as $projet)
                                     <tr>
                                         <th scope="row" style="text-align: center">
-                                            <img class="rounded-circle" alt="Profil" src="{{ asset($projet->getProjetImage()) }}"
+                                            <img class="rounded-circle" alt="LOGO" src="{{ asset($projet->getProjetImage()) }}"
                                                 width="40" height="auto">
                                         </th>
                                         <td>{{ $projet?->name }}</td>
