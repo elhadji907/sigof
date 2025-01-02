@@ -145,10 +145,8 @@
                     <div class="modal-content">
                         <form method="post" action="{{ route('listecollectives.store') }}" enctype="multipart/form-data">
                             @csrf
-                            <div class="modal-header">
-                                <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter un membre</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                            <div class="card-header text-center bg-gradient-default">
+                                <h1 class="h4 text-black mb-0">Ajouter bénéficiaires</h1>
                             </div>
                             <div class="modal-body">
                                 <div class="row g-3">
@@ -219,9 +217,9 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="date_naissance" class="form-label">Date naissance<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="date_naissance" value="{{ old('date_naissance') }}"
+                                        <input type="date" name="date_naissance" value="{{ old('date_naissance') }}"
                                             class="datepicker form-control form-control-sm @error('date_naissance') is-invalid @enderror"
-                                            id="date_naissance" placeholder="dd-mm-aaaa">
+                                            id="date_naissance" placeholder="jj/mm/aaaa">
                                         @error('date_naissance')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>

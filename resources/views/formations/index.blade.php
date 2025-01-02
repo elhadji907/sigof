@@ -186,9 +186,9 @@
                                 <tr>
                                     <th width='6%' class="text-center">Code</th>
                                     <th width='15%'>Type formation</th>
-                                    <th>Bénéficiaires</th>
+                                    {{-- <th>Bénéficiaires</th> --}}
                                     <th width='15%'>Localité</th>
-                                    <th width='5%'>Modules</th>
+                                    <th width='15%'>Modules</th>
                                     <th width='17%'>Niveau qualification</th>
                                     {{-- <th>Niveau qualification</th> --}}
                                     {{-- <th>Effectif</th> --}}
@@ -202,7 +202,7 @@
                                     <tr>
                                         <td style="text-align: center">{{ $formation?->code }}</td>
                                         <td>{{ $formation->types_formation?->name }}</td>
-                                        <td>{{ $formation?->name }}</td>
+                                        {{-- <td>{{ $formation?->name }}</td> --}}
                                         <td>{{ $formation->departement?->region?->nom }}</td>
                                         <td>
                                             @isset($formation?->module?->name)

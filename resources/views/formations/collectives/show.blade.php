@@ -1706,7 +1706,7 @@
                                             class="text-danger mx-1">*</span></label>
                                     <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                         <label class="form-check-label" for="moi">
-                                            {{ 'Retrait effectué par ' . $individuelle?->retrait_diplome }}
+                                            {{ 'Retrait effectué par ' . $listecollective?->retrait_diplome }}
                                         </label>
 
                                     </div>
@@ -1755,7 +1755,7 @@
                                     <div class="row g-3">
                                         <div class="row g-3">
                                             <div>
-                                                {{ 'Bénéficiaire : ' . $ilistecollective->civilite . ' ' . $ilistecollective->prenom . ' ' . $ilistecollective->nom }}
+                                                {{ 'Bénéficiaire : ' . $listecollective->civilite . ' ' . $listecollective->prenom . ' ' . $listecollective->nom }}
                                             </div>
                                             <hr>
                                             <label for="retrait" class="form-label">Qui va retirer le diplôme ?<span
