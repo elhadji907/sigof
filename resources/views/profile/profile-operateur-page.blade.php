@@ -376,7 +376,7 @@
                                                     src="{{ asset(Auth::user()?->getImage()) }}" width="50"
                                                     height="auto">
                                                 <div class="pt-2">
-                                                    <input type="file" name="image" id="image"
+                                                    <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png, .svg, .gif"
                                                         class="form-control @error('image') is-invalid @enderror btn btn-primary btn-sm">
                                                     @error('image')
                                                         <span class="text-danger">{{ $message }}</span>
