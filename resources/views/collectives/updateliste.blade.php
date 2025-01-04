@@ -21,7 +21,7 @@
                 <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
                     <div class="card mb-0">
                         @can('collective-view')
-                            <span class="nav-link"><a href="{{ route('collectivemodules.show', $listecollective->collectivemodule->id) }}"
+                            <span class="nav-link"><a href="{{ route('collectivemodules.show', $listecollective?->collectivemodule?->id) }}"
                                     class="btn btn-secondary btn-sm" title="retour"><i
                                         class="bi bi-arrow-counterclockwise"></i></a>
                             </span>

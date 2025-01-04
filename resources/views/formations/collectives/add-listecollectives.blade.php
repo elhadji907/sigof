@@ -53,9 +53,9 @@
                                                 <th scope="col">Date naissance</th>
                                                 <th scope="col">Lieu naissance</th>
                                                 <th scope="col">Niveau étude</th>
-                                                <th scope="col">Module</th>
-                                                <th scope="col">Statut</th>
-                                                <th><i class="bi bi-gear"></i></th>
+                                                {{-- <th scope="col">Module</th> --}}
+                                                <th class="text-center" width="5%">Statut</th>
+                                                <th class="text-center" width="5%"><i class="bi bi-gear"></i></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -80,12 +80,12 @@
                                                             </td>
                                                             <td>{{ $listecollective?->lieu_naissance }}</td>
                                                             <td>{{ $listecollective?->niveau_etude }}</td>
-                                                            <td>{{ $listecollective?->collectivemodule?->module }}</td>
+                                                            {{-- <td>{{ $listecollective?->collectivemodule?->module }}</td> --}}
                                                             <td>
                                                                 <span
                                                                     class="{{ $listecollective?->statut }}">{{ $listecollective?->statut }}</span>
                                                             </td>
-                                                            <td>
+                                                            <td class="text-center">
                                                                 <span class="d-flex align-items-baseline">
                                                                     <a href="{{ route('listecollectives.show', $listecollective?->id) }}"
                                                                         class="btn btn-primary btn-sm"
