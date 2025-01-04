@@ -1045,42 +1045,22 @@ class FormationController extends Controller
     public function addcollectiveformations($idformation, $idlocalite)
     {
         $formation = Formation::findOrFail($idformation);
-        /* $collectives = Collective::where('statut_demande', 'accepter')
-        ->orwhere('statut_demande', 'retenu')
-        ->get(); */
-
-        /* $admis_h_count = Individuelle::join('users', 'users.id', 'individuelles.users_id')
-        ->select('individuelles.*')
-        ->where('formations_id', $formation->id)
-        ->where('users.civilite', "M.")
-        ->where('note_obtenue', '>=', '12')
-        ->count(); */
 
         $collectivemodules = Collectivemodule::join('collectives', 'collectives.id', 'collectivemodules.collectives_id')
             ->select('collectivemodules.*')
             ->where('collectives.statut_demande', 'attente')
-            ->whereBetween('collectivemodules.statut', ['attente', 'retenu'])
+            ->where('collectivemodules.statut', 'attente')
+            ->orwhere('collectivemodules.statut', 'retenu')
             ->get();
-
-        /* $collectiveFormation = DB::table('collectives')
-        ->where('formations_id', $idformation)
-        ->pluck('formations_id', 'formations_id')
-        ->all(); */
 
         $collectiveModule = DB::table('collectivemodules')
             ->where('formations_id', $idformation)
             ->pluck('formations_id', 'formations_id')
             ->all();
 
-        /* $collectiveFormationCheck = DB::table('collectives')
-        ->where('formations_id', '!=', null)
-        ->where('formations_id', '!=', $idformation)
-        ->pluck('formations_id', 'formations_id')
-        ->all(); */
-
         $collectiveModuleCheck = DB::table('collectivemodules')
             ->where('formations_id', '!=', null)
-            ->where('formations_id', '!=', $idformation)
+            ->orwhere('formations_id', '!=', $idformation)
             ->pluck('formations_id', 'formations_id')
             ->all();
 
@@ -1106,19 +1086,26 @@ class FormationController extends Controller
         $formation = Formation::findOrFail($idformation);
 
         if (count($formation->listecollectives) > 0) {
-            if (!empty($liste)) {
-                Alert::warning('Attention !', 'des bénéficiaires sont déjà sélectionnés');
+            if (!empty($request->collectivemodule) && $request->collectivemodule != $collectivemodule->id) {
 
-                return redirect()->back();
-            } elseif (isset($request->collectivemoduleformation) && $request->collectivemoduleformation != $collectivemodule->id) {
-                $collectivemoduleformation = Collectivemodule::findOrFail($request->collectivemoduleformation);
-
-                $collectivemoduleformation->update([
+                $collectivemodule->update([
                     "formations_id" => null,
                     "statut" => 'attente',
                 ]);
 
-                $collectivemoduleformation->save();
+                $collectivemodule->save();
+
+                $collectivemodule->update([
+                    "formations_id" => $idformation,
+                    "statut" => 'retenu',
+                ]);
+
+                $collectivemodule->save();
+
+                Alert::success('Fait !', 'ajouté avec succès');
+
+                return redirect()->back();
+            } else {
 
                 $collectivemodule->update([
                     "formations_id" => $idformation,
@@ -1131,6 +1118,7 @@ class FormationController extends Controller
 
                 return redirect()->back();
             }
+
         } else {
             $collectivemodule->update([
                 "formations_id" => $idformation,
@@ -1144,34 +1132,27 @@ class FormationController extends Controller
             return redirect()->back();
         }
 
-        /* foreach ($formation->listecollectives as $liste) {
     }
 
-    if (!empty($liste)) {
-    Alert::warning('Attention !', 'des bénéficiaires sont déjà sélectionnés');
+    public function retirermoduleformation(Request $request, $id)
+    {
 
-    return redirect()->back();
-    } elseif (isset($request->collectivemoduleformation) && $request->collectivemoduleformation != $collectivemodule->id) {
-    $collectivemoduleformation = Collectivemodule::findOrFail($request->collectivemoduleformation);
+        $request->validate([
+            'motif' => ['required'],
+        ]);
 
-    $collectivemoduleformation->update([
-    "formations_id"      =>  null,
-    "statut"             =>  'attente',
-    ]);
+        $collectivemodule = Collectivemodule::findOrFail($id);
 
-    $collectivemoduleformation->save();
-    }
+        $collectivemodule->update([
+            "formations_id" => null,
+            "statut" => 'attente',
+        ]);
 
-    $collectivemodule->update([
-    "formations_id"      =>  $idformation,
-    "statut"             =>  'retenu',
-    ]);
+        $collectivemodule->save();
 
-    $collectivemodule->save();
+        Alert::success('Succès !', 'module retiré avec succès');
 
-    Alert::success('Fait !', 'ajouté avec succès');
-
-    return redirect()->back(); */
+        return redirect()->back();
     }
 
     public function givemoduleformationcollectives($idformation, Request $request)
@@ -2638,20 +2619,20 @@ class FormationController extends Controller
 
         for ($i = 1; $i <= $nbre_jours; $i++) {
             $emargement = Emargement::create([
-                'jour' => 'Jour '.$i,
+                'jour' => 'Jour ' . $i,
                 'formations_id' => $request->idformation,
 
             ]);
         }
 
         /* foreach ($formation->individuelles as $key => $individuelle) {
-            $emargement = Emargement::create([
-                'jour' => $request->jour,
-                'date' => $request->date,
-                'formations_id' => $request->idformation,
-                'individuelles_id' => $individuelle->id,
+        $emargement = Emargement::create([
+        'jour' => $request->jour,
+        'date' => $request->date,
+        'formations_id' => $request->idformation,
+        'individuelles_id' => $individuelle->id,
 
-            ]);
+        ]);
         } */
 
         Alert::success('Enregistrement réussi !');

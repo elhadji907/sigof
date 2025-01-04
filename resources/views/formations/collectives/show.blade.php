@@ -702,7 +702,7 @@
                                                         @foreach ($collectivemodules as $collectivemodule)
                                                             <tr>
                                                                 <td>
-                                                                    <input type="radio" name="collectivemodule"
+                                                                   {{--  <input type="radio" name="collectivemodule"
                                                                         value="{{ $collectivemodule?->id }}"
                                                                         {{ in_array($collectivemodule->formations_id, $collectiveModule) ? 'checked' : '' }}
                                                                         {{ in_array($collectivemodule->formations_id, $collectiveModuleCheck) ? 'disabled' : '' }}
@@ -711,7 +711,7 @@
                                                                         <span class="invalid-feedback" role="alert">
                                                                             <div>{{ $message }}</div>
                                                                         </span>
-                                                                    @enderror
+                                                                    @enderror --}}
                                                                     {{ $collectivemodule?->collective->numero }}
                                                                 </td>
 
@@ -726,12 +726,6 @@
                                                                 </td>
                                                                 <td>{{ $collectivemodule?->module }}</td>
                                                                 <td style="text-align: center;">
-                                                                    {{--  @foreach ($collectivemodule->listecollectives as $listecollective)
-                                                                            @if ($loop->last)
-                                                                                <span
-                                                                                    class="badge bg-info">{{ $loop->count }}</span>
-                                                                            @endif
-                                                                        @endforeach --}}
                                                                     <span
                                                                         class="badge bg-info">{{ count($collectivemodule->listecollectives) }}</span>
                                                                 </td>
@@ -751,12 +745,12 @@
                                                                                     class="bi bi-three-dots"></i></a>
                                                                             <ul
                                                                                 class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                                <li><a class="dropdown-item btn btn-sm"
+                                                                                {{-- <li><a class="dropdown-item btn btn-sm"
                                                                                         href="{{ route('collectives.edit', $collectivemodule->collective->id) }}"
                                                                                         class="mx-1"
                                                                                         title="Modifier"><i
                                                                                             class="bi bi-pencil"></i>Modifier</a>
-                                                                                </li>
+                                                                                </li> --}}
                                                                             </ul>
                                                                         </div>
                                                                     </span>
@@ -767,10 +761,10 @@
                                                 </table>
                                             </div>
                                             @can('module-check')
-                                                <div class="text-center">
-                                                    <button type="submit" class="btn btn-outline-primary"><i
+                                                {{-- <div class="text-center">
+                                                    <button type="submit" class="btn btn-outline-primary btn-sm"><i
                                                             class="bi bi-check2-circle"></i>&nbsp;Sélectionner</button>
-                                                </div>
+                                                </div> --}}
                                             @endcan
                                     </form>
                                 @else
@@ -936,8 +930,10 @@
                                         <form action="{{ route('supprimerModuleCollective') }}" method="post">
                                             @csrf
                                             @method('PUT')
-                                            <input type="hidden" name="id"
+                                            <input type="hidden" name="idmodule"
                                                 value="{{ $formation->collectivemodule?->id }}">
+                                            <input type="hidden" name="idformation"
+                                                value="{{ $formation?->id }}">
                                             <button type="submit"
                                                 class="btn btn-danger float-end btn-sm show_confirm"
                                                 title="Supprimer"><i class="bi bi-trash"></i>Supprimer</button>

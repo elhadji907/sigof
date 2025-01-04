@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Collectivemodule;
 use App\Models\Module;
+use App\Models\Formation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -135,7 +136,15 @@ class CollectivemoduleController extends Controller
 
     public function supprimerModuleCollective(Request $request)
     {
-        $collectivemodule = Collectivemodule::findOrFail($request->id);
+        $collectivemodule = Collectivemodule::findOrFail($request->idmodule);
+
+        $formation = Formation::findOrFail($request->idformation);
+
+        $formation->update([
+            'ingenieurs_id' => null
+        ]);
+
+        $formation->save();
 
         $collectivemodule->update([
             'statut' => 'attente',
