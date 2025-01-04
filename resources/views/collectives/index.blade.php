@@ -347,7 +347,7 @@
                                             @enderror
                                         </div>
                                         <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                            <label for="departement" class="form-label">Siège social<span
+                                            <label for="departement" class="form-label">Département<span
                                                     class="text-danger mx-1">*</span></label>
                                             <select name="departement"
                                                 class="form-select form-select-sm @error('departement') is-invalid @enderror"

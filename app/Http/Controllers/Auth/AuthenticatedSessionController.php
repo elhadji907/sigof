@@ -13,6 +13,7 @@ use App\Models\Poste;
 use App\Models\Projet;
 use App\Models\Service;
 use App\Models\Une;
+use App\Models\Module;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;

@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Projets & Programmes')
+@section('title', 'ONFP - Partenaires')
 @section('space-work')
     <div class="pagetitle">
         <nav>
@@ -36,18 +36,20 @@
                 <div class="card">
                     <div class="card-body">
                         @if (auth()->user()->hasRole('super-admin|admin'))
-                            <div class="pt-1">
-                                <button type="button" class="btn btn-primary btn-sm float-end btn-rounded" data-bs-toggle="modal"
-                                    data-bs-target="#AddProjetModal">Ajouter
+                            <div class="pt-0">
+                                <button type="button" class="btn btn-primary btn-sm float-end btn-rounded"
+                                    data-bs-toggle="modal" data-bs-target="#AddProjetModal">Ajouter
                                 </button>
                             </div>
                         @endif
-                        <h5 class="card-title">Liste des projets et programmes</h5>
+                        <div class="pt-0">
+                            <h5 class="card-title">Liste des partenaires</h5>
+                        </div>
                         <table class="table datatables align-middle" id="table-individuelles">
                             <thead>
                                 <tr>
                                     <th class="text-center" width="3%">LOGO</th>
-                                    <th>Projet / Programme</th>
+                                    <th>Partenaires</th>
                                     <th class="text-center">Sigle</th>
                                     <th class="text-center">Statut</th>
                                     <th>Modules</th>
@@ -61,8 +63,8 @@
                                 @foreach ($projets as $projet)
                                     <tr>
                                         <th scope="row" style="text-align: center">
-                                            <img class="rounded-circle" alt="LOGO" src="{{ asset($projet->getProjetImage()) }}"
-                                                width="40" height="auto">
+                                            <img class="rounded-circle" alt="LOGO"
+                                                src="{{ asset($projet->getProjetImage()) }}" width="40" height="auto">
                                         </th>
                                         <td>{{ $projet?->name }}</td>
                                         <td class="text-center">{{ $projet?->sigle }}</td>
@@ -151,13 +153,13 @@
                     <div class="modal-content">
                         <form method="post" action="{{ route('addProjet') }}" enctype="multipart/form-data">
                             @csrf
-                           {{--  <div class="modal-header">
+                            {{--  <div class="modal-header">
                                 <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter un nouveau
                                     projet ou programme</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div> --}}
-                            
+
                             <div class="card-header text-center bg-gradient-default">
                                 <h1 class="h4 text-black mb-0">AJOUTER PROJET OU PROGRAMME</h1>
                             </div>

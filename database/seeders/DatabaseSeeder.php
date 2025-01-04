@@ -308,6 +308,22 @@ class DatabaseSeeder extends Seeder
         'courrier-notification-show',
         'afficher-operateur-adresse',
         'afficher-operateur-responsable',
+        'sadmin',
+        'admin',
+        'diof',
+        'adiof',
+        'dec',
+        'adec',
+        'ddp',
+        'addp',
+        'car',
+        'dg',
+        'adg',
+        'operateur',
+        'demandeur',
+        'courrier',
+        'acourrier',
+        'suivi',
     ];
 
     public function run(): void

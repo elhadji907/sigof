@@ -41,23 +41,23 @@
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary">Ajouter</button>
                             </div> --}}
-
-
                             <table class="table table-bordered" id="dynamicAddRemove">
                                 <tr>
                                     <th>Permissions<span class="text-danger mx-1">*</span></th>
                                     <th width="15%">Action</th>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="permissions[0][name]" placeholder="Entrer une permission"
-                                            class="form-control form-control-sm" autofocus/></td>
-                                    <td><button type="button" name="add" id="add-btn" class="btn btn-success"
+                                    <td><input type="text" name="permissions[0][name]"
+                                            placeholder="ajouter une permission" class="form-control form-control-sm"
+                                            autofocus />
+                                    </td>
+                                    <td><button type="button" name="add" id="add-btn" class="btn btn-success btn-sm"
                                             title="Ajouter une ligne">Ajouter</button>
                                     </td>
                                 </tr>
                             </table>
                             <div class="col-xs-12 col-sm-12 col-md-12 text-left mt-2">
-                                <button type="submit" class="btn btn-outline-success"><i
+                                <button type="submit" class="btn btn-outline-info btn-sm"><i
                                         class="far fa-save"></i>&nbsp;Sauvegarder</button>
                             </div>
 
@@ -75,7 +75,7 @@
         $("#add-btn").click(function() {
             ++i;
             $("#dynamicAddRemove").append('<tr><td><input type="text" name="permissions[' + i +
-                '][name]" placeholder="Entrer une autre catégorie" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr">Supprimer</button></td></tr>'
+                '][name]" placeholder="ajouter une autre permission" class="form-control form-control-sm" /></td><td><button type="button" class="btn btn-danger btn-sm remove-tr">Supprimer</button></td></tr>'
             );
         });
         $(document).on('click', '.remove-tr', function() {

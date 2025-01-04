@@ -488,8 +488,8 @@
                                                         <tr>
                                                             <th class="text-center">N°</th>
                                                             <th class="text-center">N° Dossier</th>
-                                                            <th class="text-center">Civilité</th>
                                                             <th class="text-center">CIN</th>
+                                                            <th class="text-center">Civilité</th>
                                                             <th>Prénom</th>
                                                             <th>NOM</th>
                                                             <th class="text-center">Date naissance</th>
@@ -514,11 +514,11 @@
                                                             <tr>
                                                                 <td class="text-center">{{ $i++ }}</td>
                                                                 <td class="text-center">{{ $individuelle?->numero }}</td>
+                                                                <td style="text-align: center;">
+                                                                    {{ $individuelle?->user?->cin }}</td>
                                                                 <td class="text-center">
                                                                     {{ $individuelle?->user?->civilite }}
                                                                 </td>
-                                                                <td style="text-align: center;">
-                                                                    {{ $individuelle?->user?->cin }}</td>
                                                                 <td>{{ $individuelle?->user?->firstname }}</td>
                                                                 <td>{{ $individuelle?->user?->name }}</td>
                                                                 <td style="text-align: center;">
@@ -1130,8 +1130,8 @@
                         enctype="multipart/form-data" class="row">
                         @csrf
                         @method('PUT')
-                        <div class="card-header text-center bg-gradient-default">
-                            <h1 class="h4 text-black mb-0">Retirer demandeur</h1>
+                        <div class="card-header bg-gradient-default">
+                            <h1 class="h4 text-black mb-0">Retirer {{ $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}</h1>
                         </div>
                         <div class="modal-body">
                             <div class="row g-3">

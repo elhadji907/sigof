@@ -30,9 +30,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="pt-5">
-                            <a href="{{ route('permissions.create') }}" class="btn btn-primary float-end btn-rounded"><i
-                                    class="fas fa-plus"></i>
-                                <i class="bi bi-person-plus" title="Ajouter"></i> </a>
+                            <a href="{{ route('permissions.create') }}" class="btn btn-primary btn-sm float-end btn-rounded">Ajouter </a>
                         </div>
                         <h5 class="card-title">Permissions</h5>
                         <p>Le tableau de toutes les permissions du système.</p>

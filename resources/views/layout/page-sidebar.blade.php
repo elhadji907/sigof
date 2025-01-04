@@ -432,7 +432,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="{{ url('projets') }}">
                     <i class="bi bi-layers-half"></i>
-                    <span>Gestion des projets</span>
+                    <span>Nos partenaires</span>
                 </a>
             </li>
         @endcan
