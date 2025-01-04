@@ -39,7 +39,9 @@ class AuthenticatedSessionController extends Controller
         $services = Service::get();
         $postes = Poste::orderBy("created_at", "desc")->limit(4)->get();
 
-        $count_today = Individuelle::where("created_at", "LIKE",  "{$today}%")->count();
+        /* $count_today = Individuelle::where("created_at", "LIKE",  "{$today}%")->count(); */
+        /* $count_today = Module::where("domaines_id", "!=",  null)->count(); */
+        $count_today = Module::distinct()->count();
         $count_individuelles = Individuelle::count();
         $count_collectives = Collective::count();
         $count_projets = Projet::count();
@@ -47,9 +49,9 @@ class AuthenticatedSessionController extends Controller
         $count_operateurs = Operateur::where('statut_agrement', 'agréer')->count();
 
         if ($count_today <= "0") {
-            $title = "demande reçue aujourd'hui";
+            $title = "module de formation";
         } else {
-            $title = "demandes reçues aujourd'hui";
+            $title = "modules de formation";
         }
 
         return view(
