@@ -186,24 +186,24 @@
                                                 show: false
                                             },
                                             data: [{
-                                                    value: {{ $attente }},
-                                                    name: 'Attente'
-                                                },
-                                                {
                                                     value: {{ $nouvelle }},
                                                     name: 'Nouvelles'
                                                 },
                                                 {
+                                                    value: {{ $attente }},
+                                                    name: 'Attente'
+                                                },
+                                                {
                                                     value: {{ $retenue }},
-                                                    name: 'Retenues'
+                                                    name: 'Sélectionner'
                                                 },
                                                 {
                                                     value: {{ $terminer }},
-                                                    name: 'Terminées'
+                                                    name: 'Former'
                                                 },
                                                 {
                                                     value: {{ $rejeter }},
-                                                    name: 'Rejetées'
+                                                    name: 'Rejeter'
                                                 }
                                             ]
                                         }]

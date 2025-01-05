@@ -24,7 +24,7 @@
                                 <span class="d-flex mt-0 align-items-baseline"><a
                                         href="{{ route('formations.show', $formation->id) }}" class="btn btn-success btn-sm"
                                         title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                    <p> | Liste des formations</p>
+                                    <p> | Liste des bénéficiaires</p>
                                 </span>
                             </div>
                         </div>

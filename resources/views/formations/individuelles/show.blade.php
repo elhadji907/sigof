@@ -924,8 +924,9 @@
                                             <thead>
                                                 <tr>
                                                     <th width="5%">N°</th>
-                                                    <th width="10%">Jours</th>
-                                                    <th width="10%">Date</th>
+                                                    <th width="15%">Jours</th>
+                                                    <th width="15%">Date</th>
+                                                    <th width="15%">Effectif</th>
                                                     <th>Observations</th>
                                                     <th width="5%" class="text-center"><i class="bi bi-gear"></i>
                                                     </th>
@@ -938,13 +939,51 @@
                                                         <td>{{ $i++ }}</td>
                                                         <td>{{ $emargement?->jour }}</td>
                                                         <td>{{ $emargement?->date?->format('d/m/Y') }}</td>
+                                                        <td></td>
                                                         <td>{{ $emargement?->observations }}</td>
                                                         <td class="text-center">
-                                                            <span class="d-flex mt-2 align-items-baseline"><a
-                                                                    href="{{ route('emargements.show', $emargement->id) }}"
-                                                                    class="btn btn-warning btn-sm mx-1"
-                                                                    title="Voir détails">
-                                                                    <i class="bi bi-eye"></i></a>
+                                                            <span class="d-flex mt-2 align-items-baseline">
+                                                                {{-- <a href="{{ url('formationemargement', [
+                                                                    '$idformation' => $formation?->id,
+                                                                    '$idmodule' => $formation?->module?->id,
+                                                                    '$idlocalite' => $formation?->departement?->region?->id,
+                                                                    '$idemargement' => $emargement?->id,
+                                                                ]) }}"
+                                                                    class="btn btn-outline-primary btn-rounded btn-sm">
+                                                                    <i class="bi bi-plus"
+                                                                        title="Ajouter bénéficiaires"></i> </a> --}}
+
+                                                                {{-- <form
+                                                                    action="{{ route('emargements.show', $emargement->id) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    <button type="submit"
+                                                                        class="btn btn-outline-primary btn-rounded btn-sm"><i
+                                                                            class="bi bi-plus"
+                                                                            title="Ajouter bénéficiaires"></i></button>
+                                                                </form> --}}
+
+                                                                <form
+                                                                    action="{{ route('formationemargement', [
+                                                                        '$idformation' => $formation->id,
+                                                                        '$idmodule' => $formation->module->id,
+                                                                        '$idlocalite' => $formation->departement->id
+                                                                    ]) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    <input type="hidden" name="idformation"
+                                                                        value="{{ $formation?->id }}">
+                                                                    <input type="hidden" name="idmodule"
+                                                                        value="{{ $formation?->module?->id }}">
+                                                                    <input type="hidden" name="idlocalite"
+                                                                        value="{{ $formation?->departement?->region?->id }}">
+                                                                    <input type="hidden" name="idemargement"
+                                                                        value="{{ $emargement?->id }}">
+                                                                    <button type="submit"
+                                                                        class="btn btn-outline-primary btn-rounded btn-sm"><i
+                                                                            class="bi bi-plus"
+                                                                            title="Ajouter bénéficiaires"></i></button>
+                                                                </form>
                                                                 <div class="filter">
                                                                     <a class="icon" href="#"
                                                                         data-bs-toggle="dropdown"><i
@@ -1131,7 +1170,9 @@
                         @csrf
                         @method('PUT')
                         <div class="card-header bg-gradient-default">
-                            <h1 class="h4 text-black mb-0">Retirer {{ $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}</h1>
+                            <h1 class="h4 text-black mb-0">Retirer
+                                {{ $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}
+                            </h1>
                         </div>
                         <div class="modal-body">
                             <div class="row g-3">
@@ -1857,7 +1898,8 @@
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <div class="mb-3">
                                         <label>Date<span class="text-danger mx-1">*</span></label>
-                                        <input type="date" name="date" value="{{ $emargement?->date?->format('Y-m-d') ?? old('date') }}"
+                                        <input type="date" name="date"
+                                            value="{{ $emargement?->date?->format('Y-m-d') ?? old('date') }}"
                                             class="datepicker form-control form-control-sm @error('date') is-invalid @enderror"
                                             id="date" placeholder="jj/mm/aaaa">
                                         @error('date')
