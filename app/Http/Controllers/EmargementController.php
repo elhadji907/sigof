@@ -21,13 +21,18 @@ class EmargementController extends Controller
 
         $this->validate($request, [
             'jour' => "required|string",
-            'date' => 'required|date|min:10|max:10|date_format:Y-m-d',
-            'date' => 'nullable|string',
+            'date' => 'nullable|date|min:10|max:10|date_format:Y-m-d',
         ]);
+
+        if (!empty($request->input('date'))) {
+            $date = $request->input('date');
+        } else {
+            $date = null;
+        }
 
         $emargement->update([
             'jour' => $request->jour,
-            'date' => $request->date,
+            'date' => $date,
             'observations' => $request->observations,
 
         ]);

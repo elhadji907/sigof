@@ -2615,9 +2615,20 @@ class FormationController extends Controller
         ]);
 
         $nbre_jours = $request->jour;
-        $i = 1;
 
-        for ($i = 1; $i <= $nbre_jours; $i++) {
+        $emargement_count = Emargement::where('formations_id', $request->idformation)->count();
+
+        if (!empty($emargement_count)) {
+            $nbre_jours = $nbre_jours + $emargement_count + 1;
+            $emargement_count = $emargement_count + 1;
+        } else {
+            $emargement_count = 1;
+            $nbre_jours = $nbre_jours + $emargement_count;
+        }
+
+        $i = $emargement_count;
+
+        for ($i = $emargement_count; $i < $nbre_jours; $i++) {
             $emargement = Emargement::create([
                 'jour' => 'Jour ' . $i,
                 'formations_id' => $request->idformation,
