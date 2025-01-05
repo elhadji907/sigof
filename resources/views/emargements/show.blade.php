@@ -46,7 +46,9 @@
                                     <table class="table datatables align-middle" id="table-individuelles">
                                         <thead>
                                             <tr>
-                                                <th><input type="checkbox" class="form-check-input" id="checkAll">Civilité
+                                                <th>
+                                                    {{-- <input type="checkbox" class="form-check-input" id="checkAll"> --}}
+                                                    Civilité
                                                 </th>
                                                 <th>Prénom</th>
                                                 <th>NOM</th>
@@ -67,11 +69,11 @@
                                                 @isset($individuelle?->numero)
                                                     <tr>
                                                         <td>
-                                                            <input type="checkbox" name="individuelles[]"
+                                                            {{-- <input type="checkbox" name="individuelles[]"
                                                                 value="{{ $individuelle->id }}"
                                                                 {{ in_array($individuelle->formations_id, $individuelleFormation) ? 'checked' : '' }}
                                                                 {{ in_array($individuelle->formations_id, $individuelleFormationCheck) ? 'disabled' : '' }}
-                                                                class="form-check-input @error('individuelles') is-invalid @enderror">
+                                                                class="form-check-input @error('individuelles') is-invalid @enderror"> --}}
                                                             {{ $individuelle?->user?->civilite }}
                                                             @error('individuelles')
                                                                 <span class="invalid-feedback" role="alert">
@@ -128,10 +130,10 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                    <div class="text-center">
+                                   {{--  <div class="text-center">
                                         <button type="submit" class="btn btn-outline-primary btn-sm"><i
                                                 class="bi bi-check2-circle"></i>&nbsp;Sélectionner</button>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </form>

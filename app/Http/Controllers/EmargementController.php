@@ -61,11 +61,12 @@ class EmargementController extends Controller
             ->join('regions', 'regions.id', 'individuelles.regions_id')
             ->select('individuelles.*')
             ->where('individuelles.projets_id', $formation?->projets_id)
+            ->where('individuelles.formations_id', $formation?->id)
             ->where('modules.name', 'LIKE', "%{$module->name}%")
             ->where('regions.nom', $region->nom)
-            ->where('individuelles.statut', 'attente')
+            /* ->where('individuelles.statut', 'attente')
             ->orwhere('individuelles.statut', 'retirer')
-            ->orwhere('individuelles.statut', 'retenu')
+            ->orwhere('individuelles.statut', 'retenu') */
             ->get();
 
         $candidatsretenus = Individuelle::where('formations_id', $formation?->id)

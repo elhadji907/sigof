@@ -187,23 +187,23 @@
                                             },
                                             data: [{
                                                     value: {{ $nouvelle }},
-                                                    name: 'Nouvelles'
+                                                    name: 'nouvelles'
                                                 },
                                                 {
                                                     value: {{ $attente }},
-                                                    name: 'Attente'
+                                                    name: 'attente'
                                                 },
                                                 {
                                                     value: {{ $retenue }},
-                                                    name: 'Sélectionner'
+                                                    name: 'sélectionner'
                                                 },
                                                 {
                                                     value: {{ $terminer }},
-                                                    name: 'Former'
+                                                    name: 'former'
                                                 },
                                                 {
                                                     value: {{ $rejeter }},
-                                                    name: 'Rejeter'
+                                                    name: 'rejeter'
                                                 }
                                             ]
                                         }]

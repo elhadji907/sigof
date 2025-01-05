@@ -923,10 +923,10 @@
                                             id="table-evaluation">
                                             <thead>
                                                 <tr>
-                                                    <th width="5%">N°</th>
-                                                    <th width="15%">Jours</th>
-                                                    <th width="15%">Date</th>
-                                                    <th width="15%">Effectif</th>
+                                                    <th width="5%" class="text-center">N°</th>
+                                                    <th width="10%" class="text-center">Jours</th>
+                                                    <th width="10%" class="text-center">Date</th>
+                                                    <th width="10%" class="text-center">Effectif</th>
                                                     <th>Observations</th>
                                                     <th width="5%" class="text-center"><i class="bi bi-gear"></i>
                                                     </th>
@@ -936,33 +936,13 @@
                                                 <?php $i = 1; ?>
                                                 @foreach ($emargements as $emargement)
                                                     <tr>
-                                                        <td>{{ $i++ }}</td>
-                                                        <td>{{ $emargement?->jour }}</td>
-                                                        <td>{{ $emargement?->date?->format('d/m/Y') }}</td>
-                                                        <td></td>
+                                                        <td class="text-center">{{ $i++ }}</td>
+                                                        <td class="text-center">{{ $emargement?->jour }}</td>
+                                                        <td class="text-center">{{ $emargement?->date?->format('d/m/Y') }}</td>
+                                                        <td class="text-center">{{ count($emargement?->feuillepresences) }}</td>
                                                         <td>{{ $emargement?->observations }}</td>
                                                         <td class="text-center">
                                                             <span class="d-flex mt-2 align-items-baseline">
-                                                                {{-- <a href="{{ url('formationemargement', [
-                                                                    '$idformation' => $formation?->id,
-                                                                    '$idmodule' => $formation?->module?->id,
-                                                                    '$idlocalite' => $formation?->departement?->region?->id,
-                                                                    '$idemargement' => $emargement?->id,
-                                                                ]) }}"
-                                                                    class="btn btn-outline-primary btn-rounded btn-sm">
-                                                                    <i class="bi bi-plus"
-                                                                        title="Ajouter bénéficiaires"></i> </a> --}}
-
-                                                                {{-- <form
-                                                                    action="{{ route('emargements.show', $emargement->id) }}"
-                                                                    method="post">
-                                                                    @csrf
-                                                                    <button type="submit"
-                                                                        class="btn btn-outline-primary btn-rounded btn-sm"><i
-                                                                            class="bi bi-plus"
-                                                                            title="Ajouter bénéficiaires"></i></button>
-                                                                </form> --}}
-
                                                                 <form
                                                                     action="{{ route('formationemargement', [
                                                                         '$idformation' => $formation->id,
@@ -981,7 +961,7 @@
                                                                         value="{{ $emargement?->id }}">
                                                                     <button type="submit"
                                                                         class="btn btn-outline-primary btn-rounded btn-sm"><i
-                                                                            class="bi bi-plus"
+                                                                            class="bi bi-eye"
                                                                             title="Ajouter bénéficiaires"></i></button>
                                                                 </form>
                                                                 <div class="filter">
@@ -1829,8 +1809,8 @@
                         <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                             <div class="mb-3">
                                 <label>Nombre de jours<span class="text-danger mx-1">*</span></label>
-                                <input type="number" min="1" max="150" name="jour"
-                                    value="{{ old('jour') }}"
+                                <input type="number" min="1" max="1" name="jour"
+                                    value="{{ '1' ?? old('jour') }}"
                                     class="form-control form-control-sm @error('jour') is-invalid @enderror"
                                     id="jour" placeholder="Nombre de jour">
                                 @error('jour')

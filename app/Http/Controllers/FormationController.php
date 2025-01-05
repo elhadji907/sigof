@@ -26,6 +26,7 @@ use App\Models\Statut;
 use App\Models\TypesFormation;
 use App\Models\Validationformation;
 use App\Models\Validationindividuelle;
+use App\Models\Feuillepresence;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -2634,6 +2635,13 @@ class FormationController extends Controller
                 'formations_id' => $request->idformation,
 
             ]);
+            
+            foreach ($formation->individuelles as $key => $individuelle) {
+                $feuillepresence = Feuillepresence::create([
+                    'emargements_id' => $emargement->id,
+                    'individuelles_id' => $individuelle->id,
+                ]);
+            }
         }
 
         /* foreach ($formation->individuelles as $key => $individuelle) {

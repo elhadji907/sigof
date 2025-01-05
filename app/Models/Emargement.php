@@ -22,7 +22,6 @@ class Emargement extends Model
         'date'
     ];
 
-
 	protected $fillable = [
 		'uuid',
 		'formations_id',
@@ -41,5 +40,10 @@ class Emargement extends Model
 	public function formation()
 	{
 		return $this->belongsTo(Formation::class, 'formations_id');
+	}
+
+	public function feuillepresences()
+	{
+		return $this->hasMany(Feuillepresence::class, 'emargements_id');
 	}
 }

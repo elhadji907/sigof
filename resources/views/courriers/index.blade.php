@@ -30,7 +30,7 @@
                                 new Chart(document.querySelector('#barChart'), {
                                     type: 'bar',
                                     data: {
-                                        labels: ['Arrivés', 'Départs', 'Internes'],
+                                        labels: ['arrivés', 'départs', 'internes'],
                                         datasets: [{
                                             label: 'Diagramme à barres',
                                             data: [{{ $arrives }}, {{ $departs }}, {{ $internes }}],
@@ -131,10 +131,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Diagramme circulaire courriers</h5>
-
                         <!-- Donut Chart -->
                         <div id="donutChart" style="min-height: 365px;" class="echart"></div>
-
                         <script>
                             document.addEventListener("DOMContentLoaded", () => {
                                 echarts.init(document.querySelector("#donutChart")).setOption({
@@ -166,15 +164,15 @@
                                         },
                                         data: [{
                                                 value: {{ $arrives }},
-                                                name: 'Arrivés'
+                                                name: 'arrivés'
                                             },
                                             {
                                                 value: {{ $departs }},
-                                                name: 'Départs'
+                                                name: 'départs'
                                             },
                                             {
                                                 value: {{ $internes }},
-                                                name: 'Internes'
+                                                name: 'internes'
                                             }
                                         ]
                                     }]
@@ -182,12 +180,12 @@
                             });
                         </script>
                         <!-- End Donut Chart -->
-
                     </div>
                 </div>
             </div>
         </div>
     </section>
+    
     <section class="section dashboard">
         <div class="row">
 
