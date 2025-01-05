@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $contact
  * @property string|null $adresse
  * @property string|null $deleted_at
+ * @property string|null $informations
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
@@ -38,10 +39,17 @@ class Antenne extends Model
     use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;
+
 	protected $table = 'antennes';
+
 	protected $casts = [
 		'chef_id' => 'int',
+        'date_ouverture' => 'datetime'
 	];
+    
+    protected $dates = [
+        'date_ouverture'
+    ];
 
 	protected $fillable = [
 		'uuid',
@@ -50,6 +58,8 @@ class Antenne extends Model
 		'contact',
 		'adresse',
 		'chef_id',
+		'date_ouverture',
+		'informations',
 	];
 
 	public function regions()

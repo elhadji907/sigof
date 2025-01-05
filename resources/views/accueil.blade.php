@@ -120,7 +120,7 @@
 
                 <div class="row align-items-center">
 
-                @if ($message = Session::get('status'))
+                    @if ($message = Session::get('status'))
                         <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                             role="alert">
                             <strong>{{ $message }}</strong>
@@ -162,7 +162,6 @@
                                 @if (!empty($une?->message))
                                     {{ substr($une?->message, 0, 350) }}...
                                 @else
-                                    
                                 @endif
                             </p>
                             <div class="hero-buttons">
@@ -170,13 +169,15 @@
                                     <a href="#" data-bs-toggle="modal" data-bs-target="#enSavoirPlusModal"
                                         class="btn btn-primary btn-sm me-0 me-sm-2 mx-1">En savoir plus</a>
                                 @else
-                                    <a href="#apropos" class="btn btn-primary btn-sm me-0 me-sm-2 mx-1">En savoir plus</a>
+                                    <a href="#apropos" class="btn btn-primary btn-sm me-0 me-sm-2 mx-1">En savoir
+                                        plus</a>
                                 @endif
                                 @if (!empty($une?->video))
                                     <a href="{{ $une?->video }}" class="btn btn-sm btn-link mt-2 mt-sm-0 glightbox">
                                         <i class="bi bi-play-circle me-1"></i>Lire la vidéo</a>
                                 @else
-                                    <a href="https://www.youtube.com/watch?v=UVn3WAv8XbM&t=49s" class="btn btn-sm btn-link mt-2 mt-sm-0 glightbox">
+                                    <a href="https://www.youtube.com/watch?v=UVn3WAv8XbM&t=49s"
+                                        class="btn btn-sm btn-link mt-2 mt-sm-0 glightbox">
                                         <i class="bi bi-play-circle me-1"></i>Vidéo présentation</a>
                                 @endif
                             </div>
@@ -240,9 +241,9 @@
                     <div class="col-xl-5" data-aos="fade-up" data-aos-delay="200">
                         <span class="about-meta">A PROPOS DE NOUS</span>
                         {{-- <h2 class="about-title">La référence de la formation professionnelle</h2> --}}
-                        <p class="about-description">L'Office National de Formation Professionnelle (ONFP) est un
-                            établissement public à caractère industriel et commercial (EPIC) créé par la Loi n°86-44 du
-                            11 Août 1986. Ainsi, l'ONFP a pour mission de :</p>
+                        <p class="about-description">L'Office National de Formation Professionnelle <b>(ONFP)</b> est un
+                            établissement public à caractère industriel et commercial (EPIC) créé par la Loi <b>n°86-44 du
+                            11 Août 1986.</b> Ainsi, l'ONFP a pour mission de :</p>
 
                         <div class="row feature-list-wrapper">
                             <div class="col-md-12">
@@ -355,17 +356,17 @@
 
                     <div class="col-lg-3 col-md-6">
                         <div class="stats-item text-center w-100 h-100">
-                            <span data-purecounter-start="0" data-purecounter-end="{{ $count_individuelles }}"
+                            <span data-purecounter-start="0" data-purecounter-end="{{ $count_demandeurs }}"
                                 data-purecounter-duration="1" class="purecounter"></span>
-                            <p>Demandes individuelles</p>
+                            <p>Demandes</p>
                         </div>
                     </div><!-- End Stats Item -->
 
                     <div class="col-lg-3 col-md-6">
                         <div class="stats-item text-center w-100 h-100">
-                            <span data-purecounter-start="0" data-purecounter-end="{{ $count_collectives }}"
+                            <span data-purecounter-start="0" data-purecounter-end="{{ $referentiels }}"
                                 data-purecounter-duration="1" class="purecounter"></span>
-                            <p>Demandes collectives</p>
+                            <p>Référentiels</p>
                         </div>
                     </div><!-- End Stats Item -->
 
@@ -373,7 +374,7 @@
                         <div class="stats-item text-center w-100 h-100">
                             <span data-purecounter-start="0" data-purecounter-end="{{ $count_projets }}"
                                 data-purecounter-duration="1" class="purecounter"></span>
-                            <p>Projets, Programmes</p>
+                            <p>Partenaires</p>
                         </div>
                     </div><!-- End Stats Item -->
 
@@ -381,7 +382,7 @@
                         <div class="stats-item text-center w-100 h-100">
                             <span data-purecounter-start="0" data-purecounter-end="{{ $count_operateurs }}"
                                 data-purecounter-duration="1" class="purecounter"></span>
-                            <p>Opérateurs agréés</p>
+                            <p>Opérateurs</p>
                         </div>
                     </div><!-- End Stats Item -->
 
@@ -557,7 +558,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-12 text-center">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 text-center">
                                     <button class="btn btn-sm" type="submit">Envoyer</button>
                                 </div>
                             </form>
@@ -1042,11 +1043,17 @@
                                         <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12"
                                             data-aos="fade-up" data-aos-delay="200">
                                             <div class="pricing-card popular">
-                                                <div class="popular-badge">{{ $antenne?->code }}</div>
+
+                                                @if (!empty($antenne?->date_ouverture))
+                                                    <div class="popular-badge">
+                                                        {{ 'DEPUIS LE ' . mb_strtoupper($antenne?->date_ouverture?->translatedFormat('d F Y'), 'UTF-8') }}
+                                                    </div>
+                                                @else
+                                                    <div class="popular-badge">{{ $antenne?->code }}</div>
+                                                @endif
                                                 {{-- <h3>Chef : <span
                                                         class="currency">{{ $antenne?->chef?->user?->firstname . ' ' . $antenne?->chef?->user?->name }}</span>
                                                 </h3> --}}
-
                                                 <h4>ZONE DE COUVERTURE</h4>
                                                 <ul class="features-list">
                                                     @foreach ($antenne?->regions as $region)

@@ -6,8 +6,8 @@ use App\Models\Antenne;
 use App\Models\Employee;
 use App\Models\Region;
 use Illuminate\Http\Request;
-use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Validation\Rule;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AntenneController extends Controller
 {
@@ -21,18 +21,30 @@ class AntenneController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            "name"         => "required|string|unique:antennes,name,except,id",
-            "code"         => "required|string|unique:antennes,code,except,id",
-            "contact"      => "required|string",
-            "adresse"      => "required|string",
+            "name" => "required|string|unique:antennes,name,except,id",
+            "code" => "required|string|unique:antennes,code,except,id",
+            'date_ouverture' => "nullable|date|min:10|max:10|date_format:Y-m-d",
+            "informations" => "nullable|string",
+            "contact" => "required|string|min:9|max:9",
+            "adresse" => "required|string",
         ]);
 
+        $date_ouverture = $request->input("date_ouverture");
+
+        if (!empty($date_ouverture)) {
+            $date_ouverture = $request->input("date_ouverture");
+        } else {
+            $date_ouverture = null;
+        }
+
         $antenne = Antenne::create([
-            "name"      => $request->input("name"),
-            "code"      => $request->input("code"),
-            "contact"   => $request->input("contact"),
-            "adresse"   => $request->input("adresse"),
-            "chef_id"   => $request->input("employe"),
+            "name" => $request->input("name"),
+            "code" => $request->input("code"),
+            "contact" => $request->input("contact"),
+            "adresse" => $request->input("adresse"),
+            "chef_id" => $request->input("employe"),
+            "date_ouverture" => $date_ouverture,
+            "informations" => $request->input("informations"),
         ]);
 
         $antenne->save();
@@ -41,7 +53,7 @@ class AntenneController extends Controller
 
         Alert::success('Effectuée ! ', 'antenne ajoutée');
 
-        return  redirect()->back();
+        return redirect()->back();
     }
 
     public function edit($id)
@@ -67,18 +79,30 @@ class AntenneController extends Controller
         $antenne = Antenne::findOrFail($id);
 
         $this->validate($request, [
-            "name"           => ['required', 'string', Rule::unique(Antenne::class)->ignore($id)],
-            "code"         => ['required', 'string', Rule::unique(Antenne::class)->ignore($id)],
-            "contact"      => "required|string",
-            "adresse"      => "required|string",
+            "name" => ['required', 'string', Rule::unique(Antenne::class)->ignore($id)],
+            "code" => ['required', 'string', Rule::unique(Antenne::class)->ignore($id)],
+            'date_ouverture' => ["nullable", "date", "min:10", "max:10", "date_format:Y-m-d"],
+            "informations" => ["nullable", "string"],
+            "contact" => "required|string|min:9|max:9",
+            "adresse" => ["required", "string"],
         ]);
 
+        $date_ouverture = $request->input("date_ouverture");
+
+        if (!empty($date_ouverture)) {
+            $date_ouverture = $request->input("date_ouverture");
+        } else {
+            $date_ouverture = null;
+        }
+
         $antenne->update([
-            "name"      => $request->input("name"),
-            "code"      => $request->input("code"),
-            "contact"   => $request->input("contact"),
-            "adresse"   => $request->input("adresse"),
-            "chef_id"   => $request->input("employe"),
+            "name" => $request->input("name"),
+            "code" => $request->input("code"),
+            "contact" => $request->input("contact"),
+            "adresse" => $request->input("adresse"),
+            "chef_id" => $request->input("employe"),
+            "date_ouverture" => $date_ouverture,
+            "informations" => $request->input("informations"),
         ]);
 
         $antenne->save();
@@ -87,7 +111,7 @@ class AntenneController extends Controller
 
         Alert::success('Félicitations ! ', 'Modification effectuée');
 
-        return  redirect()->back();
+        return redirect()->back();
     }
     public function destroy($id)
     {

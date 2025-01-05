@@ -14,6 +14,7 @@ use App\Models\Projet;
 use App\Models\Service;
 use App\Models\Une;
 use App\Models\Module;
+use App\Models\Referentiel;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -45,6 +46,8 @@ class AuthenticatedSessionController extends Controller
         $count_today = Module::distinct()->count();
         $count_individuelles = Individuelle::count();
         $count_collectives = Collective::count();
+        $referentiels = Referentiel::count();
+        $count_demandeurs = $count_individuelles + $count_collectives;
         $count_projets = Projet::count();
         $antennes = Antenne::get();
         $count_operateurs = Operateur::where('statut_agrement', 'agréer')->count();
@@ -67,6 +70,8 @@ class AuthenticatedSessionController extends Controller
                 'count_projets',
                 'count_operateurs',
                 'count_collectives',
+                'count_demandeurs',
+                'referentiels',
                 'anciennete',
                 'antennes',
                 'services',

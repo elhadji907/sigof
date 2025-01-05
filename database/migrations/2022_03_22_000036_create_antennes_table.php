@@ -26,9 +26,11 @@ class CreateAntennesTable extends Migration
             $table->char('uuid', 36);
             $table->string('name', 200)->nullable();
             $table->string('code', 45)->nullable();
+            $table->dateTime('date_ouverture')->nullable(true);
             $table->string('contact', 200)->nullable();
             $table->string('adresse', 200)->nullable();
             $table->unsignedInteger('chef_id')->nullable();
+            $table->longText('informations')->nullable(true);
             $table->softDeletes();
             $table->nullableTimestamps();
         });

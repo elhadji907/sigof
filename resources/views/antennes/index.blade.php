@@ -136,7 +136,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <label for="contact" class="form-label">contact<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="number" min="0" name="contact" value="{{ old('contact') }}"
@@ -149,7 +149,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <label for="adresse" class="form-label">Adresse<span
                                             class="text-danger mx-1">*</span></label>
                                     <textarea name="adresse" id="adresse" rows="1"
@@ -162,7 +162,20 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                    <label for="date_ouverture" class="form-label">Date ouverture<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="date" name="date_ouverture" value="{{ old('date_ouverture') }}"
+                                        class="datepicker form-control form-control-sm @error('date_ouverture') is-invalid @enderror"
+                                        id="date_ouverture" placeholder="Date ouverture">
+                                    @error('date_ouverture')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <label for="employe" class="form-label">Chef antenne</label>
                                     <select name="employe" class="form-select  @error('employe') is-invalid @enderror"
                                         aria-label="Select" id="select-field-chef-antenne"
@@ -192,6 +205,18 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <label for="informations" class="form-label">Informations</label>
+                                    <textarea name="informations" rows="2"
+                                        class="form-control form-control-sm @error('informations') is-invalid @enderror"
+                                        placeholder="Informations complémentaires concernant l'antenne">{{ $antenne?->informations ?? old('informations') }}</textarea>
+                                    @error('informations')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
                                 </div>
 
                             </div>
