@@ -161,17 +161,19 @@
                                                 <div class="label">Quitus</div>
                                                 <div>
                                                     @if (!empty($operateur?->debut_quitus))
-                                                    <a class="btn btn-outline-secondary btn-sm" title="télécharger le quitus"
-                                                        target="_blank" href="{{ asset($operateur?->getQuitus()) }}">
-                                                        <i class="bi bi-file-image"></i>
-                                                    </a>
-                                                        
+                                                        <a class="btn btn-outline-secondary btn-sm"
+                                                            title="télécharger le quitus" target="_blank"
+                                                            href="{{ asset($operateur?->getQuitus()) }}">
+                                                            <i class="bi bi-file-image"></i>
+                                                        </a>
                                                     @endif
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-4 col-lg-4">
                                                 <div class="label">Durée quitus</div>
-                                                <div>{{ $operateur?->debut_quitus?->diffForHumans(['parts' => 3, 'join' => ', ']) }}</div>
+                                                <div>
+                                                    {{ $operateur?->debut_quitus?->diffForHumans(['parts' => 3, 'join' => ', ']) }}
+                                                </div>
                                             </div>
                                         </form>
                                         <form method="post" action="#" enctype="multipart/form-data" class="row">
@@ -563,6 +565,15 @@
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <h5 class="card-title">DOMAINES DE COMPETENCES OU PROGRAMMES DE FORMATION</h5>
+                                                <form action="{{ route('lettreOperateur') }}" method="post"
+                                                    target="_blank">
+                                                    @csrf
+                                                    {{-- @method('PUT') --}}
+                                                    <input type="hidden" name="id" value="{{ $operateur?->id }}">
+                                                    <button class="btn btn-outline-secondary btn-sm"><i class="fa fa-print"
+                                                            aria-hidden="true"></i>Lettre agrément</button>
+                                                </form>
+
                                                 <span class="card-title d-flex align-items-baseline">Statut
                                                     :&nbsp;
                                                     <span class="{{ $operateur?->statut_agrement }} text-white btn-sm">

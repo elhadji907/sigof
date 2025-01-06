@@ -1603,4 +1603,34 @@ class OperateurController extends Controller
             )
         );
     }
+    
+    public function lettreOperateur(Request $request)
+    {
+
+        $operateur = Operateur::findOrFail($request->id);
+
+
+        $title = 'Lettres agrément , ' . $operateur?->user?->operateur;
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('operateurs.lettreoperateur', compact(
+            'operateur',
+            'title'
+        )));
+
+        // (Optional) Setup the paper size and orientation (portrait ou landscape)
+        $dompdf->setPaper('Letter', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        $name = 'Lettres agrément opérateurs, ' . $operateur?->user?->operateur . '.pdf';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($name, ['Attachment' => false]);
+    }
+
 }
