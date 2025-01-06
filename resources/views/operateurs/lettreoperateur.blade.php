@@ -155,7 +155,7 @@
                 @foreach ($operateur?->operateurmodules?->where('statut', 'agréer') as $operateurmodule)
                     <tr class="item" style="text-align: left;">
                         <td colspan="2">{{ ucfirst(strtolower($operateurmodule?->domaine)) }}</td>
-                        <td colspan="2">{{ ucfirst(strtolower($operateurmodule?->module)) }}</td>
+                        <td colspan="2">{{ $operateurmodule?->module }}</td>
                         <td colspan="5">{{ ucfirst(strtolower($operateurmodule?->categorie)) }}</td>
                     </tr>
                 @endforeach
