@@ -6,8 +6,10 @@
 
     <meta charset="utf-8" />
     <style>
-        @page {
+       @page {
+            size: 21cm 29.7cm;
             margin-top: 0cm;
+            margin-bottom: 0cm;
         }
 
         .invoice-box {

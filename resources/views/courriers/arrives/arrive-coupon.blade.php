@@ -6,8 +6,10 @@
 
     <meta charset="utf-8" />
     <style>
-        @page {
+         @page {
+            size: 21cm 29.7cm;
             margin-top: 0cm;
+            margin-bottom: 0cm;
         }
 
         .invoice-box {
@@ -81,7 +83,7 @@
 </head>
 
 <body>
-    <div class="invoice-box" style="margin-top: -20px;">
+    <div class="invoice-box">
         <table class="table table-responsive" cellpadding="0" cellspacing="0">
             <tbody>
                 <tr>

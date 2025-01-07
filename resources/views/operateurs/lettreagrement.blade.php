@@ -9,8 +9,14 @@
     <link href="{{ asset('assets/img/favicon-onfp.png') }}" rel="icon">
     <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
     <style>
-        @page {
+        /* @page {
             margin: 0cm 0cm;
+        } */
+
+        @page {
+            size: 21cm 29.7cm;
+            margin-top: 0cm;
+            margin-bottom: 0cm;
         }
 
         .invoice-box {
@@ -106,78 +112,99 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
-
 @foreach ($operateurs as $operateur)
 
     <body>
-        <h6 valign="top" style="text-align: center;">
-            <b>REPUBLIQUE DU SENEGAL<br></b>
-            Un Peuple - Un But - Une Foi<br>
-            <b>********<br>
-                MINISTERE DE LA FORMATION PROFESSIONNELLE ET TECHNIQUE<br>
-                ********<br>
-                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/logo-onfp.jpg'))) }}"
-                    style="width: 100%; max-width: 300px" />
-            </b>
-        </h6>
-        <h4 style="text-align: center; margin-top: -15px;">AGREMENT OPERATEUR</h4>
+        <div class="invoice-box">
+            <table>
+                <thead>
+                    <tr class="heading">
+                        <td colspan="3">
+                            <small>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <b>REPUBLIQUE DU SENEGAL</b><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <small><em>Un Peuple - Un But - Une Foi</em></small><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                ********<br>
+                                <b>MINISTERE DE LA FORMATION PROFESSIONNELLE ET TECHNIQUE</b><br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                ********</small><br>
+                            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/logo-onfp.jpg'))) }}"
+                                style="width: 100%; max-width: 370px" />
+                        </td>
+                        <td colspan="3"></td>
+                        <td colspan="3" style="text-align: right;"></td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+        <h4 style="text-align: center;">AGREMENT OPERATEUR</h4>
+        <div class="invoice-box">
+            <b>Opérateur</b> :
+            {{ $operateur?->user?->operateur . ' (' . $operateur?->user?->username . ')' }}
+            <br>
+            <b>Responsable</b> :
+            {{ $operateur?->user?->firstname . ' ' . $operateur?->user?->name }}
+            <br>
+            <b>Adresse</b> :
+            {{ $operateur?->user?->adresse }}
+            <br>
+            <b>Téléphone</b> :
+            <a style="text-decoration:none" href="tel:+{{ $operateur?->user?->telephone }}">
+                {{ substr($operateur?->user?->fixe, 0, 2) .
+                    ' ' .
+                    substr($operateur?->user?->fixe, 2, 3) .
+                    ' ' .
+                    substr($operateur?->user?->fixe, 5, 2) .
+                    ' ' .
+                    substr($operateur?->user?->fixe, 7, 2) }}
 
-        <div class="invoice-box" style="margin-top: -15px;">
-            <p>
-                <b>Opérateur</b> :
-                {{ $operateur?->user?->operateur . ' (' . $operateur?->user?->username . ')' }}
-                <br>
-                <b>Responsable</b> :
-                {{ $operateur?->user?->firstname . ' ' . $operateur?->user?->name }}
-                <br>
-                <b>Adresse</b> :
-                {{ $operateur?->user?->adresse }}
-                <br>
-                <b>Téléphone</b> :
-                <a style="text-decoration:none" href="tel:+{{ $operateur?->user?->telephone }}">
-
-                    {{ substr($operateur?->user?->fixe, 0, 2) .
-                        ' ' .
-                        substr($operateur?->user?->fixe, 2, 3) .
-                        ' ' .
-                        substr($operateur?->user?->fixe, 5, 2) .
-                        ' ' .
-                        substr($operateur?->user?->fixe, 7, 2) }}
-
-                    {{ ' / ' .
-                        substr($operateur?->user?->telephone, 0, 2) .
-                        ' ' .
-                        substr($operateur?->user?->telephone, 2, 3) .
-                        ' ' .
-                        substr($operateur?->user?->telephone, 5, 2) .
-                        ' ' .
-                        substr($operateur?->user?->telephone, 7, 2) }}
-                </a>
-                <br>
-                <b>Email</b> :
-                <a style="text-decoration:none"
-                    href="mailto:{{ $operateur?->user?->email }}">{{ $operateur?->user?->email }}</a>
-                <br>
-                Est agréé par l'ONFP sous le N°: <span
-                    style="color: #DC3545; font-weight: bold">{{ $operateur?->numero_agrement }}</span>
-            </p>
+                {{ ' / ' .
+                    substr($operateur?->user?->telephone, 0, 2) .
+                    ' ' .
+                    substr($operateur?->user?->telephone, 2, 3) .
+                    ' ' .
+                    substr($operateur?->user?->telephone, 5, 2) .
+                    ' ' .
+                    substr($operateur?->user?->telephone, 7, 2) }}
+            </a>
+            <br>
+            <b>Email</b> :
+            <a style="text-decoration:none"
+                href="mailto:{{ $operateur?->user?->email }}">{{ $operateur?->user?->email }}</a>
+            <br>
+            Est agréé par l'ONFP sous le N°: <span
+                style="color: #DC3545; font-weight: bold">{{ $operateur?->numero_agrement }}</span> <br><br>
             <table class="table table-responsive">
                 <tbody>
                     <tr class="item" style="text-align: center;">
                         <td colspan="9"><b>{{ __('FORMATIONS AGRÉÉES') }}</b></td>
                     </tr>
                     <tr class="item" style="text-align: center;">
-                        <td colspan="2" style="width:170px"><b>{{ __('DOMAINES') }}</b></td>
-                        <td colspan="2" width="30%"><b>{{ __('MODULES OU SPECIALITE') }}</b></td>
-                        <td colspan="5" width="55%">
+                        <td colspan="2" style="width:5cm"><b>{{ __('DOMAINES') }}</b></td>
+                        <td colspan="2" style="width:8cm"><b>{{ __('MODULES / SPECIALITE') }}</b></td>
+                        <td colspan="5" style="width:8cm">
                             <b>{{ __('TITRE OU NIVEAU DE QUALIFICATION CORRESPONDANT ') }}</b>
                         </td>
                     </tr>
                     @foreach ($operateur?->operateurmodules?->where('statut', 'agréer') as $operateurmodule)
                         <tr class="item" style="text-align: center;">
-                            <td colspan="2">{{ ucfirst(strtolower($operateurmodule?->domaine)) }}</td>
+                            <td colspan="2">{{ $operateurmodule?->domaine }}</td>
                             <td colspan="2">{{ $operateurmodule?->module }}</td>
-                            <td colspan="5">{{ ucfirst(strtolower($operateurmodule?->categorie)) }}</td>
+                            <td colspan="5">{{ $operateurmodule?->categorie }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -201,27 +228,43 @@
                     la propriété de l'Office.</li>
 
             </ul>
-        </div>
-        <div class="invoice-box">
             <table>
-                <thead>
-                    <tr class="heading">
-                        <td colspan="3">
-                            <h3>L'Opérateur <br><small class="small fst-italic">(Lu et
-                                    approuvé - Signature)</small></h3>
-                        </td>
-                        <td colspan="3"></td>
-                        <td colspan="3" style="text-align: right;">
-                            <h3>{{ $operateur?->commissionagrement?->description }} <br>
-                                <span style="padding-right: 40px">Le Directeur Général</span>
-                            </h3>
-                        </td>
-                    </tr>
-                </thead>
+                <h3 style="text-align: right;">{{ $operateur?->commissionagrement?->description }}</h3>
+                <h3>L'Opérateur
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Le Directeur Général
+                    <br><small class="small fst-italic">(Lu et
+                        approuvé - Signature)</small>
+                </h3>
             </table>
         </div>
-        {{-- <div style="page-break-after: always;"></div> --}}
+        {{-- <div class="invoice-box" style="margin-top: 0cm;">
+        <table>
+            <thead>
+                <tr class="heading">
+                    <td colspan="3">
+                        <h3>L'Opérateur <br><small class="small fst-italic">(Lu et
+                                approuvé - Signature)</small></h3>
+                    </td>
+                    <td colspan="3"></td>
+                    <td colspan="3" style="text-align: right;">
+                        <h3>{{ $operateur?->commissionagrement?->description }} <br>
+                            <span style="padding-right: 40px">Le Directeur Général</span>
+                        </h3>
+                    </td>
+                </tr>
+            </thead>
+        </table>
+    </div> --}}
     </body>
+
+    {{-- <div style="page-break-after: always;"></div> --}}
 @endforeach
 
 </html>
