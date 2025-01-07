@@ -9,9 +9,9 @@
     <link href="{{ asset('assets/img/favicon-onfp.png') }}" rel="icon">
     <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
     <style>
-        /* @page {
+        @page {
             margin: 0cm 0cm;
-        } */
+        }
 
         .invoice-box {
             max-width: 800px;
@@ -108,7 +108,7 @@
 </head>
 
 <body>
-    <h6 valign="top" style="text-align: center; margin-top: -40px;">
+    <h6 valign="top" style="text-align: center;">
         <b>REPUBLIQUE DU SENEGAL<br></b>
         Un Peuple - Un But - Une Foi<br>
         <b>********<br>
@@ -132,7 +132,24 @@
             <br>
             <b>Téléphone</b> :
             <a style="text-decoration:none"
-                href="tel:+{{ $operateur?->user?->telephone }}">{{ $operateur?->user?->fixe . ' / ' . $operateur?->user?->telephone }}</a>
+                href="tel:+{{ $operateur?->user?->telephone }}">
+                {{ substr($operateur?->user?->fixe, 0, 2) .
+                    ' ' .
+                    substr($operateur?->user?->fixe, 2, 3) .
+                    ' ' .
+                    substr($operateur?->user?->fixe, 5, 2) .
+                    ' ' .
+                    substr($operateur?->user?->fixe, 7, 2) }}
+
+                {{ ' / ' .
+                    substr($operateur?->user?->telephone, 0, 2) .
+                    ' ' .
+                    substr($operateur?->user?->telephone, 2, 3) .
+                    ' ' .
+                    substr($operateur?->user?->telephone, 5, 2) .
+                    ' ' .
+                    substr($operateur?->user?->telephone, 7, 2) }}
+            </a>
             <br>
             <b>Email</b> :
             <a style="text-decoration:none"
@@ -148,15 +165,15 @@
                 </tr>
                 <tr class="item" style="text-align: left;">
                     <td colspan="2" style="width:170px"><b>{{ __('DOMAINES') }}</b></td>
-                    <td colspan="2" style="width:200px"><b>{{ __('MODULES OU SPECIALITE') }}</b></td>
-                    <td colspan="5"><b>{{ __('TITRE OU NIVEAU DE QUALIFICATION CORRESPONDANT ') }}</b>
+                    <td colspan="2" width="30%"><b>{{ __('MODULES OU SPECIALITE') }}</b></td>
+                    <td colspan="5" width="55%"><b>{{ __('TITRE OU NIVEAU DE QUALIFICATION CORRESPONDANT ') }}</b>
                     </td>
                 </tr>
                 @foreach ($operateur?->operateurmodules?->where('statut', 'agréer') as $operateurmodule)
                     <tr class="item" style="text-align: left;">
-                        <td colspan="2">{{ ucfirst(strtolower($operateurmodule?->domaine)) }}</td>
+                        <td colspan="2">{{$operateurmodule?->domaine }}</td>
                         <td colspan="2">{{ $operateurmodule?->module }}</td>
-                        <td colspan="5">{{ ucfirst(strtolower($operateurmodule?->categorie)) }}</td>
+                        <td colspan="5">{{$operateurmodule?->categorie }}</td>
                     </tr>
                 @endforeach
             </tbody>

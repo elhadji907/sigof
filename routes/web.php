@@ -180,6 +180,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::post('pvEvaluation', [FormationController::class, 'pvEvaluation'])->name('pvEvaluation');
         Route::post('pvVierge', [FormationController::class, 'pvVierge'])->name('pvVierge');
         Route::post('ficheSuivi', [FormationController::class, 'ficheSuivi'])->name('ficheSuivi');
+        Route::post('feuillePresence', [FormationController::class, 'feuillePresence'])->name('feuillePresence');
 
         Route::post('pvEvaluationCol', [FormationController::class, 'pvEvaluationCol'])->name('pvEvaluationCol');
         Route::post('ficheSuiviCol', [FormationController::class, 'ficheSuiviCol'])->name('ficheSuiviCol');
@@ -418,6 +419,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::put('observations/{id}', [OperateurController::class, 'observations'])->name('observations');
 
         Route::post('ficheSynthese', [OperateurController::class, 'ficheSynthese'])->name('ficheSynthese');
+        Route::post('ficheSyntheseOperateur', [OperateurController::class, 'ficheSyntheseOperateur'])->name('ficheSyntheseOperateur');
 
         Route::post('lettreAgrement', [OperateurController::class, 'lettreAgrement'])->name('lettreAgrement');                                                
         Route::post('lettreOperateur', [OperateurController::class, 'lettreOperateur'])->name('lettreOperateur');

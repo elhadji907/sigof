@@ -1709,6 +1709,42 @@ class FormationController extends Controller
         $dompdf->stream($name, ['Attachment' => false]);
     }
 
+    public function feuillePresence(Request $request)
+    {
+
+        $formation = Formation::find($request->input('id'));
+
+        $title = 'Feuille de présence de la formation en  ' . $formation->name;
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Formation');
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('formations.individuelles.feuillepresence', compact(
+            'formation',
+            'title'
+        )));
+
+        // (Optional) Setup the paper size and orientation (portrait ou landscape)
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        /* $anne = date('d');
+        $anne = $anne . ' ' . date('m');
+        $anne = $anne . ' ' . date('Y');
+        $anne = $anne . ' à ' . date('H') . 'h';
+        $anne = $anne . ' ' . date('i') . 'min';
+        $anne = $anne . ' ' . date('s') . 's'; */
+
+        $name = 'Feuille de présence de la formation en  ' . $formation->name . ', code ' . $formation->code . '.pdf';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($name, ['Attachment' => false]);
+    }
+
     public function pvEvaluation(Request $request)
     {
 

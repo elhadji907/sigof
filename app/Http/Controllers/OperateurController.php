@@ -1467,6 +1467,34 @@ class OperateurController extends Controller
         $dompdf->stream($name, ['Attachment' => false]);
     }
 
+    public function ficheSyntheseOperateur(Request $request)
+    {
+        $operateur = Operateur::findOrFail($request->input('id'));
+
+        $title = 'Fiche de synthèse ' . $operateur?->user?->operateur;
+
+        $dompdf = new Dompdf();
+        $options = $dompdf->getOptions();
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('operateurs.fichesyntheseoperateur',
+            compact(
+                'operateur',
+                'title'
+            )));
+
+        // (Optional) Setup the paper size and orientation (portrait ou landscape)
+        $dompdf->setPaper('Letter', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        $name = 'Fiche de synthèse ' . $operateur?->user?->operateur . '.pdf';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($name, ['Attachment' => false]);
+    }
+
     public function lettreAgrement(Request $request)
     {
         $commission = Commissionagrement::find($request->input('id'));
@@ -1603,12 +1631,11 @@ class OperateurController extends Controller
             )
         );
     }
-    
+
     public function lettreOperateur(Request $request)
     {
 
         $operateur = Operateur::findOrFail($request->id);
-
 
         $title = 'Lettres agrément , ' . $operateur?->user?->operateur;
 

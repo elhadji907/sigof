@@ -565,19 +565,35 @@
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <h5 class="card-title">DOMAINES DE COMPETENCES OU PROGRAMMES DE FORMATION</h5>
-                                                <form action="{{ route('lettreOperateur') }}" method="post"
-                                                    target="_blank">
-                                                    @csrf
-                                                    {{-- @method('PUT') --}}
-                                                    <input type="hidden" name="id" value="{{ $operateur?->id }}">
-                                                    <button class="btn btn-outline-secondary btn-sm"><i class="fa fa-print"
-                                                            aria-hidden="true"></i>Lettre agrément</button>
-                                                </form>
-
                                                 <span class="card-title d-flex align-items-baseline">Statut
                                                     :&nbsp;
                                                     <span class="{{ $operateur?->statut_agrement }} text-white btn-sm">
                                                         {{ $operateur?->statut_agrement }}</span>
+
+                                                    <div class="filter">
+                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                class="bi bi-three-dots"></i></a>
+                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                            <li>
+                                                                <form action="{{ route('ficheSyntheseOperateur') }}"
+                                                                    method="post" target="_blank">
+                                                                    @csrf
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $operateur?->id }}">
+                                                                    <button class="btn btn-sm mx-1">Fiche synthèse</button>
+                                                                </form>
+                                                            </li>
+                                                            <li>
+                                                                <form action="{{ route('lettreOperateur') }}" method="post"
+                                                                    target="_blank">
+                                                                    @csrf
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $operateur?->id }}">
+                                                                    <button class="btn btn-sm mx-1">Lettre agrément</button>
+                                                                </form>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                     {{-- <div class="filter">
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                             class="bi bi-three-dots"></i></a>

@@ -392,6 +392,14 @@
                                                                     </button>
                                                                 @endcan
                                                                 <hr>
+                                                                <form action="{{ route('feuillePresence') }}" method="post"
+                                                                    target="_blank">
+                                                                    @csrf
+                                                                    {{-- @method('PUT') --}}
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $formation->id }}">
+                                                                    <button class="btn btn-sm mx-1">Feuille présence</button>
+                                                                </form>
                                                                 <form action="{{ route('ficheSuivi') }}" method="post"
                                                                     target="_blank">
                                                                     @csrf

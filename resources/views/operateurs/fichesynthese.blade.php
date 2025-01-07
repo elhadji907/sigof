@@ -186,12 +186,26 @@
                         <td><b>{{ __('CONTACTS') }}</b></td>
                         <td colspan="3">
                             @if (!empty($operateur?->user?->fixe))
-                                Tél 1 : <a
-                                    href="tel:+{{ $operateur?->user?->fixe }}">{{ $operateur?->user?->fixe }}</a>
+                                Tél 1 : <a href="tel:+{{ $operateur?->user?->fixe }}">
+                                    {{ substr($operateur?->user?->fixe, 0, 2) .
+                                        ' ' .
+                                        substr($operateur?->user?->fixe, 2, 3) .
+                                        ' ' .
+                                        substr($operateur?->user?->fixe, 5, 2) .
+                                        ' ' .
+                                        substr($operateur?->user?->fixe, 7, 2) }}
+                                </a>
                             @endif
                             @if (!empty($operateur?->user?->telephone))
-                                / <a
-                                    href="tel:+{{ $operateur?->user?->telephone }}">{{ $operateur?->user?->telephone }}</a>
+                                / <a href="tel:+{{ $operateur?->user?->telephone }}">
+                                    {{ substr($operateur?->user?->telephone, 0, 2) .
+                                        ' ' .
+                                        substr($operateur?->user?->telephone, 2, 3) .
+                                        ' ' .
+                                        substr($operateur?->user?->telephone, 5, 2) .
+                                        ' ' .
+                                        substr($operateur?->user?->telephone, 7, 2) }}
+                                </a>
                             @endif
                             <br>
                             @if (!empty($operateur?->user?->telephone_parent))

@@ -93,7 +93,7 @@
         Un Peuple - Un But - Une Foi<br>
         <b>********<br>
             MINISTERE DE LA FORMATION PROFESSIONNELLE ET TECHNIQUE<br>
-            ********<br>
+            ********<br><br>
             <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/logo-onfp.jpg'))) }}"
                 style="width: 100%; max-width: 300px" />
         </b>
@@ -117,10 +117,7 @@
                 </tr>
                 <tr class="heading">
                     <td colspan="4">{{ __('Intitulé formation : ') }}
-                        {{ $formation->module->name }};
-                        @isset($formation?->lieu)
-                            {{ ' Lieu: ' . $formation?->lieu }}
-                        @endisset
+                        {{ $formation->module->name }}
                     </td>
                     <td colspan="4"><b>{{ __('Opérateur : ') }}</b>
                         {{ $formation?->operateur?->user?->operateur . ' (' . $formation?->operateur?->user?->username . ')' }}
@@ -131,10 +128,23 @@
                         {{ $formation?->lieu }}
                     </td>
                     <td colspan="4"><b>{{ __('Contact : ') }}</b>
-                        {{ $formation?->operateur?->user?->fixe }}
-                        @isset($formation?->operateur?->user?->telephone)
-                            {{ ' / ' . $formation?->operateur?->user?->telephone }}
-                        @endisset
+                        {{ substr($formation?->operateur?->user?->fixe, 0, 2) .
+                            ' ' .
+                            substr($formation?->operateur?->user?->fixe, 2, 3) .
+                            ' ' .
+                            substr($formation?->operateur?->user?->fixe, 5, 2) .
+                            ' ' .
+                            substr($formation?->operateur?->user?->fixe, 7, 2) }}
+                        @if (!empty($formation?->operateur?->user?->telephone))
+                            {{ ' / ' .
+                                substr($formation?->operateur?->user?->telephone, 0, 2) .
+                                ' ' .
+                                substr($formation?->operateur?->user?->telephone, 2, 3) .
+                                ' ' .
+                                substr($formation?->operateur?->user?->telephone, 5, 2) .
+                                ' ' .
+                                substr($formation?->operateur?->user?->telephone, 7, 2) }}
+                        @endif
                     </td>
                 </tr>
                 <tr class="item" style="text-align: center;">
