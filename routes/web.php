@@ -56,6 +56,7 @@ use App\Http\Controllers\ProjetmoduleController;
 use App\Http\Controllers\ReferentielController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\EmargementController;
+use App\Http\Controllers\SMSController;
 
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SecteurController;
@@ -131,6 +132,11 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::post('/addRegion', [RegionController::class, 'addRegion'])->name('addRegion');
 
         Route::post('sendWelcomeEmail', [EmailController::class, 'sendWelcomeEmail'])->name('sendWelcomeEmail');
+        Route::post('sendFormationEmail', [EmailFormationController::class, 'sendFormationEmail'])->name('sendFormationEmail');
+
+        Route::post('sendFormationSMS', [SMSController::class, 'sendFormationSMS'])->name('sendFormationSMS');
+        Route::post('sendWelcomeSMS', [SMSController::class, 'sendWelcomeSMS'])->name('sendWelcomeSMS');
+
         Route::post('sendFormationEmail', [EmailFormationController::class, 'sendFormationEmail'])->name('sendFormationEmail');
 
         Route::put('/arrives/{arriveId}/delete', [ArriveController::class, 'destroy']);

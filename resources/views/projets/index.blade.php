@@ -161,7 +161,7 @@
                             </div> --}}
 
                             <div class="card-header text-center bg-gradient-default">
-                                <h1 class="h4 text-black mb-0">AJOUTER PROJET OU PROGRAMME</h1>
+                                <h1 class="h4 text-black mb-0">AJOUTER PARTENAIRE</h1>
                             </div>
                             <div class="modal-body">
                                 <div class="row g-3">

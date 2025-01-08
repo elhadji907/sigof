@@ -458,6 +458,15 @@
                                                                         <button class="btn btn-sm mx-1">Démarrage
                                                                             (e-mail)</button>
                                                                     </form>
+                                                                    <form action="{{ route('sendFormationSMS') }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        {{-- @method('PUT') --}}
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $formation->id }}">
+                                                                        <button class="btn btn-sm mx-1">Démarrage
+                                                                            (SMS)</button>
+                                                                    </form>
                                                                     <form action="{{ route('sendWelcomeEmail') }}"
                                                                         method="post">
                                                                         @csrf
@@ -466,6 +475,15 @@
                                                                             value="{{ $formation->id }}">
                                                                         <button class="btn btn-sm mx-1">Résultats
                                                                             (e-mail)</button>
+                                                                    </form>
+                                                                    <form action="{{ route('sendWelcomeSMS') }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        {{-- @method('PUT') --}}
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $formation->id }}">
+                                                                        <button class="btn btn-sm mx-1">Résultats
+                                                                            (SMS)</button>
                                                                     </form>
                                                                 @endcan
 
