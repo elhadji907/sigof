@@ -18,6 +18,12 @@ class SMSController extends Controller
 
     public function sendFormationSMS(Request $request)
     {
+        $data = request()->validate([
+            'titre' => ['required', 'string', 'max:7'],
+            'sms' => ['required', 'string', 'max:128'],
+
+        ]);
+
         $formation = Formation::findOrFail($request->id);
 
         $configuration = new Configuration(
@@ -34,7 +40,10 @@ class SMSController extends Controller
                     ),
                 ],
                 content: new SmsTextContent(
-                    text: 'Bonjour ' . $individuelle->user->firstname . ' ' . $individuelle->user->name . ', votre formation en ' . $formation?->module?->name . ' va démarrer le ' . $formation?->date_debut?->format('d/m/Y') . ' merci de confirmer votre disponibilité'
+                    text: $request?->titre
+                    . ' ' . $individuelle?->user?->civilite
+                    . ' ' . $individuelle->user->name
+                    . ' ' . $request?->sms
                 ),
                 sender: 'ONFP'
             );

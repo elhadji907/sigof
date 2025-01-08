@@ -458,15 +458,12 @@
                                                                         <button class="btn btn-sm mx-1">Démarrage
                                                                             (e-mail)</button>
                                                                     </form>
-                                                                    <form action="{{ route('sendFormationSMS') }}"
-                                                                        method="post">
-                                                                        @csrf
-                                                                        {{-- @method('PUT') --}}
-                                                                        <input type="hidden" name="id"
-                                                                            value="{{ $formation->id }}">
-                                                                        <button class="btn btn-sm mx-1">Démarrage
-                                                                            (SMS)</button>
-                                                                    </form>
+
+                                                                    <button class="btn btn-sm mx-1" data-bs-toggle="modal"
+                                                                        data-bs-target="#sendFormationSMS">Démarrage
+                                                                        (SMS)
+                                                                    </button>
+
                                                                     <form action="{{ route('sendWelcomeEmail') }}"
                                                                         method="post">
                                                                         @csrf
@@ -476,8 +473,7 @@
                                                                         <button class="btn btn-sm mx-1">Résultats
                                                                             (e-mail)</button>
                                                                     </form>
-                                                                    <form action="{{ route('sendWelcomeSMS') }}"
-                                                                        method="post">
+                                                                    <form action="{{ route('sendWelcomeSMS') }}" method="post">
                                                                         @csrf
                                                                         {{-- @method('PUT') --}}
                                                                         <input type="hidden" name="id"
@@ -964,8 +960,10 @@
                                                     <tr>
                                                         <td class="text-center">{{ $i++ }}</td>
                                                         <td class="text-center">{{ $emargement?->jour }}</td>
-                                                        <td class="text-center">{{ $emargement?->date?->format('d/m/Y') }}</td>
-                                                        <td class="text-center">{{ count($emargement?->feuillepresences) }}</td>
+                                                        <td class="text-center">
+                                                            {{ $emargement?->date?->format('d/m/Y') }}</td>
+                                                        <td class="text-center">
+                                                            {{ count($emargement?->feuillepresences) }}</td>
                                                         <td>{{ $emargement?->observations }}</td>
                                                         <td class="text-center">
                                                             <span class="d-flex mt-2 align-items-baseline">
@@ -973,7 +971,7 @@
                                                                     action="{{ route('formationemargement', [
                                                                         '$idformation' => $formation->id,
                                                                         '$idmodule' => $formation->module->id,
-                                                                        '$idlocalite' => $formation->departement->id
+                                                                        '$idlocalite' => $formation->departement->id,
                                                                     ]) }}"
                                                                     method="post">
                                                                     @csrf
@@ -1273,16 +1271,14 @@
                     enctype="multipart/form-data" class="row">
                     @csrf
                     @method('DELETE')
-                    <div class="modal-header">
-                        <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Rejet demande</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
+                    <div class="card-header text-center bg-gradient-default">
+                        <h1 class="h4 text-black mb-0">ANNULER DEMANDE</h1>
                     </div>
                     <div class="modal-body">
-                        <label for="motif" class="form-label">Motifs du rejet</label>
+                        <label for="motif" class="form-label">Motifs<span
+                                class="text-danger mx-1">*</span></label>
                         <textarea name="motif" id="motif" rows="5"
-                            class="form-control form-control-sm @error('motif') is-invalid @enderror"
-                            placeholder="Enumérer les motifs du rejet">{{ old('motif') }}</textarea>
+                            class="form-control form-control-sm @error('motif') is-invalid @enderror" placeholder="Motifs de l'annulation">{{ old('motif') }}</textarea>
                         @error('motif')
                             <span class="invalid-feedback" role="alert">
                                 <div>{{ $message }}</div>
@@ -1290,9 +1286,63 @@
                         @enderror
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                        <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-printer"></i>
-                            Annuler</button>
+                        <button type="button" class="btn btn-secondary btn-sm"
+                            data-bs-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-danger btn-sm">Annuler</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="sendFormationSMS" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('sendFormationSMS') }}" method="post">
+                    @csrf
+                    <div class="card-header text-center bg-gradient-info">
+                        <h1 class="h4 text-black mb-0">ENVOYER SMS</h1>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id" value="{{ $formation->id }}">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                <div class="mb-3">
+                                    <label for="titre" class="form-label">Titre<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <textarea name="titre" id="titre" rows="1"
+                                        class="form-control form-control-sm @error('titre') is-invalid @enderror" placeholder="Bonjour, Bonsoir">{{ 'Bonjour' ?? old('titre') }}</textarea>
+                                    @error('titre')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                <label for="sms" class="form-label">SMS<span
+                                        class="text-danger mx-1">*</span></label>
+                                <textarea name="sms" id="sms" rows="3"
+                                    class="form-control form-control-sm @error('sms') is-invalid @enderror" placeholder="Ecrire votre SMS ici">{{ 'vous êtes convoqué(e)s pour une formation en ' .
+                                        $formation?->module?->name .
+                                        ' le ' .
+                                        $formation?->date_debut?->format('d/m/Y') .
+                                        ' à partir de 08 h ' .
+                                        ' à ' .
+                                        $formation?->lieu ??
+                                        old('sms') }}
+                                    </textarea>
+                                @error('sms')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm"
+                            data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-success btn-sm">Envoyer SMS</button>
                     </div>
                 </form>
             </div>
@@ -1798,8 +1848,8 @@
                             <label for="recommandations">Recommandations</label>
 
                             <textarea name="recommandations" id="recommandations" cols="30" rows="3s"
-                                class="form-control form-control-sm @error('recommandations') is-invalid @enderror" placeholder="Recommandations"
-                                autofocus>{{ $formation?->recommandations ?? old('recommandations') }}</textarea>
+                                class="form-control form-control-sm @error('recommandations') is-invalid @enderror"
+                                placeholder="Recommandations" autofocus>{{ $formation?->recommandations ?? old('recommandations') }}</textarea>
                             @error('recommandations')
                                 <span class="invalid-feedback" role="alert">
                                     <div>{{ $message }}</div>
@@ -1823,8 +1873,8 @@
         aria-labelledby="ajouterJoursLabel{{ $formation->id }}" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form method="post" action="{{ route('formations.ajouterJours') }}" enctype="multipart/form-data"
-                    class="row g-3">
+                <form method="post" action="{{ route('formations.ajouterJours') }}"
+                    enctype="multipart/form-data" class="row g-3">
                     @csrf
                     @method('patch')
                     <div class="card-header text-center bg-gradient-default">

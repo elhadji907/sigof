@@ -697,17 +697,15 @@
                             enctype="multipart/form-data" class="row">
                             @csrf
                             @method('PUT')
-                            <div class="modal-header">
-                                <h5 class="modal-title">Rejet opérateur</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                            <div class="card-header text-center bg-gradient-default">
+                                <h1 class="h4 text-black mb-0">SOUS RESERVE</h1>
                             </div>
                             <div class="modal-body">
-                                <label for="motif" class="form-label">Motifs de la réserve<span
+                                <label for="motif" class="form-label">Motifs<span
                                         class="text-danger mx-1">*</span></label>
                                 <textarea name="motif" id="motif" rows="5"
                                     class="form-control form-control-sm @error('motif') is-invalid @enderror"
-                                    placeholder="Enumérer les motifs de l'agrément sous réserve">{{ $operateur?->motif ?? old('motif') }}</textarea>
+                                    placeholder="Justification">{{ $operateur?->motif ?? old('motif') }}</textarea>
                                 @error('motif')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -715,9 +713,8 @@
                                 @enderror
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                <button type="submit" class="btn btn-warning btn-sm"><i class="bi bi-printer"></i>
-                                    Sous réserve</button>
+                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-warning btn-sm">Mettre sous réserve</button>
                             </div>
                         </form>
                     </div>
@@ -735,17 +732,15 @@
                             enctype="multipart/form-data" class="row">
                             @csrf
                             @method('DELETE')
-                            <div class="modal-header">
-                                <h5 class="modal-title">Rejet opérateur</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                            <div class="card-header text-center bg-gradient-default">
+                                <h1 class="h4 text-black mb-0">REJET AGREMENT</h1>
                             </div>
                             <div class="modal-body">
-                                <label for="motif" class="form-label">Motifs du rejet<span
+                                <label for="motif" class="form-label">Motifs<span
                                         class="text-danger mx-1">*</span></label>
                                 <textarea name="motif" id="motif" rows="5"
                                     class="form-control form-control-sm @error('motif') is-invalid @enderror"
-                                    placeholder="Enumérer les motifs du rejet">{{ $operateur?->motif ?? old('motif') }}</textarea>
+                                    placeholder="Justification">{{ $operateur?->motif ?? old('motif') }}</textarea>
                                 @error('motif')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -753,9 +748,8 @@
                                 @enderror
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-printer"></i>
-                                    Rejeter</button>
+                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
                             </div>
                         </form>
                     </div>
