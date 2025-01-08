@@ -119,7 +119,7 @@
             <table>
                 <thead>
                     <tr class="heading">
-                        <td colspan="3">
+                        <td colspan="3" style="text-align: center;">
                             <small>
                                 <b>REPUBLIQUE DU SENEGAL</b><br>
                                 <small><em>Un Peuple - Un But - Une Foi</em></small><br>
