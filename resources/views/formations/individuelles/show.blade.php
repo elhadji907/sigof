@@ -455,14 +455,9 @@
                                                                         {{-- @method('PUT') --}}
                                                                         <input type="hidden" name="id"
                                                                             value="{{ $formation->id }}">
-                                                                        <button class="btn btn-sm mx-1">Démarrage
+                                                                        <button class="show_confirm_valider btn btn-sm mx-1">Démarrage
                                                                             (e-mail)</button>
                                                                     </form>
-
-                                                                    <button class="btn btn-sm mx-1" data-bs-toggle="modal"
-                                                                        data-bs-target="#sendFormationSMS">Démarrage
-                                                                        (SMS)
-                                                                    </button>
 
                                                                     <form action="{{ route('sendWelcomeEmail') }}"
                                                                         method="post">
@@ -470,17 +465,21 @@
                                                                         {{-- @method('PUT') --}}
                                                                         <input type="hidden" name="id"
                                                                             value="{{ $formation->id }}">
-                                                                        <button class="btn btn-sm mx-1">Résultats
+                                                                        <button class="show_confirm_valider btn btn-sm mx-1">Résultats
                                                                             (e-mail)</button>
                                                                     </form>
-                                                                    <form action="{{ route('sendWelcomeSMS') }}" method="post">
-                                                                        @csrf
-                                                                        {{-- @method('PUT') --}}
-                                                                        <input type="hidden" name="id"
-                                                                            value="{{ $formation->id }}">
-                                                                        <button class="btn btn-sm mx-1">Résultats
-                                                                            (SMS)</button>
-                                                                    </form>
+
+                                                                    <hr>
+
+                                                                    <button class="btn btn-sm mx-1" data-bs-toggle="modal"
+                                                                        data-bs-target="#sendFormationSMS">Démarrage
+                                                                        (SMS)
+                                                                    </button>
+                                                                    <br>
+                                                                    <button class="btn btn-sm mx-1" data-bs-toggle="modal"
+                                                                        data-bs-target="#sendWelcomeSMS">Résultats
+                                                                        (SMS)
+                                                                    </button>
                                                                 @endcan
 
                                                                 <hr>
@@ -1300,7 +1299,7 @@
                 <form action="{{ route('sendFormationSMS') }}" method="post">
                     @csrf
                     <div class="card-header text-center bg-gradient-info">
-                        <h1 class="h4 text-black mb-0">ENVOYER SMS</h1>
+                        <h1 class="h4 text-black mb-0">ENVOYER SMS DEMARRAGE</h1>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="id" value="{{ $formation->id }}">
@@ -1329,6 +1328,56 @@
                                         ' à partir de 08 h ' .
                                         ' à ' .
                                         $formation?->lieu ??
+                                        old('sms') }}
+                                    </textarea>
+                                @error('sms')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm"
+                            data-bs-dismiss="modal">Annuler</button>
+                        <button type="submit" class="btn btn-success btn-sm">Envoyer SMS</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="sendWelcomeSMS" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('sendWelcomeSMS') }}" method="post">
+                    @csrf
+                    <div class="card-header text-center bg-gradient-info">
+                        <h1 class="h4 text-black mb-0">ENVOYER SMS FIN</h1>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="id" value="{{ $formation->id }}">
+                        <div class="row">
+                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                <div class="mb-3">
+                                    <label for="titre" class="form-label">Titre<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <textarea name="titre" id="titre" rows="1"
+                                        class="form-control form-control-sm @error('titre') is-invalid @enderror" placeholder="Bonjour, Bonsoir">{{ 'Bonjour' ?? old('titre') }}</textarea>
+                                    @error('titre')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                <label for="sms" class="form-label">SMS<span
+                                        class="text-danger mx-1">*</span></label>
+                                <textarea name="sms" id="sms" rows="3"
+                                    class="form-control form-control-sm @error('sms') is-invalid @enderror" placeholder="Ecrire votre SMS ici">{{ 'votre formation en ' .
+                                        $formation?->module?->name .
+                                        ' est désormais terminée. Vous avez obtenu une note de ' ??
                                         old('sms') }}
                                     </textarea>
                                 @error('sms')
@@ -1774,8 +1823,10 @@
                                     class="form-control form-control-sm @error('type_certificat') is-invalid @enderror"
                                     id="type_certificat" placeholder="Attestation ou Titre "> --}}
 
-                                    <select name="titre" class="form-select  @error('titre') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-titre" data-placeholder="Choisir titre">
+                                    <select name="titre"
+                                        class="form-select  @error('titre') is-invalid @enderror"
+                                        aria-label="Select" id="select-field-titre"
+                                        data-placeholder="Choisir titre">
                                         <option>
                                             {{ $formation?->titre ?? ($formation?->referentiel?->titre ?? old('titre')) }}
                                         </option>

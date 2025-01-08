@@ -579,7 +579,7 @@
             var name = $(this).data("name");
             event.preventDefault();
             swal({
-                    title: `Êtes-vous sûr de vouloir valider ?`,
+                    title: `Êtes-vous sûr ?`,
                     text: "Si oui, cliquer sur ok.",
                     icon: "success",
                     buttons: true,

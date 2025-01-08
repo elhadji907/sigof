@@ -41,7 +41,7 @@ class SMSController extends Controller
                 ],
                 content: new SmsTextContent(
                     text: $request?->titre
-                    . ' ' . $individuelle?->user?->civilite
+                    . ', ' . $individuelle?->user?->civilite
                     . ' ' . $individuelle->user->name
                     . ' ' . $request?->sms
                 ),
@@ -53,7 +53,7 @@ class SMSController extends Controller
             try {
                 $smsResponse = $sendSmsApi->sendSmsMessages($request);
 
-                Alert::success("Felicitations !!!", "SMS envoyé");
+                Alert::success("Effectué !!!", "SMS envoyé");
 
                 return redirect()->back();
             } catch (ApiException $apiException) {
@@ -68,7 +68,53 @@ class SMSController extends Controller
 
     public function sendWelcomeSMS(Request $request)
     {
-        $idformation = $request->id;
-        dd($idformation);
+        $data = request()->validate([
+            'titre' => ['required', 'string', 'max:7'],
+            'sms' => ['required', 'string', 'max:128'],
+
+        ]);
+
+        $formation = Formation::findOrFail($request->id);
+
+        $configuration = new Configuration(
+            host: '1gr529.api.infobip.com',
+            apiKey: '34c32d6cfad602ef077241fe3e568dd0-e65adb7c-8209-452a-962a-dfb66979a0c0'
+        );
+
+        foreach ($formation->individuelles as $key => $individuelle) {
+            $sendSmsApi = new SmsApi(config: $configuration);
+            $message = new SmsMessage(
+                destinations: [
+                    new SmsDestination(
+                        to: '221' . $individuelle->user->telephone
+                    ),
+                ],
+                content: new SmsTextContent(
+                    text: $request?->titre
+                    . ', ' . $individuelle?->user?->civilite
+                    . ' ' . $individuelle->user->name
+                    . ' ' . $request?->sms
+                    . ' ' . $individuelle?->note_obtenue . '/20'
+                    . ' avec la mention ' . $individuelle?->appreciation
+                ),
+                sender: 'ONFP'
+            );
+
+            $request = new SmsRequest(messages: [$message]);
+
+            try {
+                $smsResponse = $sendSmsApi->sendSmsMessages($request);
+
+                Alert::success("Effectué !!!", "SMS envoyé");
+
+                return redirect()->back();
+            } catch (ApiException $apiException) {
+                // HANDLE THE EXCEPTION
+
+                Alert::warning("Désolez !!!", "Echec de l'envoi");
+
+                return redirect()->back();
+            }
+        }
     }
 }
