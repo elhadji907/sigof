@@ -27,7 +27,7 @@
                 @endif
                 <div class="card">
                     <div class="card-header text-center bg-gradient-default">
-                        <h1 class="h4 text-black mb-0">PROJETS - PROGRAMMES</h1>
+                        <h1 class="h4 text-black mb-0">PARTENAIRES</h1>
                     </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center mt-0">
@@ -50,7 +50,7 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center" width="3%">N°</th>
-                                        <th>Name</th>
+                                        <th>Partenaires</th>
                                         <th class="text-center">Sigle</th>
                                         <th class="text-center">Type</th>
                                         <th class="text-center">Statut</th>
@@ -80,7 +80,7 @@
                                 </tbody>
                             </table>
                         @else
-                            <div class="alert alert-info">Vous n'avez aucune demande projet ou programme pour le moment !!!
+                            <div class="alert alert-info">Vous n'avez aucune demande pour le moment !!!
                             </div>
                         @endif
                     </div>

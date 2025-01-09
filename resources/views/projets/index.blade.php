@@ -166,10 +166,10 @@
                             <div class="modal-body">
                                 <div class="row g-3">
                                     <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                        <label for="name" class="form-label">Projet<span
+                                        <label for="name" class="form-label">Partenaire<span
                                                 class="text-danger mx-1">*</span></label>
                                         <textarea name="name" id="name" rows="1"
-                                            class="form-control form-control-sm @error('name') is-invalid @enderror" placeholder="Nom du projet ou programme">{{ old('name') }}</textarea>
+                                            class="form-control form-control-sm @error('name') is-invalid @enderror" placeholder="Partenaire">{{ old('name') }}</textarea>
                                         @error('name')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -268,12 +268,12 @@
                                     </div>
 
                                     <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="type" class="form-label">Type localité<span
+                                        <label for="type" class="form-label">Localité<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="type" class="form-select  @error('type') is-invalid @enderror"
                                             aria-label="Select" id="select-field-typelocalite"
                                             data-placeholder="Choisir type">
-                                            <option value="">Choisir type</option>
+                                            <option value="">Choisir</option>
                                             <option value="Commune">Commune</option>
                                             <option value="Arrondissement">Arrondissement</option>
                                             <option value="Departement">Departement</option>
@@ -287,15 +287,17 @@
                                     </div>
 
                                     <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="type_projet" class="form-label">Type projet<span
+                                        <label for="type_projet" class="form-label">Type partenaire<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="type_projet"
                                             class="form-select  @error('type_projet') is-invalid @enderror"
                                             aria-label="Select" id="select-field-projetprogramme"
                                             data-placeholder="Choisir type projet">
-                                            <option value="">Choisir type projet</option>
+                                            <option value="">Choisir</option>
                                             <option value="Projet">Projet</option>
                                             <option value="Programme">Programme</option>
+                                            <option value="Convention">Convention</option>
+                                            <option value="Aucun">Aucun</option>
                                         </select>
                                         @error('type_projet')
                                             <span class="invalid-feedback" role="alert">
@@ -309,7 +311,7 @@
                                                 class="text-danger mx-1">*</span></label>
                                         <textarea name="description" id="description" rows="3"
                                             class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                            placeholder="Description du projet ou programme">{{ old('description') }}</textarea>
+                                            placeholder="Description">{{ old('description') }}</textarea>
                                         @error('description')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -356,7 +358,7 @@
                                                     class="text-danger mx-1">*</span></label>
                                             <textarea name="name" id="name" rows="1"
                                                 class="form-control form-control-sm @error('name') is-invalid @enderror"
-                                                placeholder="Nom du projet ou programme">{{ $projet->name ?? old('name') }}</textarea>
+                                                placeholder="Partenaire">{{ $projet->name ?? old('name') }}</textarea>
                                             @error('name')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -512,7 +514,7 @@
                                                     class="text-danger mx-1">*</span></label>
                                             <textarea name="description" id="description" rows="3"
                                                 class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                                placeholder="Description du projet ou programme">{{ $projet?->description ?? old('description') }}</textarea>
+                                                placeholder="Description">{{ $projet?->description ?? old('description') }}</textarea>
                                             @error('description')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>

@@ -28,4 +28,9 @@ class Projetmodule extends Model
     {
         return $this->belongsTo(Projet::class, 'projets_id')->latest();
     }
+
+	public function individuelles()
+	{
+		return $this->hasMany(Individuelle::class, 'modules_id');
+	}
 }

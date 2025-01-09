@@ -515,6 +515,7 @@
                                                             <th>NOM</th>
                                                             <th class="text-center">Date naissance</th>
                                                             <th class="text-center">Lieu de naissance</th>
+                                                            <th class="text-center">Telephone</th>
                                                             {{-- <th>Adresse</th> --}}
                                                             {{-- @isset($individuelle?->note_obtenue) --}}
                                                             <th class="text-center">Note</th>
@@ -543,7 +544,10 @@
                                                                 <td>{{ $individuelle?->user?->firstname }}</td>
                                                                 <td>{{ $individuelle?->user?->name }}</td>
                                                                 <td style="text-align: center;">
-                                                                    {{ $individuelle?->user->date_naissance?->format('d/m/Y') }}
+                                                                    {{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}
+                                                                </td>
+                                                                <td style="text-align: center;">
+                                                                    {{ $individuelle?->user?->telephone }}
                                                                 </td>
                                                                 <td class="text-center">
                                                                     {{ $individuelle?->user?->lieu_naissance }}</td>

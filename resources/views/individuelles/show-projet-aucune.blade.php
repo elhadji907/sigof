@@ -51,7 +51,7 @@
                             </h5>
                         @endif
                         @if (!empty(Auth::user()->cin))
-                            <div class="alert alert-info">Vous n'avez aucune demande projet ou programme pour le moment !!
+                            <div class="alert alert-info">Vous n'avez aucune demande pour le moment !!
                             </div>
                         @elseif(!empty($statut))
                             <h5 class="card-title">Informations personnelles : <a href="{{ route('profil') }}"><span
@@ -71,11 +71,13 @@
                         <form method="post" action="{{ route('showIndividuelleProjet') }}" enctype="multipart/form-data">
                             @csrf
                             @method('post')
-                            <div class="modal-header">
-                                <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une demande pour
-                                    le projet : {{ $projet?->sigle }}</h5>
+                            {{-- <div class="modal-header">
+                                <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une nouvelle demande : {{ $projet?->sigle }}</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
+                            </div> --}}
+                            <div class="card-header text-center bg-gradient-default">
+                                <h1 class="h4 text-black mb-0">AJOUTER DEMANDE</h1>
                             </div>
                             <input type="hidden" name="idprojet" value="{{ $projet?->id }}">
                             <div class="modal-body">
@@ -440,10 +442,9 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
+                                    <button type="button" class="btn btn-secondary btn-sm"
                                         data-bs-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                        Enregistrer</button>
+                                    <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
                                 </div>
                             </div>
                         </form>

@@ -19,7 +19,7 @@
                                     <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('projets.index') }}"
                                             class="btn btn-success btn-sm" title="retour"><i
                                                 class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                        <p> | Liste des projets</p>
+                                        <p> | Liste des partenaires</p>
                                     </span>
                                 </div>
                             </div>
@@ -39,10 +39,10 @@
                                 <div class="modal-body">
                                     <div class="row g-3">
                                         <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <label for="name" class="form-label">Projet<span
+                                            <label for="name" class="form-label">Partenaires<span
                                                     class="text-danger mx-1">*</span></label>
                                             <textarea name="name" id="name" rows="1"
-                                                class="form-control form-control-sm @error('name') is-invalid @enderror" placeholder="Nom du projet ou programme">{{ $projet->name ?? old('name') }}</textarea>
+                                                class="form-control form-control-sm @error('name') is-invalid @enderror" placeholder="Partenaires">{{ $projet->name ?? old('name') }}</textarea>
                                             @error('name')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -155,7 +155,7 @@
                                             <select name="type"
                                                 class="form-select  @error('type') is-invalid @enderror"
                                                 aria-label="Select" id="select-field-type"
-                                                data-placeholder="Choisir type">
+                                                data-placeholder="Choisir">
                                                 <option value="{{ $projet?->type_localite ?? old('type') }}">
                                                     {{ $projet?->type_localite ?? old('type') }}</option>
                                                 <option value="Commune">Commune</option>
@@ -171,16 +171,18 @@
                                         </div>
 
                                         <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                            <label for="type_projet" class="form-label">Type projet<span
+                                            <label for="type_projet" class="form-label">Type partenaire<span
                                                     class="text-danger mx-1">*</span></label>
                                             <select name="type_projet"
                                                 class="form-select  @error('type_projet') is-invalid @enderror"
                                                 aria-label="Select" id="select-field"
-                                                data-placeholder="Choisir type projet">
+                                                data-placeholder="Choisir">
                                                 <option value="{{ $projet?->type_projet ?? old('type_projet') }}">
                                                     {{ $projet?->type_projet ?? old('type_projet') }}</option>
                                                 <option value="Projet">Projet</option>
                                                 <option value="Programme">Programme</option>
+                                                <option value="Convention">Convention</option>
+                                                <option value="Aucun">Aucun</option>
                                             </select>
                                             @error('type_projet')
                                                 <span class="invalid-feedback" role="alert">

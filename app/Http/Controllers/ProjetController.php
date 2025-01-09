@@ -366,8 +366,6 @@ class ProjetController extends Controller
             $region = null;
             $arrondissement = null;
         }
-
-
         return view('projets.individuelle', compact('projet', 'commune', 'arrondissement', 'departement', 'region'));
     }
 }

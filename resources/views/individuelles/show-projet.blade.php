@@ -735,13 +735,16 @@
                         <div class="modal-content">
                             <form method="post" action="{{ route('individuellesStore') }}" enctype="multipart/form-data">
                                 @csrf
-                                <div class="modal-header">
+                                {{-- <div class="modal-header">
                                     <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une nouvelle
                                         demande
                                         individuelle</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
-                                </div>
+                                </div> --}}                                
+                            <div class="card-header text-center bg-gradient-default">
+                                <h1 class="h4 text-black mb-0">AJOUTER UNE NOUVELLE DEMANDE</h1>
+                            </div>
                                 <div class="modal-body">
                                     <div class="row g-3">
                                         <div class="col-12 col-md-12 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
