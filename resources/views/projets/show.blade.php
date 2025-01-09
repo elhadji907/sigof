@@ -9,9 +9,9 @@
                 {{-- <h1>Data Tables</h1> --}}
                 <nav>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
+                        <li class="breadcrumb-item"><a href="#">Accueil</a></li>
                         <li class="breadcrumb-item">Tables</li>
-                        <li class="breadcrumb-item active">Projet {{ $projet?->sigle }}</li>
+                        <li class="breadcrumb-item active">{{ $projet?->sigle }}</li>
                     </ol>
                 </nav>
             </div>
@@ -65,6 +65,14 @@
                                             data-bs-target="#localites-overview">Localités</button>
                                     </li>
                                 @endif
+                                
+                                <li class="nav-item">
+                                    <button class="nav-link">
+                                        <a style="text-decoration: none; color: black"
+                                            href="{{ route('projetsBeneficiaire', $projet?->id) }}" title="voir" target="_blank">Liste</a>
+                                    </button>
+                                </li>
+
                             </ul>
 
                             <div class="tab-content">

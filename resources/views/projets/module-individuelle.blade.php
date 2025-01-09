@@ -1,13 +1,13 @@
 @extends('layout.user-layout')
-@section('title', 'Base de données des demandeurs du ' . $projet->type_projet . ' ' . $projet?->sigle)
+@section('title', $projet?->sigle . ', liste des demandeurs ')
 @section('space-work')
     <div class="pagetitle">
         {{-- <h1>Data Tables</h1> --}}
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
+                <li class="breadcrumb-item"><a href="#">Accueil</a></li>
                 <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active">{{ $projet->type_projet . ' ' . $projet?->sigle }}</li>
+                <li class="breadcrumb-item active">{{ $projet?->sigle }}</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->

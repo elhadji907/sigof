@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'Base de données des demandeurs du ' . $projet->type_projet . ' ' . $projet?->sigle)
+@section('title', $projet?->sigle . ', liste des demandeurs ')
 @section('space-work')
     <div class="pagetitle">
         {{-- <h1>Data Tables</h1> --}}
@@ -7,7 +7,7 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
                 <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active">{{ $projet->type_projet . ' ' . $projet?->sigle }}</li>
+                <li class="breadcrumb-item active">{{ $projet?->sigle }}</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -40,13 +40,13 @@
                                 class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                         <p> | retour</p>
                     </span>
-                    <h4 class="card-title">Base de données des demandeurs du
-                        {{ $projet->type_projet . ' ' . $projet->sigle }}</h4>
+                    <h4 class="card-title">Liste des demandeurs : {{ $projet?->sigle }}</h4>
                     <table class="table datatables align-middle" id="table-individuelles">
                         <thead>
                             <tr>
-                                {{-- <th class="text-center">N°</th> --}}
+                                <th class="text-center">N°</th>
                                 <th class="text-center">CIN</th>
+                                <th class="text-center">Civilité</th>
                                 <th>Prénom</th>
                                 <th>NOM</th>
                                 <th>Date naissance</th>
@@ -72,8 +72,9 @@
                             @foreach ($projet?->individuelles as $individuelle)
                                 @if (!empty($individuelle?->numero))
                                     <tr>
-                                        {{-- <td style="text-align: center">{{ $individuelle?->numero }}</td> --}}
-                                        <td style="text-align: center">{{ $individuelle?->user?->cin }}</td>
+                                        <td class="text-center">{{ $individuelle?->numero }}</td>
+                                        <td class="text-center">{{ $individuelle?->user?->cin }}</td>
+                                        <td class="text-center">{{ $individuelle?->user?->civilite }}</td>
                                         <td>{{ $individuelle?->user?->firstname }}</td>
                                         <td>{{ $individuelle?->user?->name }}</td>
                                         <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>

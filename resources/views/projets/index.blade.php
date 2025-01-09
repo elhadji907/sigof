@@ -76,12 +76,6 @@
                                         <td class="text-center">
                                             <a href="{{ route('projetsBeneficiaire', $projet->id) }}" class="badge bg-info"
                                                 title="afficher">{{ count($projet?->individuelles) }}</a>
-                                            {{-- @foreach ($projet?->individuelles as $individuelle)
-                                                @if ($loop->last)
-                                                    <a href="#"><span
-                                                            class="badge bg-info">{{ $loop->count }}</span></a>
-                                                @endif
-                                            @endforeach --}}
                                         </td>
                                         <td class="text-center">{{ $projet?->effectif }}</td>
                                         <td>
