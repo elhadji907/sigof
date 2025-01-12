@@ -168,6 +168,7 @@
                                     <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                         <div class="d-flex justify-content-between align-items-center mt-3">
                                             <h5 class="card-title">Modules</h5>
+                                            <h5 class="card-title">Demandes reçues: {{ count($projet?->individuelles) }}</h5>
                                             <h5 class="card-title">Effectif total: {{ $projet?->effectif }}</h5>
                                         </div>
                                         {{-- <form method="post" action="#" enctype="multipart/form-data"

@@ -324,6 +324,13 @@ class DatabaseSeeder extends Seeder
         'courrier',
         'acourrier',
         'suivi',
+        'antKL',
+        'antKD',
+        'antSL',
+        'antKG',
+        'antDL',
+        'antMT',
+        'antZG',
     ];
 
     public function run(): void

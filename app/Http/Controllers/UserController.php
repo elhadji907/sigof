@@ -292,7 +292,7 @@ class UserController extends Controller
             ]);
             Alert::success('Effectuée ! ', 'employé ajouté');
 
-            $user->assignRole('Employe');
+            /* $user->assignRole('Employe'); */
 
             return Redirect::back();
 
@@ -316,7 +316,7 @@ class UserController extends Controller
 
             Alert::success('Effectuée ! ', 'ingénieur ajouté');
 
-            $user->assignRole('Ingenieur');
+            /* $user->assignRole('Ingenieur'); */
 
             return Redirect::back();
 

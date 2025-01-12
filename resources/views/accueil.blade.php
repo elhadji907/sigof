@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>@yield('title', "SIGOF - Système d'Information et de Gestion des Opérations de Formation")</title>
+    <title>@yield('title', 'ONFP-SIGOF')</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -239,11 +239,13 @@
                 <div class="row gy-4 align-items-center justify-content-between">
 
                     <div class="col-xl-5" data-aos="fade-up" data-aos-delay="200">
-                        <span class="about-meta">A PROPOS DE NOUS</span>
+                        <span class="about-meta">À PROPOS DE L'ONFP</span>
                         {{-- <h2 class="about-title">La référence de la formation professionnelle</h2> --}}
-                        <p class="about-description">L'Office National de Formation Professionnelle <b>(ONFP)</b> est un
-                            établissement public à caractère industriel et commercial (EPIC) créé par la Loi <b>n°86-44 du
-                            11 Août 1986.</b> Ainsi, l'ONFP a pour mission de :</p>
+                        <p class="about-description">L'Office National de Formation Professionnelle <b>(ONFP)</b> est
+                            un
+                            établissement public à caractère industriel et commercial (EPIC) créé par la Loi <b>n°86-44
+                                du
+                                11 Août 1986.</b> Ainsi, l'ONFP a pour mission de :</p>
 
                         <div class="row feature-list-wrapper">
                             <div class="col-md-12">
@@ -308,6 +310,149 @@
 
         </section>
         <!-- /About Section -->
+
+        <section class="testimonials section light-background">
+        </section>
+
+
+        <!-- Features Section -->
+        <section id="features" class="features section">
+
+            <!-- Section Title -->
+            <div class="container section-title" data-aos="fade-up">
+                <h2>À PROPOS DU SIGOF</h2>
+                <p>Le Système Intégré de Gestion des Opérations de Formation de l’ONFP</p>
+            </div><!-- End Section Title -->
+
+            <div class="container">
+
+                {{-- <div class="d-flex justify-content-center">
+  
+            <ul class="nav nav-tabs" data-aos="fade-up" data-aos-delay="100">
+  
+              <li class="nav-item">
+                <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#features-tab-1">
+                  <h4>Modisit</h4>
+                </a>
+              </li><!-- End tab nav item -->
+  
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-2">
+                  <h4>Praesenti</h4>
+                </a><!-- End tab nav item -->
+  
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-3">
+                  <h4>Explica</h4>
+                </a>
+              </li><!-- End tab nav item -->
+  
+            </ul>
+  
+          </div> --}}
+
+                <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
+
+                    <div class="tab-pane fade active show" id="features-tab-1">
+                        <div class="row">
+                            <div
+                                class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">
+                                {{-- <h3>SIGOF</h3> --}}
+                                <p class="fst-italic">
+                                    Le Système Intégré de Gestion des Opérations de Formation (SIGOF) de l’ONFP (Office
+                                    National de Formation Professionnelle) est une plateforme numérique conçue pour
+                                    centraliser et automatiser la gestion des activités liées à la formation
+                                    professionnelle.
+                                </p>
+                                <ul>
+                                    <h5>Objectifs principaux :</h5>
+                                    <li><i class="bi bi-check"></i> <span><b>Optimisation des processus</b> :
+                                            Simplifier la gestion des inscriptions et la coordination des parties
+                                            prenantes.</span></li>
+                                    <li><i class="bi bi-check"></i> <span><b>Gestion des demandeurs</b> :
+                                            Enregistrement et traitement des demandes individuelles ou
+                                            collectives.</span></li>
+                                    <li><i class="bi bi-check"></i> <span><b>Gestion des opérateurs</b> :
+                                            Enregistrement et traitement
+                                            des prestataires de formation.</span></li>
+                                    <li><i class="bi bi-check"></i> <span><b>Gestion des partenaires</b> :
+                                            Coordination et suivi des collaborations institutionnelles.</span></li>
+                                    <li><i class="bi bi-check"></i> <span><b>Portail interactif</b> : Interface
+                                            utilisateur pour les demandeurs de formations et les opérateurs, accessible
+                                            en ligne.</span></li>
+                                </ul>
+                                {{-- <ul>
+                                    <h5>Fonctionnalités clés :</h5>
+                                    <li><i class="bi bi-check"></i> <span><b>Gestion des formations</b> :
+                                            Planification, organisation et suivi des programmes.</span></li>
+                                    <li><i class="bi bi-check"></i> <span><b>Base de données des bénéficiaires</b>
+                                            : Enregistrement et suivi des apprenants et des formateurs.</span></li>
+                                    <li><i class="bi bi-check"></i> <span><b>Rapports et statistiques</b> :
+                                            Génération automatique de bilans et d’indicateurs pour mesurer les
+                                            performances.</span></li>
+                                    <li><i class="bi bi-check"></i> <span><b>Portail interactif</b> : Interface
+                                            utilisateur pour les apprenants, formateurs et administrateurs, accessible
+                                            en ligne.</span></li>
+                                </ul> --}}
+                                <p>
+                                    En résumé, le SIGOF est un outil stratégique qui modernise et professionnalise la
+                                    gestion des activités de formation de l'ONFP, améliorant ainsi l'efficacité et la
+                                    qualité des services offerts.
+                                </p>
+                            </div>
+                            <div class="col-lg-6 order-1 order-lg-2 text-center">
+                                <img src="assets/img/features-illustration-1.webp" alt="" class="img-fluid">
+                            </div>
+                        </div>
+                    </div><!-- End tab content item -->
+                    {{-- 
+            <div class="tab-pane fade" id="features-tab-2">
+                <div class="row">
+                  <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">
+                    <h3>Neque exercitationem debitis</h3>
+                    <p class="fst-italic">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                      magna aliqua.
+                    </p>
+                    <ul>
+                      <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
+                      <li><i class="bi bi-check2-all"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span></li>
+                      <li><i class="bi bi-check2-all"></i> <span>Provident mollitia neque rerum asperiores dolores quos qui a. Ipsum neque dolor voluptate nisi sed.</span></li>
+                      <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</span></li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-6 order-1 order-lg-2 text-center">
+                    <img src="assets/img/features-illustration-2.webp" alt="" class="img-fluid">
+                  </div>
+                </div>
+              </div><!-- End tab content item -->
+    
+              <div class="tab-pane fade" id="features-tab-3">
+                <div class="row">
+                  <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">
+                    <h3>Voluptatibus commodi accusamu</h3>
+                    <ul>
+                      <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
+                      <li><i class="bi bi-check2-all"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span></li>
+                      <li><i class="bi bi-check2-all"></i> <span>Provident mollitia neque rerum asperiores dolores quos qui a. Ipsum neque dolor voluptate nisi sed.</span></li>
+                    </ul>
+                    <p class="fst-italic">
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
+                      magna aliqua.
+                    </p>
+                  </div>
+                  <div class="col-lg-6 order-1 order-lg-2 text-center">
+                    <img src="assets/img/features-illustration-3.webp" alt="" class="img-fluid">
+                  </div>
+                </div>
+              </div><!-- End tab content item -->
+               --}}
+                </div>
+
+            </div>
+
+        </section><!-- /Features Section -->
 
         <section class="testimonials section light-background">
         </section>

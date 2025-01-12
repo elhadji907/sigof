@@ -86,46 +86,62 @@
                             </a>
                         </li>
                     @endcan
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('demandesdg') }}">
-                            <span>Direction générale</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('demandeskl') }}">
-                            <span>Antenne Kaolack</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('demandeskd') }}">
-                            <span>Antenne Kolda</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('demandessl') }}">
-                            <span>Antenne Saint Louis</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('demandeskg') }}">
-                            <span>Antenne Kédougou</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('demandesmt') }}">
-                            <span>Antenne Matam</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('demandesdl') }}">
-                            <span>Antenne Diourbel</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('demandeszig') }}">
-                            <span>Antenne Ziguinchor</span>
-                        </a>
-                    </li>
+                    @can('dg')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('demandesdg') }}">
+                                <span>Direction générale</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('antKL')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('demandeskl') }}">
+                                <span>Antenne Kaolack</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('antKD')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('demandeskd') }}">
+                                <span>Antenne Kolda</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('antSL')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('demandessl') }}">
+                                <span>Antenne Saint Louis</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('antKG')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('demandeskg') }}">
+                                <span>Antenne Kédougou</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('antMT')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('demandesmt') }}">
+                                <span>Antenne Matam</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('antDL')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('demandesdl') }}">
+                                <span>Antenne Diourbel</span>
+                            </a>
+                        </li>
+                    @endcan
+                    @can('antZG')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('demandeszig') }}">
+                                <span>Antenne Ziguinchor</span>
+                            </a>
+                        </li>
+                    @endcan
                 </ul>
             </li>
         @endcan
