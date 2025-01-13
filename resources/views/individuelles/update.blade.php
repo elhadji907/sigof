@@ -172,11 +172,11 @@
                                 </div>
 
                                 <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="departement" class="form-label">Lieu de formation<span
+                                    <label for="departement" class="form-label">Département<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="departement"
                                         class="form-select  @error('departement') is-invalid @enderror" aria-label="Select"
-                                        id="select-field-departement" data-placeholder="Choisir localité">
+                                        id="select-field-departement" data-placeholder="Choisir">
                                         <option value="{{ $individuelle?->departement?->nom ?? old('departement') }}">
                                             {{ $individuelle?->departement?->nom ?? old('departement') }}</option>
                                         @foreach ($departements as $departement)
@@ -570,7 +570,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="date_depot" class="form-label">Date depot<span
+                                    <label for="date_depot" class="form-label">Date dépot<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="date" name="date_depot" value="{{ $individuelle->date_depot->format('Y-m-d') ?? old('date_depot') }}"
                                         class="datepicker form-control form-control-sm @error('date_depot') is-invalid @enderror"
@@ -583,9 +583,9 @@
                                 </div>
 
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-8">
-                                    <label for="projet" class="form-label">Projet</label>
+                                    <label for="projet" class="form-label">Partenaire</label>
                                     <select name="projet" class="form-select  @error('projet') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-projet" data-placeholder="Choisir projet">
+                                        aria-label="Select" id="select-field-projet" data-placeholder="Choisir">
                                         <option>
                                             {{ $individuelle?->projet?->sigle ?? old('projet') }}
                                         </option>

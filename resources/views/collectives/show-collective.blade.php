@@ -129,11 +129,14 @@
                     <div class="modal-content">
                         <form method="post" action="{{ route('collectives.store') }}" enctype="multipart/form-data">
                             @csrf
-                            <div class="modal-header">
+                            {{-- <div class="modal-header">
                                 <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une demande
                                     collective</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
+                            </div> --}}
+                            <div class="card-header text-center bg-gradient-default">
+                                <h1 class="h4 text-black mb-0"> ajouter une nouvelle demande collective</h1>
                             </div>
                             <div class="modal-body">
                                 <div class="row g-3">
@@ -263,7 +266,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="departement" class="form-label">Siège social<span
+                                        <label for="departement" class="form-label">Département<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="departement"
                                             class="form-select form-select-sm @error('departement') is-invalid @enderror"

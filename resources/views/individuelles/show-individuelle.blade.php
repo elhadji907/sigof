@@ -729,7 +729,7 @@
                             <form method="post" action="{{ route('individuelles.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="card-header text-center bg-gradient-default">
-                                    <h1 class="h4 text-black mb-0">Ajouter une nouvelle demande individuelle</h1>
+                                    <h1 class="h4 text-black mb-0">ajouter une nouvelle demande individuelle</h1>
                                 </div>
                                 {{-- <div class="modal-header">
                                     <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une nouvelle
@@ -787,12 +787,12 @@
                                     </div> --}}
 
                                         <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                            <label for="departement" class="form-label">Lieu de formation<span
+                                            <label for="departement" class="form-label">Département<span
                                                     class="text-danger mx-1">*</span></label>
                                             <select name="departement"
                                                 class="form-select  @error('departement') is-invalid @enderror"
                                                 aria-label="Select" id="select-field-departement-ind"
-                                                data-placeholder="Choisir la localité">
+                                                data-placeholder="Choisir">
                                                 <option value="{{ $individuelle?->departement?->nom }}">
                                                     {{ $individuelle?->departement?->nom ?? old('departement') }}</option>
                                                 @foreach ($departements as $departement)

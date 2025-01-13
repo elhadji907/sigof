@@ -36,7 +36,7 @@
                                         class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                 <p> | retour</p>
                             </span>
-                            @if(!empty(Auth::user()->cin))
+                            @if (!empty(Auth::user()->cin))
                                 <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded"
                                     data-bs-toggle="modal" data-bs-target="#AddCollectiveModal">
                                     <i class="bi bi-plus" title="Ajouter"></i>
@@ -50,7 +50,7 @@
                             </h5>
                         @endif
                         @if (isset(Auth::user()->cin))
-                            <div class="alert alert-info">Vous n'avez aucune demande collective pour le moment !!
+                            <div class="alert alert-info">Vous n'avez aucune demande collective pour le moment !
                             </div>
                         @else
                             <h5 class="card-title">Informations personnelles : <a href="{{ route('profil') }}"><span
@@ -68,11 +68,14 @@
                     <div class="modal-content">
                         <form method="post" action="{{ route('collectives.store') }}" enctype="multipart/form-data">
                             @csrf
-                            <div class="modal-header">
+                            {{-- <div class="modal-header">
                                 <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une demande
                                     collective</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
+                            </div> --}}
+                            <div class="card-header text-center bg-gradient-default">
+                                <h1 class="h4 text-black mb-0"> ajouter une demande collective</h1>
                             </div>
                             <div class="modal-body">
                                 <div class="row g-3">
@@ -202,7 +205,7 @@
                                         @enderror
                                     </div>
                                     <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="departement" class="form-label">Siège social<span
+                                        <label for="departement" class="form-label">Département<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="departement"
                                             class="form-select form-select-sm @error('departement') is-invalid @enderror"
