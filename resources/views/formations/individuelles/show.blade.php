@@ -274,7 +274,7 @@
                                                     <tbody>
                                                         <?php $i = 1; ?>
                                                         @foreach ($operateur?->formations as $operateurformation)
-                                                            <tr>
+                                                            <tr valign="middle">
                                                                 <td>{{ $operateurformation?->code }}</td>
                                                                 <td><a
                                                                         href="#">{{ $operateurformation->types_formation?->name }}</a>
@@ -415,7 +415,7 @@
                                                                         {{-- @method('PUT') --}}
                                                                         <input type="hidden" name="id"
                                                                             value="{{ $formation->id }}">
-                                                                        <button class="btn btn-sm mx-1">PV (vierge)</button>
+                                                                        <button class="btn btn-sm mx-1">PV vierge</button>
                                                                     </form>
                                                                     <form action="{{ route('pvEvaluation') }}" method="post"
                                                                         target="_blank">
@@ -423,7 +423,7 @@
                                                                         {{-- @method('PUT') --}}
                                                                         <input type="hidden" name="id"
                                                                             value="{{ $formation->id }}">
-                                                                        <button class="btn btn-sm mx-1">PV (finale)</button>
+                                                                        <button class="btn btn-sm mx-1">PV finale</button>
                                                                     </form>
                                                                 @endcan
                                                                 @can('lettre-formation')
@@ -455,7 +455,8 @@
                                                                         {{-- @method('PUT') --}}
                                                                         <input type="hidden" name="id"
                                                                             value="{{ $formation->id }}">
-                                                                        <button class="show_confirm_valider btn btn-sm mx-1">Démarrage
+                                                                        <button
+                                                                            class="show_confirm_valider btn btn-sm mx-1">Démarrage
                                                                             (e-mail)</button>
                                                                     </form>
 
@@ -465,7 +466,8 @@
                                                                         {{-- @method('PUT') --}}
                                                                         <input type="hidden" name="id"
                                                                             value="{{ $formation->id }}">
-                                                                        <button class="show_confirm_valider btn btn-sm mx-1">Résultats
+                                                                        <button
+                                                                            class="show_confirm_valider btn btn-sm mx-1">Résultats
                                                                             (e-mail)</button>
                                                                     </form>
 
@@ -533,7 +535,7 @@
                                                     <tbody>
                                                         <?php $i = 1; ?>
                                                         @foreach ($formation->individuelles as $individuelle)
-                                                            <tr>
+                                                            <tr valign="middle">
                                                                 <td class="text-center">{{ $i++ }}</td>
                                                                 <td class="text-center">{{ $individuelle?->numero }}</td>
                                                                 <td style="text-align: center;">
@@ -755,7 +757,7 @@
                                                 <tbody>
                                                     <?php $i = 1; ?>
                                                     @foreach ($ingenieur?->formations as $ingenieurformation)
-                                                        <tr>
+                                                        <tr valign="middle">
                                                             <td>{{ $ingenieurformation?->code }}</td>
                                                             <td><a
                                                                     href="#">{{ $ingenieurformation->types_formation?->name }}</a>
@@ -863,7 +865,7 @@
                                                     <tbody>
                                                         <?php $i = 1; ?>
                                                         @foreach ($formation->individuelles as $individuelle)
-                                                            <tr>
+                                                            <tr valign="middle">
                                                                 <td>{{ $i++ }}</td>
                                                                 {{-- <td>{{ $individuelle?->numero }}</td> --}}
                                                                 <td>{{ $individuelle?->user?->civilite }}</td>
@@ -952,6 +954,7 @@
                                                     <th width="10%" class="text-center">Jours</th>
                                                     <th width="10%" class="text-center">Date</th>
                                                     <th width="10%" class="text-center">Effectif</th>
+                                                    <th width="10%" class="text-center">SCAN</th>
                                                     <th>Observations</th>
                                                     <th width="5%" class="text-center"><i class="bi bi-gear"></i>
                                                     </th>
@@ -960,13 +963,14 @@
                                             <tbody>
                                                 <?php $i = 1; ?>
                                                 @foreach ($emargements as $emargement)
-                                                    <tr>
+                                                    <tr valign="middle">
                                                         <td class="text-center">{{ $i++ }}</td>
                                                         <td class="text-center">{{ $emargement?->jour }}</td>
                                                         <td class="text-center">
                                                             {{ $emargement?->date?->format('d/m/Y') }}</td>
                                                         <td class="text-center">
                                                             {{ count($emargement?->feuillepresences) }}</td>
+                                                        <td></td>
                                                         <td>{{ $emargement?->observations }}</td>
                                                         <td class="text-center">
                                                             <span class="d-flex mt-2 align-items-baseline">
@@ -1077,7 +1081,7 @@
                                                 <tbody>
                                                     <?php $i = 1; ?>
                                                     @foreach ($formation->individuelles as $individuelle)
-                                                        <tr>
+                                                        <tr valign="middle">
                                                             <td>{{ $i++ }}</td>
                                                             {{-- <td>{{ $individuelle?->numero }}</td> --}}
                                                             <td>{{ $individuelle?->user?->civilite }}</td>
@@ -1744,7 +1748,8 @@
                                             class="text-danger mx-1">*</span></label>
                                     <select name="evaluateur"
                                         class="form-select @error('evaluateur') is-invalid @enderror"
-                                        aria-label="Select" id="select-field" data-placeholder="Choisir evaluateur">
+                                        aria-label="Select" id="select-field"
+                                        data-placeholder="Choisir evaluateur">
                                         <option value="{{ $formation?->evaluateur?->id }}">
                                             @if (!empty($formation?->evaluateur?->name))
                                                 {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction }}
@@ -1794,17 +1799,16 @@
 
                             <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                 <div class="mb-3">
-                                    <label for="evaluateur" class="form-label">Evaluateur ONFP<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="evaluateur" class="form-label">Evaluateur ONFP</label>
                                     <select name="onfpevaluateur"
                                         class="form-select @error('onfpevaluateur') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-onfp"
-                                        data-placeholder="Choisir evaluateur ONFP">
+                                        aria-label="Select" id="select-field-onfp" data-placeholder="Choisir">
                                         <option value="{{ $formation->onfpevaluateur?->id }}">
                                             @if (!empty($formation?->onfpevaluateur?->name))
                                                 {{ $formation?->onfpevaluateur?->name . ', ' . $formation?->onfpevaluateur?->fonction }}
                                             @endif
                                         </option>
+                                        <option value="Aucun">Aucun</option>
                                         @foreach ($onfpevaluateurs as $onfpevaluateur)
                                             <option value="{{ $onfpevaluateur->id }}">
                                                 {{ $onfpevaluateur?->name . ', ' . $onfpevaluateur?->fonction ?? old('onfpevaluateur') }}
@@ -2020,9 +2024,22 @@
                                         @enderror
                                     </div>
                                 </div>
+                                
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <div class="mb-3">
-                                        <label>Observations<span class="text-danger mx-1">*</span></label>
+                                        <label for="feuille" class="form-label">Joindre scan feuille de prsénce
+                                            {{ $emargement?->jour }}</label>
+                                        <input type="file" name="feuille" id="feuille"
+                                            class="form-control @error('feuille') is-invalid @enderror btn btn-outline-default btn-sm">
+                                        @error('feuille')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="mb-3">
+                                        <label>Observations</label>
                                         <textarea name="observations" id="observations" cols="30" rows="3s"
                                             class="form-control form-control-sm @error('observations') is-invalid @enderror" placeholder="observations"
                                             autofocus>{{ $emargement?->observations ?? old('observations') }}</textarea>

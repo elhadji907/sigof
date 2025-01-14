@@ -200,7 +200,7 @@
                             <form method="post" action="{{ route('addCollective') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="card-header text-center bg-gradient-default">
-                                    <h1 class="h4 text-black mb-0">Ajouter une nouvelle demande collective</h1>
+                                    <h1 class="h4 text-black mb-0">ajouter une nouvelle demande collective</h1>
                                 </div>
                                 {{-- <div class="modal-header">
                                     <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une demande
@@ -249,8 +249,7 @@
                                         </div>
 
                                         <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                            <label for="fixe" class="form-label">Téléphone fixe<span
-                                                    class="text-danger mx-1">*</span></label>
+                                            <label for="fixe" class="form-label">Téléphone fixe</label>
                                             <input type="number" min="0" name="fixe" value="{{ old('fixe') }}"
                                                 class="form-control form-control-sm @error('fixe') is-invalid @enderror"
                                                 id="fixe" placeholder="3xxxxxxxx">
@@ -262,7 +261,7 @@
                                         </div>
 
                                         <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                            <label for="telephone" class="form-label">Téléphone<span
+                                            <label for="telephone" class="form-label">Téléphone portable<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="number" name="telephone" min="0"
                                                 value="{{ old('telephone') }}"

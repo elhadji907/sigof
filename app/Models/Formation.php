@@ -225,7 +225,10 @@ class Formation extends Model
 		'statut',
 		'categorie_professionnelle',
 		'nbre_admis',
+		'file_pv',
 		'file1',
+		'file2',
+		'file3',
 		'evaluateur_onfp',
 		'numero_convention',
 		'file_convention',
@@ -273,6 +276,11 @@ class Formation extends Model
 	
 	public function getFileDetf(){
 		$filePath = $this->detf_file ?? '';
+		return "/storage/" . $filePath;
+	}
+	
+	public function getFilePV(){
+		$filePath = $this->file_pv ?? '';
 		return "/storage/" . $filePath;
 	}
 

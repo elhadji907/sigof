@@ -29,8 +29,14 @@ class Emargement extends Model
 		'date',
 		'observations',
 		'signature',
+		'file',
 		'individuelles_id'
 	];
+
+	public function getFileEmargement(){
+		$filePath = $this->file ?? '';
+		return "/storage/" . $filePath;
+	}
 
 	public function individuelle()
 	{

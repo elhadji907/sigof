@@ -20,6 +20,7 @@ return new class extends Migration
             $table->dateTime('date')->nullable(true);
             $table->longText('observations')->nullable();
             $table->longText('signature')->nullable();
+            $table->string('file', 200)->nullable();
             $table->unsignedInteger('individuelles_id')->nullable();
             $table->softDeletes();
             $table->nullableTimestamps();

@@ -35,6 +35,32 @@ class EmargementController extends Controller
             $date = null;
         }
 
+        
+        if (request('feuille')) {
+
+            $filePath = request('feuille')->store('feuilles', 'public');
+
+            dd($filePath);
+            
+            $file = $request->file('feuille');
+            $filenameWithExt = $file->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Remove unwanted characters
+            $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
+            $filename = preg_replace("/\s+/", '-', $filename);
+            // Get the original image extension
+            $extension = $file->getClientOriginalExtension();
+
+            // Create unique file name
+            $fileNameToStore = 'feuilles/' . $filename . '' . time() . '.' . $extension;
+
+            $emargement->update([
+                'file' => $filePath,
+            ]);
+
+            $emargement->save();
+        }
+
         $emargement->update([
             'jour' => $request->jour,
             'date' => $date,

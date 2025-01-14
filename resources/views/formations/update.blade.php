@@ -390,6 +390,29 @@
                                             <div class="badge bg-warning">Aucun</div>
                                         @endif
                                     </div>
+                                    
+
+                                    <div class="col-12 col-md-12 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                        <label for="file_pv" class="form-label">Joindre scan PV</label>
+                                        <input type="file" name="file_pv" id="file_pv"
+                                            class="form-control @error('file_pv') is-invalid @enderror btn btn-outline-primary btn-sm">
+                                        @error('file_pv')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-12 col-md-12 col-lg-1 col-sm-12 col-xs-12 col-xxl-1">
+                                        <label for="file_pv" class="form-label">Fichier</label>
+                                        @if (!empty($formation?->file_pv))
+                                            <div>
+                                                <a class="btn btn-outline-secondary btn-sm" title="DETF"
+                                                    target="_blank" href="{{ asset($formation->getFilePV()) }}">
+                                                    <i class="bi bi-file-earmark-pdf"></i>
+                                                </a>
+                                            </div>
+                                        @else
+                                            <div class="badge bg-warning">Aucun</div>
+                                        @endif
+                                    </div>
                                     <hr>
                                     {{-- <h5 class="card-title text-center pb-0 fs-4">Evaluation</h5> --}}
 

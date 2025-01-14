@@ -119,8 +119,7 @@
                                     </div>
 
                                     <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="fixe" class="form-label">Téléphone fixe<span
-                                                class="text-danger mx-1">*</span></label>
+                                        <label for="fixe" class="form-label">Téléphone fixe</label>
                                         <input type="number" name="fixe" value="{{ old('fixe') }}"
                                             class="form-control form-control-sm @error('fixe') is-invalid @enderror"
                                             id="fixe" placeholder="3xxxxxxxx">
@@ -132,7 +131,7 @@
                                     </div>
 
                                     <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="telephone" class="form-label">Téléphone<span
+                                        <label for="telephone" class="form-label">Téléphone portable<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="number" min="0" name="telephone"
                                             value="{{ old('telephone') }}"

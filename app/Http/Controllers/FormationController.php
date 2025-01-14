@@ -457,8 +457,6 @@ class FormationController extends Controller
 
             $filePath = request('detf_file')->store('detfs', 'public');
 
-            /* dd($filePath); */
-
             $file = $request->file('detf_file');
             $filenameWithExt = $file->getClientOriginalName();
             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
@@ -473,6 +471,29 @@ class FormationController extends Controller
 
             $formation->update([
                 'detf_file' => $filePath,
+            ]);
+
+            $formation->save();
+        }
+
+        if (request('file_pv')) {
+
+            $filePath = request('file_pv')->store('pvs', 'public');
+
+            $file = $request->file('file_pv');
+            $filenameWithExt = $file->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            // Remove unwanted characters
+            $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
+            $filename = preg_replace("/\s+/", '-', $filename);
+            // Get the original image extension
+            $extension = $file->getClientOriginalExtension();
+
+            // Create unique file name
+            $fileNameToStore = 'pv/' . $filename . '' . time() . '.' . $extension;
+
+            $formation->update([
+                'file_pv' => $filePath,
             ]);
 
             $formation->save();
@@ -1522,6 +1543,12 @@ class FormationController extends Controller
             $date_convention = null;
         }
 
+        if (!empty($request->input('onfpevaluateur')) && $request->input('onfpevaluateur') === "Aucun") {
+            $onfpevaluateur = null;
+        } else {
+            $onfpevaluateur = $request->input('onfpevaluateur');
+        }
+
         $formation->update([
             "membres_jury" => $request->input('membres_jury'),
             "numero_convention" => $request->input('numero_convention'),
@@ -1533,7 +1560,7 @@ class FormationController extends Controller
             "date_pv" => $date_pv,
             "date_convention" => $date_convention,
             "evaluateurs_id" => $request->input('evaluateur'),
-            "onfpevaluateurs_id" => $request->input('onfpevaluateur'),
+            "onfpevaluateurs_id" => $onfpevaluateur,
             "referentiels_id" => $referentiel_id,
         ]);
 

@@ -146,13 +146,13 @@
                         <form method="post" action="{{ route('listecollectives.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-header text-center bg-gradient-default">
-                                <h1 class="h4 text-black mb-0">Ajouter bénéficiaires</h1>
+                                <h1 class="h4 text-black mb-0">ajouter bénéficiaires</h1>
                             </div>
                             <div class="modal-body">
                                 <div class="row g-3">
                                     <input type="hidden" name="collective"
                                         value="{{ $collectivemodule->collective->id }}">
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="cin" class="form-label">CIN<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="cin" value="{{ old('cin') }}"
@@ -165,7 +165,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="civilite" class="form-label">Civilité<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="civilite"
@@ -188,7 +188,7 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="firstname" class="form-label">Prénom<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="firstname" value="{{ old('firstname') }}"
@@ -201,7 +201,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="name" class="form-label">Nom<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="name" value="{{ old('name') }}"
@@ -214,7 +214,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="date_naissance" class="form-label">Date naissance<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="date" name="date_naissance" value="{{ old('date_naissance') }}"
@@ -227,7 +227,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="name" class="form-label">Lieu naissance<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input name="lieu_naissance" type="text"
@@ -243,8 +243,9 @@
 
                                     <input type="hidden" name="module" value="{{ $collectivemodule->id }}">
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
-                                        <label for="telephone" class="form-label">Téléphone</label>
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <label for="telephone" class="form-label">Téléphone<span
+                                            class="text-danger mx-1">*</span></label>
                                         <input type="number" min="0" name="telephone"
                                             value="{{ old('telephone') }}"
                                             class="form-control form-control-sm @error('telephone') is-invalid @enderror"
@@ -256,7 +257,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                    <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="Niveau étude" class="form-label">Niveau étude</label>
                                         <select name="niveau_etude"
                                             class="form-select  @error('niveau_etude') is-invalid @enderror"
