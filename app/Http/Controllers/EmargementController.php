@@ -1,15 +1,14 @@
 <?php
-
 namespace App\Http\Controllers;
+
 use App\Models\Emargement;
 use App\Models\Formation;
+use App\Models\Individuelle;
 use App\Models\Module;
 use App\Models\Region;
-use App\Models\Individuelle;
-use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Support\Facades\DB;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class EmargementController extends Controller
 {
@@ -26,34 +25,19 @@ class EmargementController extends Controller
 
         $this->validate($request, [
             'jour' => "required|string",
+            'feuille' => "nullable|file|mimes:pdf|max:2048",
             'date' => 'nullable|date|min:10|max:10|date_format:Y-m-d',
         ]);
 
-        if (!empty($request->input('date'))) {
+        if (! empty($request->input('date'))) {
             $date = $request->input('date');
         } else {
             $date = null;
         }
 
-        
         if (request('feuille')) {
-
-            $filePath = request('feuille')->store('feuilles', 'public');
-
-            dd($filePath);
-            
+            $filePath = request('feuille')->store('storage/feuilles','public');
             $file = $request->file('feuille');
-            $filenameWithExt = $file->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Remove unwanted characters
-            $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-            $filename = preg_replace("/\s+/", '-', $filename);
-            // Get the original image extension
-            $extension = $file->getClientOriginalExtension();
-
-            // Create unique file name
-            $fileNameToStore = 'feuilles/' . $filename . '' . time() . '.' . $extension;
-
             $emargement->update([
                 'file' => $filePath,
             ]);
@@ -62,25 +46,24 @@ class EmargementController extends Controller
         }
 
         $emargement->update([
-            'jour' => $request->jour,
-            'date' => $date,
+            'jour'         => $request->jour,
+            'date'         => $date,
             'observations' => $request->observations,
 
         ]);
 
         $emargement->save();
-        
+
         Alert::success("Modification réussie", "La modification a été effectuée avec succès.");
 
         return redirect()->back();
     }
 
-    
     public function formationemargement(Request $request)
     {
-        $formation = Formation::findOrFail($request->input('idformation'));
-        $module = Module::findOrFail($request->input('idmodule'));
-        $region = Region::findOrFail($request->input('idlocalite'));
+        $formation  = Formation::findOrFail($request->input('idformation'));
+        $module     = Module::findOrFail($request->input('idmodule'));
+        $region     = Region::findOrFail($request->input('idlocalite'));
         $emargement = Emargement::findOrFail($request->input('idemargement'));
 
         $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
@@ -90,7 +73,7 @@ class EmargementController extends Controller
             ->where('individuelles.formations_id', $formation?->id)
             ->where('modules.name', 'LIKE', "%{$module->name}%")
             ->where('regions.nom', $region->nom)
-            /* ->where('individuelles.statut', 'attente')
+        /* ->where('individuelles.statut', 'attente')
             ->orwhere('individuelles.statut', 'retirer')
             ->orwhere('individuelles.statut', 'retenu') */
             ->get();
@@ -141,15 +124,15 @@ class EmargementController extends Controller
                 $individuelle = Individuelle::findOrFail($individuelle);
                 $individuelle->update([
                     "formations_id" => $idformation,
-                    "statut" => 'retenu',
+                    "statut"        => 'retenu',
                 ]);
 
                 $individuelle->save();
             }
 
             $validated_by = new Validationindividuelle([
-                'validated_id' => Auth::user()->id,
-                'action' => 'retenu',
+                'validated_id'     => Auth::user()->id,
+                'action'           => 'retenu',
                 'individuelles_id' => $individuelle->id,
             ]);
 

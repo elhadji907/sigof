@@ -113,9 +113,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 @foreach ($operateurs as $operateur)
-
     <body>
-        <div class="invoice-box">
+        <div style="text-align: center;">
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/entete.png'))) }}"
+                style="width: 100%; max-width: 370px" />
+        </div>
+        {{-- <div class="invoice-box">
             <table>
                 <thead>
                     <tr class="heading">
@@ -134,7 +137,7 @@
                     </tr>
                 </thead>
             </table>
-        </div>
+        </div> --}}
         <h4 style="text-align: center;">AGREMENT OPERATEUR</h4>
         <div class="invoice-box">
             <b>Opérateur</b> :

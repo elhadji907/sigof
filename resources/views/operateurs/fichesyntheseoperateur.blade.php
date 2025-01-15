@@ -11,6 +11,8 @@
     <style>
         @page {
             margin: 0cm 0cm;
+            margin-top: 1cm;
+            margin-bottom: 0cm;
         }
 
         .invoice-box {
@@ -108,7 +110,11 @@
 </head>
 
 <body>
-    <h6 valign="top" style="text-align: center;">
+    <div style="text-align: center;">
+        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/entete.png'))) }}"
+            style="width: 100%; max-width: 370px" />
+    </div>
+    {{-- <h6 valign="top" style="text-align: center;">
         <b>REPUBLIQUE DU SENEGAL<br></b>
         Un Peuple - Un But - Une Foi<br>
         <b>********<br>
@@ -117,7 +123,7 @@
             <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/logo-onfp.jpg'))) }}"
                 style="width: 100%; max-width: 300px" />
         </b>
-    </h6>
+    </h6> --}}
     <h4 style="text-align: center;">FICHE DE SYNTHESE DU DOSSIER D'AGREMENT</h4>
     <div class="invoice-box">
         <table class="table table-responsive">

@@ -429,23 +429,8 @@ class FormationController extends Controller
         }
 
         if (request('file_convention')) {
-
-            $filePath = request('file_convention')->store('conventions', 'public');
-
-            /* dd($filePath); */
-
+            $filePath = request('file_convention')->store('storage/conventions', 'public');
             $file = $request->file('file_convention');
-            $filenameWithExt = $file->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Remove unwanted characters
-            $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-            $filename = preg_replace("/\s+/", '-', $filename);
-            // Get the original image extension
-            $extension = $file->getClientOriginalExtension();
-
-            // Create unique file name
-            $fileNameToStore = 'conventions/' . $filename . '' . time() . '.' . $extension;
-
             $formation->update([
                 'file_convention' => $filePath,
             ]);
@@ -455,20 +440,8 @@ class FormationController extends Controller
 
         if (request('detf_file')) {
 
-            $filePath = request('detf_file')->store('detfs', 'public');
-
+            $filePath = request('detf_file')->store('storage/detfs', 'public');
             $file = $request->file('detf_file');
-            $filenameWithExt = $file->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Remove unwanted characters
-            $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-            $filename = preg_replace("/\s+/", '-', $filename);
-            // Get the original image extension
-            $extension = $file->getClientOriginalExtension();
-
-            // Create unique file name
-            $fileNameToStore = 'detfs/' . $filename . '' . time() . '.' . $extension;
-
             $formation->update([
                 'detf_file' => $filePath,
             ]);
@@ -477,21 +450,8 @@ class FormationController extends Controller
         }
 
         if (request('file_pv')) {
-
-            $filePath = request('file_pv')->store('pvs', 'public');
-
+            $filePath = request('file_pv')->store('storage/pvs', 'public');
             $file = $request->file('file_pv');
-            $filenameWithExt = $file->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-            // Remove unwanted characters
-            $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
-            $filename = preg_replace("/\s+/", '-', $filename);
-            // Get the original image extension
-            $extension = $file->getClientOriginalExtension();
-
-            // Create unique file name
-            $fileNameToStore = 'pv/' . $filename . '' . time() . '.' . $extension;
-
             $formation->update([
                 'file_pv' => $filePath,
             ]);

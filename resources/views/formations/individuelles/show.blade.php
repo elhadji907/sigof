@@ -970,7 +970,18 @@
                                                             {{ $emargement?->date?->format('d/m/Y') }}</td>
                                                         <td class="text-center">
                                                             {{ count($emargement?->feuillepresences) }}</td>
-                                                        <td></td>
+                                                        <td class="text-center">
+                                                            @if (!empty($emargement?->file))
+                                                            <div>
+                                                                <a class="btn btn-outline-secondary btn-sm" title="Feuille émargement"
+                                                                    target="_blank" href="{{ asset($emargement->getFileEmargement()) }}">
+                                                                    <i class="bi bi-file-earmark-pdf"></i>
+                                                                </a>
+                                                            </div>
+                                                        @else
+                                                            <div class="badge bg-warning">Aucun</div>
+                                                        @endif
+                                                        </td>
                                                         <td>{{ $emargement?->observations }}</td>
                                                         <td class="text-center">
                                                             <span class="d-flex mt-2 align-items-baseline">
@@ -2030,7 +2041,7 @@
                                         <label for="feuille" class="form-label">Joindre scan feuille de prsénce
                                             {{ $emargement?->jour }}</label>
                                         <input type="file" name="feuille" id="feuille"
-                                            class="form-control @error('feuille') is-invalid @enderror btn btn-outline-default btn-sm">
+                                            class="form-control @error('feuille') is-invalid @enderror btn btn-outline-secondary btn-sm">
                                         @error('feuille')
                                             <span class="text-danger">{{ $message }}</span>
                                         @enderror

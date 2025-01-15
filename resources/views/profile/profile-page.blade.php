@@ -1154,7 +1154,7 @@
                                                 <th width='5%'>Modules</th>
                                                 <th width='15%'>Niveau qualification</th>
                                                 <th width='5%' class="text-center">Statut</th>
-                                                <th width='5%'><i class="bi bi-gear"></i></th>
+                                                <th width='3%'><i class="bi bi-gear"></i></th>
                                             </tr>
                                         </thead>
                                         <tbody>

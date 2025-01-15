@@ -114,18 +114,16 @@
 </head>
 
 <body>
-    <div class="invoice-box">
+    <div style="text-align: center;">
+        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/entete.png'))) }}"
+            style="width: 100%; max-width: 370px" />
+    </div>
+    {{--  <div class="invoice-box">
         <table>
             <thead>
                 <tr class="heading">
                     <td colspan="3" style="text-align: center;">
-                        <small>
-                            <b>REPUBLIQUE DU SENEGAL</b><br>
-                            <small><em>Un Peuple - Un But - Une Foi</em></small><br>
-                            ********<br>
-                            <b>MINISTERE DE LA FORMATION PROFESSIONNELLE ET TECHNIQUE</b><br>
-                            ********</small><br>
-                        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/logo-onfp.jpg'))) }}"
+                        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/entete.png'))) }}"
                             style="width: 100%; max-width: 370px" />
                     </td>
                     <td colspan="3"></td>
@@ -133,7 +131,7 @@
                 </tr>
             </thead>
         </table>
-    </div>
+    </div> --}}
     <h4 style="text-align: center;">AGREMENT OPERATEUR</h4>
     <div class="invoice-box">
         <b>Opérateur</b> :
@@ -208,21 +206,19 @@
                 la propriété de l'Office.</li>
 
         </ul>
-        <table>
-            <h3 style="text-align: right;">{{ $operateur?->commissionagrement?->description }}</h3>
-            <h3>L'Opérateur
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Le Directeur Général
-                <br><small class="small fst-italic">(Lu et
-                    approuvé - Signature)</small>
-            </h3>
-        </table>
+        <h3 style="text-align: right;">{{ $operateur?->commissionagrement?->description }}</h3>
+        <h3>L'Opérateur
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Le Directeur Général
+            <br><small class="small fst-italic">(Lu et
+                approuvé - Signature)</small>
+        </h3>
     </div>
     {{-- <div class="invoice-box" style="margin-top: 0cm;">
         <table>
