@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 use App\Models\Poste;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -40,6 +41,7 @@ class PosteController extends Controller
         $image->save();
 
         $poste = Poste::create([
+            'titre'    => $data['titre'],
             'name'     => $data['name'],
             'legende'  => $data['legende'],
             'users_id' => auth()->user()->id,
@@ -50,16 +52,14 @@ class PosteController extends Controller
 
         return redirect()->back();
     }
-    public function update(Request $request, $id)
-    {
-        $data = request()->validate([
-            'name'    => ['required', 'string'],
-            'legende' => ['required', 'string'],
-            'image'   => ['image', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
 
-        ]);
+    public function update(UpdatePostRequest $request, $id): RedirectResponse
+    {
+        $data = $request->validated();
 
         $poste = Poste::findOrFail($id);
+
+        $image = $request->validated('image');
 
         if (request('image')) {
             Storage::disk('public')->delete($poste->image);
@@ -73,6 +73,7 @@ class PosteController extends Controller
         }
 
         $poste->update([
+            'titre'    => $data['titre'],
             'name'     => $data['name'],
             'legende'  => $data['legende'],
             'users_id' => auth()->user()->id,

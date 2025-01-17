@@ -21,7 +21,7 @@
                                             data-bs-toggle="modal" data-bs-target="#AddPosteModal">Ajouter</button>
                                     </div>
                                 @endif
-                                <h5 class="card-title">Postes <span>| les plus récents</span></h5>
+                                <h5 class="card-title">Posts <span>| les plus récents</span></h5>
                                 <div class="news mb-5">
                                     @foreach ($postes as $poste)
                                         <div class="post-item clearfix">
@@ -30,7 +30,7 @@
                                                     <img src="{{ asset($poste->getPoste()) }}" class="w-20"
                                                         alt="{{ $poste->legende }}" data-bs-toggle="modal"
                                                         data-bs-target="#ShowPostModal{{ $poste->id }}">
-                                                    <h4><a href="#">{{ $poste->legende }}</a></h4>
+                                                    <h4><a href="#">{{ $poste->titre }}</a></h4>
                                                     <p>{{ substr($poste->name, 0, 250) }}
                                                     </p>
                                                 </div>
@@ -80,6 +80,19 @@
                                 <div class="modal-body">
                                     <div class="row g-3">
                                         <input type="hidden" name="users_id" value="{{ Auth::user()->id }}">
+                                        
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <label for="titre" class="form-label">Titre<span
+                                                class="text-danger mx-1">*</span></label>
+                                            <textarea name="titre" id="titre" rows="1"
+                                                class="form-control form-control-sm @error('titre') is-invalid @enderror" placeholder="Titre">{{ old('titre') }}</textarea>
+                                            @error('titre')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+
                                         <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="name" class="form-label">Post<span
                                                     class="text-danger mx-1">*</span></label>
@@ -92,10 +105,10 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <label for="legende" class="form-label">Titre</label>
+                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                            <label for="legende" class="form-label">Légende</label>
                                             <textarea name="legende" id="legende" rows="1"
-                                                class="form-control form-control-sm @error('legende') is-invalid @enderror" placeholder="Titre">{{ old('legende') }}</textarea>
+                                                class="form-control form-control-sm @error('legende') is-invalid @enderror" placeholder="Légende">{{ old('legende') }}</textarea>
                                             @error('legende')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -103,7 +116,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                             <label for="image" class="form-label">Image<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="file" name="image" value="{{ old('image') }}" accept=".jpg, .jpeg, .png, .svg, .gif"
@@ -177,6 +190,20 @@
                                     <div class="modal-body">
                                         <div class="row g-3">
 
+
+                                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                                <label for="titre" class="form-label">Titre<span
+                                                    class="text-danger mx-1">*</span><span
+                                                        class="text-danger mx-1">*</span></label>
+                                                <textarea name="titre" id="titre" rows="1"
+                                                    class="form-control form-control-sm @error('titre') is-invalid @enderror" placeholder="Titre">{{ $poste?->titre ?? old('titre') }}</textarea>
+                                                @error('titre')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+
                                             <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                                 <label for="name" class="form-label">Poste<span
                                                         class="text-danger mx-1">*</span></label>
@@ -189,9 +216,8 @@
                                                 @enderror
                                             </div>
 
-                                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                                <label for="legende" class="form-label">Légende<span
-                                                        class="text-danger mx-1">*</span></label>
+                                            <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                                <label for="legende" class="form-label">Légende</label>
                                                 <textarea name="legende" id="legende" rows="1"
                                                     class="form-control form-control-sm @error('legende') is-invalid @enderror" placeholder="Légende">{{ $poste->legende ?? old('legende') }}</textarea>
                                                 @error('legende')
@@ -201,7 +227,7 @@
                                                 @enderror
                                             </div>
 
-                                            <div class="col-12 col-md-12 col-lg-10 col-sm-12 col-xs-12 col-xxl-10">
+                                            <div class="col-12 col-md-12 col-lg-5 col-sm-12 col-xs-12 col-xxl-5">
                                                 <label for="image" class="form-label">Image<span
                                                         class="text-danger mx-1">*</span></label>
                                                 <input type="file" name="image" value="{{ old('image') }}" accept=".jpg, .jpeg, .png, .svg, .gif"
@@ -214,12 +240,12 @@
                                                 @enderror
                                             </div>
 
-                                            <div class="col-12 col-md-12 col-lg-2 col-sm-12 col-xs-12 col-xxl-2">
-                                                <label for="reference" class="form-label">Image</label><br>
-                                                @if (isset($poste->image))
+                                            <div class="col-12 col-md-12 col-lg-1 col-sm-12 col-xs-12 col-xxl-1">
+                                                <br>
+                                                @if (!empty($poste->image))
                                                     <div>
-                                                        <img class="w-25" alt="Profil"
-                                                            src="{{ asset($poste->getPoste()) }}" width="20"
+                                                        <img class="w-50" alt="Profil"
+                                                            src="{{ asset($poste->getPoste()) }}" width="50"
                                                             height="auto">
                                                     </div>
                                                 @else

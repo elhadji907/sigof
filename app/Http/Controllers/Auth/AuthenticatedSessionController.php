@@ -39,7 +39,7 @@ class AuthenticatedSessionController extends Controller
         $anciennete = date('Y') - '1987';
 
         $services = Service::get();
-        $postes = Poste::orderBy("created_at", "desc")->limit(4)->get();
+        $posts = Poste::orderBy("created_at", "desc")->limit(4)->get();
 
         /* $count_today = Individuelle::where("created_at", "LIKE",  "{$today}%")->count(); */
         /* $count_today = Module::where("domaines_id", "!=",  null)->count(); */
@@ -75,7 +75,7 @@ class AuthenticatedSessionController extends Controller
                 'anciennete',
                 'antennes',
                 'services',
-                'postes',
+                'posts',
             )
         );
     }

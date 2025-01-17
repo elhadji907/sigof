@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
 
-class StorePostRequest extends FormRequest
+class UpdatePostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,10 @@ class StorePostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'titre'    => ['required', 'string', 'max:25'],
-            'name'     => ['required', 'string'],
-            'legende'  => ['sometimes', 'string'],
-            'image'    => ['image', 'sometimes', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'users_id' => ['nullable'],
-
+            'titre'   => ['required', 'string', 'max:25'],
+            'name'    => ['required', 'string'],
+            'legende' => ['sometimes', 'string'],
+            'image'   => ['image', 'sometimes', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
         ];
     }
 
@@ -35,7 +33,6 @@ class StorePostRequest extends FormRequest
     {
         $this->merge([
             'legende' => $this->input('legende') ?: Str::slug($this->input('titre')),
-            /* 'legende' => $this->input('legende') ?: Str::substr($this->input('titre'), 0, 25), */
         ]);
     }
 }

@@ -45,6 +45,8 @@ class Poste extends Model
 		'name',
 		'legende',
 		'image',
+		'titre',
+		'slug',
 		'users_id'
 	];
 

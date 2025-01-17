@@ -206,19 +206,19 @@
                         </div>
                     </div>
                 </div>
-                @foreach ($postes as $poste)
+                @foreach ($posts as $post)
                 @endforeach
-                @if (!empty($poste))
+                @if (!empty($post))
                     <div class="row stats-row gy-4 mt-5" data-aos="fade-up" data-aos-delay="500">
-                        @foreach ($postes as $poste)
+                        @foreach ($posts as $post)
                             <div class="col-lg-4 col-md-6">
                                 <a href="#" data-bs-toggle="modal"
-                                    data-bs-target="#ShowPostModal{{ $poste->id }}">
+                                    data-bs-target="#ShowPostModal{{ $post->id }}">
                                     <div class="stat-item">
-                                        <img class="rounded-circle" alt="{{ $poste->legende }}"
-                                            src="{{ asset($poste->getPoste()) }}" width="50" height="auto">
+                                        <img class="rounded-circle" alt="{{ $post->titre }}"
+                                            src="{{ asset($post->getPoste()) }}" width="50" height="auto">
                                         <div class="stat-content">
-                                            <h6>{{ $poste?->legende }}</h6>
+                                            <h6>{{ $post?->titre }}</h6>
                                         </div>
                                     </div>
                                 </a>
@@ -1235,22 +1235,22 @@
                 </div>
             </div>
         @endforeach
-        @foreach ($postes as $poste)
-            <div class="modal fade" id="ShowPostModal{{ $poste->id }}" tabindex="-1">
+        @foreach ($posts as $post)
+            <div class="modal fade" id="ShowPostModal{{ $post->id }}" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <section class="pricing section light-background">
                             <div class="container section-title" data-aos="fade-up">
-                                <h1 class="h4 text-black mb-0">{{ $poste->legende }}</h1>
+                                <h1 class="h4 text-black mb-0">{{ $post->titre }}</h1>
                             </div>
                             <div class="modal-body">
                                 <div class="row g-3">
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                                        <img src="{{ asset($poste->getPoste()) }}"
-                                            class="d-block w-100 main-image rounded-4" alt="{{ $poste->legende }}">
+                                        <img src="{{ asset($post->getPoste()) }}"
+                                            class="d-block w-100 main-image rounded-4" alt="{{ $post->legende }}">
                                     </div>
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                                        <p>{{ $poste->name }}</p>
+                                        <p>{{ $post->name }}</p>
                                     </div>
 
                                 </div>
