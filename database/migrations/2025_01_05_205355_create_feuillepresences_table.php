@@ -15,6 +15,8 @@ return new class extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->char('uuid', 36);
+            $table->string('presence', 200);
+            $table->string('signature', 200)->nullable();
             $table->unsignedInteger('emargements_id');
             $table->unsignedInteger('individuelles_id');
             $table->softDeletes();

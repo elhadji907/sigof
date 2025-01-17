@@ -335,4 +335,14 @@ class Individuelle extends Model
 	{
 		return $this->belongsTo(Zone::class, 'zones_id')->latest();
 	}
+	
+	public function feuillepresence()
+	{
+		return $this->hasOne(Feuillepresence::class, 'individuelles_id');
+	}
+
+    public function emargement()
+    {
+        return $this->belongsTo(Emargement::class, 'emargements_id');
+    }
 }

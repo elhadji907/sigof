@@ -378,7 +378,6 @@
                                                                     <form action="{{ route('formationTerminer') }}"
                                                                         method="post">
                                                                         @csrf
-                                                                        {{-- @method('PUT') --}}
                                                                         <input type="hidden" name="id"
                                                                             value="{{ $formation->id }}">
                                                                         <button
@@ -991,7 +990,7 @@
                                                                         '$idmodule' => $formation->module->id,
                                                                         '$idlocalite' => $formation->departement->id,
                                                                     ]) }}"
-                                                                    method="post">
+                                                                    method="get">
                                                                     @csrf
                                                                     <input type="hidden" name="idformation"
                                                                         value="{{ $formation?->id }}">

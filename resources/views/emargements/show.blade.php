@@ -46,7 +46,8 @@
                                     <table class="table datatables align-middle" id="table-individuelles">
                                         <thead>
                                             <tr>
-                                                <th>
+                                                <th width="3%">N°</th>
+                                                <th width="3%">
                                                     {{-- <input type="checkbox" class="form-check-input" id="checkAll"> --}}
                                                     Civilité
                                                 </th>
@@ -56,11 +57,11 @@
                                                 <th>Lieu naissance</th>
                                                 <th>Département</th>
                                                 <th>Module</th>
-                                                <th>Statut</th>
+                                                <th>Présence</th>
                                                 @if (!empty($formation->projets_id))
                                                     <th>Projet</th>
                                                 @endif
-                                                <th><i class="bi bi-gear"></i></th>
+                                                <th width="3%"><i class="bi bi-gear"></i></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -68,6 +69,7 @@
                                             @foreach ($individuelles as $individuelle)
                                                 @isset($individuelle?->numero)
                                                     <tr>
+                                                        <td>{{ $i++ }}</td>
                                                         <td>
                                                             {{-- <input type="checkbox" name="individuelles[]"
                                                                 value="{{ $individuelle->id }}"
@@ -88,8 +90,12 @@
                                                         <td>{{ $individuelle?->user->lieu_naissance }}</td>
                                                         <td>{{ $individuelle?->departement->nom }}</td>
                                                         <td>{{ $individuelle?->module->name }}</td>
-                                                        <td><span
+                                                        {{-- <td><span
                                                                 class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
+                                                        </td> --}}
+                                                        <td><span
+                                                                class="{{ $individuelle?->feuillepresence?->presence }}">{{ $individuelle?->feuillepresence?->presence }}
+                                                            </span>
                                                         </td>
                                                         @if (!empty($formation->projets_id))
                                                             <td>{{ $individuelle?->projet?->sigle }}</td>
@@ -105,14 +111,23 @@
                                                                             class="bi bi-three-dots"></i></a>
                                                                     <ul
                                                                         class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                        <li><a class="dropdown-item btn btn-sm"
-                                                                                href="{{ route('individuelles.edit', $individuelle->id) }}"
+                                                                        <li>
+                                                                            {{-- <a class="dropdown-item btn btn-sm"
+                                                                                href="{{ route('individuelleEmargement', ['idindividuelle' => $individuelle?->id, 'idemargement' => $emargement?->id]) }}"
                                                                                 class="mx-1" title="Modifier"><i
-                                                                                    class="bi bi-pencil"></i>Modifier</a>
+                                                                                    class="bi bi-pencil"></i>Modifier</a> --}}
+                                                                            <button type="button" class="dropdown-item"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#PresenceModal{{ $individuelle->id }}"><i
+                                                                                    class="bi bi-pencil"></i>Présence
+                                                                            </button>
+                                                                            {{-- <button type="button" class="dropdown-item btn btn-sm"
+                                                                            data-bs-toggle="modal" data-bs-target="#generate_rapport"></i>Rechercher
+                                                                            plus</button> --}}
                                                                         </li>
                                                                         <li>
                                                                             <form
-                                                                                action="{{ route('individuelles.destroy', $individuelle->id) }}"
+                                                                                action="{{ route('feuillepresences.destroy', $individuelle->id) }}"
                                                                                 method="post">
                                                                                 @csrf
                                                                                 <button type="submit"
@@ -130,7 +145,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
-                                   {{--  <div class="text-center">
+                                    {{--  <div class="text-center">
                                         <button type="submit" class="btn btn-outline-primary btn-sm"><i
                                                 class="bi bi-check2-circle"></i>&nbsp;Sélectionner</button>
                                     </div> --}}
@@ -141,5 +156,45 @@
                 </div>
             </div>
         </div>
+        @foreach ($individuelles as $individuelle)
+            <div class="modal fade" id="PresenceModal{{ $individuelle->id }}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form method="post" action="{{ route('feuillepresences.update', $individuelle->id) }}"
+                            enctype="multipart/form-data" class="row">
+                            @csrf
+                            @method('patch')
+                            <div class="card-header text-center bg-gradient-default">
+                                <h3 class="h4 text-black mb-0">
+                                    {{ $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}
+                                </h3>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="idemargement" value="{{ $emargement->id }}">
+                                <label for="motif" class="form-label">Sélectionner<span
+                                        class="text-danger mx-1">*</span></label>
+                                <select name="presence" class="form-select  @error('presence') is-invalid @enderror"
+                                    aria-label="Select" id="select-field-feuille_presence" data-placeholder="Choisir">
+                                    <option value="">Choisir</option>
+                                    <option value="Présent">Présent</option>
+                                    <option value="Absent">Absent</option>
+                                    <option value="Abandon">Abandon</option>
+                                </select>
+                                @error('motif')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary btn-sm"
+                                    data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-success btn-sm">Valider</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     </section>
 @endsection

@@ -210,6 +210,15 @@
             /* border-radius: 5px; */
         }
 
+        .Absent {
+            background-color: #ffcc00;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
         .démarrer {
             background-color: #0DCAF0;
             color: white;
@@ -238,6 +247,14 @@
         }
 
         .terminer {
+            background-color: #198754;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+        .Présent {
             background-color: #198754;
             color: white;
             padding: 4px 8px;
@@ -301,6 +318,15 @@
         }
 
         .non {
+            background-color: #DC3545;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
+        .Abandon {
             background-color: #DC3545;
             color: white;
             padding: 4px 8px;
@@ -731,6 +757,17 @@
 
     <script>
         $('#select-field-statut-attestations').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
+        $('#select-field-feuille_presences').select2({
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),

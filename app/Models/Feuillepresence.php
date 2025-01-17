@@ -22,6 +22,19 @@ class Feuillepresence extends Model
     protected $fillable = [
 		'uuid',
 		'emargements_id',
-		'individuelles_id'
+		'individuelles_id',
+		'presence',
+		'signature'
 	];
+
+	public function individuelle()
+	{
+		return $this->belongsTo(Individuelle::class, 'individuelles_id');
+	}
+
+	
+	public function emargement()
+	{
+		return $this->belongsTo(Emargement::class, 'emargements_id')->latest();
+	}
 }

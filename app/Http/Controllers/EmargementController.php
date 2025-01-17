@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Emargement;
+use App\Models\Feuillepresence;
 use App\Models\Formation;
 use App\Models\Individuelle;
 use App\Models\Module;
@@ -19,14 +20,30 @@ class EmargementController extends Controller
         return view('emargements.show', compact('emargement'));
     }
 
+    public function giveindividuelleEmargement(Request $request, $id)
+    {
+        $individuelle = Feuillepresence::where('individuelles_id', $id)->where('emargements_id', $request->idemargement)->get();
+
+        $individuelle->update([
+            'presence' => $request->presence,
+
+        ]);
+
+        $emargement->save();
+
+        Alert::success("Modification réussie", "La modification a été effectuée avec succès.");
+
+        return redirect()->back();
+    }
+
     public function update(Request $request, $id)
     {
         $emargement = Emargement::findOrFail($id);
 
         $this->validate($request, [
-            'jour' => "required|string",
+            'jour'    => "required|string",
             'feuille' => "nullable|file|mimes:pdf|max:2048",
-            'date' => 'nullable|date|min:10|max:10|date_format:Y-m-d',
+            'date'    => 'nullable|date|min:10|max:10|date_format:Y-m-d',
         ]);
 
         if (! empty($request->input('date'))) {
@@ -36,8 +53,8 @@ class EmargementController extends Controller
         }
 
         if (request('feuille')) {
-            $filePath = request('feuille')->store('storage/feuilles','public');
-            $file = $request->file('feuille');
+            $filePath = request('feuille')->store('storage/feuilles', 'public');
+            $file     = $request->file('feuille');
             $emargement->update([
                 'file' => $filePath,
             ]);

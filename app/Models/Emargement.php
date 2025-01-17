@@ -28,7 +28,6 @@ class Emargement extends Model
 		'jour',
 		'date',
 		'observations',
-		'signature',
 		'file',
 		'individuelles_id'
 	];

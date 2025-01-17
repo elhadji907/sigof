@@ -57,6 +57,7 @@ use App\Http\Controllers\ReferentielController;
 use App\Http\Controllers\RegionController;
 use App\Http\Controllers\EmargementController;
 use App\Http\Controllers\SMSController;
+use App\Http\Controllers\FeuillepresenceController;
 
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SecteurController;
@@ -203,7 +204,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('formationdemandeurs/{idformation}/{idmodule}/{idlocalite}', [FormationController::class, 'addformationdemandeurs']);
         Route::put('formationdemandeurs/{idformation}/{idmodule}/{idlocalite}', [FormationController::class, 'giveformationdemandeurs']);
 
-        Route::post('formationemargement', [EmargementController::class, 'formationemargement'])->name('formationemargement');
+        Route::get('formationemargement', [EmargementController::class, 'formationemargement'])->name('formationemargement');
 
         Route::get('formationdemandeurscollectives/{idformation}/{idcollectivemodule}/{idlocalite}', [FormationController::class, 'addformationdemandeurscollectives']);
         Route::put('formationdemandeurscollectives/{idformation}/{idcollectivemodule}/{idlocalite}', [FormationController::class, 'giveformationdemandeurscollectives']);
@@ -507,6 +508,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::resource('/unes', UneController::class);
         Route::resource('/antennes', AntenneController::class);
         Route::resource('/emargements', EmargementController::class);
+        Route::resource('/feuillepresences', FeuillepresenceController::class);
     });
     Route::resource('/contacts', ContactController::class);
 });

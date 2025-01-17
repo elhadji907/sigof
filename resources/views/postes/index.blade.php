@@ -79,7 +79,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row g-3">
-
+                                        <input type="hidden" name="users_id" value="{{ Auth::user()->id }}">
                                         <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="name" class="form-label">Post<span
                                                     class="text-danger mx-1">*</span></label>
@@ -93,10 +93,9 @@
                                         </div>
 
                                         <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <label for="legende" class="form-label">Légende<span
-                                                    class="text-danger mx-1">*</span></label>
+                                            <label for="legende" class="form-label">Titre</label>
                                             <textarea name="legende" id="legende" rows="1"
-                                                class="form-control form-control-sm @error('legende') is-invalid @enderror" placeholder="Légende">{{ old('legende') }}</textarea>
+                                                class="form-control form-control-sm @error('legende') is-invalid @enderror" placeholder="Titre">{{ old('legende') }}</textarea>
                                             @error('legende')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -107,7 +106,7 @@
                                         <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="image" class="form-label">Image<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="file" name="image" value="{{ old('image') }}"
+                                            <input type="file" name="image" value="{{ old('image') }}" accept=".jpg, .jpeg, .png, .svg, .gif"
                                                 class="form-control form-control-sm @error('image') is-invalid @enderror"
                                                 id="image" placeholder="Image">
                                             @error('image')
@@ -205,7 +204,7 @@
                                             <div class="col-12 col-md-12 col-lg-10 col-sm-12 col-xs-12 col-xxl-10">
                                                 <label for="image" class="form-label">Image<span
                                                         class="text-danger mx-1">*</span></label>
-                                                <input type="file" name="image" value="{{ old('image') }}"
+                                                <input type="file" name="image" value="{{ old('image') }}" accept=".jpg, .jpeg, .png, .svg, .gif"
                                                     class="form-control form-control-sm @error('image') is-invalid @enderror"
                                                     id="image" placeholder="Image">
                                                 @error('image')

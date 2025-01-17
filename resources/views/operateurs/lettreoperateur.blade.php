@@ -96,12 +96,6 @@
             left: 0cm;
             right: 0cm;
             height: 2cm;
-
-            /** Extra personal styles **/
-            background-color: #ffffff;
-            color: rgb(0, 0, 0);
-            text-align: center;
-            line-height: 1.5cm;
         }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -204,22 +198,27 @@
                 l'ONFP vis-à-vis d'un tiers ou de l'administration,</li>
             <li>reconnait que toute production faite dans le cadre des actions de formation qui lui sont confiées, est
                 la propriété de l'Office.</li>
-
         </ul>
-        <h3 style="text-align: right;">{{ $operateur?->commissionagrement?->description }}</h3>
-        <h3>L'Opérateur
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            Le Directeur Général
-            <br><small class="small fst-italic">(Lu et
-                approuvé - Signature)</small>
-        </h3>
+        <h3 style="text-align: right;">{{ $operateur?->commissionagrement?->description }} <br>
+            <div class="page-number" id="footer">
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/signature_op_dg.png'))) }}"
+                    style="display: block; width: 100%;" />
+            </div>
     </div>
+    {{--     <div class="invoice-box" style="margin-top: 0cm;">
+        L'Opérateur
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Le Directeur Général
+        <br><small class="small fst-italic">(Lu et
+            approuvé - Signature)</small>
+        </h3>
+    </div> --}}
     {{-- <div class="invoice-box" style="margin-top: 0cm;">
         <table>
             <thead>
@@ -238,6 +237,12 @@
             </thead>
         </table>
     </div> --}}
+    <footer>
+        <div class="page-number" id="footer">
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/pied.png'))) }}"
+                style="display: block; width: 100%;" />
+        </div>
+    </footer>
 </body>
 
 </html>

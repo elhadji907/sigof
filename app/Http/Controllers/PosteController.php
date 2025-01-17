@@ -1,9 +1,11 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use App\Models\Poste;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -25,29 +27,24 @@ class PosteController extends Controller
         $postes = Poste::orderBy("created_at", "desc")->get();
         return view('postes.index', compact('postes'));
     }
-    public function store(Request $request)
+    public function store(StorePostRequest $request): RedirectResponse
     {
-        $data = request()->validate([
-            'name'      =>  ['required', 'string'],
-            'legende'   =>  ['required', 'string'],
-            'image'     => ['image', 'required', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+        $data = $request->validated();
 
-        ]);
+        $image = $request->validated('image');
 
-        $imagePath = request('image')->store('postes', 'public');
+        $imagePath = request('image')->store('posts', 'public');
 
         $image = Image::make(public_path("/storage/{$imagePath}"))->fit(1200, 1200);
 
         $image->save();
 
-        $poste = new Poste([
-            'name'      => $data['name'],
-            'legende'   => $data['legende'],
-            'users_id'  => auth()->user()->id,
-            'image'     => $imagePath
+        $poste = Poste::create([
+            'name'     => $data['name'],
+            'legende'  => $data['legende'],
+            'users_id' => auth()->user()->id,
+            'image'    => $imagePath,
         ]);
-
-        $poste->save();
 
         Alert::success("Poster !!!", "Félicitations");
 
@@ -56,16 +53,17 @@ class PosteController extends Controller
     public function update(Request $request, $id)
     {
         $data = request()->validate([
-            'name'      =>  ['required', 'string'],
-            'legende'   =>  ['required', 'string'],
-            'image'     => ['image', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'name'    => ['required', 'string'],
+            'legende' => ['required', 'string'],
+            'image'   => ['image', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
 
         ]);
 
         $poste = Poste::findOrFail($id);
 
         if (request('image')) {
-            $imagePath = request('image')->store('postes', 'public');
+            Storage::disk('public')->delete($poste->image);
+            $imagePath = request('image')->store('posts', 'public');
 
             $image = Image::make(public_path("/storage/{$imagePath}"))->fit(1200, 1200);
 
@@ -75,10 +73,10 @@ class PosteController extends Controller
         }
 
         $poste->update([
-            'name'      => $data['name'],
-            'legende'   => $data['legende'],
-            'users_id'  => auth()->user()->id,
-            'image'     => $imagePath
+            'name'     => $data['name'],
+            'legende'  => $data['legende'],
+            'users_id' => auth()->user()->id,
+            'image'    => $imagePath,
         ]);
 
         $poste->save();
@@ -88,13 +86,14 @@ class PosteController extends Controller
         return redirect()->back();
     }
 
-
     public function destroy($id)
     {
 
-        $Poste   = Poste::find($id);
+        $poste = Poste::find($id);
 
-        $Poste->delete();
+        Storage::disk('public')->delete($poste->image);
+
+        $poste->delete();
 
         Alert::success('Effectué !', 'post supprimé');
 
