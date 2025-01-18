@@ -25,7 +25,7 @@
                     <p> | Liste des courriers arrivés</p>
                 </span>
 
-                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                {{--  <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                     <div class="card border-info mb-3">
                         <div class="card-header text-center">
                             AUDIT
@@ -41,8 +41,8 @@
                             @endif
                         </div>
                     </div>
-                </div>
-                <div class="col-12 col-md-12 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                </div> --}}
+                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                     <div class="card border-info mb-3">
                         <div class="card-body pt-3">
                             <ul class="nav nav-tabs nav-tabs-bordered">
@@ -64,6 +64,9 @@
                                     <button class="nav-link" data-bs-toggle="tab"
                                         data-bs-target="#profile-settings">Commentaires</button>
                                 </li>
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#audit">Audit</button>
+                                </li>
                             </ul>
 
                             <div class="tab-content pt-0">
@@ -73,6 +76,10 @@
 
                                     <h5 class="card-title">Détails</h5>
 
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label ">N° courrier arrivé</div>
+                                        <div class="col-lg-3 col-md-4">{{ $arrive?->numero_arrive }}</div>
+                                    </div>
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label ">Date arrivé</div>
                                         <div class="col-lg-3 col-md-4">
@@ -88,7 +95,7 @@
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label ">N° correspondance</div>
-                                        <div class="col-lg-3 col-md-4">{{ $arrive?->courrier?->numero }}</div>
+                                        <div class="col-lg-3 col-md-4">{{ $arrive?->courrier?->numero_courrier }}</div>
                                     </div>
 
                                     <div class="row">
@@ -144,7 +151,6 @@
                                 </div>
 
                                 <div class="tab-pane fade pt-3" id="profile-settings">
-
                                     <form method="POST" action="{{ route('comments.store', $arrive?->courrier) }}"
                                         class="mt-3">
                                         @csrf
@@ -281,12 +287,30 @@
 
                                     @endforelse
                                 </div>
+                                <div class="tab-pane fade pt-3" id="audit">
+                                    <div class="border-info mb-3">
+                                        <div class="card-header text-center">
+                                            AUDIT
+                                        </div>
+                                        <div class="card-body profile-card pt-1 d-flex flex-column">
+                                            <h5 class="card-title">Informations complémentaires</h5>
+                                            <p>créé par <b>{{ $user_create_name }}</b>,
+                                                {{ $courrier?->created_at?->diffForHumans() }}</p>
+                                            @if ($courrier?->created_at != $courrier?->updated_at)
+                                                <p>{{ 'modifié par ' }} <b> {{ $user_update_name }} </b>
+                                                    {{ $courrier?->updated_at?->diffForHumans() }}</p>
+                                            @else
+                                                <p> jamais modifié</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="tab-pane fade pt-3" id="modifier_courrier">
-                                    <form method="post" action="{{ url('arrives/' . $arrive?->id) }}"
+                                    <form method="post" action="{{ route('arrives.update', $arrive?->id) }}"
                                         enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         @method('PUT')
-                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                             <label for="date_arrivee" class="form-label">Date arrivée<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="date" name="date_arrivee"
@@ -300,14 +324,14 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                             <label for="numero_arrive" class="form-label">Numéro<span
                                                     class="text-danger mx-1">*</span></label>
                                             <div class="input-group has-validation">
                                                 <input type="number" min="0" name="numero_arrive"
-                                                    value="{{ $arrive?->numero ?? old('numero_arrive') }}"
+                                                    value="{{ $arrive?->numero_arrive ?? old('numero_arrive') }}"
                                                     class="form-control form-control-sm @error('numero_arrive') is-invalid @enderror"
-                                                    id="numero_arrive" placeholder="Numéro de correspondance">
+                                                    id="numero_arrive" placeholder="N° courrier arrivé">
                                                 @error('numero_arrive')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -316,7 +340,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                             <label for="date_correspondance" class="form-label">Date correspondance<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="date" name="date_correspondance"
@@ -330,15 +354,15 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                            <label for="numero_correspondance" class="form-label">Numéro
+                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                            <label for="numero_courrier" class="form-label">Numéro
                                                 correspondance<span class="text-danger mx-1">*</span></label>
                                             <div class="input-group has-validation">
-                                                <input type="text" min="0" name="numero_correspondance"
-                                                    value="{{ $arrive?->courrier?->numero ?? old('numero_correspondance') }}"
-                                                    class="form-control form-control-sm @error('numero_correspondance') is-invalid @enderror"
-                                                    id="numero_correspondance" placeholder="Numéro de correspondance">
-                                                @error('numero_correspondance')
+                                                <input type="text" min="0" name="numero_courrier"
+                                                    value="{{ $arrive?->courrier?->numero_courrier ?? old('numero_courrier') }}"
+                                                    class="form-control form-control-sm @error('numero_courrier') is-invalid @enderror"
+                                                    id="numero_courrier" placeholder="Numéro courrier">
+                                                @error('numero_courrier')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
                                                     </span>
@@ -346,7 +370,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                             <label for="annee" class="form-label">Année<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="number" min="2024" name="annee"
@@ -360,7 +384,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                             <label for="expediteur" class="form-label">Expéditeur<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="text" name="expediteur"
@@ -374,7 +398,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                             <label for="objet" class="form-label">Objet<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="text" name="objet"
@@ -388,7 +412,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                             <label for="reference" class="form-label">Référence</label>
                                             <input type="text" name="reference"
                                                 value="{{ $arrive?->courrier?->reference ?? old('reference') }}"
@@ -401,7 +425,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                             <label for="numero_reponse" class="form-label">Numéro réponse</label>
                                             <input type="number" min="0" name="numero_reponse"
                                                 value="{{ $arrive?->courrier?->numero_reponse ?? old('numero_reponse') }}"
@@ -414,7 +438,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                             <label for="date_reponse" class="form-label">Date réponse</label>
                                             <input type="date" min="0" name="date_reponse"
                                                 value="{{ $arrive?->courrier?->date_reponse?->format('Y-m-d') ?? old('date_reponse') }}"
@@ -427,7 +451,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-12 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="observation" class="form-label">Observations </label>
                                             <textarea name="observation" id="observation" rows="1" class="form-control form-control-sm"
                                                 placeholder="Observations">{{ old('observation', $arrive?->courrier?->observation) }}</textarea>
@@ -438,7 +462,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                             <label for="legende" class="form-label">Légende</label>
                                             <input type="text" name="legende"
                                                 value="{{ $arrive?->courrier?->legende ?? old('legende') }}"
@@ -451,10 +475,10 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                            <label for="reference" class="form-label">Scan courrier</label>
+                                        <div class="col-12 col-md-12 col-lg-5 col-sm-12 col-xs-12 col-xxl-5">
+                                            <label for="reference" class="form-label">Joindre courrier</label>
                                             <input type="file" name="file" id="file"
-                                                class="form-control @error('file') is-invalid @enderror btn btn-primary btn-sm">
+                                                class="form-control @error('file') is-invalid @enderror btn btn-secondary btn-sm">
                                             @error('file')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
@@ -464,16 +488,13 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                            @if (isset($arrive?->courrier?->file))
-                                                <label for="reference" class="form-label">Cliquer ici pour
-                                                    télécharger</label><br>
+                                        <div class="col-12 col-md-6 col-lg-1 col-sm-12 col-xs-12 col-xxl-1">
+                                            @if (!empty($arrive?->courrier?->file))
+                                                <label for="reference" class="form-label">Fichier</label><br>
                                                 <a class="btn btn-outline-secondary btn-sm"
                                                     title="télécharger le fichier joint" target="_blank"
                                                     href="{{ asset($arrive?->courrier?->getFile()) }}">
-                                                    <i class="bi bi-download">&nbsp;Cliquer ici pour télécharger le
-                                                        courrier
-                                                        scanné</i>
+                                                    <i class="bi bi-download"></i>
                                                 </a>
                                             @endif
                                             {{-- <img class="w-25" alt="courrier"
@@ -491,100 +512,77 @@
                                     <div class="col-lg-12">
                                         <div class="col-sm-12 col-md-12 pt-2">
 
-                                            <div class="card">
-                                                <div class="card-body custom-edit-service">
-                                                    <div class="d-flex justify-content-between align-items-center mt-3">
-                                                        <span><a href="{{ route('arrives.index') }}"
-                                                                class="btn btn-success btn-sm" title="retour"><i
-                                                                    class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                                            | Liste des courriers arrivés
-                                                        </span>
-
-                                                        {{-- <small>
-                                                        <a href="{!! url('coupon-arrive', ['$id' => $arrive?->id]) !!}" class='btn btn-primary btn-sm'
-                                                            title="télécharger le coupon" target="_blank">
-                                                            <i class="fa fa-print" aria-hidden="true"></i>&nbsp;Télécharger coupon
-                                                        </a>
-                                                    </small> --}}
-                                                        <form action="{{ route('couponArrive') }}" method="post"
-                                                            target="_blank">
-                                                            @csrf
-                                                            {{-- @method('PUT') --}}
-                                                            <input type="hidden" name="id"
-                                                                value="{{ $arrive?->id }}">
-                                                            <button class="btn btn-outline-primary btn-sm"><i
-                                                                    class="fa fa-print" aria-hidden="true"></i>Télécharger
-                                                                coupon</button>
-                                                        </form>
-                                                    </div>
+                                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                                <h3>
+                                                    Imputation
+                                                </h3>
+                                                <form action="{{ route('couponArrive') }}" method="post"
+                                                    target="_blank">
                                                     @csrf
-                                                    <div class="row form-row pt-3">
-                                                        <div class="pb-1"><b>Expéditeur:</b>
-                                                            {{ $arrive?->courrier?->expediteur }}</div>
-                                                        <div class="pb-3"><b>Objet:</b> {{ $arrive?->courrier?->objet }}
+                                                    <input type="hidden" name="id" value="{{ $arrive?->id }}">
+                                                    <button class="btn btn-outline-primary btn-sm"><i class="fa fa-print"
+                                                            aria-hidden="true"></i>Télécharger
+                                                        coupon</button>
+                                                </form>
+                                            </div>
+                                            @csrf
+                                            <div class="row form-row pt-3">
+                                                <div class="pb-1"><b>Expéditeur:</b>
+                                                    {{ $arrive?->courrier?->expediteur }}</div>
+                                                <div class="pb-3"><b>Objet:</b> {{ $arrive?->courrier?->objet }}
+                                                </div>
+                                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="">Employé</label>
+                                                        <input type="text" placeholder="rechercher employé..."
+                                                            class="form-control form-control-sm @error('product') is-invalid @enderror"
+                                                            name="product" id="product" value=""
+                                                            @required(true)>
+                                                        <div class="col-lg-6" id="productList">
                                                         </div>
-                                                        {{-- <div class="pb-3"><b>Imputation:</b>
-                                                        @if ($arrive?->courrier?->directions != '[]')
-                                                            <?php $i = 1; ?>
-                                                            @foreach ($arrive?->courrier?->directions as $direction)
-                                                                <br>{{ $i++ }}. {!! $direction?->name ?? '' !!}
-                                                                <b>[{!! $direction?->sigle ?? '' !!}]</b>
-                                                            @endforeach
-                                                        @else
-                                                            Aucune imputation pour l'instant
-                                                        @endif
-                                                    </div> --}}
-                                                        <div class="col-xs-6 col-sm-6 col-md-6">
-                                                            <div class="form-group">
-                                                                <label for="">Employé</label>
-                                                                <input type="text" placeholder="rechercher employé..."
-                                                                    class="form-control form-control-sm @error('product') is-invalid @enderror"
-                                                                    name="product" id="product" value=""
-                                                                    @required(true)>
-                                                                <div class="col-lg-6" id="productList">
-                                                                </div>
-                                                                @error('product')
-                                                                    <span class="invalid-feedback" role="alert">
-                                                                        <div>{{ $message }}</div>
-                                                                    </span>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-lg-6">
-                                                            <div class="form-group">
-                                                                <label for="">Direction/Service/Cellule</label>
-                                                                <input type="text" placeholder="Personne responsable"
-                                                                    class="form-control form-control-sm @error('direction') is-invalid @enderror"
-                                                                    name="direction" id="direction" value=""
-                                                                    readonly>
-                                                                @error('direction')
-                                                                    <span class="invalid-feedback" role="alert">
-                                                                        <div>{{ $message }}</div>
-                                                                    </span>
-                                                                @enderror
-                                                                <input type="hidden" name="id_direction"
-                                                                    id="id_direction" value="" readonly>
-                                                            </div>
-                                                        </div>
-
-                                                        <input type="hidden" placeholder="ID"
-                                                            class="form-control form-control-sm @error('id_emp') is-invalid @enderror"
-                                                            name="id_emp" id="id_emp" value="0.0" min="0">
-                                                        <input type="hidden" placeholder="imp"
-                                                            class="form-control form-control-sm @error('imp') is-invalid @enderror"
-                                                            name="imp" id="imp" value="1">
-
-                                                        <div class="col-xs-12 col-sm-12 col-md-12 pt-3 text-center">
-                                                            <button id="addMore" class="btn btn-success btn-sm"><i
-                                                                    class="fa fa-plus"
-                                                                    aria-hidden="true"></i>&nbsp;Ajouter</button>
-                                                        </div>
-
+                                                        @error('product')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <div>{{ $message }}</div>
+                                                            </span>
+                                                        @enderror
                                                     </div>
                                                 </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="form-group">
+                                                        <label for="">Centre de responsabilité</label>
+                                                        <input type="text" placeholder="Centre de responsabilité"
+                                                            class="form-control form-control-sm @error('direction') is-invalid @enderror"
+                                                            name="direction" id="direction" value=""
+                                                            @required(true) @readonly(true)>
+                                                        @error('direction')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <div>{{ $message }}</div>
+                                                            </span>
+                                                        @enderror
+                                                        <input type="hidden" name="id_direction" id="id_direction"
+                                                            value="" @readonly(true)>
+                                                    </div>
+                                                </div>
+
+                                                <input type="hidden" placeholder="ID"
+                                                    class="form-control form-control-sm @error('id_emp') is-invalid @enderror"
+                                                    name="id_emp" id="id_emp" value="0.0" min="0">
+                                                <input type="hidden" placeholder="imp"
+                                                    class="form-control form-control-sm @error('imp') is-invalid @enderror"
+                                                    name="imp" id="imp" value="1">
+
+                                                <div class="col-xs-12 col-sm-12 col-md-12 pt-3 text-center">
+                                                    <button id="addMore" class="btn btn-success btn-sm"><i
+                                                            class="fa fa-plus"
+                                                            aria-hidden="true"></i>&nbsp;Ajouter</button>
+                                                </div>
+
+                                                {{--   </div>
+                                                </div> --}}
                                             </div>
                                         </div>
+                                        <hr>
                                         <div class="col-lg-12">
                                             <form method="post" action="{{ url('arrives/' . $arrive?->id) }}"
                                                 enctype="multipart/form-data" class="row g-3">
@@ -597,9 +595,8 @@
                                                         <thead>
                                                             <tr>
                                                                 <th style="width: 50%">Direction<span
-                                                                    class="text-danger mx-1">*</span></th>
-                                                                <th>Responsable<span
-                                                                    class="text-danger mx-1">*</span></th>
+                                                                        class="text-danger mx-1">*</span></th>
+                                                                <th>Responsable<span class="text-danger mx-1">*</span></th>
                                                                 <th style="width: 5%">#</th>
                                                             </tr>
                                                         </thead>
@@ -638,9 +635,10 @@
                                                                         @endforeach
                                                                     @endif
                                                                 </small> --}}
-                                                                <strong><label for="description" class="form-label">Actions
-                                                                        attendues<span
-                                                                            class="text-danger mx-1">*</span></label></strong>
+                                                                    <strong><label for="description"
+                                                                            class="form-label">Actions
+                                                                            attendues<span
+                                                                                class="text-danger mx-1">*</span></label></strong>
                                                                     <select name="description"
                                                                         class="form-select font-italic @error('description') is-invalid @enderror"
                                                                         aria-label="Select" id="select-field-familiale"
@@ -684,7 +682,7 @@
                                                                 <td colspan="1">
                                                                     <strong><label
                                                                             for="date_imp">{{ __('Date imputation') }}<span
-                                                                            class="text-danger mx-1">*</span></label></strong>
+                                                                                class="text-danger mx-1">*</span></label></strong>
                                                                     <input id="date_imp"
                                                                         {{ $errors?->has('date_imp') ? 'is-invalid' : '' }}
                                                                         type="date"
@@ -706,8 +704,8 @@
                                                                 <td colspan="4">
                                                                     <strong><label
                                                                             for="observation">{{ __('Observations') }}</label></strong>
-                                                                            <textarea name="observation" id="observation" rows="2" class="form-control form-control-sm"
-                                                                                placeholder="observation">{{ old('observation', $arrive?->courrier?->observation) }}</textarea>
+                                                                    <textarea name="observation" id="observation" rows="2" class="form-control form-control-sm"
+                                                                        placeholder="observation">{{ old('observation', $arrive?->courrier?->observation) }}</textarea>
                                                                     @error('observation')
                                                                         <span class="invalid-feedback" role="alert">
                                                                             <div>{{ $message }}</div>

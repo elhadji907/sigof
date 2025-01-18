@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * Class Arrive
  * 
  * @property int $id
- * @property string|null $numero
+ * @property string|null $numero_interne
  * @property string $uuid
  * @property int $courriers_id
  * @property string|null $deleted_at
@@ -35,7 +35,7 @@ class Interne extends Model
 	];
 
 	protected $fillable = [
-		'numero',
+		'numero_interne',
 		'uuid',
 		'courriers_id',
 	];

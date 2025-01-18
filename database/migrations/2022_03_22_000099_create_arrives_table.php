@@ -23,7 +23,7 @@ class CreateArrivesTable extends Migration
         Schema::create($this->tableName, function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->string('numero', 200)->nullable();
+            $table->string('numero_arrive', 200)->nullable();
             $table->char('uuid', 36);
             $table->unsignedInteger('courriers_id');
             $table->string('type', 200)->nullable();

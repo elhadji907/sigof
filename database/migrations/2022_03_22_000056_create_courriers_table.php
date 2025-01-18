@@ -24,7 +24,7 @@ class CreateCourriersTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->char('uuid', 36);
-            $table->string('numero', 200)->nullable();
+            $table->string('numero_courrier', 200)->nullable();
             $table->longText('objet')->nullable();
             $table->string('expediteur', 200)->nullable();
             $table->string('numero_reponse', 200)->nullable();

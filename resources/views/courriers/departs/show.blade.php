@@ -14,7 +14,7 @@
                     class="btn btn-success btn-sm" title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                 <p> | Liste des courriers départs</p>
             </span>
-            <div class="col-xl-4">
+           {{--  <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                 <div class="card border-info mb-3">
                     <div class="card-header text-center">
                         AUDIT
@@ -22,7 +22,6 @@
                     <div class="card-body profile-card pt-1 d-flex flex-column">
                         <h5 class="card-title">Informations complémentaires</h5>
                         <p>créé par <b>{{ $user_create_name }}</b>, {{ $courrier?->created_at?->diffForHumans() }}</p>
-                        {{-- <p>modifié par <b>{{ $user_update_name }}</b>, {{ $courrier?->updated_at?->diffForHumans() }}</p> --}}
                         @if ($courrier?->created_at != $courrier?->updated_at)
                             <p>{{ 'modifié par ' }} <b> {{ $user_update_name }} </b>
                                 {{ $courrier?->updated_at?->diffForHumans() }}</p>
@@ -31,11 +30,9 @@
                         @endif
                     </div>
                 </div>
+            </div> --}}
 
-            </div>
-
-            <div class="col-xl-8">
-
+            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                 <div class="card border-info mb-3">
                     <div class="card-body pt-3">
                         <ul class="nav nav-tabs nav-tabs-bordered">
@@ -64,6 +61,9 @@
                             <li class="nav-item">
                                 <button class="nav-link" data-bs-toggle="tab"
                                     data-bs-target="#profile-settings">Commentaires</button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#audit">Audit</button>
                             </li>
                         </ul>
 
@@ -106,13 +106,13 @@
                                     <div class="col-lg-3 col-md-4">{{ $depart?->destinataire }}</div>
                                 </div>
                                 <div class="row">
-                                    @isset($depart?->courrier?->reference)
+                                    @if(!empty($depart?->courrier?->reference))
                                         <div class="col-lg-3 col-md-4 label">Service expéditeur</div>
                                         <div class="col-lg-3 col-md-4">{{ $depart?->courrier?->reference }}</div>
-                                    @endisset
+                                    @endif
                                 </div>
 
-                                @isset($depart?->courrier?->numero_reponse)
+                                @if(!empty($depart?->courrier?->numero_reponse))
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label ">N° réponse</div>
                                         <div class="col-lg-3 col-md-4">{{ $depart?->courrier?->numero_reponse }}</div>
@@ -120,17 +120,15 @@
                                         <div class="col-lg-3 col-md-4">{{ $depart?->courrier?->date_reponse?->format('d/m/Y') }}
                                         </div>
                                     </div>
-                                @endisset
+                                @endif
 
-                                @isset($depart?->courrier?->observation)
+                                @if(!empty($depart?->courrier?->observation))
                                     <h5 class="card-title">Observations</h5>
                                     <p class="small fst-italic">{{ $depart?->courrier?->observation }}.</p>
-                                @endisset
-
+                                @endif
                             </div>
 
                             <div class="tab-pane fade pt-3" id="profile-settings">
-
                                 <form method="POST" action="{{ route('comments.store', $depart?->courrier) }}"
                                     class="mt-3">
                                     @csrf
@@ -242,6 +240,24 @@
                                 @endforelse
                             </div>
 
+                            <div class="tab-pane fade pt-3" id="audit">
+                                <div class="border-info mb-3">
+                                    <div class="card-header text-center">
+                                        AUDIT
+                                    </div>
+                                    <div class="card-body profile-card pt-1 d-flex flex-column">
+                                        <h5 class="card-title">Informations complémentaires</h5>
+                                        <p>créé par <b>{{ $user_create_name }}</b>,
+                                            {{ $courrier?->created_at?->diffForHumans() }}</p>
+                                        @if ($courrier?->created_at != $courrier?->updated_at)
+                                            <p>{{ 'modifié par ' }} <b> {{ $user_update_name }} </b>
+                                                {{ $courrier?->updated_at?->diffForHumans() }}</p>
+                                        @else
+                                            <p> jamais modifié</p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                             <div class="tab-pane fade pt-3" id="courrier_update">
                                 <form method="post" action="{{ url('departs/' . $depart?->id) }}"
                                     enctype="multipart/form-data" class="row g-3">

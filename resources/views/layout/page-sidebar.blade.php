@@ -10,26 +10,35 @@
             </li>
         @endcan
 
-        @can('post-view')
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('postes') }}">
-                    <i class="bi bi-file-post"></i>
-                    <span>Actualités</span>
-                </a>
-            </li>
-        @endcan
-        @can('une-view')
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ url('unes') }}">
-                    <i class="bi bi-book"></i>
-                    <span>A la une</span>
-                </a>
-            </li>
-        @endcan
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#actualite-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-envelope"></i><span>Page de présentation</span><i
+                    class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="actualite-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+                @can('post-view')
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('postes') }}">
+                            <span>Actualité</span>
+                        </a>
+                    </li>
+                @endcan
+                @can('une-view')
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('unes') }}">
+                            <span>A la une</span>
+                        </a>
+                    </li>
+                @endcan
+
+            </ul>
+        </li>
+
         @can('courrier-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#courrier-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-envelope"></i><span>Gestion courrier</span><i class="bi bi-chevron-down ms-auto"></i>
+                    <i class="bi bi-envelope"></i><span>Gestion du courrier</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="courrier-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                     <li class="nav-item">

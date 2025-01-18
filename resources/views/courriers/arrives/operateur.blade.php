@@ -54,7 +54,7 @@
                     </div>
                     <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                         <div class="card info-card sales-card">
-                           {{--  <div class="filter">
+                            {{--  <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                         class="bi bi-three-dots"></i></a>
                             </div> --}}
@@ -145,11 +145,11 @@
                                     <?php $i = 1; ?>
                                     @foreach ($arrives as $arrive)
                                         <tr>
-                                            <td style="text-align: center;">{{ $arrive?->numero }}</td>
+                                            <td style="text-align: center;">{{ $arrive?->numero_arrive }}</td>
                                             {{-- Date reception = date arrivée --}}
                                             <td style="text-align: center;">
                                                 {{ $arrive?->courrier?->date_recep?->format('d/m/Y') }} </td>
-                                            <td style="text-align: center;">{{ $arrive?->courrier?->numero }}</td>
+                                            <td style="text-align: center;">{{ $arrive?->courrier?->numero_courrier }}</td>
                                             <td style="text-align: center;">
                                                 {{ $arrive?->courrier?->date_cores?->format('d/m/Y') }} </td>
                                             {{-- <td class="text-center">{{ $arrive->numero }}</td> --}}
@@ -219,7 +219,7 @@
                     </div> --}}
 
                     <div class="card-header text-center bg-gradient-default">
-                        <h1 class="h4 text-black mb-0">Ajouter un nouveau courrier opérateur</h1>
+                        <h1 class="h4 text-black mb-0">ajouter un nouveau courrier opérateur</h1>
                     </div>
                     {{-- <div class="modal-header">
                         <h5 class="modal-title">Ajouter un nouveau courrier opérateur</h5>
@@ -236,7 +236,7 @@
                                     <label for="objet" class="form-label">Objet<span
                                             class="text-danger mx-1">*</span></label>
                                     <textarea name="objet" id="objet" rows="1"
-                                        class="form-control form-control-sm @error('objet') is-invalid @enderror" placeholder="Objet">{{ old('objet') }}</textarea>
+                                        class="form-control form-control-sm @error('objet') is-invalid @enderror" placeholder="Objet">{{ 'Demande agrément opérateur' ?? old('objet') }}</textarea>
                                     @error('objet')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -330,7 +330,8 @@
                                 </div>
 
                                 <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="sigle" class="form-label">Sigle</label>
+                                    <label for="sigle" class="form-label">Sigle<span
+                                            class="text-danger mx-1">*</span></label>
                                     <textarea name="sigle" id="sigle" rows="1"
                                         class="form-control form-control-sm @error('sigle') is-invalid @enderror" placeholder="Sigle">{{ old('sigle') }}</textarea>
                                     @error('sigle')

@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * 
  * @property int $id
  * @property string $uuid
- * @property string $numero
+ * @property string $numero_courrier
  * @property string|null $objet
  * @property string|null $expediteur
  * @property string|null $name
@@ -126,7 +126,7 @@ class Courrier extends Model
 
 	protected $fillable = [
 		'uuid',
-		'numero',
+		'numero_courrier',
 		'num_bord',
 		'objet',
 		'expediteur',

@@ -136,15 +136,11 @@
                                     class="btn btn-success btn-sm" title="retour"><i
                                         class="bi bi-arrow-counterclockwise"></i></a>&nbsp;Liste des courriers
                             </span>
-                            @can('courrier-operateur-view')
-                                {{-- <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
-                                    data-bs-target="#addCourrierOperateur"><i class="bi bi-plus"
-                                        title="ajouter courrier opérateurs"></i>&nbsp;ajouter courrier opérateurs</button> --}}
-
+                            {{-- @can('courrier-operateur-view')
                                 <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('arrivesop') }}"
                                         class="btn btn-primary btn-sm" title="ajouter opérateur">ajouter courrier opérateur</a>
                                 </span>
-                            @endcan
+                            @endcan --}}
                             <span class="d-flex align-items-baseline">
                                 <a href="#" class="btn btn-success btn-sm float-end" data-bs-toggle="modal"
                                     data-bs-target="#addCourrierArrive" title="Ajouter">Ajouter</a>
@@ -168,7 +164,7 @@
                             <table class="table datatables align-middle" id="table-arrives">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">N°</th>
+                                        <th class="text-center">N° arrivé</th>
                                         <th class="text-center">Date arrivé</th>
                                         <th class="text-center">N° correspondance</th>
                                         <th class="text-center">Date correspondance</th>
@@ -181,11 +177,11 @@
                                     <?php $i = 1; ?>
                                     @foreach ($arrives as $arrive)
                                         <tr>
-                                            <td style="text-align: center;">{{ $arrive?->numero }}</td>
+                                            <td style="text-align: center;">{{ $arrive?->numero_arrive }}</td>
                                             {{-- Date reception = date arrivée --}}
                                             <td style="text-align: center;">
                                                 {{ $arrive?->courrier?->date_recep?->format('d/m/Y') }} </td>
-                                            <td style="text-align: center;">{{ $arrive?->courrier?->numero }}</td>
+                                            <td style="text-align: center;">{{ $arrive?->courrier?->numero_courrier }}</td>
                                             <td style="text-align: center;">
                                                 {{ $arrive?->courrier?->date_cores?->format('d/m/Y') }} </td>
                                             {{-- <td class="text-center">{{ $arrive->numero }}</td> --}}
@@ -327,14 +323,14 @@
                                 </div>
 
                                 <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="numero_correspondance" class="form-label">Numéro correspondance<span
+                                    <label for="numero_courrier" class="form-label">Numéro correspondance<span
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
-                                        <input type="text" min="0" name="numero_correspondance"
-                                            value="{{ old('numero_correspondance') }}"
-                                            class="form-control form-control-sm @error('numero_correspondance') is-invalid @enderror"
-                                            id="numero_correspondance" placeholder="Numéro de correspondance">
-                                        @error('numero_correspondance')
+                                        <input type="text" min="0" name="numero_courrier"
+                                            value="{{ old('numero_courrier') }}"
+                                            class="form-control form-control-sm @error('numero_courrier') is-invalid @enderror"
+                                            id="numero_courrier" placeholder="Numéro de correspondance">
+                                        @error('numero_courrier')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
@@ -518,14 +514,14 @@
                                 </div>
 
                                 {{-- <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="numero_correspondance" class="form-label">Numéro correspondance<span
+                                    <label for="numero_courrier" class="form-label">Numéro correspondance<span
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
-                                        <input type="text" min="0" name="numero_correspondance"
-                                            value="{{ old('numero_correspondance') }}"
-                                            class="form-control form-control-sm @error('numero_correspondance') is-invalid @enderror"
-                                            id="numero_correspondance" placeholder="Numéro de correspondance">
-                                        @error('numero_correspondance')
+                                        <input type="text" min="0" name="numero_courrier"
+                                            value="{{ old('numero_courrier') }}"
+                                            class="form-control form-control-sm @error('numero_courrier') is-invalid @enderror"
+                                            id="numero_courrier" placeholder="Numéro de correspondance">
+                                        @error('numero_courrier')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>

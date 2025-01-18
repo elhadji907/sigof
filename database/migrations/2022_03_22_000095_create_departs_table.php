@@ -24,7 +24,7 @@ class CreateDepartsTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->char('uuid', 36);
-            $table->string('numero', 200)->nullable();
+            $table->string('numero_depart', 200)->nullable();
             $table->string('destinataire', 200)->nullable();
             $table->unsignedInteger('courriers_id');
 

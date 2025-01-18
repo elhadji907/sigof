@@ -60,9 +60,9 @@
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
                                         <input type="number" min="0" name="numero_arrive"
-                                            value="{{ $arrive?->numero ?? old('numero_arrive') }}"
+                                            value="{{ $arrive?->numero_arrive ?? old('numero_arrive') }}"
                                             class="form-control form-control-sm @error('numero_arrive') is-invalid @enderror"
-                                            id="numero_arrive" placeholder="Numéro de correspondance">
+                                            id="numero_arrive" placeholder="Numéro courrier arrivé">
                                         @error('numero_arrive')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -86,14 +86,14 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="numero_correspondance" class="form-label">Numéro correspondance<span
+                                    <label for="numero_courrier" class="form-label">Numéro correspondance<span
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
-                                        <input type="text" min="0" name="numero_correspondance"
-                                            value="{{ $arrive?->courrier?->numero ?? old('numero_correspondance') }}"
-                                            class="form-control form-control-sm @error('numero_correspondance') is-invalid @enderror"
-                                            id="numero_correspondance" placeholder="Numéro de correspondance">
-                                        @error('numero_correspondance')
+                                        <input type="text" min="0" name="numero_courrier"
+                                            value="{{ $arrive?->courrier?->numero ?? old('numero_courrier') }}"
+                                            class="form-control form-control-sm @error('numero_courrier') is-invalid @enderror"
+                                            id="numero_courrier" placeholder="Numéro courrier">
+                                        @error('numero_courrier')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
