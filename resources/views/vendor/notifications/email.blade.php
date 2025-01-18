@@ -39,8 +39,7 @@
 @if (! empty($salutation))
 {{ $salutation }}
 @else
-@lang('Merci'),<br>
-{{ __("Vous pouvez nous joindre par email à contact@onfp.sn ou par téléphone au (+221) 33 827 92 51.") }}
+@lang('Si vous n\'êtes pas à l\'origine de la création de ce compte ne tenez pas compte de cet email, le compte sera automatiquement supprimé.')
 @endif
 
 {{-- Subcopy --}}

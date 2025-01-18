@@ -80,7 +80,7 @@ class ArriveController extends Controller
         } elseif ($count_courrier == "1") {
             $title = $count_courrier . ' courrier sur un total de ' . $total_count;
         } else {
-            $title = 'Liste des ' . $count_courrier . ' derniers courriers sur un total de ' . $total_count;
+            $title = $count_courrier . ' derniers courriers sur un total de ' . $total_count;
         }
 
         $today = date('Y-m-d');
@@ -755,11 +755,11 @@ class ArriveController extends Controller
         $count_courrier = number_format($arrives?->count(), 0, ',', ' ');
 
         if ($count_courrier < "1") {
-            $title = 'Aucun courrier';
+            $title = 'Aucun courrier opérateur';
         } elseif ($count_courrier == "1") {
-            $title = $count_courrier . ' courrier sur un total de ' . $total_count;
+            $title = $count_courrier . ' courrier opérateur sur un total de ' . $total_count;
         } else {
-            $title = 'Liste des ' . $count_courrier . ' derniers courriers sur un total de ' . $total_count;
+            $title = $count_courrier . ' derniers courriers opérateur sur un total de ' . $total_count;
         }
 
         $today = date('Y-m-d');

@@ -348,22 +348,6 @@
                         @if (auth()->user()->hasRole('super-admin|admin'))
                             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="card info-card sales-card">
-
-                                    {{-- <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                        class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Roles</h6>
-                                    </li>
-                                    <li><a class="dropdown-item" href="#">
-                                            @foreach (Auth::user()->roles as $role)
-                                                <div>{{ $role->name }}</div>
-                                            @endforeach
-                                        </a></li>
-                                </ul>
-                            </div> --}}
-
                                     <a href="{{ route('user.index') }}">
                                         <div class="card-body">
                                             <h5 class="card-title">Utilisateurs <span>| Tous</span></h5>

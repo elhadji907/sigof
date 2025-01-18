@@ -1009,7 +1009,7 @@
                                         </div> --}}
 
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary">Sauvegarder les
+                                            <button type="submit" class="btn btn-primary btn-sm">Sauvegarder les
                                                 modifications</button>
                                         </div>
                                         @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())

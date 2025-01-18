@@ -1,13 +1,8 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\Collective;
-use App\Models\Demandeur;
 use App\Models\File;
-use App\Models\Individuelle;
-use App\Models\Pcharge;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
@@ -37,24 +32,14 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            /* 'prenom'                => ['required', 'string', 'max:50'], */
-            'username'              => ['required', 'string', 'min:3', 'max:25', 'unique:' . User::class],
-            'email'                 => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            /* 'telephone'             => ['required', 'string', 'max:25', 'min:9'], */
-            /* 'adresse'               => ['required', 'string', 'max:255'], */
-            /* 'date_naissance'        => ['required', 'date'],
-            'lieu_naissance'        => ['required', 'string', 'max:50'], */
-            'password'              => ['required', 'confirmed', Rules\Password::defaults()],
+            'username' => ['required', 'string', 'min:3', 'max:25', 'unique:' . User::class],
+            'email'    => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            /* 'firstname' => $request->prenom,
-            'laststname' => $request->nom, */
             'username' => $request->username,
-            'email' => $request->email,
-            /* 'telephone' => $request->telephone,
-            'date_naissance' => $request->date_naissance,
-            'lieu_naissance' => $request->lieu_naissance, */
+            'email'    => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
@@ -62,61 +47,19 @@ class RegisteredUserController extends Controller
 
         foreach ($files as $key => $file) {
             $file = File::create([
-                'legende'   => $file->legende,
-                'sigle'     => $file->sigle,
-                'users_id'  => $user->id
+                'legende'  => $file->legende,
+                'sigle'    => $file->sigle,
+                'users_id' => $user->id,
             ]);
         }
-
-        /*     $demandeur = Demandeur::create([
-            'users_id' => $user->id,
-        ]);
-
-        $individuelle = Individuelle::create([
-            'demandeurs_id' => $demandeur->id,
-            'statut' => 'attente',
-            'users_id' => $user->id,
-        ]);
-
-        $collective = Collective::create([
-            'demandeurs_id' => $demandeur->id,
-            'statut' => 'attente',
-            'users_id' => $user->id,
-        ]);
-
-        $pcharge = Pcharge::create([
-            'demandeurs_id' => $demandeur->id,
-            'statut' => 'attente',
-            'users_id' => $user->id,
-        ]); */
 
         $user->assignRole($request->input('role'));
 
         event(new Registered($user));
-        /* event(new Registered($demandeur));
-        event(new Registered($individuelle));
-        event(new Registered($collective));
-        event(new Registered($pcharge)); */
 
-        /* Se connecter automatiquement après inscription */
-        /* Auth::login($user); */
-
-        /* Redirection vers le home directement après incrption */
-        /* return redirect(RouteServiceProvider::HOME); */
-
-
-        /* Redirection vers le connexion après incrption */
-        /* $status = "Compte créé, merci de vous connecter";
-        return redirect(RouteServiceProvider::LOGIN)->with('status', $status); */
-
-        /* Alert::success('Félicitations  ! ' . $user->username, 'Votre inscription a été réussie, 
-        Pour activer votre compte, veuillez vérifier votre boîte e-mail et suivre les instructions. 
-        Si vous ne trouvez pas l\'e-mail, pensez à vérifier votre dossier spam.'); */
-
-        alert()->html('<i>Félicitations </i> <a href="#">' . $user->username . '</a>', "Votre inscription a été effectuée avec <b>succès</b>, <br> 
+        alert()->html('<i>Félicitations </i> <a href="#">' . $user->username . '</a>', "Votre inscription a été effectuée avec <b>succès</b>, <br>
         Pour activer votre compte, veuillez vérifier votre <a href='#'>boîte e-mail</a> et suivre les instructions. <br>
         Si vous ne trouvez pas l'e-mail, pensez à vérifier votre dossier spam.", 'success');
-
 
         return redirect(RouteServiceProvider::LOGIN);
     }

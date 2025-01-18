@@ -75,7 +75,7 @@ class DepartController extends Controller
         } elseif ($count_courrier == "1") {
             $title = $count_courrier . ' courrier sur un total de ' . $total_count;
         } else {
-            $title = 'Liste des ' . $count_courrier . ' derniers courriers sur un total de ' . $total_count;
+            $title = $count_courrier . ' derniers courriers sur un total de ' . $total_count;
         }
 
         $today       = date('Y-m-d');

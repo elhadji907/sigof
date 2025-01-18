@@ -62,7 +62,7 @@ class InterneController extends Controller
         } elseif ($count_courrier == "1") {
             $title = $count_courrier . ' courrier sur un total de ' . $total_count;
         } else {
-            $title = 'Liste des ' . $count_courrier . ' derniers courriers sur un total de ' . $total_count;
+            $title = $count_courrier . ' derniers courriers sur un total de ' . $total_count;
         }
 
         return view('courriers.internes.index', compact('internes', 'title', 'numCourrier', 'anneeEnCours'));
