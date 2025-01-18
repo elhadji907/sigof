@@ -876,7 +876,6 @@
                                         enctype="multipart/form-data">
                                         @csrf
                                         @method('patch')
-
                                         <h5 class="card-title">{{ __("Ajouter d'autres fichiers") }}</h5>
                                         <span style="color:red;">NB:</span>
                                         <span>Seule la Carte Nationale d'Identité (recto/verso) </span><span

@@ -1,11 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\File;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class FileController extends Controller
@@ -26,8 +25,8 @@ class FileController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'legende'           => 'required |string',
-            'file'              => 'required|file|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',
+            'legende' => 'required |string',
+            'file'    => 'required|file|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',
         ]);
 
         $file = File::where('id', $request->legende)
@@ -40,7 +39,7 @@ class FileController extends Controller
             $filePath = $request->file('file')->store('uploads', 'public');
             // Return success response
             $file->update([
-                'file'      =>   $filePath,
+                'file' => $filePath,
             ]);
 
             $file->save();
@@ -58,8 +57,10 @@ class FileController extends Controller
     {
         $file = File::findOrFail($request->idFile);
 
+        Storage::disk('public')->delete($file->file);
+
         $file->update([
-            'file'      => null
+            'file' => null,
         ]);
 
         Alert::success($file->legende, 'a été retiré');
@@ -78,18 +79,18 @@ class FileController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'legende'       => 'required|string',
-            'user'          => 'required|string',
+            'legende' => 'required|string',
+            'user'    => 'required|string',
         ]);
 
         $file = File::where('legende', $request?->legende)?->first();
 
         $sigle = $file?->sigle;
 
-        $file =  File::create([
-            'legende'   => $request?->legende,
-            'sigle'     => $sigle,
-            'users_id'  => $request?->user,
+        $file = File::create([
+            'legende'  => $request?->legende,
+            'sigle'    => $sigle,
+            'users_id' => $request?->user,
         ]);
 
         $file?->save();
