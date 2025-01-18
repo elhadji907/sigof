@@ -56,13 +56,13 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                                    <label for="numero_interne" class="form-label">Numéro<span
+                                    <label for="numero_interne" class="form-label">Numéro courrier<span
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
                                         <input type="number" min="0" name="numero_interne"
-                                            value="{{ $interne->numero ?? old('numero_interne') }}"
+                                            value="{{ $interne->numero_interne ?? old('numero_interne') }}"
                                             class="form-control form-control-sm @error('numero_interne') is-invalid @enderror"
-                                            id="numero_interne" placeholder="Numéro de correspondance">
+                                            id="numero_interne" placeholder="Numéro courrier">
                                         @error('numero_interne')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>

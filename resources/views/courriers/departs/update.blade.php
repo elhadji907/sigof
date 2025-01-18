@@ -29,8 +29,8 @@
                                 <h5 class="card-title text-center pb-0 fs-4">Modification</h5>
                                 <p class="text-center small">modification courrier départ</p>
                             </div> --}}
-                            <form method="post" action="{{ url('departs/' . $depart->id) }}" enctype="multipart/form-data"
-                                class="row g-3">
+                            <form method="post" action="{{ route('departs.update', $depart->id) }}"
+                                enctype="multipart/form-data" class="row g-3">
                                 @csrf
                                 @method('PUT')
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
@@ -52,7 +52,7 @@
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
                                         <input type="number" min="0" name="numero_depart"
-                                            value="{{ $depart->numero ?? old('numero_depart') }}"
+                                            value="{{ $depart->numero_depart ?? old('numero_depart') }}"
                                             class="form-control form-control-sm @error('numero_depart') is-invalid @enderror"
                                             id="numero_depart" placeholder="Numéro départ">
                                         @error('numero_depart')
@@ -78,14 +78,14 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="numero_correspondance" class="form-label">Numéro correspondance<span
+                                    <label for="numero_courrier" class="form-label">Numéro correspondance<span
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
-                                        <input type="number" min="0" name="numero_correspondance"
-                                            value="{{ $depart->courrier->numero ?? old('numero_correspondance') }}"
-                                            class="form-control form-control-sm @error('numero_correspondance') is-invalid @enderror"
-                                            id="numero_correspondance" placeholder="Numéro de correspondance">
-                                        @error('numero_correspondance')
+                                        <input type="number" min="0" name="numero_courrier"
+                                            value="{{ $depart->courrier->numero_courrier ?? old('numero_courrier') }}"
+                                            class="form-control form-control-sm @error('numero_courrier') is-invalid @enderror"
+                                            id="numero_courrier" placeholder="Numéro de correspondance">
+                                        @error('numero_courrier')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>

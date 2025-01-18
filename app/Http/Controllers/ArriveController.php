@@ -151,7 +151,7 @@ class ArriveController extends Controller
         $courrier = Courrier::create([
             'date_recep'      => $request->input('date_arrivee'),
             'date_cores'      => $request->input('date_correspondance'),
-            'numero_courrier' => $request->input('numero_correspondance'),
+            'numero_courrier' => $request->input('numero_courrier'),
             'annee'           => $request->input('annee'),
             'objet'           => $request->input('objet'),
             'expediteur'      => $request->input('expediteur'),
@@ -336,7 +336,7 @@ class ArriveController extends Controller
                 [
                     'date_recep'      => $request->input('date_arrivee'),
                     'date_cores'      => $request->input('date_correspondance'),
-                    'numero_courrier' => $request->input('numero_correspondance'),
+                    'numero_courrier' => $request->input('numero_courrier'),
                     'annee'           => $request->input('annee'),
                     'objet'           => $request->input('objet'),
                     'expediteur'      => $request->input('expediteur'),
@@ -376,7 +376,7 @@ class ArriveController extends Controller
                 [
                     'date_recep'      => $request->input('date_arrivee'),
                     'date_cores'      => $request->input('date_correspondance'),
-                    'numero_courrier' => $request->input('numero_correspondance'),
+                    'numero_courrier' => $request->input('numero_courrier'),
                     'annee'           => $request->input('annee'),
                     'objet'           => $request->input('objet'),
                     'expediteur'      => $request->input('expediteur'),
@@ -397,7 +397,7 @@ class ArriveController extends Controller
                 [
                     'date_recep'      => $request->input('date_arrivee'),
                     'date_cores'      => $request->input('date_correspondance'),
-                    'numero_courrier' => $request->input('numero_correspondance'),
+                    'numero_courrier' => $request->input('numero_courrier'),
                     'annee'           => $request->input('annee'),
                     'objet'           => $request->input('objet'),
                     'expediteur'      => $request->input('expediteur'),
@@ -416,7 +416,7 @@ class ArriveController extends Controller
 
         $arrive->update(
             [
-                'numero_arrive' => $request->input('numero'),
+                'numero_arrive' => $request->input('numero_arrive'),
                 'courriers_id'  => $courrier->id,
             ]
         );

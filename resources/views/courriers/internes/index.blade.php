@@ -50,8 +50,8 @@
                                     <tr>
                                         <th class="text-center" width='8%'>N°</th>
                                         <th class="text-center" width='12%'>Date arrivé</th>
+                                        <th width='35%'>Objet</th>
                                         <th>Expéditeur</th>
-                                        <th>Objet</th>
                                         <th width='2%'>#</th>
                                     </tr>
                                 </thead>
@@ -59,11 +59,11 @@
                                     <?php $i = 1; ?>
                                     @foreach ($internes as $interne)
                                         <tr>
-                                            <td style="text-align: center;">{{ $interne?->numero }}</td>
+                                            <td style="text-align: center;">{{ $interne?->numero_interne }}</td>
                                             <td style="text-align: center;">
                                                 {{ $interne?->courrier?->date_recep?->format('d/m/Y') }} </td>
-                                            <td>{{ $interne?->courrier?->expediteur }}</td>
                                             <td>{{ $interne?->courrier?->objet }}</td>
+                                            <td>{{ $interne?->courrier?->expediteur }}</td>
                                             <td>
                                                 <span class="d-flex align-items-baseline"><a href="#"
                                                         class="btn btn-success btn-sm" title="voir détails"><i
@@ -105,7 +105,7 @@
             aria-labelledby="addCourrierArriveLabel" aria-hidden="true">
             <div class="modal-dialog modal-xl">
                 <div class="modal-content">
-                    
+
                     <div class="card-header text-center bg-gradient-default">
                         <h1 class="h4 text-black mb-0">Ajouter un nouveau courrier interne</h1>
                     </div>
@@ -145,13 +145,13 @@
                                 </div>
 
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                                    <label for="numero_interne" class="form-label">Numéro<span
+                                    <label for="numero_interne" class="form-label">Numéro courrier<span
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
                                         <input type="number" min="0" name="numero_interne"
                                             value="{{ $numCourrier ?? old('numero_interne') }}"
                                             class="form-control form-control-sm @error('numero_interne') is-invalid @enderror"
-                                            id="numero_interne" placeholder="Numéro de correspondance">
+                                            id="numero_interne" placeholder="Numéro courrier">
                                         @error('numero_interne')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -307,11 +307,12 @@
                                     <div class="row">
                                         <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <div class="form-group">
-                                                <label for="numero" class="form-label">Numero</label>
-                                                <input type="text" name="numero" value="{{ old('numero') }}"
-                                                    class="form-control form-control-sm @error('numero') is-invalid @enderror"
-                                                    id="numero" placeholder="Numero">
-                                                @error('numero')
+                                                <label for="numero_interne" class="form-label">Numero</label>
+                                                <input type="text" name="numero_interne"
+                                                    value="{{ old('numero_interne') }}"
+                                                    class="form-control form-control-sm @error('numero_interne') is-invalid @enderror"
+                                                    id="numero_interne" placeholder="Numero courrier">
+                                                @error('numero_interne')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
                                                     </span>

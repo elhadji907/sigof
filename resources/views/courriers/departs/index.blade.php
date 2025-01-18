@@ -156,11 +156,11 @@
                                     @foreach ($departs as $depart)
                                         <tr>
                                             <td>{{ $depart->courrier->date_depart?->format('d/m/Y') }} <br>
-                                                <span style="color: rgb(255, 0, 0);">{{ ' n° ' . $depart?->numero }}</span>
+                                                <span style="color: rgb(255, 0, 0);">{{ ' n° ' . $depart?->numero_depart }}</span>
                                             </td>
                                             <td>{{ $depart->courrier->date_cores?->format('d/m/Y') }} <br>
                                                 <span
-                                                    style="color: rgb(255, 0, 0);">{{ ' n° ' . $depart?->courrier->numero }}</span>
+                                                    style="color: rgb(255, 0, 0);">{{ ' n° ' . $depart?->courrier?->numero_courrier }}</span>
                                             </td>
                                             <td>{{ $depart?->destinataire }}</td>
                                             <td>{{ $depart->courrier?->objet }}</td>
@@ -291,14 +291,14 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="numero_correspondance" class="form-label">Numéro correspondance<span
+                                    <label for="numero_courrier" class="form-label">Numéro correspondance<span
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
-                                        <input type="number" min="0" name="numero_correspondance"
-                                            value="{{ old('numero_correspondance') }}"
-                                            class="form-control form-control-sm @error('numero_correspondance') is-invalid @enderror"
-                                            id="numero_correspondance" placeholder="Numéro de correspondance">
-                                        @error('numero_correspondance')
+                                        <input type="number" min="0" name="numero_courrier"
+                                            value="{{ old('numero_courrier') }}"
+                                            class="form-control form-control-sm @error('numero_courrier') is-invalid @enderror"
+                                            id="numero_courrier" placeholder="Numéro de correspondance">
+                                        @error('numero_courrier')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
@@ -425,11 +425,11 @@
                                     <div class="row">
                                         <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <div class="form-group">
-                                                <label for="numero" class="form-label">Numero</label>
-                                                <input type="text" name="numero" value="{{ old('numero') }}"
-                                                    class="form-control form-control-sm @error('numero') is-invalid @enderror"
-                                                    id="numero" placeholder="Numero">
-                                                @error('numero')
+                                                <label for="numero_depart" class="form-label">Numéro courrier</label>
+                                                <input type="text" name="numero_depart" value="{{ old('numero_depart') }}"
+                                                    class="form-control form-control-sm @error('numero_depart') is-invalid @enderror"
+                                                    id="numero_depart" placeholder="Numero_depart">
+                                                @error('numero_depart')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
                                                     </span>

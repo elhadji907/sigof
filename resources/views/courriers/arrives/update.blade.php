@@ -37,7 +37,7 @@
                                 <h5 class="card-title text-center pb-0 fs-4">Modification</h5>
                                 <p class="text-center small">modification courrier arrivé</p>
                             </div> --}}
-                            <form method="post" action="{{ url('arrives/' . $arrive?->id) }}" enctype="multipart/form-data"
+                            <form method="post" action="{{ route('arrives.update', $arrive?->id) }}" enctype="multipart/form-data"
                                 class="row g-3">
                                 @csrf
                                 @method('PUT')
@@ -90,7 +90,7 @@
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
                                         <input type="text" min="0" name="numero_courrier"
-                                            value="{{ $arrive?->courrier?->numero ?? old('numero_courrier') }}"
+                                            value="{{ $arrive?->courrier?->numero_courrier ?? old('numero_courrier') }}"
                                             class="form-control form-control-sm @error('numero_courrier') is-invalid @enderror"
                                             id="numero_courrier" placeholder="Numéro courrier">
                                         @error('numero_courrier')

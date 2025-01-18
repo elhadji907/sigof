@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DepartStoreRequest;
@@ -31,9 +30,9 @@ class DepartController extends Controller
     }
     public function index()
     {
-        $departs = Depart::orderBy('created_at', 'desc')->get();
+        $departs      = Depart::orderBy('created_at', 'desc')->get();
         $anneeEnCours = date('Y');
-        $an = date('y');
+        $an           = date('y');
 
         $numCourrier = Depart::join('courriers', 'courriers.id', 'departs.courriers_id')
             ->select('departs.*')
@@ -41,7 +40,7 @@ class DepartController extends Controller
             ->get()->last();
 
         if (isset($numCourrier)) {
-            $numCourrier = Depart::get()->last()->numero;
+            $numCourrier = Depart::get()->last()->numero_depart;
             $numCourrier = ++$numCourrier;
         } else {
             $numCourrier = $an . "0001";
@@ -49,17 +48,17 @@ class DepartController extends Controller
             $longueur = strlen($numCourrier);
 
             if ($longueur <= 1) {
-                $numCourrier   =   strtolower("00000" . $numCourrier);
+                $numCourrier = strtolower("00000" . $numCourrier);
             } elseif ($longueur >= 2 && $longueur < 3) {
-                $numCourrier   =   strtolower("0000" . $numCourrier);
+                $numCourrier = strtolower("0000" . $numCourrier);
             } elseif ($longueur >= 3 && $longueur < 4) {
-                $numCourrier   =   strtolower("000" . $numCourrier);
+                $numCourrier = strtolower("000" . $numCourrier);
             } elseif ($longueur >= 4 && $longueur < 5) {
-                $numCourrier   =   strtolower("00" . $numCourrier);
+                $numCourrier = strtolower("00" . $numCourrier);
             } elseif ($longueur >= 5 && $longueur < 6) {
-                $numCourrier   =   strtolower("0" . $numCourrier);
+                $numCourrier = strtolower("0" . $numCourrier);
             } else {
-                $numCourrier   =   strtolower($numCourrier);
+                $numCourrier = strtolower($numCourrier);
             }
         }
 
@@ -79,8 +78,8 @@ class DepartController extends Controller
             $title = 'Liste des ' . $count_courrier . ' derniers courriers sur un total de ' . $total_count;
         }
 
-        $today = date('Y-m-d');
-        $count_today = Depart::where("created_at", "LIKE",  "{$today}%")->count();
+        $today       = date('Y-m-d');
+        $count_today = Depart::where("created_at", "LIKE", "{$today}%")->count();
 
         return view(
             "courriers.departs.index",
@@ -97,7 +96,7 @@ class DepartController extends Controller
     public function create()
     {
         $anneeEnCours = date('Y');
-        $an = date('y');
+        $an           = date('y');
 
         $numCourrier = Depart::join('courriers', 'courriers.id', 'departs.courriers_id')
             ->select('departs.*')
@@ -105,7 +104,7 @@ class DepartController extends Controller
             ->get()->last();
 
         if (isset($numCourrier)) {
-            $numCourrier = Depart::get()->last()->numero;
+            $numCourrier = Depart::get()->last()->numero_depart;
             $numCourrier = ++$numCourrier;
         } else {
             $numCourrier = $an . "0001";
@@ -113,62 +112,62 @@ class DepartController extends Controller
             $longueur = strlen($numCourrier);
 
             if ($longueur <= 1) {
-                $numCourrier   =   strtolower("00000" . $numCourrier);
+                $numCourrier = strtolower("00000" . $numCourrier);
             } elseif ($longueur >= 2 && $longueur < 3) {
-                $numCourrier   =   strtolower("0000" . $numCourrier);
+                $numCourrier = strtolower("0000" . $numCourrier);
             } elseif ($longueur >= 3 && $longueur < 4) {
-                $numCourrier   =   strtolower("000" . $numCourrier);
+                $numCourrier = strtolower("000" . $numCourrier);
             } elseif ($longueur >= 4 && $longueur < 5) {
-                $numCourrier   =   strtolower("00" . $numCourrier);
+                $numCourrier = strtolower("00" . $numCourrier);
             } elseif ($longueur >= 5 && $longueur < 6) {
-                $numCourrier   =   strtolower("0" . $numCourrier);
+                $numCourrier = strtolower("0" . $numCourrier);
             } else {
-                $numCourrier   =   strtolower($numCourrier);
+                $numCourrier = strtolower($numCourrier);
             }
         }
         return view("courriers.departs.create", compact('anneeEnCours', 'numCourrier'));
     }
     public function store(DepartStoreRequest $request): RedirectResponse
     {
-        if (!empty($request->input('date_reponse'))) {
+        if (! empty($request->input('date_reponse'))) {
             $date_reponse = $request->input('date_reponse');
         } else {
             $date_reponse = null;
         }
 
         $courrier = new Courrier([
-            'date_depart'        =>      $request->input('date_depart'),
-            'numero'             =>      $request->input('numero_correspondance'),
-            'date_cores'         =>      $request->input('date_corres'),
-            'annee'              =>      $request->input('annee'),
-            'objet'              =>      $request->input('objet'),
-            'numero_reponse'     =>      $request->input('numero_reponse'),
-            'date_reponse'       =>      $date_reponse,
-            'observation'        =>      $request->input('observation'),
-            'reference'          =>      $request->input('service_expediteur'),
-            'type'               =>      'depart',
-            "user_create_id"     =>      Auth::user()->id,
-            "user_update_id"     =>      Auth::user()->id,
-            'users_id'           =>      Auth::user()->id
+            'date_depart'     => $request->input('date_depart'),
+            'numero_courrier' => $request->input('numero_courrier'),
+            'date_cores'      => $request->input('date_corres'),
+            'annee'           => $request->input('annee'),
+            'objet'           => $request->input('objet'),
+            'numero_reponse'  => $request->input('numero_reponse'),
+            'date_reponse'    => $date_reponse,
+            'observation'     => $request->input('observation'),
+            'reference'       => $request->input('service_expediteur'),
+            'type'            => 'depart',
+            "user_create_id"  => Auth::user()->id,
+            "user_update_id"  => Auth::user()->id,
+            'users_id'        => Auth::user()->id,
 
         ]);
 
         $courrier->save();
 
         $depart = new Depart([
-            'numero'             =>      $request->input('numero_depart'),
-            'destinataire'       =>      $request->input('destinataire'),
-            'courriers_id'       =>      $courrier->id
+            'numero_depart' => $request->input('numero_depart'),
+            'destinataire'  => $request->input('destinataire'),
+            'courriers_id'  => $courrier->id,
 
         ]);
 
         $depart->save();
+
         Alert::success('Bravo !', 'Le courrier a été ajouté avec succès.');
         return back();
         /* $status = "Enregistrement effectué avec succès";
         return redirect()->back()->with("status", $status); */
     }
-
 
     public function edit($id)
     {
@@ -178,7 +177,7 @@ class DepartController extends Controller
 
     public function update(Request $request, $id)
     {
-        $depart = Depart::findOrFail($id);
+        $depart   = Depart::findOrFail($id);
         $courrier = Courrier::findOrFail($depart->courriers_id);
 
         $imp = $request->input('imp');
@@ -188,8 +187,8 @@ class DepartController extends Controller
             /* $count = count($request->product); */
             $courrier->directions()->sync($request->id_direction);
             $courrier->employees()->sync($request->id_employe);
-            $courrier->description =  $request->input('description');
-            $courrier->date_imp    =  $request->input('date_imp');
+            $courrier->description = $request->input('description');
+            $courrier->date_imp    = $request->input('date_imp');
             $courrier->save();
 
             /* $status = 'Courrier imputé avec succès';
@@ -203,20 +202,20 @@ class DepartController extends Controller
         }
 
         $this->validate($request, [
-            "date_depart"           => ["required", "date", "max:10", "min:10", "date_format:Y-m-d"],
-            "date_corres"           => ["required", "date", "max:10", "min:10", "date_format:Y-m-d"],
-            "numero_correspondance" => ["required", "string", "min:4", "max:6", "unique:courriers,numero,Null,id,deleted_at,NULL" . $depart->courrier->id],
-            "numero_depart"         => ["required", "string", "min:4", "max:6", "unique:departs,numero,Null,id,deleted_at,NULL" . $depart->id],
-            "annee"                 => ["required", "string"],
-            "objet"                 => ["required", "string"],
-            "destinataire"          => ["required", "string"],
-            "numero_reponse"        => ["string", "min:4", "max:6", "nullable", "unique:courriers,numero_reponse,Null,id,deleted_at,NULL" . $courrier->id],
-            "date_reponse"          => ["nullable", "date", "max:10", "min:10", "date_format:Y-m-d"],
-            "observation"           => ["nullable", "string"],
-            "reference"             => ["nullable", "string"],
+            "date_depart"     => ["required", "date", "max:10", "min:10", "date_format:Y-m-d"],
+            "date_corres"     => ["required", "date", "max:10", "min:10", "date_format:Y-m-d"],
+            "numero_courrier" => ["nullable", "string", "min:4", "max:6", "unique:courriers,numero_courrier,{$depart->courrier->id}"],
+            "numero_depart"   => ["nullable", "string", "min:4", "max:6", "unique:departs,numero_depart,{$depart->id}"],
+            "annee"           => ["required", "string"],
+            "objet"           => ["required", "string"],
+            "destinataire"    => ["required", "string"],
+            "numero_reponse"  => ["string", "min:4", "max:6", "nullable", "unique:courriers,numero_reponse,Null,id,deleted_at,NULL" . $courrier->id],
+            "date_reponse"    => ["nullable", "date", "max:10", "min:10", "date_format:Y-m-d"],
+            "observation"     => ["nullable", "string"],
+            "reference"       => ["nullable", "string"],
         ]);
 
-        if (!empty($request->input('date_reponse'))) {
+        if (! empty($request->input('date_reponse'))) {
             $date_reponse = $request->input('date_reponse');
         } else {
             $date_reponse = null;
@@ -224,59 +223,59 @@ class DepartController extends Controller
 
         if (isset($courrier->file)) {
             $this->validate($request, [
-                "legende"          => ["required", "string"],
+                "legende" => ["required", "string"],
             ]);
         }
 
         if (request('file')) {
             $this->validate($request, [
-                "legende"          => ["required", "string"],
+                "legende" => ["required", "string"],
             ]);
             $filePath = request('file')->store('courriers', 'public');
             $courrier->update(
                 [
-                    'date_depart'        =>      $request->input('date_depart'),
-                    'numero'             =>      $request->input('numero_correspondance'),
-                    'date_cores'         =>      $request->input('date_corres'),
-                    'annee'              =>      $request->input('annee'),
-                    'objet'              =>      $request->input('objet'),
-                    'numero_reponse'     =>      $request->input('numero_reponse'),
-                    'date_reponse'       =>      $date_reponse,
-                    'observation'        =>      $request->input('observation'),
-                    'reference'          =>      $request->input('service_expediteur'),
-                    'file'               =>      $filePath,
-                    'legende'            =>      $request->input('legende'),
-                    'type'               =>      'depart',
-                    "user_create_id"     =>      Auth::user()->id,
-                    "user_update_id"     =>      Auth::user()->id,
-                    'users_id'           =>      Auth::user()->id
+                    'date_depart'     => $request->input('date_depart'),
+                    'numero_courrier' => $request->input('numero_courrier'),
+                    'date_cores'      => $request->input('date_corres'),
+                    'annee'           => $request->input('annee'),
+                    'objet'           => $request->input('objet'),
+                    'numero_reponse'  => $request->input('numero_reponse'),
+                    'date_reponse'    => $date_reponse,
+                    'observation'     => $request->input('observation'),
+                    'reference'       => $request->input('service_expediteur'),
+                    'file'            => $filePath,
+                    'legende'         => $request->input('legende'),
+                    'type'            => 'depart',
+                    "user_create_id"  => Auth::user()->id,
+                    "user_update_id"  => Auth::user()->id,
+                    'users_id'        => Auth::user()->id,
                 ]
             );
         } else {
             $courrier->update(
                 [
-                    'date_depart'        =>      $request->input('date_depart'),
-                    'numero'             =>      $request->input('numero_correspondance'),
-                    'date_cores'         =>      $request->input('date_corres'),
-                    'annee'              =>      $request->input('annee'),
-                    'objet'              =>      $request->input('objet'),
-                    'numero_reponse'     =>      $request->input('numero_reponse'),
-                    'date_reponse'       =>      $date_reponse,
-                    'observation'        =>      $request->input('observation'),
-                    'reference'          =>      $request->input('service_expediteur'),
-                    'legende'            =>      $request->input('legende'),
-                    'type'               =>      'depart',
-                    "user_create_id"     =>      Auth::user()->id,
-                    "user_update_id"     =>      Auth::user()->id,
-                    'users_id'           =>      Auth::user()->id
+                    'date_depart'     => $request->input('date_depart'),
+                    'numero_courrier' => $request->input('numero_courrier'),
+                    'date_cores'      => $request->input('date_corres'),
+                    'annee'           => $request->input('annee'),
+                    'objet'           => $request->input('objet'),
+                    'numero_reponse'  => $request->input('numero_reponse'),
+                    'date_reponse'    => $date_reponse,
+                    'observation'     => $request->input('observation'),
+                    'reference'       => $request->input('service_expediteur'),
+                    'legende'         => $request->input('legende'),
+                    'type'            => 'depart',
+                    "user_create_id"  => Auth::user()->id,
+                    "user_update_id"  => Auth::user()->id,
+                    'users_id'        => Auth::user()->id,
                 ]
             );
         }
         $depart->update(
             [
-                'numero'             =>      $request->input('numero_depart'),
-                'destinataire'       =>      $request->input('destinataire'),
-                'courriers_id'       =>      $courrier->id
+                'numero_depart' => $request->input('numero_depart'),
+                'destinataire'  => $request->input('destinataire'),
+                'courriers_id'  => $courrier->id,
             ]
         );
 
@@ -311,16 +310,15 @@ class DepartController extends Controller
         return redirect()->back();
     }
 
-
     public function departImputation(Request $request, $id)
     {
-        $depart = Depart::findOrFail($id);
+        $depart   = Depart::findOrFail($id);
         $courrier = $depart->courrier;
 
         return view("courriers.departs.imputation-depart", compact("depart", "courrier"));
     }
 
-    function fetch(Request $request)
+    public function fetch(Request $request)
     {
 
         if ($request->get('query')) {
@@ -332,17 +330,17 @@ class DepartController extends Controller
 
             $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
             foreach ($data as $direction) {
-                $id = $direction->id;
-                $sigle = $direction->sigle;
+                $id         = $direction->id;
+                $sigle      = $direction->sigle;
                 $employe_id = $direction->chef_id;
-                $employe = Employee::find($employe_id);
+                $employe    = Employee::find($employe_id);
 
                 $user = User::find($employe->users_id);
 
                 $name = $user->firstname . ' ' . $user->name;
 
                 $output .= '
-       
+
                 <li data-id="' . $id . '" data-chef="' . $name . '" data-employeid="' . $employe->id . '"><a href="#">' . $sigle . '</a></li>
        ';
             }
@@ -353,7 +351,7 @@ class DepartController extends Controller
 
     public function couponDepart(Request $request)
     {
-        $depart = Depart::find($request->input('id'));
+        $depart   = Depart::find($request->input('id'));
         $courrier = $depart->courrier;
 
         /*  $directions     = Direction::pluck('sigle', 'id'); */
@@ -362,11 +360,11 @@ class DepartController extends Controller
 
         $departDirections = $courrier->directions->pluck('sigle', 'sigle')->all();
 
-        $numero = $courrier->numero;
+        $numero = $courrier->numero_courrier;
 
         $title = ' Coupon d\'envoi courrier départ n° ' . $numero;
 
-        $dompdf = new Dompdf();
+        $dompdf  = new Dompdf();
         $options = $dompdf->getOptions();
         $options->setDefaultFont('Courier');
         $dompdf->setOptions($options);
@@ -422,16 +420,16 @@ class DepartController extends Controller
     {
         $this->validate($request, [
             'from_date' => 'required|date',
-            'to_date' => 'required|date',
+            'to_date'   => 'required|date',
         ]);
 
-        $now =  Carbon::now()->format('H:i:s');
+        $now = Carbon::now()->format('H:i:s');
 
         $from_date = date_format(date_create($request->from_date), 'd/m/Y');
 
         $to_date = date_format(date_create($request->to_date), 'd/m/Y');
 
-        $departs = Depart::whereBetween(DB::raw('DATE(created_at)'), array($request->from_date, $request->to_date))->get();
+        $departs = Depart::whereBetween(DB::raw('DATE(created_at)'), [$request->from_date, $request->to_date])->get();
 
         $count = $departs->count();
 
@@ -461,23 +459,22 @@ class DepartController extends Controller
         ));
     }
 
-
     public function generateReport(Request $request)
     {
         $this->validate($request, [
-            'numero'             => 'nullable|string',
-            'objet'              => 'nullable|string',
-            'expediteur'         => 'nullable|string',
+            'numero_depart' => 'nullable|string',
+            'objet'         => 'nullable|string',
+            'expediteur'    => 'nullable|string',
         ]);
 
-        if ($request?->numero == null && $request->objet == null && $request->expediteur == null && $request->destinataire == null) {
+        if ($request?->numero_depart == null && $request->objet == null && $request->expediteur == null && $request->destinataire == null) {
             Alert::warning('Attention !', 'Veuillez remplir au moins un champ pour effectuer la recherche.');
             return redirect()->back();
         }
 
         $departs = Depart::join('courriers', 'courriers.id', 'departs.courriers_id')
             ->select('departs.*')
-            ->where('departs.numero', 'LIKE', "%{$request?->numero}%")
+            ->where('departs.numero_depart', 'LIKE', "%{$request?->numero_depart}%")
             ->where('departs.destinataire', 'LIKE', "%{$request?->destinataire}%")
             ->where('courriers.objet', 'LIKE', "%{$request?->objet}%")
             ->where('courriers.reference', 'LIKE', "%{$request?->expediteur}%")
