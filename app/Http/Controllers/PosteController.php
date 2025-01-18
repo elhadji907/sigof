@@ -34,12 +34,15 @@ class PosteController extends Controller
 
         $image = $request->validated('image');
 
-        $imagePath = request('image')->store('posts', 'public');
+        if (request('image')) {
+            $imagePath = request('image')->store('posts', 'public');
 
-        $image = Image::make(public_path("/storage/{$imagePath}"))->fit(1200, 1200);
+            $image = Image::make(public_path("/storage/{$imagePath}"))->fit(1200, 1200);
 
-        $image->save();
-
+            $image->save();
+        } else {
+            $imagePath = null;
+        }
         $poste = Poste::create([
             'titre'    => $data['titre'],
             'name'     => $data['name'],
@@ -61,13 +64,28 @@ class PosteController extends Controller
 
         $image = $request->validated('image');
 
-        if (request('image')) {
+        if (request('image') && $image->getError()) {
             Storage::disk('public')->delete($poste->image);
             $imagePath = request('image')->store('posts', 'public');
 
             $image = Image::make(public_path("/storage/{$imagePath}"))->fit(1200, 1200);
 
             $image->save();
+
+        } elseif (request('image') && empty($poste->image)) {
+            $imagePath = request('image')->store('posts', 'public');
+
+            $image = Image::make(public_path("/storage/{$imagePath}"))->fit(1200, 1200);
+
+            $image->save();
+
+        } elseif (request('image') && !empty($poste->image)) {
+            $imagePath = request('image')->store('posts', 'public');
+
+            $image = Image::make(public_path("/storage/{$imagePath}"))->fit(1200, 1200);
+
+            $image->save();
+
         } else {
             $imagePath = $poste->image;
         }

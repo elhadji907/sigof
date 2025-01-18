@@ -52,7 +52,7 @@ class Poste extends Model
 
     public function getPoste()
     {
-        $imagePath = $this->image ?? '';
+        $imagePath = $this->image ?? 'avatars/default.png';
         return "/storage/" . $imagePath;
     }
 	public function user()

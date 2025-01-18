@@ -36,10 +36,6 @@
                                                 </div>
                                                 <div>
                                                     <span class="d-flex mt-2 align-items-baseline">
-                                                        {{--  <a href="#"
-                                                            class="btn btn-success btn-sm mx-1" title="Voir détails">
-                                                            <i class="bi bi-eye"></i></a> --}}
-
                                                         <button type="button" class="dropdown-item btn btn-sm"
                                                             data-bs-toggle="modal"
                                                             data-bs-target="#EditPostModal{{ $poste->id }}">

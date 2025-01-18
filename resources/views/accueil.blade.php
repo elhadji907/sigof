@@ -211,18 +211,20 @@
                 @if (!empty($post))
                     <div class="row stats-row gy-4 mt-5" data-aos="fade-up" data-aos-delay="500">
                         @foreach ($posts as $post)
-                            <div class="col-lg-4 col-md-6">
-                                <a href="#" data-bs-toggle="modal"
-                                    data-bs-target="#ShowPostModal{{ $post->id }}">
-                                    <div class="stat-item">
-                                        <img class="rounded-circle" alt="{{ $post->titre }}"
-                                            src="{{ asset($post->getPoste()) }}" width="50" height="auto">
-                                        <div class="stat-content">
-                                            <h6>{{ $post?->titre }}</h6>
+                            @if (!empty($post->image))
+                                <div class="col-12 col-md-12 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                    <a href="#" data-bs-toggle="modal"
+                                        data-bs-target="#ShowPostModal{{ $post->id }}">
+                                        <div class="stat-item">
+                                            <img class="rounded-circle" alt="{{ $post->titre }}"
+                                                src="{{ asset($post->getPoste()) }}" width="50" height="auto">
+                                            <div class="stat-content">
+                                                <p>{{ $post?->titre }}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                            </div>
+                                    </a>
+                                </div>
+                            @endif
                         @endforeach
                     </div>
                 @endif
