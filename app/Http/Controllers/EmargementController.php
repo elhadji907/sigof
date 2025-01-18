@@ -9,6 +9,7 @@ use App\Models\Module;
 use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class EmargementController extends Controller
@@ -52,8 +53,18 @@ class EmargementController extends Controller
             $date = null;
         }
 
-        if (request('feuille')) {
-            $filePath = request('feuille')->store('storage/feuilles', 'public');
+        if (request('feuille') && ! empty($emargement->file)) {
+            Storage::disk('public')->delete($emargement->file);
+            $filePath = request('feuille')->store('feuilles', 'public');
+            $file     = $request->file('feuille');
+            $emargement->update([
+                'file' => $filePath,
+            ]);
+
+            $emargement->save();
+
+        } elseif (request('feuille') &&  empty($emargement->file)) {
+            $filePath = request('feuille')->store('feuilles', 'public');
             $file     = $request->file('feuille');
             $emargement->update([
                 'file' => $filePath,
