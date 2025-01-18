@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Storage;
 
 class ArriveController extends Controller
 {
@@ -315,6 +316,7 @@ class ArriveController extends Controller
                 "legende" => ["required", "string"],
             ]);
 
+            Storage::disk('public')->delete($courrier->file);
             $filePath = request('file')->store('courriers', 'public');
 
             /* dd($filePath); */
@@ -330,12 +332,6 @@ class ArriveController extends Controller
 
             // Create unique file name
             $fileNameToStore = 'courriers/' . $filename . '' . time() . '.' . $extension;
-
-            /* dd($fileNameToStore); */
-
-            /* $file = Image::make(public_path("/storage/{$filePath}"))->fit(800, 800); */
-
-            /*  $file->save(); */
 
             $courrier->update(
                 [
@@ -416,7 +412,10 @@ class ArriveController extends Controller
     public function destroy($arriveId)
     {
         $arrive = Arrive::findOrFail($arriveId);
-        $arrive->courrier()->delete();
+        $courrier = $arrive->courrier;
+        Storage::disk('public')->delete($courrier->file);
+
+        $courrier->delete();
         $arrive->delete();
         /*  $status = "Supprimer avec succès"; */
         Alert::success('Opération réussie !', 'Le courrier a été supprimé avec succès.');

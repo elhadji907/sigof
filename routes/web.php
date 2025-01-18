@@ -120,8 +120,8 @@ Route::group(['middleware' => ['XSS']], function () {
 Route::group(['middleware' => ['XSS']], function () {
     Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::patch('/profiles', [ProfileOperateurController::class, 'update'])->name('profile.updated');
+        Route::patch('/profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
+        Route::patch('/profiles/{id}', [ProfileOperateurController::class, 'update'])->name('profile.updated');
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
         Route::get('/home', [UserController::class, 'homePage'])->name('home');
         Route::get('/profil', [ProfileController::class, 'profilePage'])->name('profil');

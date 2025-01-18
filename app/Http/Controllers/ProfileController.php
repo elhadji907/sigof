@@ -7,6 +7,7 @@ use App\Models\Collective;
 use App\Models\File;
 use App\Models\Individuelle;
 use App\Models\Projet;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -150,7 +152,7 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(ProfileUpdateRequest $request, $id): RedirectResponse
     {
         $request->user()->fill($request->validated());
 
@@ -158,7 +160,10 @@ class ProfileController extends Controller
             $request->user()->email_verified_at = null;
         }
 
+        $user = User::findOrFail($id);
+
         if (request('image')) {
+            Storage::disk('public')->delete($user->image);
             $imagePath = request('image')->store('avatars', 'public');
             $file = $request->file('image');
             $filenameWithExt = $file->getClientOriginalName();
@@ -205,6 +210,7 @@ class ProfileController extends Controller
 
         Auth::logout();
 
+        Storage::disk('public')->delete($user->image);
         $user->delete();
 
         $request->session()->invalidate();

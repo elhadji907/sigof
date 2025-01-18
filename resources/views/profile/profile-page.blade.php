@@ -322,7 +322,7 @@
                             <div class="tab-content pt-2">
                                 {{-- Début Edition --}}
                                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
-                                    <form method="post" action="{{ route('profile.update') }}"
+                                    <form method="post" action="{{ route('profile.update', Auth::user()->id) }}"
                                         enctype="multipart/form-data">
                                         @csrf
                                         @method('patch')

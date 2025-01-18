@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\User;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -63,7 +64,7 @@ class ProfileOperateurController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileOperateurUpdateRequest $request): RedirectResponse
+    public function update(ProfileOperateurUpdateRequest $request, $id): RedirectResponse
     {
         $request->user()->fill($request->validated());
 
@@ -71,7 +72,10 @@ class ProfileOperateurController extends Controller
             $request->user()->email_verified_at = null;
         }
 
+        $user = User::findOrFail($id);
+
         if (request('image')) {
+            Storage::disk('public')->delete($user->image);
             $imagePath = request('image')->store('avatars', 'public');
             $file = $request->file('image');
             $filenameWithExt = $file->getClientOriginalName();
