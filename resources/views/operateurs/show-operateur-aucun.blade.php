@@ -71,6 +71,7 @@
                 </div>
             </div>
         </div>
+
         <div
             class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
             <div class="modal fade" id="AddoperateurModal" tabindex="-1">
@@ -81,15 +82,8 @@
                         </div>
                         <form method="post" action="{{ route('operateurs.store') }}" enctype="multipart/form-data">
                             @csrf
-                            {{-- <div class="modal-header">
-                                <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i>Ajouter une demande
-                                    d'agrément</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div> --}}
                             <div class="modal-body">
                                 <div class="row g-3">
-
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="type_demande" class="form-label">Type demande<span
                                                 class="text-danger mx-1">*</span></label>
@@ -132,66 +126,6 @@
                                             </span>
                                         @enderror
                                     </div>
-
-                                    {{-- <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                                        <label for="statut" class="form-label">Statut juridique<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <select name="statut" class="form-select  @error('statut') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-statut_op"
-                                            data-placeholder="Choisir statut">
-                                            <option value="{{ old('statut') }}">
-                                                {{ old('statut') }}
-                                            </option>
-                                            <option value="GIE">
-                                                GIE
-                                            </option>
-                                            <option value="Association">
-                                                Association
-                                            </option>
-                                            <option value="Entreprise individuelle">
-                                                Entreprise individuelle
-                                            </option>
-                                            <option value="SA">
-                                                SA
-                                            </option>
-                                            <option value="SUARL">
-                                                SUARL
-                                            </option>
-                                            <option value="SARL">
-                                                SARL
-                                            </option>
-                                            <option value="SNC">
-                                                SNC
-                                            </option>
-                                            <option value="SCS">
-                                                SCS
-                                            </option>
-                                            <option value="Etablissement public">
-                                                Etablissement public
-                                            </option>
-                                            <option value="Autre">
-                                                Autre
-                                            </option>
-                                        </select>
-                                        @error('statut')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                                        <label for="autre_statut" class="form-label">Si autre ?
-                                            précisez</label>
-                                        <input type="text" name="autre_statut" value="{{ old('autre_statut') }}"
-                                            class="form-control form-control-sm @error('autre_statut') is-invalid @enderror"
-                                            id="autre_statut" placeholder="autre statut juridique">
-                                        @error('autre_statut')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div> --}}
 
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="quitus" class="form-label">Quitus fiscal<span

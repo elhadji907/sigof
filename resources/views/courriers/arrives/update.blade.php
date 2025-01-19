@@ -208,7 +208,7 @@
 
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="reference" class="form-label">Scan courrier</label>
-                                    <input type="file" name="file" id="file"
+                                    <input type="file" name="file" id="file" accept=".jpg, .jpeg, .png, .svg, .gif"
                                         class="form-control @error('file') is-invalid @enderror btn btn-outline-primary btn-sm">
                                     @error('file')
                                         <span class="text-danger">{{ $message }}</span>

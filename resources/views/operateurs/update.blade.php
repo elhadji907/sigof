@@ -421,7 +421,7 @@
 
                                         <div class="col-12 col-md-6 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                             <label for="quitus" class="form-label">Scan quitus fiscal</label>
-                                            <input type="file" name="quitus" id="quitus"
+                                            <input type="file" name="quitus" id="quitus" accept=".jpg, .jpeg, .png, .svg, .gif"
                                                 class="form-control @error('quitus') is-invalid @enderror btn btn-outline-primary btn-sm">
                                             @error('quitus')
                                                 <span class="text-danger">{{ $message }}</span>

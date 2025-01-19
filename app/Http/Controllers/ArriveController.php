@@ -453,7 +453,10 @@ class ArriveController extends Controller
     {
         $arrive   = Arrive::findOrFail($arriveId);
         $courrier = $arrive->courrier;
-        Storage::disk('public')->delete($courrier->file);
+
+        if (! empty($courrier->file)) {
+            Storage::disk('public')->delete($courrier->file);
+        }
 
         $courrier->delete();
         $arrive->delete();

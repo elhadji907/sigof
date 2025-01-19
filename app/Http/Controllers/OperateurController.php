@@ -40,6 +40,7 @@ class OperateurController extends Controller
         $operateur_rejeter = Operateur::where('statut_agrement', 'rejeter')->count();
         $operateur_nouveau = Operateur::where('statut_agrement', 'nouveau')->count();
         $operateur_total   = Operateur::where('statut_agrement', 'agréer')->orwhere('statut_agrement', 'rejeter')->orwhere('statut_agrement', 'nouveau')->count();
+
         if (isset($operateur_total) && $operateur_total > '0') {
             $pourcentage_agreer  = ((($operateur_agreer) / ($operateur_total)) * 100);
             $pourcentage_rejeter = ((($operateur_rejeter) / ($operateur_total)) * 100);
@@ -114,8 +115,12 @@ class OperateurController extends Controller
                 $this->authorize('view', $operateur);
             }
         }
-        return view("operateurs.agrement", compact("operateurs", "operateur", "operateureferences"));
+        return view("operateurs.agrement",
+            compact("operateurs",
+                "operateur",
+                "operateureferences"));
     }
+
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -175,8 +180,8 @@ class OperateurController extends Controller
                 'date_cores'      => date('Y-m-d'),
                 'numero_courrier' => $numCourrier,
                 'annee'           => date('Y'),
-                'objet'           => $request->input("operateur"),
-                'expediteur'      => $request->input("username"),
+                'objet'           => $request->input("type_demande") . ' agrément opérateur',
+                'expediteur'      => Auth::user()?->username,
                 'type'            => 'operateur',
                 "user_create_id"  => Auth::user()->id,
                 "user_update_id"  => Auth::user()->id,
@@ -227,7 +232,7 @@ class OperateurController extends Controller
                     'quitus' => $quitusPath,
                 ]);
             }
-
+            
             Alert::success("Félicitations ! ", "demande ajoutée avec succès");
 
             return redirect()->back();
