@@ -502,7 +502,7 @@
                                                                 value="{{ $operateur?->id }}">
                                                             <td>
                                                                 <input type="text" name="module" id="module_operateur"
-                                                                    class="form-control form-control-sm"
+                                                                    class="form-control form-control-sm @error('module') is-invalid @enderror"
                                                                     placeholder="Module ou spécialité" />
                                                                 <div id="moduleList"></div>
                                                                 {{ csrf_field() }}
@@ -514,10 +514,9 @@
                                                             </td>
                                                             <td><input type="text" name="categorie"
                                                                     placeholder="Niveau de qualification"
-                                                                    class="form-control form-control-sm" />
+                                                                    class="form-control form-control-sm @error('categorie') is-invalid @enderror" />
                                                                 <p class="small fst-italic">
-                                                                    <small>{{ __("Préciser le niveau de qualification,l'emploi ou le métier correspondant lorsqu'il s'agit") }}</small><br>
-                                                                    <small>{{ __("d'une pré-qualification ou qualification") }}</small>
+                                                                    <small>{{ __("Préciser le niveau de qualification,l'emploi ou le métier correspondant lorsqu'il s'agit d'une pré-qualification ou qualification") }}</small><br>
                                                                 </p>
                                                             </td>
                                                         </tr>
@@ -530,7 +529,7 @@
                                                         <tr>
                                                             <td><input type="text" name="domaine"
                                                                     placeholder="Domaine d'intervention"
-                                                                    class="form-control form-control-sm" />
+                                                                    class="form-control form-control-sm @error('domaine') is-invalid @enderror" />
                                                             </td>
                                                             <td>
                                                                 <select name="niveau_qualification"
