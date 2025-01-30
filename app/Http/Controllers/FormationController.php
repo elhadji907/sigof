@@ -713,7 +713,28 @@ class FormationController extends Controller
 
                 $formation->save();
 
+                if (! empty($formation->file_convention)) {
+                    Storage::disk('public')->delete($formation->file_convention);
+                }
+
+                if (! empty($formation->detf_file)) {
+                    Storage::disk('public')->delete($formation->detf_file);
+                }
+
+                if (! empty($formation->file_pv)) {
+                    Storage::disk('public')->delete($formation->file_pv);
+                }
+
+                if (! empty($formation->lettre_mission_file)) {
+                    Storage::disk('public')->delete($formation->lettre_mission_file);
+                }
+
+                if (! empty($formation->abe_file)) {
+                    Storage::disk('public')->delete($formation->abe_file);
+                }
+
                 $formation->delete();
+
                 Alert::success('Opération réussie !', 'La formation a été supprimée avec succès.');
                 return redirect()->back();
             }
@@ -729,7 +750,29 @@ class FormationController extends Controller
                 ]);
 
                 $formation->save();
+
+                if (! empty($formation->file_convention)) {
+                    Storage::disk('public')->delete($formation->file_convention);
+                }
+
+                if (! empty($formation->detf_file)) {
+                    Storage::disk('public')->delete($formation->detf_file);
+                }
+
+                if (! empty($formation->file_pv)) {
+                    Storage::disk('public')->delete($formation->file_pv);
+                }
+
+                if (! empty($formation->lettre_mission_file)) {
+                    Storage::disk('public')->delete($formation->lettre_mission_file);
+                }
+
+                if (! empty($formation->abe_file)) {
+                    Storage::disk('public')->delete($formation->abe_file);
+                }
+
                 $formation->delete();
+
                 Alert::success('Opération réussie !', 'La formation a été supprimée avec succès.');
                 return redirect()->back();
             }
@@ -879,7 +922,7 @@ class FormationController extends Controller
             $individuelle->update([
                 "formations_id" => null,
                 "statut"        => 'retirer',
-                "motif_rejet"   => $individuelle->motif_rejet . ' retirer de la formation '.$formation->name.' pour mitif : ' . $request->input('motif'),
+                "motif_rejet"   => $individuelle->motif_rejet . ' retirer de la formation ' . $formation->name . ' pour mitif : ' . $request->input('motif'),
             ]);
 
             $individuelle->save();
@@ -1834,7 +1877,7 @@ class FormationController extends Controller
     public function feuillePresenceJour(Request $request)
     {
 
-        $formation = Formation::find($request->input('idformation'));
+        $formation  = Formation::find($request->input('idformation'));
         $module     = Module::findOrFail($request->input('idmodule'));
         $region     = Region::findOrFail($request->input('idlocalite'));
         $emargement = Emargement::findOrFail($request->input('idemargement'));
