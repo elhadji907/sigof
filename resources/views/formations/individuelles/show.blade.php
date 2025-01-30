@@ -217,9 +217,9 @@
                                         @endif
                                     </form>
                                     <div class="col-12 col-md-12 col-lg-12 mb-0 text-center">
-                                        <a class="btn btn-outline-primary"
+                                        <a class="btn btn-outline-primary btn-sm"
                                             href="{{ route('formations.edit', $formation->id) }}" class="mx-1"
-                                            title="Modifier"><i class="bi bi-pencil"></i>&nbsp;Modifier</a>
+                                            title="Modifier">Modifier cette formation</a>
                                     </div>
                                 </div>
                             </div>

@@ -11,9 +11,12 @@
     <style>
         @page {
             margin: 0cm 0cm;
+            margin-top: 1cm;
+            margin-bottom: 0cm;
         }
 
-        .invoice-box {
+
+ /*        .invoice-box {
             max-width: 800px;
             margin: auto;
             padding: 25px;
@@ -23,6 +26,21 @@
             line-height: 22px;
             font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
             color: #555;
+        } */
+
+        .invoice-box {
+            max-width: 800px;
+            margin: auto;
+            padding-top: 0px;
+            padding-bottom: 25px;
+            padding-left: 25px;
+            padding-right: 25px;
+            border: 0px solid #eee;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            font-size: 13px;
+            line-height: 22px;
+            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+            /* color: #555; */
         }
 
         /** RTL **/

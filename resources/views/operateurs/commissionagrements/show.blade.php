@@ -149,49 +149,54 @@
                                         class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                 <p> | {{ $commissionagrement?->commission }}</p>
                             </span>
-                            <span class="d-flex align-items-baseline">
-                                <a href="#" class="btn btn-secondary btn-sm" title="Générer">Fiches de synthèse</a>
-                                <div class="filter">
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                            class="bi bi-three-dots"></i></a>
-                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                        @if (!empty($decoupage))
-                                            <?php $i = 1; ?>
-                                            <?php $value_1 = 0; ?>
-                                            <?php $value_2 = 50; ?>
-                                            @foreach ($operateurs as $operateur)
+                            @if (!empty($commissionagrement->operateurs->count()))
+                                <span class="d-flex align-items-baseline">
+                                    <span class="btn btn-secondary btn-sm" title="Générer">Fiches de synthèse</span>
+                                    <div class="filter">
+                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                class="bi bi-three-dots"></i></a>
+                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                            @if (!empty($decoupage))
+                                                <?php $i = 1; ?>
+                                                <?php $value_1 = 0; ?>
+                                                <?php $value_2 = 50; ?>
+                                                @foreach ($operateurs as $operateur)
+                                                    <li>
+                                                        <form action="{{ route('ficheSynthese') }}" method="post"
+                                                            target="_blank">
+                                                            @csrf
+                                                            <input type="hidden" name="id"
+                                                                value="{{ $commissionagrement->id }}">
+                                                            <input type="hidden" name="value2"
+                                                                value="{{ $value_2 }}">
+                                                            <input type="hidden" name="value1"
+                                                                value="{{ $value_1 }}">
+                                                            <button type="submit" class="dropdown-item btn btn-sm">Fiche de
+                                                                synthèse {{ $i++ }}</button>
+                                                        </form>
+                                                    </li>
+                                                    <?php $value_1 = $value_1 + 50; ?>
+                                                    <?php $value_2 = $value_2 + 50; ?>
+                                                @endforeach
+                                            @else
                                                 <li>
                                                     <form action="{{ route('ficheSynthese') }}" method="post"
                                                         target="_blank">
                                                         @csrf
                                                         <input type="hidden" name="id"
                                                             value="{{ $commissionagrement->id }}">
-                                                        <input type="hidden" name="value2" value="{{ $value_2 }}">
-                                                        <input type="hidden" name="value1" value="{{ $value_1 }}">
+                                                        <input type="hidden" name="value2" value="50">
+                                                        <input type="hidden" name="value1" value="0">
                                                         <button type="submit" class="dropdown-item btn btn-sm">Fiche de
-                                                            synthèse {{ $i++ }}</button>
+                                                            synthèse</button>
                                                     </form>
                                                 </li>
-                                                <?php $value_1 = $value_1 + 50; ?>
-                                                <?php $value_2 = $value_2 + 50; ?>
-                                            @endforeach
-                                        @else
-                                            <li>
-                                                <form action="{{ route('ficheSynthese') }}" method="post"
-                                                    target="_blank">
-                                                    @csrf
-                                                    <input type="hidden" name="id"
-                                                        value="{{ $commissionagrement->id }}">
-                                                    <input type="hidden" name="value2" value="50">
-                                                    <input type="hidden" name="value1" value="0">
-                                                    <button type="submit" class="dropdown-item btn btn-sm">Fiche de
-                                                        synthèse</button>
-                                                </form>
-                                            </li>
-                                        @endif
-                                    </ul>
-                                </div>
-                            </span>
+                                            @endif
+                                        </ul>
+                                    </div>
+                                </span>
+                            @endif
+
                             <h5 class="card-title">
                                 <a href="{{ route('addopCommission', ['id' => $commissionagrement->id]) }}"
                                     class="btn btn-success btn-sm" title="ajouter"><i class="bi bi-plus"></i></a>
@@ -221,7 +226,7 @@
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @foreach ($operateurs as $operateur)
-                                            @isset($operateur?->numero_agrement)
+                                            @if (!empty($operateur?->numero_agrement))
                                                 <tr>
                                                     @can('afficher-dossier-operateur')
                                                         <td class="text-center">{{ $operateur?->numero_dossier }}</td>
@@ -247,7 +252,8 @@
                                                                 class="btn btn-primary btn-sm" title="voir détails"><i
                                                                     class="bi bi-eye"></i></a>
                                                             <div class="filter">
-                                                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                <a class="icon" href="#"
+                                                                    data-bs-toggle="dropdown"><i
                                                                         class="bi bi-three-dots"></i></a>
                                                                 <ul
                                                                     class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
@@ -265,7 +271,8 @@
                                                                         method="post">
                                                                         @csrf
                                                                         @method('PUT')
-                                                                        <button class="show_confirm_retirer btn btn-sm mx-1"><i
+                                                                        <button
+                                                                            class="show_confirm_retirer btn btn-sm mx-1"><i
                                                                                 class="bi bi-reply-fill"
                                                                                 title="Retirer"></i>&nbsp;Retirer</button>
                                                                     </form>
@@ -275,7 +282,7 @@
                                                         </span>
                                                     </td>
                                                 </tr>
-                                            @endisset
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>

@@ -182,42 +182,48 @@
 
                                     <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Prénom</div>
-                                        <div>{{ $individuelle?->user->firstname }}</div>
+                                        <div>{{ $individuelle?->user?->firstname }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Nom</div>
-                                        <div>{{ $individuelle?->user->name }}</div>
+                                        <div>{{ $individuelle?->user?->name }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div for="date_naissance" class="label">Date naissance</div>
-                                        <div>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}</div>
+                                        <div>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Lieu naissance</div>
-                                        <div>{{ $individuelle?->user->lieu_naissance }}</div>
+                                        <div>{{ $individuelle?->user?->lieu_naissance }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Adresse</div>
-                                        <div>{{ $individuelle?->user->adresse }}</div>
+                                        <div>{{ $individuelle?->user?->adresse }}</div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Email</div>
-                                        <div>{{ $individuelle?->user->email }}</div>
+                                        <div><a
+                                                href="mailto:{{ $individuelle?->user->email }}">{{ $individuelle?->user?->email }}</a>
+                                        </div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Téléphone personnel</div>
-                                        <div>{{ $individuelle?->user->telephone }}</div>
+                                        <div><a
+                                                href="tel:+{{ $individuelle?->user?->telephone }}">{{ $individuelle?->user?->telephone }}</a>
+                                        </div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                         <div class="label">Téléphone secondaire</div>
-                                        <div>{{ $individuelle?->user?->telephone_secondaire }}</div>
+                                        <div><a
+                                                href="tel:+{{ $individuelle?->user?->telephone_secondaire }}">{{ $individuelle?->user?->telephone_secondaire }}</a>
+                                        </div>
                                     </div>
 
                                     <div class="col-12 col-md-3 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
@@ -334,8 +340,7 @@
 
                                     <div class="text-center">
                                         <a href="{{ route('individuelles.edit', $individuelle?->id) }}"
-                                            class="btn btn-primary btn-sm text-white" title="voir détails"><i
-                                                class="bi bi-pencil"></i>&nbsp;Modifier</a>
+                                            class="btn btn-primary btn-sm text-white" title="voir détails">Modifier</a>
                                     </div>
                                 </form>
                             </div>
@@ -351,16 +356,14 @@
                         enctype="multipart/form-data" class="row">
                         @csrf
                         @method('DELETE')
-                        <div class="modal-header">
-                            <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Rejet demande</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
+                        <div class="card-header text-center bg-gradient-default">
+                            <h1 class="h4 text-black mb-0">REJET</h1>
                         </div>
                         <div class="modal-body">
                             <label for="motif" class="form-label">Motifs du rejet</label>
                             <textarea name="motif" id="motif" rows="5"
                                 class="form-control form-control-sm @error('motif') is-invalid @enderror"
-                                placeholder="Enumérer les motifs du rejet">{{ old('motif') }}</textarea>
+                                placeholder="Enumérer les motifs du rejet">{{ $individuelle?->motif_retrait ?? old('motif') }}</textarea>
                             @error('motif')
                                 <span class="invalid-feedback" role="alert">
                                     <div>{{ $message }}</div>
@@ -368,9 +371,9 @@
                             @enderror
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            <button type="submit" class="btn btn-danger btn-sm"><i class="bi bi-printer"></i>
-                                Rejeter</button>
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
                         </div>
                     </form>
                 </div>

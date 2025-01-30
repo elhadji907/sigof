@@ -219,6 +219,15 @@
             /* border-radius: 5px; */
         }
 
+        .Absente {
+            background-color: #ffcc00;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
         .démarrer {
             background-color: #0DCAF0;
             color: white;
@@ -255,6 +264,14 @@
             /* border-radius: 5px; */
         }
         .Présent {
+            background-color: #198754;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+        .Présente {
             background-color: #198754;
             color: white;
             padding: 4px 8px;
@@ -774,6 +791,7 @@
             closeOnSelect: true,
             selectionCssClass: "select2--small",
             dropdownCssClass: "select2--small",
+            dropdownParent: $('#PresenceModal'),
         });
     </script>
 

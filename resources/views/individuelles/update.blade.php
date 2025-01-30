@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'modification demande individuelle')
+@section('title', 'Modification demande individuelle')
 @section('space-work')
     <section class="section min-vh-0 d-flex flex-column align-items-center justify-content-center py-0">
         <div class="container">

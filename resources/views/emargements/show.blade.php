@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ajouter dans la formation')
+@section('title', 'Feuille de présence formation en ' . $formation?->name . ': ' . $emargement?->jour)
 @section('space-work')
     <section class="section">
         <div class="row justify-content-center">
@@ -29,7 +29,18 @@
                             </div>
                         </div>
                         <br>
-                        <h5><u><b>Jour</b></u> : {{ $emargement?->jour }}</h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5><u><b>{{ $emargement?->jour }}</b></u></h5>
+                            <form action="{{ route('feuillePresenceJour') }}" method="post" target="_blank">
+                                @csrf
+                                <input type="hidden" name="idformation" value="{{ $formation->id }}">
+                                <input type="hidden" name="idmodule" value="{{ $formation?->module?->id }}">
+                                <input type="hidden" name="idlocalite"
+                                    value="{{ $formation?->departement?->region?->id }}">
+                                <input type="hidden" name="idemargement" value="{{ $emargement?->id }}">
+                                <button class="btn btn-secondary btn-sm mx-1">Feuille présence</button>
+                            </form>
+                        </div>
                         <br>
                         <form method="post"
                             action="{{ url('formationemargement', [
@@ -67,7 +78,7 @@
                                         <tbody>
                                             <?php $i = 1; ?>
                                             @foreach ($individuelles as $individuelle)
-                                                @isset($individuelle?->numero)
+                                                @if (!empty($individuelle?->numero))
                                                     <tr>
                                                         <td>{{ $i++ }}</td>
                                                         <td>
@@ -141,7 +152,7 @@
                                                             </span>
                                                         </td>
                                                     </tr>
-                                                @endisset
+                                                @endif
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -175,7 +186,7 @@
                                         class="text-danger mx-1">*</span></label>
                                 <select name="presence" class="form-select  @error('presence') is-invalid @enderror"
                                     aria-label="Select" id="select-field-feuille_presence" data-placeholder="Choisir">
-                                    <option value="">Choisir</option>
+                                    <option value="{{ $individuelle?->feuillepresence?->presence ?? old('presence') }}">{{ $individuelle?->feuillepresence?->presence ?? old('presence') }}</option>
                                     <option value="Présent">Présent</option>
                                     <option value="Absent">Absent</option>
                                     <option value="Abandon">Abandon</option>

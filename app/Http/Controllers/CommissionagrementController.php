@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Commissionagrement;
@@ -23,21 +22,21 @@ class CommissionagrementController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'commission' => 'required|string|unique:commissionagrements,commission,except,id',
-            'session' => 'required|string',
-            'annee' => 'required|string',
+            'commission'  => 'required|string|unique:commissionagrements,commission,except,id',
+            'session'     => 'required|string',
+            'annee'       => 'required|string',
             'description' => 'nullable|string',
-            'lieu' => 'nullable|string',
+            'lieu'        => 'nullable|string',
 
         ]);
 
         $commissionagrement = new Commissionagrement([
 
-            'commission' => $request->input('commission'),
-            'session' => $request->input('session'),
+            'commission'  => $request->input('commission'),
+            'session'     => $request->input('session'),
             'description' => $request->input('description'),
-            'lieu' => $request->input('lieu'),
-            'annee' => $request->input('annee'),
+            'lieu'        => $request->input('lieu'),
+            'annee'       => $request->input('annee'),
 
         ]);
 
@@ -53,20 +52,26 @@ class CommissionagrementController extends Controller
 
         $request->validate([
             'commission' => ["required", "string", "unique:commissionagrements,commission,{$id}"],
-            'session' => 'required|string',
-            'date' => 'nullable|date',
-            'lieu' => 'nullable|string',
-            'annee' => 'required|string',
+            'session'    => 'required|string',
+            'date'       => "nullable|date|min:10|max:10|date_format:Y-m-d",
+            'lieu'       => 'nullable|string',
+            'annee'      => 'required|string',
 
         ]);
 
+        if (! empty($request->input('date'))) {
+            $date = $request->input('date');
+        } else {
+            $date = null;
+        }
+
         $commissionagrement->update([
-            'commission' => $request->input('commission'),
-            'session' => $request->input('session'),
-            'date' => $request->input('date'),
+            'commission'  => $request->input('commission'),
+            'session'     => $request->input('session'),
+            'date'        => $date,
             'description' => $request->input('description'),
-            'lieu' => $request->input('lieu'),
-            'annee' => $request->input('annee'),
+            'lieu'        => $request->input('lieu'),
+            'annee'       => $request->input('annee'),
 
         ]);
 
@@ -87,7 +92,7 @@ class CommissionagrementController extends Controller
 
         $operateur_count = $operateurs->count();
 
-        if (!empty($operateur_count) && $operateur_count > 50) {
+        if (! empty($operateur_count) && $operateur_count > 50) {
             $decoupage = ($operateur_count / 50);
         } else {
             $decoupage = null;
@@ -129,8 +134,13 @@ class CommissionagrementController extends Controller
     public function destroy($id)
     {
         $commissionagrement = Commissionagrement::findOrFail($id);
-        $commissionagrement->delete();
-        Alert::success('Effectuée !', 'Commission supprimée avec succès');
+
+        if (! empty($commissionagrement?->operateurs)) {
+            Alert::warning('Attention !', 'Impossible de supprimer cette commission');
+        } else {
+            $commissionagrement->delete();
+            Alert::success('Effectuée !', 'Commission supprimée avec succès');
+        }
         return redirect()->back();
     }
 
@@ -156,16 +166,16 @@ class CommissionagrementController extends Controller
 
             $operateur->update([
                 "commissionagrements_id" => $idcommissionagrement,
-                "statut_agrement" => 'attente',
+                "statut_agrement"        => 'attente',
             ]);
 
             $operateur->save();
 
             $historiqueagrement = new Historiqueagrement([
-                'operateurs_id' => $operateur->id,
+                'operateurs_id'          => $operateur->id,
                 'commissionagrements_id' => $idcommissionagrement,
-                'statut' => 'attente',
-                'validated_id' => Auth::user()->id,
+                'statut'                 => 'attente',
+                'validated_id'           => Auth::user()->id,
 
             ]);
 

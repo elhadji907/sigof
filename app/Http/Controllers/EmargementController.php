@@ -63,7 +63,7 @@ class EmargementController extends Controller
 
             $emargement->save();
 
-        } elseif (request('feuille') &&  empty($emargement->file)) {
+        } elseif (request('feuille') && empty($emargement->file)) {
             $filePath = request('feuille')->store('feuilles', 'public');
             $file     = $request->file('feuille');
             $emargement->update([
@@ -94,17 +94,30 @@ class EmargementController extends Controller
         $region     = Region::findOrFail($request->input('idlocalite'));
         $emargement = Emargement::findOrFail($request->input('idemargement'));
 
-        $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
-            ->join('regions', 'regions.id', 'individuelles.regions_id')
-            ->select('individuelles.*')
-            ->where('individuelles.projets_id', $formation?->projets_id)
-            ->where('individuelles.formations_id', $formation?->id)
-            ->where('modules.name', 'LIKE', "%{$module->name}%")
-            ->where('regions.nom', $region->nom)
-        /* ->where('individuelles.statut', 'attente')
-            ->orwhere('individuelles.statut', 'retirer')
-            ->orwhere('individuelles.statut', 'retenu') */
-            ->get();
+        if (! empty($formation?->projets_id)) {
+            $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
+                ->join('regions', 'regions.id', 'individuelles.regions_id')
+                ->select('individuelles.*')
+                ->where('individuelles.projets_id', $formation?->projets_id)
+                ->where('individuelles.formations_id', $formation?->id)
+                ->where('modules.name', 'LIKE', "%{$module->name}%")
+                ->where('regions.nom', $region->nom)
+            /* ->where('individuelles.statut', 'attente')
+                ->orwhere('individuelles.statut', 'retirer')
+                ->orwhere('individuelles.statut', 'retenu') */
+                ->get();
+        } else {
+            $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
+                ->join('regions', 'regions.id', 'individuelles.regions_id')
+                ->select('individuelles.*')
+                ->where('individuelles.formations_id', $formation?->id)
+                ->where('modules.name', 'LIKE', "%{$module->name}%")
+                ->where('regions.nom', $region->nom)
+            /* ->where('individuelles.statut', 'attente')
+                ->orwhere('individuelles.statut', 'retirer')
+                ->orwhere('individuelles.statut', 'retenu') */
+                ->get();
+        }
 
         $candidatsretenus = Individuelle::where('formations_id', $formation?->id)
             ->get();

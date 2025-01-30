@@ -717,16 +717,44 @@ class FormationController extends Controller
         $module    = Module::findOrFail($idmodule);
         $region    = Region::findOrFail($idlocalite);
 
-        $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
-            ->join('regions', 'regions.id', 'individuelles.regions_id')
-            ->select('individuelles.*')
-            ->where('individuelles.projets_id', $formation?->projets_id)
-            ->where('modules.name', 'LIKE', "%{$module->name}%")
-            ->where('regions.nom', $region->nom)
-            ->where('individuelles.statut', 'attente')
-            ->orwhere('individuelles.statut', 'retirer')
-            ->orwhere('individuelles.statut', 'retenu')
-            ->get();
+        if (! empty($formation?->projets_id)) {
+            $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
+                ->join('regions', 'regions.id', 'individuelles.regions_id')
+                ->select('individuelles.*')
+                ->where('individuelles.projets_id', $formation?->projets_id)
+                ->where('modules.name', 'LIKE', "%{$module->name}%")
+                ->where('regions.nom', $region->nom)
+                ->where('individuelles.statut', 'attente')
+            /* ->orwhere('individuelles.statut', 'retirer')
+                ->orwhere('individuelles.statut', 'retenu') */
+                ->get();
+
+            $retirer_individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
+                ->join('regions', 'regions.id', 'individuelles.regions_id')
+                ->select('individuelles.*')
+                ->where('individuelles.projets_id', $formation?->projets_id)
+                ->where('modules.name', 'LIKE', "%{$module->name}%")
+                ->where('regions.nom', $region->nom)
+                ->where('individuelles.statut', 'retirer')
+                ->get();
+        } else {
+            $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
+                ->join('regions', 'regions.id', 'individuelles.regions_id')
+                ->select('individuelles.*')
+                ->where('modules.name', 'LIKE', "%{$module->name}%")
+                ->where('regions.nom', $region->nom)
+                ->where('individuelles.statut', 'attente')
+            /* ->orwhere('individuelles.statut', 'retirer')
+                ->orwhere('individuelles.statut', 'retenu') */
+                ->get();
+            $retirer_individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
+                ->join('regions', 'regions.id', 'individuelles.regions_id')
+                ->select('individuelles.*')
+                ->where('modules.name', 'LIKE', "%{$module->name}%")
+                ->where('regions.nom', $region->nom)
+                ->where('individuelles.statut', 'retirer')
+                ->get();
+        }
 
         $candidatsretenus = Individuelle::where('formations_id', $idformation)
             ->get();
@@ -751,6 +779,7 @@ class FormationController extends Controller
                 'module',
                 'region',
                 'candidatsretenus',
+                'retirer_individuelles',
                 'individuelleFormationCheck'
             )
         );
@@ -764,7 +793,7 @@ class FormationController extends Controller
 
         $formation = Formation::findOrFail($idformation);
 
-        if ($formation->statut == 'terminer') {
+        if ($formation->statut == 'terminerr') {
             Alert::warning('Désolé !', 'Cette formation a déjà été exécutée.');
         } elseif ($formation->statut == 'annuler') {
             Alert::warning('Désolé !', 'La formation a été annulée.');
@@ -808,6 +837,7 @@ class FormationController extends Controller
             $individuelle->update([
                 "formations_id" => null,
                 "statut"        => 'retirer',
+                "motif_rejet"   => $individuelle->motif_rejet . ' retirer de la formation '.$formation->name.' pour mitif : ' . $request->input('motif'),
             ]);
 
             $individuelle->save();
@@ -1759,6 +1789,66 @@ class FormationController extends Controller
         $dompdf->stream($name, ['Attachment' => false]);
     }
 
+    public function feuillePresenceJour(Request $request)
+    {
+
+        $formation = Formation::find($request->input('idformation'));
+        $module     = Module::findOrFail($request->input('idmodule'));
+        $region     = Region::findOrFail($request->input('idlocalite'));
+        $emargement = Emargement::findOrFail($request->input('idemargement'));
+
+        if (! empty($formation?->projets_id)) {
+            $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
+                ->join('regions', 'regions.id', 'individuelles.regions_id')
+                ->select('individuelles.*')
+                ->where('individuelles.projets_id', $formation?->projets_id)
+                ->where('individuelles.formations_id', $formation?->id)
+                ->where('modules.name', 'LIKE', "%{$module->name}%")
+                ->where('regions.nom', $region->nom)
+                ->get();
+        } else {
+            $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
+                ->join('regions', 'regions.id', 'individuelles.regions_id')
+                ->select('individuelles.*')
+                ->where('individuelles.formations_id', $formation?->id)
+                ->where('modules.name', 'LIKE', "%{$module->name}%")
+                ->where('regions.nom', $region->nom)
+                ->get();
+        }
+
+        $title = 'Feuille de présence de la formation en  ' . $formation->name;
+
+        $dompdf  = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Formation');
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('formations.individuelles.feuillepresencejour', compact(
+            'formation',
+            'individuelles',
+            'emargement',
+            'title'
+        )));
+
+        // (Optional) Setup the paper size and orientation (portrait ou landscape)
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        /* $anne = date('d');
+        $anne = $anne . ' ' . date('m');
+        $anne = $anne . ' ' . date('Y');
+        $anne = $anne . ' à ' . date('H') . 'h';
+        $anne = $anne . ' ' . date('i') . 'min';
+        $anne = $anne . ' ' . date('s') . 's'; */
+
+        $name = 'Feuille de présence de la formation en  ' . $formation->name . ', code ' . $formation->code . '.pdf';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($name, ['Attachment' => false]);
+    }
+
     public function pvEvaluation(Request $request)
     {
 
@@ -2657,6 +2747,13 @@ class FormationController extends Controller
             'jour' => "required|numeric",
             /* 'date' => 'nullable|date|min:10|max:10|date_format:Y-m-d', */
         ]);
+
+        if (count($formation->individuelles) <= 0) {
+
+            Alert::warning('Impossible !', 'Aucun bénéficiaire dans cette formation');
+
+            return redirect()->back();
+        }
 
         $nbre_jours = $request->jour;
 
