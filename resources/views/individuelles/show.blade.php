@@ -340,7 +340,7 @@
 
                                     <div class="text-center">
                                         <a href="{{ route('individuelles.edit', $individuelle?->id) }}"
-                                            class="btn btn-primary btn-sm text-white" title="voir détails">Modifier</a>
+                                            class="btn btn-primary btn-sm text-white" title="Modifier">Modifier</a>
                                     </div>
                                 </form>
                             </div>
