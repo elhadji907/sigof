@@ -53,6 +53,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $appreciations
  * @property string|null $file_convention
  * @property string|null $detf_file
+ * @property string|null $lettre_mission_file
+ * @property string|null $abe_file
  * @property int|null $ingenieurs_id
  * @property int|null $onfpevaluateurs_id
  * @property int|null $evaluateurs_id
@@ -233,6 +235,8 @@ class Formation extends Model
 		'numero_convention',
 		'file_convention',
 		'detf_file',
+		'lettre_mission_file',
+		'abe_file',
 		'initiale_evaluateur_onfp',
 		'type_certificat',
 		'recommandations',
@@ -276,6 +280,16 @@ class Formation extends Model
 	
 	public function getFileDetf(){
 		$filePath = $this->detf_file ?? '';
+		return "/storage/" . $filePath;
+	}
+	
+	public function getFileLM(){
+		$filePath = $this->lettre_mission_file ?? '';
+		return "/storage/" . $filePath;
+	}
+	
+	public function getFileABE(){
+		$filePath = $this->abe_file ?? '';
 		return "/storage/" . $filePath;
 	}
 	

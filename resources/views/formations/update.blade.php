@@ -413,8 +413,53 @@
                                             <div class="badge bg-warning">Aucun</div>
                                         @endif
                                     </div>
-                                    <hr>
-                                    {{-- <h5 class="card-title text-center pb-0 fs-4">Evaluation</h5> --}}
+
+                                    <div class="col-12 col-md-12 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                        <label for="lettre_mission_file" class="form-label">Joindre LM</label>
+                                        <input type="file" name="lettre_mission_file" id="lettre_mission_file"
+                                            class="form-control @error('lettre_mission_file') is-invalid @enderror btn btn-outline-primary btn-sm">
+                                        @error('lettre_mission_file')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+
+                                    <div class="col-12 col-md-12 col-lg-1 col-sm-12 col-xs-12 col-xxl-1">
+                                        <label for="lettre_mission_file" class="form-label">Fichier</label>
+                                        @if (!empty($formation?->lettre_mission_file))
+                                            <div>
+                                                <a class="btn btn-outline-secondary btn-sm" title="DETF"
+                                                    target="_blank" href="{{ asset($formation->getFileLM()) }}">
+                                                    <i class="bi bi-file-earmark-pdf"></i>
+                                                </a>
+                                            </div>
+                                        @else
+                                            <div class="badge bg-warning">Aucun</div>
+                                        @endif
+                                    </div>
+                                    
+
+                                    <div class="col-12 col-md-12 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                        <label for="abe_file" class="form-label">Joindre ABE</label>
+                                        <input type="file" name="abe_file" id="abe_file"
+                                            class="form-control @error('abe_file') is-invalid @enderror btn btn-outline-primary btn-sm">
+                                        @error('abe_file')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                    </div>
+                                    <div class="col-12 col-md-12 col-lg-1 col-sm-12 col-xs-12 col-xxl-1">
+                                        <label for="abe_file" class="form-label">Fichier</label>
+                                        @if (!empty($formation?->abe_file))
+                                            <div>
+                                                <a class="btn btn-outline-secondary btn-sm" title="DETF"
+                                                    target="_blank" href="{{ asset($formation->getFileABE()) }}">
+                                                    <i class="bi bi-file-earmark-pdf"></i>
+                                                </a>
+                                            </div>
+                                        @else
+                                            <div class="badge bg-warning">Aucun</div>
+                                        @endif
+                                    </div>
+                                   
 
                                     <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <div class="mb-3">

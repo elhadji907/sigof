@@ -437,6 +437,7 @@ class FormationController extends Controller
             ]);
 
             $formation->save();
+
         } elseif (request('file_convention') && empty($formation->file_convention)) {
             $filePath = request('file_convention')->store('conventions', 'public');
             $file     = $request->file('file_convention');
@@ -456,6 +457,7 @@ class FormationController extends Controller
             ]);
 
             $formation->save();
+
         } elseif (request('detf_file') && empty($formation->detf_file)) {
             $filePath = request('detf_file')->store('detfs', 'public');
             $file     = $request->file('detf_file');
@@ -481,6 +483,46 @@ class FormationController extends Controller
             $file     = $request->file('file_pv');
             $formation->update([
                 'file_pv' => $filePath,
+            ]);
+
+            $formation->save();
+        }
+
+        if (request('abe_file') && ! empty($formation->abe_file)) {
+            Storage::disk('public')->delete($formation->abe_file);
+            $filePath = request('abe_file')->store('abe', 'public');
+            $file     = $request->file('abe_file');
+            $formation->update([
+                'abe_file' => $filePath,
+            ]);
+
+            $formation->save();
+
+        } elseif (request('abe_file') && empty($formation->abe_file)) {
+            $filePath = request('abe_file')->store('abe', 'public');
+            $file     = $request->file('abe_file');
+            $formation->update([
+                'abe_file' => $filePath,
+            ]);
+
+            $formation->save();
+        }
+
+        if (request('lettre_mission_file') && ! empty($formation->lettre_mission_file)) {
+            Storage::disk('public')->delete($formation->lettre_mission_file);
+            $filePath = request('lettre_mission_file')->store('lm', 'public');
+            $file     = $request->file('lettre_mission_file');
+            $formation->update([
+                'lettre_mission_file' => $filePath,
+            ]);
+
+            $formation->save();
+
+        } elseif (request('lettre_mission_file') && empty($formation->lettre_mission_file)) {
+            $filePath = request('lettre_mission_file')->store('lm', 'public');
+            $file     = $request->file('lettre_mission_file');
+            $formation->update([
+                'lettre_mission_file' => $filePath,
             ]);
 
             $formation->save();
