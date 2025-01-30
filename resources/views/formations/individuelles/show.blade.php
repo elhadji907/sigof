@@ -215,12 +215,12 @@
                                                 <div>{{ $formation?->attestation }}</div>
                                             </div>
                                         @endif
+                                        <div class="col-12 col-md-12 col-lg-12 mb-0 text-center pt-5">
+                                            <a class="btn btn-outline-primary btn-sm"
+                                                href="{{ route('formations.edit', $formation->id) }}" class="mx-1"
+                                                title="Modifier">Modifier cette formation</a>
+                                        </div>
                                     </form>
-                                    <div class="col-12 col-md-12 col-lg-12 mb-0 text-center">
-                                        <a class="btn btn-outline-primary btn-sm"
-                                            href="{{ route('formations.edit', $formation->id) }}" class="mx-1"
-                                            title="Modifier">Modifier cette formation</a>
-                                    </div>
                                 </div>
                             </div>
                             {{-- Détail --}}

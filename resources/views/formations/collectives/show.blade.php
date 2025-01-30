@@ -104,112 +104,139 @@
                                                 class="{{ $formation?->statut }} btn btn-sm">
                                                 {{ $formation?->statut }}</span>
                                         </h5>
+                                        
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
                                             <div class="label">Intitulé formation</div>
                                             <div>{{ $formation?->name }}</div>
                                         </div>
+
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Code</div>
                                             <div>{{ $formation?->code }}</div>
                                         </div>
-                                        @isset($formation?->module?->name)
+
+                                        @if(!empty($formation?->module?->name))
                                             <div class="col-12 col-md-3 col-lg-3 mb-0">
                                                 <div class="label">Module</div>
                                                 <div>{{ $formation?->module?->name }}</div>
                                             </div>
-                                        @endisset
+                                        @endif
+
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Région</div>
                                             <div>{{ $formation?->departement->region->nom }}</div>
                                         </div>
+
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Département</div>
                                             <div>{{ $formation->departement->nom }}
                                             </div>
                                         </div>
+
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Adresse exacte</div>
                                             <div>{{ $formation?->lieu }}
                                             </div>
                                         </div>
+
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Type formation</div>
                                             <div>{{ $formation?->types_formation?->name }}</div>
                                         </div>
+
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Statut juridique</div>
                                             <div>{{ $formation?->statut }}</div>
                                         </div>
+
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Niveau qualification</div>
                                             <div>{{ $formation->niveau_qualification }}</div>
                                         </div>
-                                        @isset($formation?->date_debut)
+
+                                        @if (!empty($formation?->date_debut))
                                             <div class="col-12 col-md-3 col-lg-3 mb-0">
                                                 <div class="label">Date début</div>
                                                 <div>{{ $formation?->date_debut->format('d/m/Y') }}</div>
                                             </div>
-                                        @endisset
-                                        @isset($formation?->date_fin)
+                                        @endif
+
+                                        @if (!empty($formation?->date_fin))
                                             <div class="col-12 col-md-3 col-lg-3 mb-0">
                                                 <div class="label">Date fin</div>
                                                 <div>{{ $formation?->date_fin->format('d/m/Y') }}</div>
                                             </div>
-                                        @endisset
-                                        @isset($formation?->effectif_prevu)
+                                        @endif
+
+                                        @if (!empty($formation?->effectif_prevu))
                                             <div class="col-12 col-md-3 col-lg-3 mb-0">
                                                 <div class="label">Effectif prévu</div>
                                                 <div>{{ $formation?->effectif_prevu }}</div>
                                             </div>
-                                        @endisset
-                                        @isset($formation?->prevue_h)
+                                        @endif
+
+                                        @if (!empty($formation?->prevue_h))
                                             <div class="col-12 col-md-3 col-lg-3 mb-0">
                                                 <div class="label">Prévu homme</div>
                                                 <div>{{ $formation?->prevue_h }}</div>
                                             </div>
-                                        @endisset
-                                        @isset($formation?->prevue_f)
+                                        @endif
+
+                                        @if (!empty($formation?->prevue_f))
                                             <div class="col-12 col-md-3 col-lg-3 mb-0">
                                                 <div class="label">Prévu femmes</div>
                                                 <div>{{ $formation?->prevue_f }}</div>
                                             </div>
-                                        @endisset
-                                        @isset($formation?->frais_operateurs)
+                                        @endif
+
+                                        @if (!empty($formation?->frais_operateurs))
                                             <div class="col-12 col-md-3 col-lg-3 mb-0">
                                                 <div class="label">Frais opérateur</div>
                                                 <div>{{ number_format($formation?->frais_operateurs, 2, ',', ' ') }}</div>
                                             </div>
-                                        @endisset
-                                        @isset($formation?->frais_add)
+                                        @endif
+
+                                        @if (!empty($formation?->frais_add))
                                             <div class="col-12 col-md-3 col-lg-3 mb-0">
                                                 <div class="label">Frais additionels</div>
                                                 <div>{{ number_format($formation?->frais_add, 2, ',', ' ') }}</div>
                                             </div>
-                                        @endisset
-                                        @isset($formation?->autes_frais)
+                                        @endif
+
+                                        @if (!empty($formation?->autes_frais))
                                             <div class="col-12 col-md-3 col-lg-3 mb-0">
                                                 <div class="label">Autres frais</div>
                                                 <div>{{ number_format($formation?->autes_frais, 2, ',', ' ') }}</div>
                                             </div>
-                                        @endisset
-                                        @isset($formation?->projets_id)
+                                        @endif
+
+                                        @if (!empty($formation?->projets_id))
                                             <div class="col-12 col-md-3 col-lg-3 mb-0">
                                                 <div class="label">Projet</div>
                                                 <div>{{ $formation?->projet?->name }}</div>
                                             </div>
-                                        @endisset
-                                        @isset($formation?->programmes_id)
+                                        @endif
+
+                                        @if (!empty($formation?->programmes_id))
                                             <div class="col-12 col-md-3 col-lg-3 mb-0">
                                                 <div class="label">Programme</div>
                                                 <div>{{ $formation?->programme?->name }}</div>
                                             </div>
-                                        @endisset
-                                        @isset($formation?->choixoperateur?->description)
+                                        @endif
+
+                                        @if (!empty($formation?->choixoperateur?->description))
                                             <div class="col-12 col-md-3 col-lg-3 mb-0">
                                                 <div class="label">Choix opérateur</div>
-                                                <div>{{ $formation?->choixoperateur?->description }}</div>
+                                                <div>{{ !empty($formation?->choixoperateur?->description) }}</div>
                                             </div>
-                                        @endisset
+                                        @endif
+
+
+                                        <div class="col-12 col-md-12 col-lg-12 mb-0 text-center pt-5">
+                                            <a class="btn btn-outline-primary btn-sm"
+                                                href="{{ route('formations.edit', $formation->id) }}" class="mx-1"
+                                                title="Modifier">Modifier cette formation</a>
+                                        </div>
                                     </form>
 
                                 </div>
@@ -702,7 +729,7 @@
                                                         @foreach ($collectivemodules as $collectivemodule)
                                                             <tr>
                                                                 <td>
-                                                                   {{--  <input type="radio" name="collectivemodule"
+                                                                    {{--  <input type="radio" name="collectivemodule"
                                                                         value="{{ $collectivemodule?->id }}"
                                                                         {{ in_array($collectivemodule->formations_id, $collectiveModule) ? 'checked' : '' }}
                                                                         {{ in_array($collectivemodule->formations_id, $collectiveModuleCheck) ? 'disabled' : '' }}
@@ -932,8 +959,7 @@
                                             @method('PUT')
                                             <input type="hidden" name="idmodule"
                                                 value="{{ $formation->collectivemodule?->id }}">
-                                            <input type="hidden" name="idformation"
-                                                value="{{ $formation?->id }}">
+                                            <input type="hidden" name="idformation" value="{{ $formation?->id }}">
                                             <button type="submit"
                                                 class="btn btn-danger float-end btn-sm show_confirm"
                                                 title="Supprimer"><i class="bi bi-trash"></i>Supprimer</button>
@@ -1189,7 +1215,8 @@
                             @enderror
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                data-bs-dismiss="modal">Fermer</button>
                             <button type="submit" class="btn btn-danger btn-sm"><i
                                     class="bi bi-arrow-right-circle"></i>
                                 Retirer</button>
@@ -1323,9 +1350,9 @@
                                 aria-label="Close"></button>
                         </div> --}}
 
-                        <div class="card-header text-center bg-gradient-default">
-                            <h1 class="h4 text-black mb-0">Ajouter un agent de suivi</h1>
-                        </div>
+                    <div class="card-header text-center bg-gradient-default">
+                        <h1 class="h4 text-black mb-0">Ajouter un agent de suivi</h1>
+                    </div>
                     <div class="modal-body">
                         <input type="hidden" name="id" value="{{ $formation->id }}">
                         <div class="form-floating mb-3">
@@ -1648,15 +1675,17 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                 aria-label="Close"></button>
                         </div> --}}
-                         
+
                         <div class="card-header bg-gradient-default">
-                            <h3 class="h4 text-black mb-0">Retirer {{ $listecollective?->civilite . ' ' . $listecollective?->prenom . ' ' . $listecollective?->nom }}</h3>
+                            <h3 class="h4 text-black mb-0">Retirer
+                                {{ $listecollective?->civilite . ' ' . $listecollective?->prenom . ' ' . $listecollective?->nom }}
+                            </h3>
                         </div>
 
                         <div class="modal-body">
                             <input type="hidden" name="listecollectiveid" value="{{ $listecollective->id }}">
                             <label for="motif" class="form-label">Justification du retrait<span
-                                class="text-danger mx-1">*</span></label>
+                                    class="text-danger mx-1">*</span></label>
                             <textarea name="motif" id="motif" rows="5"
                                 class="form-control form-control-sm @error('motif') is-invalid @enderror"
                                 placeholder="Expliquer les raisons du retrait de ce bénéficiaire">{{ $listecollective?->motif_rejet ?? old('motif') }}</textarea>
@@ -1667,7 +1696,8 @@
                             @enderror
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                data-bs-dismiss="modal">Fermer</button>
                             <button type="submit" class="btn btn-danger btn-sm"><i
                                     class="bi bi-arrow-right-circle"></i>
                                 Retirer</button>

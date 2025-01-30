@@ -774,6 +774,7 @@ class FormationController extends Controller
                 $formation->delete();
 
                 Alert::success('Opération réussie !', 'La formation a été supprimée avec succès.');
+
                 return redirect()->back();
             }
         } else {
