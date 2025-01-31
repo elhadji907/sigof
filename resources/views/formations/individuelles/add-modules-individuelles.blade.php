@@ -50,7 +50,7 @@
                                                 <th>Modules</th>
                                                 <th>Domaines</th>
                                                 <th class="text-center" scope="col">Effectif</th>
-                                                <th><i class="bi bi-gear"></i></th>
+                                                <th width="3%"><i class="bi bi-gear"></i></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -125,7 +125,7 @@
                                     </table>
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-outline-primary"><i
+                                    <button type="submit" class="btn btn-outline-primary btn-sm"><i
                                             class="bi bi-check2-circle"></i>&nbsp;Sélectionner</button>
                                 </div>
                         </form>
@@ -184,9 +184,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                            <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                Enregistrer</button>
+                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
                         </div>
                     </form>
                 </div>
@@ -243,9 +242,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                    Modifier</button>
+                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary btn-sm">Modifier</button>
                             </div>
                         </form>
                     </div>
@@ -257,11 +255,6 @@
 @push('scripts')
     <script>
         new DataTable('#table-modules', {
-            layout: {
-                topStart: {
-                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                }
-            },
             lengthMenu: [
                 [5, 10, 25, 50, 100, -1],
                 [5, 10, 25, 50, 100, "Tout"]

@@ -453,9 +453,7 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade profile-overview pt-1" id="foration-overview">
                                     <h5 class="card-title">Formations </h5>
-                                    @foreach ($collective->collectivemodules as $collectivemodule)
-                                    @endforeach
-                                    @if (!empty($collectivemodule?->formation))
+                                    @if (!empty($collectives->formation))
                                         <table class="table datatables" id="table-formations">
                                             <thead>
                                                 <tr>
@@ -469,22 +467,16 @@
                                             </thead>
                                             <tbody>
                                                 <?php $i = 1; ?>
-                                                @foreach ($collective->collectivemodules as $collectivemodule)
                                                     <tr>
-                                                        <td>{{ $collectivemodule?->formation?->code }}</td>
-                                                        <td><a>{{ $collectivemodule?->formation?->types_formation?->name }}</a>
-                                                        </td>
-                                                        <td>{{ $collectivemodule?->formation?->departement?->region?->nom }}
-                                                        </td>
-                                                        <td>{{ $collectivemodule?->module }}
-                                                        </td>
-                                                        <td class="text-center">
-                                                            {{ count($collectivemodule?->listecollectives) }}</td>
+                                                        <td>{{ $collectives->formation?->code }}</td>
+                                                        <td><a>{{ $collectives->formation?->types_formation?->name }}</a></td>
+                                                        <td>{{ $collectives->formation?->departement?->region?->nom }}</td>
+                                                        <td>{{ $collectives->formation?->collectivemodule?->module }}</td>
+                                                        <td class="text-center"></td>
                                                         <td class="text-center"><a><span
-                                                                    class="{{ $collectivemodule?->formation?->statut }}">{{ $collectivemodule?->formation?->statut }}</span></a>
+                                                                    class="{{ $collectives->formation?->statut }}">{{ $collectives->formation?->statut }}</span></a>
                                                         </td>
                                                     </tr>
-                                                @endforeach
                                             </tbody>
                                         </table>
                                     @else

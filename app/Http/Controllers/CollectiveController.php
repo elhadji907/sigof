@@ -457,11 +457,10 @@ class CollectiveController extends Controller
         $listecollective = Listecollective::where('collectives_id', $id)->first();
 
         $listemodulescollective = Collectivemodule::where("collectives_id", $id)->first();
+
         $collectivemodules = Collectivemodule::where("collectives_id", $id)->get();
 
-        $formation = Formation::where('collectives_id', $id)->first();
-
-        $collectives    = Collective::where('users_id', $collective?->users_id)->get();
+        $collectives    = Collective::where('users_id', $collective?->users_id)->first();
 
         return view(
             'collectives.show',
@@ -471,7 +470,6 @@ class CollectiveController extends Controller
                 'collectives',
                 'listecollective',
                 'listemodulescollective',
-                'formation'
             )
         );
     }

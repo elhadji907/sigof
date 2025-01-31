@@ -116,7 +116,7 @@
                                         <th>Nom structure</th>
                                         <th>E-mail</th>
                                         <th>Téléphone</th>
-                                        <th>Localité</th>
+                                        <th>Région</th>
                                         <th class="text-center">Modules</th>
                                         <th class="text-center">Effectif</th>
                                         <th class="text-center">Statut</th>

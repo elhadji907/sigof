@@ -219,6 +219,9 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('formationmodules/{idformation}/{idlocalite}', [FormationController::class, 'addformationmodules']);
         Route::put('formationmodules/{idformation}', [FormationController::class, 'giveformationmodules']);
 
+        Route::get('formationcollectivemodules/{idformation}/{idlocalite}', [FormationController::class, 'addformationcollectivemodules']);
+        Route::put('formationcollectivemodules/{idformation}', [FormationController::class, 'giveformationcollectivemodules']);
+
         Route::get('formationingenieurs/{idformation}', [FormationController::class, 'addformationingenieurs']);
         Route::put('formationingenieurs/{idformation}', [FormationController::class, 'giveformationingenieurs']);
 
@@ -230,7 +233,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::put('moduleformationcollectives/{idformation}', [FormationController::class, 'givemoduleformationcollectives']);
 
         Route::get('moduleformations/{idformation}/{idlocalite}', [FormationController::class, 'addmoduleformations']);
-        /* Route::put('moduleformations/{idformation}/{idlocalite}', [FormationController::class, 'givemoduleformations']); */
+        Route::get('collectivemoduleformations/{idformation}/{idlocalite}', [FormationController::class, 'addcollectivemoduleformations']);
 
         Route::get('collectiveformations/{idformation}/{idlocalite}', [FormationController::class, 'addcollectiveformations']);
         Route::put('collectiveformations/{idformation}/{idlocalite}', [FormationController::class, 'givecollectiveformations']);

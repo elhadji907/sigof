@@ -74,11 +74,11 @@
                                     </button>
                                 </li>
 
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
                                         data-bs-target="#collectives-overview">Structure
                                     </button>
-                                </li>
+                                </li> --}}
 
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
@@ -104,7 +104,7 @@
                                                 class="{{ $formation?->statut }} btn btn-sm">
                                                 {{ $formation?->statut }}</span>
                                         </h5>
-                                        
+
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
                                             <div class="label">Intitulé formation</div>
                                             <div>{{ $formation?->name }}</div>
@@ -115,7 +115,7 @@
                                             <div>{{ $formation?->code }}</div>
                                         </div>
 
-                                        @if(!empty($formation?->module?->name))
+                                        @if (!empty($formation?->module?->name))
                                             <div class="col-12 col-md-3 col-lg-3 mb-0">
                                                 <div class="label">Module</div>
                                                 <div>{{ $formation?->module?->name }}</div>
@@ -602,99 +602,8 @@
                             </div>
                         </div>
                         {{-- Détail Modules --}}
-                        <div class="tab-content pt-2">
+                        {{-- <div class="tab-content pt-2">
                             <div class="tab-pane fade module-overview pt-0" id="module-overview">
-                                {{-- <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                        <h1 class="card-title">Module
-                                            @if (!empty($formation?->collectivemodule?->module))
-                                                sélectionné : {{ $formation?->collectivemodule?->module }}
-                                            @endif
-                                        </h1>
-                                        @if (!empty($formation?->collectivemodule))
-                                            <form method="post"
-                                                action="{{ url('moduleformationcollectives', ['$idformation' => $formation->id]) }}"
-                                                enctype="multipart/form-data" class="row g-3">
-                                                @csrf
-                                                @method('PUT')
-                                                <div class="row g-3">
-                                                    <table class="table table-bordered table-hover datatables"
-                                                        id="table-formations">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Module</th>
-                                                                <th>Demandeurs</th>
-                                                                <th class="float-end"><i class="bi bi-gear"></i></th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <?php $i = 1; ?>
-                                                            <tr>
-                                                                <td>{{ $formation?->collectivemodule?->module }}</td>
-                                                                <td>
-                                                                    <a href="#"><span
-                                                                            class="badge bg-info">{{ count($formation?->collectivemodule->listecollectives) }}</span></a>
-                                                                    
-                                                                </td>
-                                                                <td>
-                                                                    <span class="d-flex align-items-baseline float-end"><a
-                                                                            href="{{ route('collectivemodules.show', $formation?->collectivemodule->id) }}"
-                                                                            class="btn btn-primary btn-sm"
-                                                                            title="voir détails"><i
-                                                                                class="bi bi-eye"></i></a>
-                                                                        <div class="filter">
-                                                                            <a class="icon" href="#"
-                                                                                data-bs-toggle="dropdown"><i
-                                                                                    class="bi bi-three-dots"></i></a>
-                                                                            <ul
-                                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                                <button type="button"
-                                                                                    class="dropdown-item btn btn-sm mx-1"
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="#EditRegionModal{{ $formation?->collectivemodule->id }}">
-                                                                                    <i class="bi bi-pencil"
-                                                                                        title="Modifier"></i>
-                                                                                    Modifier
-                                                                                </button>
-                                                                                <li>
-                                                                                </li>
-                                                                            </ul>
-                                                                        </div>
-                                                                    </span>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    </table>
-                                                </div>
-                                            </form>
-                                        @else
-                                            <div class="alert alert-info">Aucun module pour le moment
-                                            </div>
-                                        @endif
-                                    </div> --}}
-
-                                {{-- <div class="card">
-                                        <div class="card-body"> --}}
-                                {{-- <div class="row">
-                                                <div class="col-sm-12 pt-0">
-                                                    <span class="d-flex mt-0 align-items-baseline"><a
-                                                            href="{{ route('formations.show', $formation->id) }}"
-                                                            class="btn btn-success btn-sm" title="retour"><i
-                                                                class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                                                        <p> | Liste des demandes collectives</p>
-                                                    </span>
-                                                </div>
-                                            </div> --}}
-                                {{-- @isset($formation?->collectivemodule?->collective?->name)
-                                                <h5><b><u>BENEFICIAIRES</u></b> :
-                                                    {{ $formation?->collectivemodule?->collective?->name }}
-                                                    @isset($formation?->collectivemodule?->collective?->name)
-                                                        {{ '(' . $formation?->collectivemodule?->collective?->sigle . ')' }}
-                                                    @endisset
-                                                </h5>
-                                                <h5><b><u>MODULE</u></b> :{{ $formation?->collectivemodule?->module }}</h5>
-                                            @endisset --}}
-
                                 <h1 class="card-title">Module
                                     @if (!empty($formation?->collectivemodule?->module))
                                         sélectionné : {{ $formation?->collectivemodule?->module }}
@@ -729,16 +638,6 @@
                                                         @foreach ($collectivemodules as $collectivemodule)
                                                             <tr>
                                                                 <td>
-                                                                    {{--  <input type="radio" name="collectivemodule"
-                                                                        value="{{ $collectivemodule?->id }}"
-                                                                        {{ in_array($collectivemodule->formations_id, $collectiveModule) ? 'checked' : '' }}
-                                                                        {{ in_array($collectivemodule->formations_id, $collectiveModuleCheck) ? 'disabled' : '' }}
-                                                                        class="form-check-input @error('collective') is-invalid @enderror">
-                                                                    @error('collectivemodule')
-                                                                        <span class="invalid-feedback" role="alert">
-                                                                            <div>{{ $message }}</div>
-                                                                        </span>
-                                                                    @enderror --}}
                                                                     {{ $collectivemodule?->collective->numero }}
                                                                 </td>
 
@@ -772,12 +671,6 @@
                                                                                     class="bi bi-three-dots"></i></a>
                                                                             <ul
                                                                                 class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                                {{-- <li><a class="dropdown-item btn btn-sm"
-                                                                                        href="{{ route('collectives.edit', $collectivemodule->collective->id) }}"
-                                                                                        class="mx-1"
-                                                                                        title="Modifier"><i
-                                                                                            class="bi bi-pencil"></i>Modifier</a>
-                                                                                </li> --}}
                                                                             </ul>
                                                                         </div>
                                                                     </span>
@@ -788,19 +681,49 @@
                                                 </table>
                                             </div>
                                             @can('module-check')
-                                                {{-- <div class="text-center">
-                                                    <button type="submit" class="btn btn-outline-primary btn-sm"><i
-                                                            class="bi bi-check2-circle"></i>&nbsp;Sélectionner</button>
-                                                </div> --}}
                                             @endcan
                                     </form>
                                 @else
                                     <div class="alert alert-info">Aucun module pour le moment
                                     </div>
                                 @endif
-                                {{-- </div>
-                                    </div> --}}
 
+                            </div>
+                        </div> --}}
+
+
+
+                        {{-- Détail Modules --}}
+                        <div class="tab-content pt-2">
+                            <div class="tab-pane fade module-overview pt-3" id="module-overview">
+                                @if (!empty($module_collective))
+                                    {{-- <div class="d-flex justify-content-between align-items-center"> --}}
+                                        <h5 class="card-title">
+                                            Module : {{ $module_collective?->module }}
+                                            @can('module-check')
+                                                <a href="{{ url('formationcollectivemodules', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
+                                                    class="btn btn-outline-primary btn-sm">
+                                                    <i class="bi bi-pencil" title="Changer module"></i></a>
+                                            @endcan
+                                        </h5>
+                                        
+                                        <h5 class="card-title">
+                                            Structure : {{ $formation?->collectivemodule?->collective->name . ' (' . $formation?->collectivemodule?->collective->sigle . ')' }}
+                                            <a class="btn btn-outline-info btn-sm" title="modifier module"
+                                                href="{{ route('collectives.show', $formation->collectivemodule?->collective->id) }}"
+                                                target="_blank"><i class="bi bi-eye"></i></a>
+                                        </h5>
+                                    {{-- </div> --}}
+                                @else
+                                    <div>
+                                        @can('module-check')
+                                            <a href="{{ url('collectivemoduleformations', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
+                                                class="btn btn-outline-primary btn-sm">
+                                                <i class="bi bi-plus" title="Ajouter module"></i> </a>
+                                        @endcan
+                                    </div>
+                                    <div class="alert alert-info mt-5">Aucun module pour le moment !</div>
+                                @endif
 
                             </div>
                         </div>
@@ -941,7 +864,7 @@
                             </div>
                         </div>
                         {{-- Détail Demandes collectives --}}
-                        <div class="tab-content pt-2">
+                        {{-- <div class="tab-content pt-2">
                             <div class="tab-pane fade collectives-overview pt-3" id="collectives-overview">
                                 @if (!empty($formation?->collectivemodule))
                                     <div class="d-flex justify-content-between align-items-center">
@@ -979,7 +902,7 @@
                                     </div>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
 
                         <div class="tab-content pt-2">
                             <div class="tab-pane fade evaluation-overview pt-3" id="evaluation-overview">

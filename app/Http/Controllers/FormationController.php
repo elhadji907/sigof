@@ -631,11 +631,12 @@ class FormationController extends Controller
 
     public function show($id)
     {
-        $formation      = Formation::findOrFail($id);
-        $type_formation = $formation->types_formation->name;
-        $operateur      = $formation->operateur;
-        $module         = $formation->module;
-        $ingenieur      = $formation->ingenieur;
+        $formation         = Formation::findOrFail($id);
+        $type_formation    = $formation?->types_formation->name;
+        $operateur         = $formation?->operateur;
+        $module            = $formation?->module;
+        $module_collective = $formation?->collectivemodule;
+        $ingenieur         = $formation?->ingenieur;
         /* $emargements = $formation->emargements->unique('jour'); */
         $emargements = $formation->emargements;
 
@@ -681,6 +682,7 @@ class FormationController extends Controller
                 "count_demandes",
                 "operateur",
                 "module",
+                "module_collective",
                 "type_formation",
                 "individuelles",
                 "listecollectives",
@@ -1076,6 +1078,7 @@ class FormationController extends Controller
 
         return redirect()->back();
     }
+
     public function addformationmodules($idformation, $idlocalite)
     {
         $formation = Formation::findOrFail($idformation);
@@ -1093,10 +1096,26 @@ class FormationController extends Controller
         return view("formations.individuelles.add-modules-individuelles", compact('formation', 'modules', 'module', 'localite', 'moduleFormation', 'domaines'));
     }
 
+    public function addformationcollectivemodules($idformation, $idlocalite)
+    {
+        $formation = Formation::findOrFail($idformation);
+        $domaines  = Domaine::orderBy("created_at", "desc")->get();
+        $localite  = Region::findOrFail($idlocalite);
+
+        $collectivemodules = Collectivemodule::get();
+
+        $collectivemoduleFormation = DB::table('formations')
+            ->where('collectivemodules_id', $formation->collectivemodules_id)
+            ->pluck('collectivemodules_id', 'collectivemodules_id')
+            ->all();
+
+        return view("formations.collectives.add-collective-modules", compact('formation', 'collectivemodules', 'localite', 'collectivemoduleFormation', 'domaines'));
+    }
+
     public function giveformationmodules($idformation, Request $request)
     {
         $request->validate([
-            'module' => ['required'],
+            'collectivemodule' => ['required'],
         ]);
 
         $formation = Formation::findOrFail($idformation);
@@ -1112,12 +1131,47 @@ class FormationController extends Controller
         return redirect()->back();
     }
 
+    public function giveformationcollectivemodules($idformation, Request $request)
+    {
+        $request->validate([
+            'collectivemodule' => ['required'],
+        ]);
+
+        $formation = Formation::findOrFail($idformation);
+        $collectivemodule = Collectivemodule::findOrFail($request->input('collectivemodule'));
+        $collective = $collectivemodule?->collective;
+
+        $collectivemodule->update([
+            "statut" => 'retenu',
+        ]);
+
+        $collectivemodule->save();
+
+        $formation->update([
+            "collectivemodules_id" => $request->input('collectivemodule'),
+        ]);
+
+        $formation->save();
+
+        
+        $collective->update([
+            "formations_id" => $formation?->id,
+        ]);
+
+        $collective->save();
+
+        Alert::success('Module', 'ajouté avec succès');
+
+        return redirect()->back();
+
+    }
+
     public function addmoduleformations($idformation, $idlocalite)
     {
 
         $formation = Formation::findOrFail($idformation);
-        $module    = $formation?->module?->name;
-        $localite  = Region::findOrFail($idlocalite);
+        /* $module    = $formation?->module?->name; */
+        $localite = Region::findOrFail($idlocalite);
 
         $modules = Module::get();
 
@@ -1129,6 +1183,26 @@ class FormationController extends Controller
         $domaines = Domaine::orderBy("created_at", "desc")->get();
 
         return view("formations.individuelles.add-modules-individuelles", compact('formation', 'modules', 'module', 'localite', 'moduleFormation', 'domaines'));
+    }
+
+    public function addcollectivemoduleformations($idformation, $idlocalite)
+    {
+
+        $formation = Formation::findOrFail($idformation);
+        $localite  = Region::findOrFail($idlocalite);
+
+        /* $collectivemodule    = $formation?->collectivemodule?->module; */
+
+        $collectivemodules = Collectivemodule::get();
+
+        $collectivemoduleFormation = DB::table('formations')
+            ->where('collectivemodules_id', $formation->collectivemodules_id)
+            ->pluck('collectivemodules_id', 'collectivemodules_id')
+            ->all();
+
+        $domaines = Domaine::orderBy("created_at", "desc")->get();
+
+        return view("formations.collectives.add-collective-modules", compact('formation', 'collectivemodules', 'localite', 'collectivemoduleFormation', 'domaines'));
     }
 
     public function addformationingenieurs($idformation)
