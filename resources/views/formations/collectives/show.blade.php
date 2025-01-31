@@ -718,7 +718,7 @@
                                     <div>
                                         @can('module-check')
                                             <a href="{{ url('collectivemoduleformations', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
-                                                class="btn btn-outline-primary btn-sm">
+                                                class="btn btn-outline-primary float-end btn-sm">
                                                 <i class="bi bi-plus" title="Ajouter module"></i> </a>
                                         @endcan
                                     </div>

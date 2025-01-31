@@ -85,7 +85,8 @@
                                                         @endforeach
                                                     </td>
                                                     <td style="text-align: center;">
-                                                        <a class="badge bg-primary">{{ count($collectivemodule?->formations) }}
+                                                        <a class="badge bg-primary">
+                                                            {{ count($collectivemodule?->formations) }}
                                                         </a>
                                                     </td>
                                                     <td style="text-align: center;">

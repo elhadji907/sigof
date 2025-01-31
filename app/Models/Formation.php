@@ -382,10 +382,10 @@ class Formation extends Model
 		return $this->belongsTo(Module::class, 'modules_id');
 	}
 
-	/* public function collectivemodule()
+	public function collectivemodule()
 	{
 		return $this->belongsTo(Collectivemodule::class, 'collectivemodules_id');
-	} */
+	}
 
 	/* public function collective()
 	{
@@ -496,10 +496,10 @@ class Formation extends Model
 		return $this->hasMany(Individuelle::class, 'formations_id');
 	}
 
-	public function collectivemodule()
+/* 	public function collectivemodule()
 	{
 		return $this->hasOne(Collectivemodule::class, 'formations_id');
-	}
+	} */
 
 	public function collective()
 	{

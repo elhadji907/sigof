@@ -81,9 +81,9 @@ class Collectivemodule extends Model
 	{
 		return $this->hasMany(Listecollective::class, 'collectivemodules_id');
 	}
-    
-/* 	public function formations()
+
+	public function formations()
 	{
-		return $this->hasMany(Formation::class, 'modules_id');
-	} */
+		return $this->hasMany(Formation::class, 'collectivemodules_id');
+	}
 }

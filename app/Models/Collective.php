@@ -167,10 +167,10 @@ class Collective extends Model
 		'modules_id'
 	];
 
-	public function formations()
+/* 	public function formations()
 	{
 		return $this->hasMany(Formation::class, 'modules_id');
-	}
+	} */
 
 	public function collectivemodules()
 	{
