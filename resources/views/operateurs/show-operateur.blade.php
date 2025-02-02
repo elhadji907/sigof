@@ -563,9 +563,31 @@
                                             </span>
                                         @enderror
                                     </div> --}}
+                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <label for="type_demande" class="form-label">Type demande<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <select name="type_demande"
+                                            class="form-select form-select-sm @error('type_demande') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-registre" data-placeholder="Choisir">
+                                            <option value="{{ $operateur?->type_demande ?? old('type_demande') }}">
+                                                {{ $operateur?->type_demande ?? old('type_demande') }}
+                                            </option>
+                                            <option value="Nouvelle">
+                                                Nouvelle
+                                            </option>
+                                            <option value="Renouvellement">
+                                                Renouvellement
+                                            </option>
+                                        </select>
+                                        @error('type_demande')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
 
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                                        <label for="departement" class="form-label">Siège social<span
+                                        <label for="departement" class="form-label">Département<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="departement"
                                             class="form-select form-select-sm @error('departement') is-invalid @enderror"
@@ -652,29 +674,6 @@
                                             class="datepicker form-control form-control-sm @error('date_quitus') is-invalid @enderror"
                                             id="date_quitus" placeholder="jj/mm/aaaa">
                                         @error('date_quitus')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                                        <label for="type_demande" class="form-label">Type demande<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <select name="type_demande"
-                                            class="form-select form-select-sm @error('type_demande') is-invalid @enderror"
-                                            aria-label="Select" id="select-field-registre" data-placeholder="Choisir">
-                                            <option value="{{ $operateur?->type_demande ?? old('type_demande') }}">
-                                                {{ $operateur?->type_demande ?? old('type_demande') }}
-                                            </option>
-                                            <option value="Nouvelle">
-                                                Nouvelle
-                                            </option>
-                                            <option value="Renouvellement">
-                                                Renouvellement
-                                            </option>
-                                        </select>
-                                        @error('type_demande')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>

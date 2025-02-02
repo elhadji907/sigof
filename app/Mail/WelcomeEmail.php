@@ -41,7 +41,7 @@ class WelcomeEmail extends Mailable
         return new Envelope(
             from: new Address('lamine.badji@onfp.sn', 'ONFP | Evaluation formation'),
             replyTo:[
-                new Address('lamine.badji@onfp.sn', 'ONFP - Réponse concernant l\'évaluation de la formation')
+                new Address('lamine.badji@onfp.sn', 'ONFP | Réponse concernant l\'évaluation de la formation')
             ],
             subject: $this->subject,
         );
