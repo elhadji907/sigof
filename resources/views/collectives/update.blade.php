@@ -76,7 +76,7 @@
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="email" class="form-label">Email<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="email" name="email" value="{{ $collective?->user?->email ?? old('email') }}"
+                                    <input type="email" name="email" value="{{ $collective?->email ?? old('email') }}"
                                         class="form-control form-control-sm @error('email') is-invalid @enderror"
                                         id="email" placeholder="Adresse email">
                                     @error('email')

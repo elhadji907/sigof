@@ -24,13 +24,12 @@
 <body>
     <header>
         {{-- <img src="assets/img/logo-onfp.jpg" alt="Logo ONFP" width="150" height="50"> --}}
-        <h1>{{ $subject }}</h1>
+        <p>{{ $subject }}</p>
     </header>
 
     <body>
-        <h3>Salut ,{{ $toUserName }}</h3>
-        <h3>Votre formation en {{ $module }} est terminée, vous avez obtenue une note de : {{ $mailMessage }}
-        </h3>
+        <p>{{ $toUserName }}</p>
+        <p>{{ $mailMessage }}</p>
         {{-- <a href="#"
             style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; text-decoration: none;">Cliquez ici pour vérifiez
             votre adresse e-mail</a> --}}
@@ -47,4 +46,3 @@
 </body>
 
 </html>
-

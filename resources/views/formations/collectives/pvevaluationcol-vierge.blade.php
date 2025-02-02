@@ -180,7 +180,9 @@
                     <td colspan="5"><b>{{ __('Lieu : ') }}</b> {{ $formation?->lieu }}
                     </td>
                     <td colspan="5"><b>{{ __('Opérateur : ') }}</b>
-                        {{ $formation?->operateur?->user?->operateur . ' (' . $formation?->operateur?->user?->username . ')' }}
+                        @if (!empty($formation?->operateur?->user?->operateur))
+                        {{ $formation?->operateur?->user?->operateur . ' (' . $formation?->operateur?->user?->username . ')' }}                            
+                        @endif
                     </td>
                 </tr>
                 <tr class="heading">

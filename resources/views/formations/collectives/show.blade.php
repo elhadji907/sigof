@@ -474,7 +474,41 @@
                                                                     </form>
                                                                 @endcan
                                                                 <hr>
+                                                                @can('email-formation')
+                                                                    <form action="{{ route('sendFormationEmailCol') }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        {{-- @method('PUT') --}}
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $formation->id }}">
+                                                                        <button
+                                                                            class="show_confirm_valider btn btn-sm mx-1">Démarrage
+                                                                            (e-mail)</button>
+                                                                    </form>
 
+                                                                    <form action="{{ route('sendWelcomeEmailCol') }}"
+                                                                        method="post">
+                                                                        @csrf
+                                                                        {{-- @method('PUT') --}}
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $formation->id }}">
+                                                                        <button
+                                                                            class="show_confirm_valider btn btn-sm mx-1">Résultats
+                                                                            (e-mail)</button>
+                                                                    </form>
+
+                                                                    <hr>
+
+                                                                    <button class="btn btn-sm mx-1" data-bs-toggle="modal"
+                                                                        data-bs-target="#sendFormationSMS">Démarrage
+                                                                        (SMS)
+                                                                    </button>
+                                                                    <br>
+                                                                    <button class="btn btn-sm mx-1" data-bs-toggle="modal"
+                                                                        data-bs-target="#sendWelcomeSMS">Résultats
+                                                                        (SMS)
+                                                                    </button>
+                                                                @endcan
                                                                 <form action="{{ route('suivretousCol', $formation?->id) }}"
                                                                     method="post">
                                                                     @csrf

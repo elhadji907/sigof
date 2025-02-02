@@ -39,9 +39,9 @@ class WelcomeFormationEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('lamine.badji@onfp.sn', 'ONFP - Démarrage de la formation'),
+            from: new Address('lamine.badji@onfp.sn', 'ONFP | Démarrage de la formation'),
             replyTo: [
-                new Address('lamine.badji@onfp.sn', 'ONFP - Réponse concernant le démarrage de la formation')
+                new Address('lamine.badji@onfp.sn', 'ONFP | Réponse concernant le démarrage de la formation')
             ],
             subject: $this->subject,
         );

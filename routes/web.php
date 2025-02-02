@@ -133,12 +133,12 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::post('/addRegion', [RegionController::class, 'addRegion'])->name('addRegion');
 
         Route::post('sendWelcomeEmail', [EmailController::class, 'sendWelcomeEmail'])->name('sendWelcomeEmail');
+        Route::post('sendWelcomeEmailCol', [EmailController::class, 'sendWelcomeEmailCol'])->name('sendWelcomeEmailCol');
         Route::post('sendFormationEmail', [EmailFormationController::class, 'sendFormationEmail'])->name('sendFormationEmail');
+        Route::post('sendFormationEmailCol', [EmailFormationController::class, 'sendFormationEmailCol'])->name('sendFormationEmailCol');
 
         Route::post('sendFormationSMS', [SMSController::class, 'sendFormationSMS'])->name('sendFormationSMS');
         Route::post('sendWelcomeSMS', [SMSController::class, 'sendWelcomeSMS'])->name('sendWelcomeSMS');
-
-        Route::post('sendFormationEmail', [EmailFormationController::class, 'sendFormationEmail'])->name('sendFormationEmail');
 
         Route::put('/arrives/{arriveId}/delete', [ArriveController::class, 'destroy']);
         Route::put('/departs/{departId}/delete', [DepartController::class, 'destroy']);

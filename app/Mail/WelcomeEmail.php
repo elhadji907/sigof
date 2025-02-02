@@ -39,7 +39,7 @@ class WelcomeEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('lamine.badji@onfp.sn', 'ONFP - Evaluation formation'),
+            from: new Address('lamine.badji@onfp.sn', 'ONFP | Evaluation formation'),
             replyTo:[
                 new Address('lamine.badji@onfp.sn', 'ONFP - Réponse concernant l\'évaluation de la formation')
             ],
