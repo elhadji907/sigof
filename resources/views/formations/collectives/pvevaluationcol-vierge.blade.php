@@ -4,6 +4,61 @@
 <head>
     <meta charset="utf-8" />
     <title>{{ $title }}</title>
+    {{-- <style>
+        @page {
+            margin: 0cm 0cm;
+        }
+
+        .invoice-box {
+            max-width: 1000px;
+            margin: auto;
+            padding: 30px;
+            font-size: 12px;
+            line-height: 20px;
+            color: color: rgb(0, 0, 0);
+            ;
+        }
+
+        .rtl {
+            imputation: rtl;
+        }
+
+        .invoice-box table tr.heading td {
+            background: rgb(255, 255, 255);
+            border: 1px solid #000000;
+            font-weight: bold;
+        }
+
+        .invoice-box table tr.total td {
+            border-top: 2px solid #eee;
+            border-bottom: 1px solid #eee;
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+            background: #eee;
+            font-weight: bold;
+        }
+
+        .invoice-box table tr.item td {
+            border: 1px solid #000000;
+        }
+
+        table {
+            border-left: 0px solid rgb(0, 0, 0);
+            border-right: 0;
+            border-top: 0px solid rgb(0, 0, 0);
+            border-bottom: 0;
+            width: 100%;
+            border-spacing: 0px;
+        }
+
+        table td,
+        table th {
+            border-left: 0;
+            border-right: 0px solid rgb(0, 0, 0);
+            border-top: 0;
+            border-bottom: 0px solid rgb(0, 0, 0);
+        }
+    </style> --}}
     <style>
         @page {
             margin: 0cm 0cm;
@@ -14,7 +69,7 @@
             margin: auto;
             /* padding: 30px; */
             font-size: 12px;
-            line-height: 18px;
+            line-height: 15px;
             color: color: rgb(0, 0, 0);
             ;
         }
@@ -30,7 +85,6 @@
             border-collapse: collapse;
             font-weight: bold;
         }
-
 
         .invoice-box table tr.total td {
             /* border-top: 2px solid #eee;
@@ -88,6 +142,10 @@
 </head>
 
 <body>
+    {{-- <h6 valign="top" style="text-align: center;">
+        <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/entete_lettre_mission.png'))) }}"
+            style="width: 100%; max-width: 300px" />
+    </h6> --}}
     <h6 valign="top" style="text-align: center;">
         <b>REPUBLIQUE DU SENEGAL<br></b>
         Un Peuple - Un But - Une Foi<br>
@@ -102,63 +160,57 @@
         <table class="table table-responsive">
             <thead>
                 <tr class="heading" style="text-align: center;">
-                    <td colspan="8"><b>{{ __('FICHE DE SUIVI') }}</b>
+                    <td colspan="10"><b>{{ __("PROCES VERBAL D'EVALUATION DE FORMATION") }}</b>
                     </td>
                 </tr>
                 <tr class="heading">
-                    <td colspan="4">{{ __('Code formation : ') }}
-                        {{ $formation?->code . '-C' }}
+                    <td colspan="5"><b>{{ __('Période : ') }}</b>
+                        @isset($formation?->date_debut)
+                            {{ 'Du ' . $formation?->date_debut?->format('d/m/Y') }}
+                        @endisset
+                        @isset($formation?->date_fin)
+                            {{ ' au ' . $formation?->date_fin?->format('d/m/Y') }}
+                        @endisset
                     </td>
-                    <td colspan="4"><b>{{ __('Suivi : ') }}</b>
-                        @if(!empty($formation?->date_suivi))
-                            {{ $formation?->suivi_dossier . ', le ' . $formation?->date_suivi?->format('d/m/Y') }}
-                        @endif
-                    </td>
-                </tr>
-                <tr class="heading">
-                    <td colspan="4">{{ __('Intitulé formation : ') }}
+                    <td colspan="5"><b>{{ __('Intitulé formation : ') }}</b>
                         {{ $formation?->collectivemodule?->module }}
                     </td>
-                    <td colspan="4"><b>{{ __('Opérateur : ') }}</b>
-                        @if (!empty($formation?->operateur?->user?->operateur))
-                            {{ $formation?->operateur?->user?->operateur . ' (' . $formation?->operateur?->user?->username . ')' }}
-                        @else
-                        @endif
+                </tr>
+                <tr class="heading">
+                    <td colspan="5"><b>{{ __('Lieu : ') }}</b> {{ $formation?->lieu }}
+                    </td>
+                    <td colspan="5"><b>{{ __('Opérateur : ') }}</b>
+                        {{ $formation?->operateur?->user?->operateur . ' (' . $formation?->operateur?->user?->username . ')' }}
                     </td>
                 </tr>
                 <tr class="heading">
-                    <td colspan="4">{{ __('Adresse : ') }}
-                        {{ $formation?->lieu }}
+                    <td colspan="2"><b>{{ __('Code formation : ') }}</b> {{ $formation?->code . '-C' }}
                     </td>
-                    <td colspan="4"><b>{{ __('Contact : ') }}</b>
-                        {{ substr($formation?->operateur?->user?->fixe, 0, 2) .
-                            ' ' .
-                            substr($formation?->operateur?->user?->fixe, 2, 3) .
-                            ' ' .
-                            substr($formation?->operateur?->user?->fixe, 5, 2) .
-                            ' ' .
-                            substr($formation?->operateur?->user?->fixe, 7, 2) }}
-                        @if (!empty($formation?->operateur?->user?->telephone))
-                            {{ ' / ' .
-                                substr($formation?->operateur?->user?->telephone, 0, 2) .
-                                ' ' .
-                                substr($formation?->operateur?->user?->telephone, 2, 3) .
-                                ' ' .
-                                substr($formation?->operateur?->user?->telephone, 5, 2) .
-                                ' ' .
-                                substr($formation?->operateur?->user?->telephone, 7, 2) }}
-                        @endif
+                    <td colspan="3"><b>{{ __('Niveau de qualification : ') }}</b>
+                        {{ $formation?->type_certification }}
+                    </td>
+                    <td colspan="5"><b>{{ __('Titre : ') }}</b>
+                        {{ $formation?->titre ?? $formation?->referentiel?->titre }}
+                    </td>
+                </tr>
+                <tr class="heading">
+                    {{--  <td colspan="7">
+                        <b>{{ __('Ingénieur en charge : ') }}</b>{{ $formation?->ingenieur?->name . '(' . $formation?->ingenieur?->initiale . ')' }}
+                    </td> --}}
+                    <td rowspan="2" class="item" style="text-align: center;"><b>N° CIN</b></td>
+                    <td rowspan="2" class="item" style="text-align: center;"><b>Civilité</b></td>
+                    <td rowspan="2" class="item" style="text-align: center;"><b>Prénom</b></td>
+                    <td rowspan="2" class="item" style="text-align: center;"><b>NOM</b></td>
+                    <td rowspan="2" class="item" style="text-align: center;"><b>Date naissance</b></td>
+                    <td rowspan="2" class="item" style="text-align: center;"><b>Lieu de naissance</b></td>
+                    <td rowspan="2" class="item" style="text-align: center;"><b>Téléphone</b></td>
+                    <td colspan="3" style="text-align: center;"><b>{{ __('DECISION DU JURY') }}</b>
                     </td>
                 </tr>
                 <tr class="item" style="text-align: center;">
-                    <td><b>N° CIN</b></td>
-                    <td><b>Civilité</b></td>
-                    <td><b>Prénom</b></td>
-                    <td><b>NOM</b></td>
-                    <td><b>Date naissance</b></td>
-                    <td><b>Lieu de naissance</b></td>
-                    <td><b>Téléphone</b></td>
-                    <td><b>Emargement</b></td>
+                    <td><b>Note</b></td>
+                    <td><b>Niveau de maitrise</b></td>
+                    <td><b>Observations</b></td>
                 </tr>
             </thead>
             <tbody>
@@ -172,22 +224,17 @@
                         <td>{{ strtoupper($listecollective?->lieu_naissance) }}</td>
                         <td>{{ $listecollective?->telephone }}</td>
                         <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 @endforeach
-
             </tbody>
         </table>
-        {{-- <h4 valign="top">
-            <b><u>AGENT DE SUIVI</u>:</b>
-            @isset($formation?->date_suivi)
-                {{ $formation?->suivi_dossier . ', le ' . $formation?->date_suivi?->format('d/m/Y') }}
-            @endisset
-        </h4> --}}
+
+        <h4 valign="top">
+            <b><u>SIGNATURE DES MEMBRES DU JURY</u></b> :
+        </h4>
     </div>
-    {{-- <footer>
-        {{ __("Cité SIPRES 1 lot 2 - 2 voies liberté 6 extension VDN  Tél. : 33 827 92 51- Fax : 33 827 92 55
-                B.P. 21013 Dakar-Ponty  E-mail : onfp@onfp.sn - site web www.onfp.sn") }}
-    </footer> --}}
 </body>
 
 </html>

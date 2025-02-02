@@ -184,12 +184,13 @@
                     </td>
                 </tr>
                 <tr class="heading">
-                    <td colspan="2"><b>{{ __('Code formation : ') }}</b> {{ $formation?->code . '(C)' }}
+                    <td colspan="2"><b>{{ __('Code formation : ') }}</b> {{ $formation?->code . '-C' }}
                     </td>
                     <td colspan="3"><b>{{ __('Niveau de qualification : ') }}</b>
                         {{ $formation?->type_certification }}
                     </td>
-                    <td colspan="5"><b>{{ __('Titre : ') }}</b> {{ $formation?->titre ?? $formation?->referentiel?->titre }}
+                    <td colspan="5"><b>{{ __('Titre : ') }}</b>
+                        {{ $formation?->titre ?? $formation?->referentiel?->titre }}
                     </td>
                 </tr>
                 <tr class="heading">
@@ -231,41 +232,23 @@
         </table>
 
         <h4 valign="top">
-            <b><u>SIGNATURE DES MEMBRES DU JURY</u></b> : @isset($formation?->date_pv)
+            <b><u>SIGNATURE DES MEMBRES DU JURY</u></b> :
+            @if (!empty($formation?->date_pv))
                 <span
                     style="float: right; font-style: italic">{{ $formation?->departement?->nom . ', ' . $formation?->departement?->region?->nom . ', le ' . $formation?->date_pv?->format('d/m/Y') }}</span>
-            @endisset
+            @endif
             <br>
             <?php $i = 1; ?>
             {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction }}<br>
             {{ $formation?->onfpevaluateur?->name . ', ' . $formation?->onfpevaluateur?->fonction }}<br>
-            @isset($membres_jury)
+            @if (!empty($membres_jury))
                 @foreach ($membres_jury as $item)
                     {{ $item }} <br>
                     {{-- {{ $i++ . '/' . $count_membres . '. ' . $item }} <br><br> --}}
                 @endforeach
-            @endisset
+            @endif
         </h4>
-        {{-- <h4 valign="top">
-            <b><u>SIGNATURE DES MEMBRES DU JURY</u></b> : @isset($formation?->date_pv)
-                <span
-                    style="float: right; font-style: italic">{{ $formation?->departement?->nom . ', ' . $formation?->departement?->region?->nom . ', le ' . $formation?->date_pv?->format('d/m/Y') }}</span>
-            @endisset
-            <br>
-            <?php $i = 1; ?>
-            {{ $formation?->evaluateur?->name . ', ' . $formation?->evaluateur?->fonction }}<br>
-            {{ $formation?->onfpevaluateur?->name . ', ' . $formation?->onfpevaluateur?->fonction }}<br>
-            @isset($membres_jury)
-                @foreach ($membres_jury as $item)
-                    {{ $item }} <br>
-                @endforeach
-            @endisset
-        </h4> --}}
     </div>
-    {{-- <footer>
-        {{ __("Cité SIPRES 1 lot 2 - 2 voies liberté 6 extension VDN  Tél. : 33 827 92 51- Fax : 33 827 92 55
-                B.P. 21013 Dakar-Ponty  E-mail : onfp@onfp.sn - site web www.onfp.sn") }}
-    </footer> --}}
 </body>
 
 </html>

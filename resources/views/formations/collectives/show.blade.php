@@ -418,6 +418,14 @@
                                                                     </button>
                                                                 @endcan
                                                                 <hr>
+                                                                <form action="{{ route('feuillePresenceCol') }}"
+                                                                    method="post" target="_blank">
+                                                                    @csrf
+                                                                    {{-- @method('PUT') --}}
+                                                                    <input type="hidden" name="id"
+                                                                        value="{{ $formation->id }}">
+                                                                    <button class="btn btn-sm mx-1">Feuille présence</button>
+                                                                </form>
                                                                 <form action="{{ route('ficheSuiviCol') }}" method="post"
                                                                     target="_blank">
                                                                     @csrf
@@ -427,13 +435,21 @@
                                                                     <button class="btn btn-sm mx-1">Fiche de suivi</button>
                                                                 </form>
                                                                 @can('pv-formation')
+                                                                    <form action="{{ route('pvViergeCol') }}" method="post"
+                                                                        target="_blank">
+                                                                        @csrf
+                                                                        {{-- @method('PUT') --}}
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $formation->id }}">
+                                                                        <button class="btn btn-sm mx-1">PV vierge</button>
+                                                                    </form>
                                                                     <form action="{{ route('pvEvaluationCol') }}" method="post"
                                                                         target="_blank">
                                                                         @csrf
                                                                         {{-- @method('PUT') --}}
                                                                         <input type="hidden" name="id"
                                                                             value="{{ $formation->id }}">
-                                                                        <button class="btn btn-sm mx-1">PV Evaluation</button>
+                                                                        <button class="btn btn-sm mx-1">PV Finale</button>
                                                                     </form>
                                                                 @endcan
                                                                 @can('lettre-formation')
@@ -698,21 +714,22 @@
                             <div class="tab-pane fade module-overview pt-3" id="module-overview">
                                 @if (!empty($module_collective))
                                     {{-- <div class="d-flex justify-content-between align-items-center"> --}}
-                                        <h5 class="card-title">
-                                            Module : {{ $module_collective?->module }}
-                                            @can('module-check')
-                                                <a href="{{ url('formationcollectivemodules', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
-                                                    class="btn btn-outline-primary btn-sm">
-                                                    <i class="bi bi-pencil" title="Changer module"></i></a>
-                                            @endcan
-                                        </h5>
-                                        
-                                        <h5 class="card-title">
-                                            Structure : {{ $formation?->collectivemodule?->collective->name . ' (' . $formation?->collectivemodule?->collective->sigle . ')' }}
-                                            <a class="btn btn-outline-info btn-sm" title="modifier module"
-                                                href="{{ route('collectives.show', $formation->collectivemodule?->collective->id) }}"
-                                                target="_blank"><i class="bi bi-eye"></i></a>
-                                        </h5>
+                                    <h5 class="card-title">
+                                        Module : {{ $module_collective?->module }}
+                                        @can('module-check')
+                                            <a href="{{ url('formationcollectivemodules', ['$idformation' => $formation->id, '$idlocalite' => $formation->departement->region->id]) }}"
+                                                class="btn btn-outline-primary btn-sm">
+                                                <i class="bi bi-pencil" title="Changer module"></i></a>
+                                        @endcan
+                                    </h5>
+
+                                    <h5 class="card-title">
+                                        Structure :
+                                        {{ $formation?->collectivemodule?->collective->name . ' (' . $formation?->collectivemodule?->collective->sigle . ')' }}
+                                        <a class="btn btn-outline-info btn-sm" title="modifier module"
+                                            href="{{ route('collectives.show', $formation->collectivemodule?->collective->id) }}"
+                                            target="_blank"><i class="bi bi-eye"></i></a>
+                                    </h5>
                                     {{-- </div> --}}
                                 @else
                                     <div>
@@ -1008,7 +1025,7 @@
                                             </div>
                                             @can('evaluer-formation')
                                                 <div class="text-center">
-                                                    <button type="submit" class="btn btn-outline-primary"><i
+                                                    <button type="submit" class="btn btn-outline-primary btn-sm"><i
                                                             class="bi bi-check2-circle"></i>&nbsp;Save</button>
                                                 </div>
                                             @endcan
@@ -1261,7 +1278,7 @@
     {{-- Agent de suivi --}}
     <div class="modal fade" id="EditAgentSuiviModal{{ $formation->id }}" tabindex="-1" role="dialog"
         aria-labelledby="EditAgentSuiviModalLabel{{ $formation->id }}" aria-hidden="true">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <form method="post" action="{{ route('formations.updateAgentSuivi') }}"
                     enctype="multipart/form-data" class="row g-3">
