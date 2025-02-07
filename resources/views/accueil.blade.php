@@ -112,7 +112,6 @@
     </header>
 
     <main class="main">
-
         <!-- Hero Section -->
         <section id="accueil" class="hero section">
 

@@ -96,7 +96,7 @@ Route::get('/', [UserController::class, 'homePage'])->name('home'); */
 Route::group(['middleware' => ['XSS']], function () {
     Route::get('/', [UneController::class, 'unePage'])->name('accueil');
 
-    Route::get('/email/verify', function () {
+/*     Route::get('/email/verify', function () {
         return view('auth.verify');
     })->middleware('auth')->name('verification.notice');
 
@@ -109,14 +109,13 @@ Route::group(['middleware' => ['XSS']], function () {
         $request->user()->sendEmailVerificationNotification();
 
         return back()->with('message', 'Lien de vérification envoyé !');
-    })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+    })->middleware(['auth', 'throttle:6,1'])->name('verification.send'); */
 
     Route::get('/login', [ProfileController::class, 'loginPage'])->name('login');
     Route::get('/register-page', [ProfileController::class, 'registerPage'])->name('register-page');
 
     Route::get('/register-operateur', [ProfileController::class, 'registerOperateur'])->name('register-operateur');
 });
-
 Route::group(['middleware' => ['XSS']], function () {
     Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
