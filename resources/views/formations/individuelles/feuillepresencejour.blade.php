@@ -155,8 +155,9 @@
                     </td>
                 </tr>
                 <tr class="item" style="text-align: center;">
-                    <td><b>N° CIN</b></td>
-                    <td><b>Civilité</b></td>
+                    <td><b>N°</b></td>
+                    <td><b>CIN</b></td>
+                    {{-- <td><b>Civilité</b></td> --}}
                     <td><b>Prénom</b></td>
                     <td><b>NOM</b></td>
                     <td><b>Date naissance</b></td>
@@ -167,10 +168,12 @@
                 </tr>
             </thead>
             <tbody>
+                <?php $i = 1; ?>
                 @foreach ($formation?->individuelles as $individuelle)
                     <tr class="item" style="text-align: center;">
+                        <td>{{ $i++ }}</td>
                         <td>{{ $individuelle->user->cin }}</td>
-                        <td>{{ $individuelle?->user?->civilite }}</td>
+                        {{-- <td>{{ $individuelle?->user?->civilite }}</td> --}}
                         <td>{{ ucwords($individuelle?->user?->firstname) }}</td>
                         <td>{{ strtoupper($individuelle?->user?->name) }}</td>
                         <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>

@@ -190,6 +190,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::post('feuillePresence', [FormationController::class, 'feuillePresence'])->name('feuillePresence');
         Route::post('feuillePresenceCol', [FormationController::class, 'feuillePresenceCol'])->name('feuillePresenceCol');
         Route::post('feuillePresenceJour', [FormationController::class, 'feuillePresenceJour'])->name('feuillePresenceJour');
+        Route::post('feuillePresenceTous', [FormationController::class, 'feuillePresenceTous'])->name('feuillePresenceTous');
         Route::post('feuillePresenceFinale', [FormationController::class, 'feuillePresenceFinale'])->name('feuillePresenceFinale');
 
         Route::post('pvEvaluationCol', [FormationController::class, 'pvEvaluationCol'])->name('pvEvaluationCol');

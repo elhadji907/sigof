@@ -125,6 +125,11 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property Collection|Individuelle[] $individuelles
  * @property Collection|Collectivemodule[] $collectivemodules
  * @property Collection|Individuelle[] $listecollectives
+ * @property Carbon|null $date_etat
+ * @property string|null $duree_formation
+ * @property string|null $file_etat_hebergement
+ * @property string|null $file_etat_restauration
+ * @property string|null $file_etat_transport
  *
  * @package App\Models
  */
@@ -181,13 +186,15 @@ class Formation extends Model
 		'date_fin' => 'datetime',
 		'date_convention' => 'datetime',
 		'date_lettre' => 'datetime',
+		'date_etat' => 'datetime',
 	];
 
 	protected $dates = [
 		'date_pv',
 		'date_suivi',
 		'date_debut',
-		'date_fin'
+		'date_fin',
+		'date_etat'
 	];
 
 	protected $fillable = [
@@ -270,6 +277,12 @@ class Formation extends Model
 		'zones_id',
 		'date_convention',
 		'date_lettre',
+
+		'duree_formation',
+		'file_etat_hebergement',
+		'file_etat_restauration',
+		'file_etat_transport',
+		'date_etat',
 	];
 
 	

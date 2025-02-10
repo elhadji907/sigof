@@ -1988,7 +1988,7 @@ class FormationController extends Controller
     public function feuillePresenceJour(Request $request)
     {
 
-        $formation  = Formation::find($request->input('idformation'));
+        $formation = Formation::find($request->input('idformation'));
         /* $module     = Module::findOrFail($request->input('idmodule'));
         $region     = Region::findOrFail($request->input('idlocalite')); */
         $emargement = Emargement::findOrFail($request->input('idemargement'));
@@ -2043,6 +2043,30 @@ class FormationController extends Controller
 
         // Output the generated PDF to Browser
         $dompdf->stream($name, ['Attachment' => false]);
+    }
+
+    public function feuillePresenceTous(Request $request)
+    {
+
+        $formation  = Formation::find($request->input('idformation'));
+        $emargement = Emargement::findOrFail($request->input('idemargement'));
+
+        $feuillepresences = Feuillepresence::where('emargements_id', $request->idemargement)
+            ->get();
+
+        foreach ($feuillepresences as $key => $feuillepresence) {
+            $feuillepresence->update([
+                'presence' => "Oui",
+
+            ]);
+
+            $feuillepresence->save();
+        }
+
+        Alert::success("Modification réussie", "La modification a été effectuée avec succès.");
+
+        return redirect()->back();
+
     }
 
     public function feuillePresenceFinale(Request $request)
@@ -3072,7 +3096,7 @@ class FormationController extends Controller
                 $feuillepresence = Feuillepresence::create([
                     'emargements_id'   => $emargement->id,
                     'individuelles_id' => $individuelle->id,
-                    'presence' => null,
+                    'presence'         => null,
                 ]);
             }
         }

@@ -31,15 +31,34 @@
                         <br>
                         <div class="d-flex justify-content-between align-items-center">
                             <h5><u><b>{{ $emargement?->jour }}</b></u></h5>
-                            <form action="{{ route('feuillePresenceJour') }}" method="post" target="_blank">
-                                @csrf
-                                <input type="hidden" name="idformation" value="{{ $formation->id }}">
-                                <input type="hidden" name="idmodule" value="{{ $formation?->module?->id }}">
-                                <input type="hidden" name="idlocalite"
-                                    value="{{ $formation?->departement?->region?->id }}">
-                                <input type="hidden" name="idemargement" value="{{ $emargement?->id }}">
-                                <button class="btn btn-secondary btn-sm mx-1">Feuille présence</button>
-                            </form>
+                            <span class="d-flex align-items-baseline">
+                                <form action="{{ route('feuillePresenceJour') }}" method="post" target="_blank">
+                                    @csrf
+                                    <input type="hidden" name="idformation" value="{{ $formation->id }}">
+                                    <input type="hidden" name="idmodule" value="{{ $formation?->module?->id }}">
+                                    <input type="hidden" name="idlocalite"
+                                        value="{{ $formation?->departement?->region?->id }}">
+                                    <input type="hidden" name="idemargement" value="{{ $emargement?->id }}">
+                                    <button class="btn btn-secondary btn-sm mx-1">Feuille présence</button>
+                                </form>
+                                <div class="filter">
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                            class="bi bi-three-dots"></i></a>
+                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                        <li>
+                                            <form action="{{ route('feuillePresenceTous') }}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="idformation" value="{{ $formation->id }}">
+                                                <input type="hidden" name="idmodule" value="{{ $formation?->module?->id }}">
+                                                <input type="hidden" name="idlocalite"
+                                                    value="{{ $formation?->departement?->region?->id }}">
+                                                <input type="hidden" name="idemargement" value="{{ $emargement?->id }}">
+                                                <button class="show_confirm_valider btn btn-sm mx-1">Pointer tous</button>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </span>
                         </div>
                         <br>
                         <form method="post"
@@ -105,8 +124,7 @@
                                                         <td>{{ $individuelle?->departement?->nom }}</td>
                                                         {{-- <td>{{ $individuelle?->user?->adresse }}</td> --}}
                                                         {{-- <td>{{ $individuelle?->module?->name }}</td> --}}
-                                                        {{-- <td><span
-                                                                class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
+                                                        {{-- <td><span class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
                                                         </td> --}}
                                                         <td style="text-align: center">
                                                             @foreach ($individuelle?->feuillepresences as $feuillepresence)
@@ -145,6 +163,7 @@
                                                                                 action="{{ route('feuillepresences.destroy', $individuelle->id) }}"
                                                                                 method="post">
                                                                                 @csrf
+                                                                                @method('DELETE')
                                                                                 <button type="submit"
                                                                                     class="dropdown-item show_confirm"
                                                                                     title="Supprimer">Supprimer</button>
@@ -185,15 +204,16 @@
                             </div>
                             <div class="modal-body">
                                 <input type="hidden" name="idemargement" value="{{ $emargement->id }}">
+                                <input type="hidden" name="pointeur" value="0">
                                 <label for="motif" class="form-label">Présence<span
                                         class="text-danger mx-1">*</span></label>
                                 <select name="presence" class="form-select  @error('presence') is-invalid @enderror"
                                     aria-label="Select" id="select-field-feuille_presence" data-placeholder="Choisir">
-                                    {{-- @foreach ($individuelle?->feuillepresences as $feuillepresence)
+                                    @foreach ($individuelle?->feuillepresences->unique('presence') as $feuillepresence)
                                         <option value="{{ $feuillepresence?->presence ?? old('presence') }}">
-                                            {{ $feuillepresence?->presence ?? old('presence') }}</option>
-                                    @endforeach --}}
-                                    <option value="">Choisir</option>
+                                            {{ in_array($feuillepresence?->emargements_id, $feuillepresenceIndividuelle) ? $feuillepresence?->presence : '' }}
+                                        </option>
+                                    @endforeach
                                     <option value="Oui">Oui</option>
                                     <option value="Non">Non</option>
                                 </select>
