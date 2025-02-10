@@ -110,7 +110,7 @@
                         {{ $formation->code }}
                     </td>
                     <td colspan="2"><b>{{ __('N° convention : ') }}</b>
-                        @if(!empty($formation?->numero_convention))
+                        @if (!empty($formation?->numero_convention))
                             {{ $formation?->numero_convention }}
                         @endif
                     </td>
@@ -184,8 +184,9 @@
                         <td>{{ strtoupper($individuelle?->departement?->nom) }}</td>
                         <td>{{ $individuelle?->user?->telephone }}</td>
                         <td>{{ $individuelle?->feuillepresences?->where('presence', 'Oui')?->count() }}</td>
-                        <td></td>
-                        <td></td>
+                        <td>{{ number_format($formation?->indemnite_transport_jour, 0, ',', ' ') }}</td>
+                        <td>{{ number_format($formation?->indemnite_transport_jour * $individuelle?->feuillepresences?->where('presence', 'Oui')?->count(), 0, ',', ' ') }}
+                        </td>
                         <td></td>
                     </tr>
                 @endforeach

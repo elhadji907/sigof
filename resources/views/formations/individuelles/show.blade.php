@@ -509,9 +509,9 @@
                                                     <thead>
                                                         <tr>
                                                             <th class="text-center">N°</th>
-                                                            <th class="text-center">N° Dossier</th>
+                                                            {{-- <th class="text-center">N° Dossier</th> --}}
                                                             <th class="text-center">CIN</th>
-                                                            <th class="text-center">Civilité</th>
+                                                            {{-- <th class="text-center">Civilité</th> --}}
                                                             <th>Prénom</th>
                                                             <th>NOM</th>
                                                             <th class="text-center">Date naissance</th>
@@ -536,12 +536,12 @@
                                                         @foreach ($formation->individuelles as $individuelle)
                                                             <tr valign="middle">
                                                                 <td class="text-center">{{ $i++ }}</td>
-                                                                <td class="text-center">{{ $individuelle?->numero }}</td>
+                                                                {{-- <td class="text-center">{{ $individuelle?->numero }}</td> --}}
                                                                 <td style="text-align: center;">
                                                                     {{ $individuelle?->user?->cin }}</td>
-                                                                <td class="text-center">
+                                                                {{-- <td class="text-center">
                                                                     {{ $individuelle?->user?->civilite }}
-                                                                </td>
+                                                                </td> --}}
                                                                 <td>{{ $individuelle?->user?->firstname }}</td>
                                                                 <td>{{ $individuelle?->user?->name }}</td>
                                                                 <td style="text-align: center;">

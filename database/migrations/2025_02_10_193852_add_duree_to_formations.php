@@ -17,6 +17,13 @@ return new class extends Migration
             $table->string('file_etat_restauration', 200)->nullable();
             $table->string('file_etat_transport', 200)->nullable();
             $table->timestamp('date_etat')->nullable();
+            $table->double('indemnite_transport_jour')->nullable();
+            $table->double('indemnite_transport')->nullable();
+            $table->double('indemnite_hebergement_jour')->nullable();
+            $table->double('indemnite_hebergement')->nullable();
+            $table->double('indemnite_restauration_jour')->nullable();
+            $table->double('indemnite_restauration')->nullable();
+            $table->double('indemnite')->nullable();
         });
     }
 
@@ -31,6 +38,13 @@ return new class extends Migration
             $table->dropColumn('file_etat_restauration');
             $table->dropColumn('file_etat_transport');
             $table->dropColumn('date_etat');
+            $table->dropColumn('indemnite_transport_jour');
+            $table->dropColumn('indemnite_transport');
+            $table->dropColumn('indemnite_hebergement_jour');
+            $table->dropColumn('indemnite_hebergement');
+            $table->dropColumn('indemnite_restauration_jour');
+            $table->dropColumn('indemnite_restauration');
+            $table->dropColumn('indemnite');
         });
     }
 };

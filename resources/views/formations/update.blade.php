@@ -601,6 +601,21 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Indemnité transport (jours)</label>
+                                            <input type="number" name="indemnite_transport_jour" min="0" step="0.001"
+                                                value="{{ $formation?->indemnite_transport_jour ?? old('indemnite_transport_jour') }}"
+                                                class="form-control form-control-sm @error('indemnite_transport_jour') is-invalid @enderror"
+                                                id="indemnite_transport_jour" placeholder="Indemnité transport">
+                                            @error('indemnite_transport_jour')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
                                     <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                         <div class="mb-3">
                                             <label for="membres_jury">Autre membres du jury</label>

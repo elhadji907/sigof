@@ -130,6 +130,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $file_etat_hebergement
  * @property string|null $file_etat_restauration
  * @property string|null $file_etat_transport
+ * 
+ * @property float|null $indemnite_transport_jour
+ * @property float|null $indemnite_transport
+ * @property float|null $indemnite_hebergement_jour
+ * @property float|null $indemnite_hebergement
+ * @property float|null $indemnite_restauration_jour
+ * @property float|null $indemnite_restauration
+ * @property float|null $indemnite
  *
  * @package App\Models
  */
@@ -187,6 +195,14 @@ class Formation extends Model
 		'date_convention' => 'datetime',
 		'date_lettre' => 'datetime',
 		'date_etat' => 'datetime',
+
+		'indemnite_transport_jour' => 'float',
+		'indemnite_transport' => 'float',
+		'indemnite_hebergement_jour' => 'float',
+		'indemnite_hebergement' => 'float',
+		'indemnite_restauration_jour' => 'float',
+		'indemnite_restauration' => 'float',
+		'indemnite' => 'float',
 	];
 
 	protected $dates = [
@@ -283,6 +299,13 @@ class Formation extends Model
 		'file_etat_restauration',
 		'file_etat_transport',
 		'date_etat',
+		'indemnite_transport_jour',
+		'indemnite_transport',
+		'indemnite_hebergement_jour',
+		'indemnite_hebergement',
+		'indemnite_restauration_jour',
+		'indemnite_restauration',
+		'indemnite',
 	];
 
 	
