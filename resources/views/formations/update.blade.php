@@ -544,7 +544,7 @@
 
                                     <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <div class="mb-3">
-                                            <label for="region" class="form-label">Statut attestations<span
+                                            <label for="statut" class="form-label">Statut attestations<span
                                                     class="text-danger mx-1">*</span></label>
                                             <select name="statut"
                                                 class="form-select form-select-sm @error('statut') is-invalid @enderror"
@@ -564,6 +564,36 @@
                                                 </option>
                                             </select>
                                             @error('statut')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Durée formation (jours)</label>
+                                            <input type="number" name="duree_formation" min="1" step="1"
+                                                value="{{ $formation?->duree_formation ?? old('duree_formation') }}"
+                                                class="form-control form-control-sm @error('duree_formation') is-invalid @enderror"
+                                                id="duree_formation" placeholder="Durée formation">
+                                            @error('duree_formation')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <div class="mb-3">
+                                            <label class="form-label">Date états paiement</label>
+                                            <input type="date" name="date_etat"
+                                                value="{{ $formation?->date_etat?->format('Y-m-d') ?? old('date_etat') }}"
+                                                class="datepicker form-control form-control-sm @error('date_etat') is-invalid @enderror"
+                                                id="date_etat" placeholder="jj/mm/aaaa">
+                                            @error('date_etat')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
                                                 </span>

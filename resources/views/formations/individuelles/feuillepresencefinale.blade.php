@@ -114,10 +114,14 @@
                             {{ $formation?->suivi_dossier }}
                         @endisset
                     </td>
-                    <td colspan="1"><b>{{ __('Date : ') }}</b>
-
+                    <td colspan="1"><b>{{ __('Date état : ') }}</b>
+                        {{ $formation?->date_etat?->format('d/m/Y') }}
                     </td>
                     <td colspan="2"><b>{{ __('Durée : ') }}</b>
+                        {{ $formation?->duree_formation }}
+                        @if (!empty($formation?->duree_formation))
+                            jours
+                        @endif
                     </td>
                 </tr>
                 <tr class="heading">

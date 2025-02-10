@@ -585,6 +585,17 @@ class FormationController extends Controller
         } else {
             $onfpevaluateur = null;
         }
+        if (! empty($request->input('duree_formation'))) {
+            $duree_formation = $request->input('duree_formation');
+        } else {
+            $duree_formation = null;
+        }
+
+        if (! empty($request->input('date_etat'))) {
+            $date_etat = date('Y-m-d H:i:s', strtotime($request->input('date_etat')));
+        } else {
+            $date_etat = null;
+        }
 
         $formation->update([
             "code"                => $request->input('code'),
@@ -620,6 +631,8 @@ class FormationController extends Controller
             /* "evaluateurs_id"        =>   $request->input('evaluateur'), */
             "onfpevaluateurs_id"  => $onfpevaluateur,
             "attestation"         => $request->statut,
+            "duree_formation"     => $duree_formation,
+            "date_etat"           => $date_etat,
 
         ]);
 
