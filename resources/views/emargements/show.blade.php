@@ -58,17 +58,19 @@
                                         <thead>
                                             <tr>
                                                 <th width="3%">N°</th>
-                                                <th width="3%">
-                                                    {{-- <input type="checkbox" class="form-check-input" id="checkAll"> --}}
-                                                    Civilité
-                                                </th>
+                                                {{-- <th>CIN</th> --}}
+                                                {{--  <th width="3%"> --}}
+                                                {{-- <input type="checkbox" class="form-check-input" id="checkAll"> --}}
+                                                {{--      Civilité
+                                                </th> --}}
                                                 <th>Prénom</th>
                                                 <th>NOM</th>
                                                 <th>Date naissance</th>
                                                 <th>Lieu naissance</th>
                                                 <th>Département</th>
-                                                <th>Module</th>
-                                                <th>Présence</th>
+                                                {{-- <th>Adresse</th> --}}
+                                                {{-- <th>Module</th> --}}
+                                                <th style="text-align: center">Présence</th>
                                                 @if (!empty($formation->projets_id))
                                                     <th>Projet</th>
                                                 @endif
@@ -77,36 +79,39 @@
                                         </thead>
                                         <tbody>
                                             <?php $i = 1; ?>
-                                            @foreach ($individuelles as $individuelle)
+                                            @foreach ($formation?->individuelles as $individuelle)
                                                 @if (!empty($individuelle?->numero))
                                                     <tr>
                                                         <td>{{ $i++ }}</td>
-                                                        <td>
-                                                            {{-- <input type="checkbox" name="individuelles[]"
+                                                        {{-- <td>{{ $individuelle?->user?->cin }}</td> --}}
+                                                        {{--  <td> --}}
+                                                        {{-- <input type="checkbox" name="individuelles[]"
                                                                 value="{{ $individuelle->id }}"
                                                                 {{ in_array($individuelle->formations_id, $individuelleFormation) ? 'checked' : '' }}
                                                                 {{ in_array($individuelle->formations_id, $individuelleFormationCheck) ? 'disabled' : '' }}
                                                                 class="form-check-input @error('individuelles') is-invalid @enderror"> --}}
-                                                            {{ $individuelle?->user?->civilite }}
+                                                        {{-- {{ $individuelle?->user?->civilite }}
                                                             @error('individuelles')
                                                                 <span class="invalid-feedback" role="alert">
                                                                     <div>{{ $message }}</div>
                                                                 </span>
                                                             @enderror
-                                                        </td>
+                                                        </td> --}}
                                                         <td>{{ $individuelle?->user?->firstname }}</td>
                                                         <td>{{ $individuelle?->user?->name }}</td>
-                                                        <td>{{ $individuelle?->user->date_naissance?->format('d/m/Y') }}
+                                                        <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}
                                                         </td>
-                                                        <td>{{ $individuelle?->user->lieu_naissance }}</td>
-                                                        <td>{{ $individuelle?->departement->nom }}</td>
-                                                        <td>{{ $individuelle?->module->name }}</td>
+                                                        <td>{{ $individuelle?->user?->lieu_naissance }}</td>
+                                                        <td>{{ $individuelle?->departement?->nom }}</td>
+                                                        {{-- <td>{{ $individuelle?->user?->adresse }}</td> --}}
+                                                        {{-- <td>{{ $individuelle?->module?->name }}</td> --}}
                                                         {{-- <td><span
                                                                 class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
                                                         </td> --}}
-                                                        <td><span
-                                                                class="{{ $individuelle?->feuillepresence?->presence }}">{{ $individuelle?->feuillepresence?->presence }}
-                                                            </span>
+                                                        <td style="text-align: center">
+                                                            @foreach ($individuelle?->feuillepresences as $feuillepresence)
+                                                                {{ in_array($feuillepresence?->emargements_id, $feuillepresenceIndividuelle) ? $feuillepresence?->presence : '' }}
+                                                            @endforeach
                                                         </td>
                                                         @if (!empty($formation->projets_id))
                                                             <td>{{ $individuelle?->projet?->sigle }}</td>
@@ -129,8 +134,7 @@
                                                                                     class="bi bi-pencil"></i>Modifier</a> --}}
                                                                             <button type="button" class="dropdown-item"
                                                                                 data-bs-toggle="modal"
-                                                                                data-bs-target="#PresenceModal{{ $individuelle->id }}"><i
-                                                                                    class="bi bi-pencil"></i>Présence
+                                                                                data-bs-target="#PresenceModal{{ $individuelle->id }}">Présence
                                                                             </button>
                                                                             {{-- <button type="button" class="dropdown-item btn btn-sm"
                                                                             data-bs-toggle="modal" data-bs-target="#generate_rapport"></i>Rechercher
@@ -143,8 +147,7 @@
                                                                                 @csrf
                                                                                 <button type="submit"
                                                                                     class="dropdown-item show_confirm"
-                                                                                    title="Supprimer"><i
-                                                                                        class="bi bi-trash"></i>Supprimer</button>
+                                                                                    title="Supprimer">Supprimer</button>
                                                                             </form>
                                                                         </li>
                                                                     </ul>
@@ -167,7 +170,7 @@
                 </div>
             </div>
         </div>
-        @foreach ($individuelles as $individuelle)
+        @foreach ($formation?->individuelles as $individuelle)
             <div class="modal fade" id="PresenceModal{{ $individuelle->id }}" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -182,14 +185,17 @@
                             </div>
                             <div class="modal-body">
                                 <input type="hidden" name="idemargement" value="{{ $emargement->id }}">
-                                <label for="motif" class="form-label">Sélectionner<span
+                                <label for="motif" class="form-label">Présence<span
                                         class="text-danger mx-1">*</span></label>
                                 <select name="presence" class="form-select  @error('presence') is-invalid @enderror"
                                     aria-label="Select" id="select-field-feuille_presence" data-placeholder="Choisir">
-                                    <option value="{{ $individuelle?->feuillepresence?->presence ?? old('presence') }}">{{ $individuelle?->feuillepresence?->presence ?? old('presence') }}</option>
-                                    <option value="Présent">Présent</option>
-                                    <option value="Absent">Absent</option>
-                                    <option value="Abandon">Abandon</option>
+                                    {{-- @foreach ($individuelle?->feuillepresences as $feuillepresence)
+                                        <option value="{{ $feuillepresence?->presence ?? old('presence') }}">
+                                            {{ $feuillepresence?->presence ?? old('presence') }}</option>
+                                    @endforeach --}}
+                                    <option value="">Choisir</option>
+                                    <option value="Oui">Oui</option>
+                                    <option value="Non">Non</option>
                                 </select>
                                 @error('motif')
                                     <span class="invalid-feedback" role="alert">

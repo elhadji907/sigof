@@ -115,11 +115,9 @@
                         @endisset
                     </td>
                     <td colspan="1"><b>{{ __('Date : ') }}</b>
-                        @isset($emargement?->date)
-                            {{ $emargement?->date?->format('d/m/Y') }}
-                        @endisset
+
                     </td>
-                    <td colspan="2"><b>{{ $emargement?->jour }}</b>
+                    <td colspan="2"><b>{{ __('Durée : ') }}</b>
                     </td>
                 </tr>
                 <tr class="heading">
@@ -155,32 +153,34 @@
                     </td>
                 </tr>
                 <tr class="item" style="text-align: center;">
-                    <td><b>N° CIN</b></td>
-                    <td><b>Civilité</b></td>
+                    <td width="4%"><b>N°</b></td>
+                    <td><b>CIN</b></td>
+                    {{-- <td><b>Civilité</b></td> --}}
                     <td><b>Prénom</b></td>
                     <td><b>NOM</b></td>
                     <td><b>Date naissance</b></td>
                     <td><b>Lieu de naissance</b></td>
                     <td><b>Téléphone</b></td>
-                    <td><b>Présence</b></td>
+                    <td><b>Nbre Jours</b></td>
                     <td><b>Emargement</b></td>
                 </tr>
             </thead>
             <tbody>
+                <?php $i = 1; ?>
                 @foreach ($formation?->individuelles as $individuelle)
                     <tr class="item" style="text-align: center;">
+                        <td>{{ $i++ }}</td>
                         <td>{{ $individuelle->user->cin }}</td>
-                        <td>{{ $individuelle?->user?->civilite }}</td>
+                        {{-- <td>{{ $individuelle?->user?->civilite }}</td> --}}
                         <td>{{ ucwords($individuelle?->user?->firstname) }}</td>
                         <td>{{ strtoupper($individuelle?->user?->name) }}</td>
                         <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>
                         <td>{{ strtoupper($individuelle?->user?->lieu_naissance) }}</td>
                         <td>{{ $individuelle?->user?->telephone }}</td>
-                        <td>{{ ucwords($individuelle?->feuillepresence?->presence) }}</td>
+                        <td>{{ $individuelle?->feuillepresences?->where('presence', 'Oui')?->count() }}</td>
                         <td></td>
                     </tr>
                 @endforeach
-
             </tbody>
         </table>
         {{--  <h4 valign="top">

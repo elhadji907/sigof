@@ -922,7 +922,7 @@
                                             </div>
                                             @can('evaluation-formation')
                                                 <div class="text-center">
-                                                    <button type="submit" class="btn btn-outline-primary"><i
+                                                    <button type="submit" class="btn btn-outline-primary btn-sm"><i
                                                             class="bi bi-check2-circle"></i>&nbsp;Save</button>
                                                 </div>
                                             @endcan
@@ -937,12 +937,32 @@
                                 <div class="col-12 col-md-12 col-lg-12 mb-0">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h1 class="card-title">Feuilles de présence</h1>
-                                        <h5 class="card-title">
+                                        <span class="d-flex align-items-baseline">
                                             <button type="button" class="btn btn-outline-primary btn-sm"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#ajouterJours{{ $formation->id }}">ajouter
                                             </button>
-                                        </h5>
+                                            <div class="filter">
+                                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                        class="bi bi-three-dots"></i></a>
+                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                    <li>
+                                                        <form action="{{ route('feuillePresenceFinale') }}" method="post" target="_blank">
+                                                            @csrf
+                                                            <input type="hidden" name="idformation" value="{{ $formation->id }}">
+                                                            <input type="hidden" name="idmodule" value="{{ $formation?->module?->id }}">
+                                                            <input type="hidden" name="idlocalite"
+                                                                value="{{ $formation?->departement?->region?->id }}">                                                            
+                                                            <button class="btn btn-sm mx-1">Feuille présence</button>
+                                                        </form>
+                                                    </li>
+                                                    <li>
+                                                        <button type="button" class="dropdown-item btn btn-sm" data-bs-toggle="modal"
+                                                            data-bs-target="#generate_rapportFormation"></i>Etat paiement</button>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </span>
                                     </div>
                                     <div class="row g-3">
                                         <table class="table table-bordered table-hover datatables"
@@ -968,7 +988,7 @@
                                                         <td class="text-center">
                                                             {{ $emargement?->date?->format('d/m/Y') }}</td>
                                                         <td class="text-center">
-                                                            {{ count($emargement?->feuillepresences) }}</td>
+                                                            {{ count($emargement?->formation?->individuelles) }}</td>
                                                         <td class="text-center">
                                                             @if (!empty($emargement?->file))
                                                             <div>
@@ -1444,7 +1464,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-sm"
                                 data-bs-dismiss="modal">Fermer</button>
-                            <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-printer"></i>
+                            <button type="submit" class="btn btn-primary btn-sm">
                                 Valider</button>
                         </div>
                     </form>
@@ -1614,7 +1634,7 @@
                     </div>
                     {{-- <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
+                                <button type="submit" class="btn btn-primary">
                                     Valider</button>
                             </div>
                         </form> --}}
@@ -1927,9 +1947,9 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn btn-sm"
+                        <button type="button" class="btn btn-secondary btn-sm"
                             data-bs-dismiss="modal">Fermer</button>
-                        <button type="submit" class="btn btn-primary btn btn-sm"><i class="bi bi-printer"></i>
+                        <button type="submit" class="btn btn-primary btn-sm">
                             Vavilider</button>
                     </div>
                 </form>
@@ -1980,10 +2000,9 @@
                             </div> --}}
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn btn-sm"
+                        <button type="button" class="btn btn-secondary btn-sm"
                             data-bs-dismiss="modal">Fermer</button>
-                        <button type="submit" class="btn btn-primary btn btn-sm"><i class="bi bi-printer"></i>
-                            Ajouter</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Ajouter</button>
                     </div>
                 </form>
             </div>
@@ -2065,7 +2084,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary btn-sm"
                                 data-bs-dismiss="modal">Fermer</button>
-                            <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-printer"></i>
+                            <button type="submit" class="btn btn-primary btn-sm">
                                 Modifier</button>
                         </div>
                     </form>

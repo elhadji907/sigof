@@ -5,8 +5,6 @@ use App\Models\Emargement;
 use App\Models\Feuillepresence;
 use App\Models\Formation;
 use App\Models\Individuelle;
-use App\Models\Module;
-use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -90,11 +88,11 @@ class EmargementController extends Controller
     public function formationemargement(Request $request)
     {
         $formation  = Formation::findOrFail($request->input('idformation'));
-        $module     = Module::findOrFail($request->input('idmodule'));
-        $region     = Region::findOrFail($request->input('idlocalite'));
         $emargement = Emargement::findOrFail($request->input('idemargement'));
+        /* $module     = Module::findOrFail($request->input('idmodule'));
+        $region     = Region::findOrFail($request->input('idlocalite')); */
 
-        if (! empty($formation?->projets_id)) {
+        /* if (! empty($formation?->projets_id)) {
             $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
                 ->join('regions', 'regions.id', 'individuelles.regions_id')
                 ->select('individuelles.*')
@@ -102,9 +100,6 @@ class EmargementController extends Controller
                 ->where('individuelles.formations_id', $formation?->id)
                 ->where('modules.name', 'LIKE', "%{$module->name}%")
                 ->where('regions.nom', $region->nom)
-            /* ->where('individuelles.statut', 'attente')
-                ->orwhere('individuelles.statut', 'retirer')
-                ->orwhere('individuelles.statut', 'retenu') */
                 ->get();
         } else {
             $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
@@ -113,14 +108,11 @@ class EmargementController extends Controller
                 ->where('individuelles.formations_id', $formation?->id)
                 ->where('modules.name', 'LIKE', "%{$module->name}%")
                 ->where('regions.nom', $region->nom)
-            /* ->where('individuelles.statut', 'attente')
-                ->orwhere('individuelles.statut', 'retirer')
-                ->orwhere('individuelles.statut', 'retenu') */
                 ->get();
-        }
+        } */
 
-        $candidatsretenus = Individuelle::where('formations_id', $formation?->id)
-            ->get();
+        /* $candidatsretenus = Individuelle::where('formations_id', $formation?->id)
+            ->get(); */
 
         $individuelleFormation = DB::table('individuelles')
             ->where('formations_id', $formation?->id)
@@ -133,17 +125,25 @@ class EmargementController extends Controller
             ->pluck('formations_id', 'formations_id')
             ->all();
 
+        $feuillepresenceIndividuelle = DB::table('feuillepresences')
+            ->where('emargements_id', $emargement?->id)
+            ->pluck('emargements_id', 'emargements_id')
+            ->all();
+
+        /* dd($feuillepresenceIndividuelle); */
+
         return view(
             "emargements.show",
             compact(
                 'emargement',
                 'formation',
-                'individuelles',
+                'feuillepresenceIndividuelle',
+                /* 'individuelles',
                 'individuelleFormation',
                 'module',
                 'region',
                 'candidatsretenus',
-                'individuelleFormationCheck'
+                'individuelleFormationCheck' */
             )
         );
     }

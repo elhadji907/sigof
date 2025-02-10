@@ -345,4 +345,9 @@ class Individuelle extends Model
     {
         return $this->belongsTo(Emargement::class, 'emargements_id');
     }
+
+	public function feuillepresences()
+	{
+		return $this->hasMany(Feuillepresence::class, 'individuelles_id');
+	}
 }

@@ -47,8 +47,4 @@ class Emargement extends Model
 		return $this->belongsTo(Formation::class, 'formations_id');
 	}
 
-	public function feuillepresences()
-	{
-		return $this->hasMany(Feuillepresence::class, 'emargements_id');
-	}
 }

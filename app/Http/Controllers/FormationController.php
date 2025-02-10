@@ -1989,11 +1989,11 @@ class FormationController extends Controller
     {
 
         $formation  = Formation::find($request->input('idformation'));
-        $module     = Module::findOrFail($request->input('idmodule'));
-        $region     = Region::findOrFail($request->input('idlocalite'));
+        /* $module     = Module::findOrFail($request->input('idmodule'));
+        $region     = Region::findOrFail($request->input('idlocalite')); */
         $emargement = Emargement::findOrFail($request->input('idemargement'));
 
-        if (! empty($formation?->projets_id)) {
+        /* if (! empty($formation?->projets_id)) {
             $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
                 ->join('regions', 'regions.id', 'individuelles.regions_id')
                 ->select('individuelles.*')
@@ -2010,7 +2010,7 @@ class FormationController extends Controller
                 ->where('modules.name', 'LIKE', "%{$module->name}%")
                 ->where('regions.nom', $region->nom)
                 ->get();
-        }
+        } */
 
         $title = 'Feuille de présence de la formation en  ' . $formation->name;
 
@@ -2021,8 +2021,68 @@ class FormationController extends Controller
 
         $dompdf->loadHtml(view('formations.individuelles.feuillepresencejour', compact(
             'formation',
-            'individuelles',
+            /* 'individuelles', */
             'emargement',
+            'title'
+        )));
+
+        // (Optional) Setup the paper size and orientation (portrait ou landscape)
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        /* $anne = date('d');
+        $anne = $anne . ' ' . date('m');
+        $anne = $anne . ' ' . date('Y');
+        $anne = $anne . ' à ' . date('H') . 'h';
+        $anne = $anne . ' ' . date('i') . 'min';
+        $anne = $anne . ' ' . date('s') . 's'; */
+
+        $name = 'Feuille de présence de la formation en  ' . $formation->name . ', code ' . $formation->code . '.pdf';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($name, ['Attachment' => false]);
+    }
+
+    public function feuillePresenceFinale(Request $request)
+    {
+
+        $formation = Formation::find($request->input('idformation'));
+        /* $module    = Module::findOrFail($request->input('idmodule'));
+        $region    = Region::findOrFail($request->input('idlocalite')); */
+
+        /* if (! empty($formation?->projets_id)) {
+
+            $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
+                ->join('regions', 'regions.id', 'individuelles.regions_id')
+                ->select('individuelles.*')
+                ->where('individuelles.projets_id', $formation?->projets_id)
+                ->where('individuelles.formations_id', $formation?->id)
+                ->where('modules.name', 'LIKE', "%{$module->name}%")
+                ->where('regions.nom', $region->nom)
+                ->get();
+        } else {
+
+            $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
+                ->join('regions', 'regions.id', 'individuelles.regions_id')
+                ->select('individuelles.*')
+                ->where('individuelles.formations_id', $formation?->id)
+                ->where('modules.name', 'LIKE', "%{$module->name}%")
+                ->where('regions.nom', $region->nom)
+                ->get();
+        } */
+
+        $title = 'Feuille de présence de la formation en  ' . $formation->name;
+
+        $dompdf  = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Formation');
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('formations.individuelles.feuillepresencefinale', compact(
+            'formation',
+            /* 'individuelles', */
             'title'
         )));
 
@@ -3012,6 +3072,7 @@ class FormationController extends Controller
                 $feuillepresence = Feuillepresence::create([
                     'emargements_id'   => $emargement->id,
                     'individuelles_id' => $individuelle->id,
+                    'presence' => null,
                 ]);
             }
         }
