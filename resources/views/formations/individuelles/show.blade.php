@@ -957,8 +957,14 @@
                                                         </form>
                                                     </li>
                                                     <li>
-                                                        <button type="button" class="dropdown-item btn btn-sm" data-bs-toggle="modal"
-                                                            data-bs-target="#generate_rapportFormation"></i>Etat paiement</button>
+                                                        <form action="{{ route('etatTransport') }}" method="post" target="_blank">
+                                                            @csrf
+                                                            <input type="hidden" name="idformation" value="{{ $formation->id }}">
+                                                            <input type="hidden" name="idmodule" value="{{ $formation?->module?->id }}">
+                                                            <input type="hidden" name="idlocalite"
+                                                                value="{{ $formation?->departement?->region?->id }}">                                                            
+                                                            <button class="btn btn-sm mx-1">Etat transport</button>
+                                                        </form>
                                                     </li>
                                                 </ul>
                                             </div>

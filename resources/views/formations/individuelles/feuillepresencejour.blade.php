@@ -110,14 +110,14 @@
                         {{ $formation->code }}
                     </td>
                     <td colspan="2"><b>{{ __('Responsable suivi : ') }}</b>
-                        @isset($formation?->date_suivi)
+                        @if(!empty($formation?->date_suivi))
                             {{ $formation?->suivi_dossier }}
-                        @endisset
+                        @endif
                     </td>
                     <td colspan="1"><b>{{ __('Date : ') }}</b>
-                        @isset($emargement?->date)
+                        @if(!empty($emargement?->date))
                             {{ $emargement?->date?->format('d/m/Y') }}
-                        @endisset
+                        @endif
                     </td>
                     <td colspan="2"><b>{{ $emargement?->jour }}</b>
                     </td>

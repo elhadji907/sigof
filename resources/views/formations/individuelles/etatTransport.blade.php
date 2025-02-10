@@ -102,19 +102,19 @@
         <table class="table table-responsive">
             <thead>
                 <tr class="heading" style="text-align: center;">
-                    <td colspan="9"><b>{{ __('FEUILLE DE PRÉSENCE') }}</b>
+                    <td colspan="10"><b>{{ __('ETAT DE PAIEMENT DU TRANSPORT') }}</b>
                     </td>
                 </tr>
                 <tr class="heading">
                     <td colspan="4">{{ __('Code formation : ') }}
                         {{ $formation->code }}
                     </td>
-                    <td colspan="2"><b>{{ __('Responsable suivi : ') }}</b>
-                        @if(!empty($formation?->date_suivi))
-                            {{ $formation?->suivi_dossier }}
+                    <td colspan="2"><b>{{ __('N° convention : ') }}</b>
+                        @if(!empty($formation?->numero_convention))
+                            {{ $formation?->numero_convention }}
                         @endif
                     </td>
-                    <td colspan="1"><b>{{ __('Date état : ') }}</b>
+                    <td colspan="2"><b>{{ __('Date état : ') }}</b>
                         {{ $formation?->date_etat?->format('d/m/Y') }}
                     </td>
                     <td colspan="2"><b>{{ __('Durée : ') }}</b>
@@ -128,7 +128,7 @@
                     <td colspan="4">{{ __('Intitulé formation : ') }}
                         {{ $formation->module->name }}
                     </td>
-                    <td colspan="5"><b>{{ __('Opérateur : ') }}</b>
+                    <td colspan="6"><b>{{ __('Opérateur : ') }}</b>
                         {{ $formation?->operateur?->user?->operateur . ' (' . $formation?->operateur?->user?->username . ')' }}
                     </td>
                 </tr>
@@ -136,7 +136,7 @@
                     <td colspan="4">{{ __('Adresse : ') }}
                         {{ $formation?->lieu }}
                     </td>
-                    <td colspan="5"><b>{{ __('Contact : ') }}</b>
+                    <td colspan="6"><b>{{ __('Contact : ') }}</b>
                         {{ substr($formation?->operateur?->user?->fixe, 0, 2) .
                             ' ' .
                             substr($formation?->operateur?->user?->fixe, 2, 3) .
@@ -162,10 +162,12 @@
                     {{-- <td><b>Civilité</b></td> --}}
                     <td><b>Prénom</b></td>
                     <td><b>NOM</b></td>
-                    <td><b>Date naissance</b></td>
-                    <td><b>Lieu de naissance</b></td>
+                    {{-- <td><b>Date naissance</b></td> --}}
+                    <td><b>Lieu de provenance</b></td>
                     <td><b>Téléphone</b></td>
                     <td><b>Nbre Jours</b></td>
+                    <td><b>Montant/Jours</b></td>
+                    <td><b>Montants (CFA)</b></td>
                     <td><b>Emargement</b></td>
                 </tr>
             </thead>
@@ -178,10 +180,12 @@
                         {{-- <td>{{ $individuelle?->user?->civilite }}</td> --}}
                         <td>{{ ucwords($individuelle?->user?->firstname) }}</td>
                         <td>{{ strtoupper($individuelle?->user?->name) }}</td>
-                        <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>
-                        <td>{{ strtoupper($individuelle?->user?->lieu_naissance) }}</td>
+                        {{-- <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td> --}}
+                        <td>{{ strtoupper($individuelle?->departement?->nom) }}</td>
                         <td>{{ $individuelle?->user?->telephone }}</td>
                         <td>{{ $individuelle?->feuillepresences?->where('presence', 'Oui')?->count() }}</td>
+                        <td></td>
+                        <td></td>
                         <td></td>
                     </tr>
                 @endforeach
