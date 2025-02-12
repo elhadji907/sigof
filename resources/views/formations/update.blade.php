@@ -25,7 +25,7 @@
                                         </span>
                                     </div>
                                 </div>
-                                <h5 class="card-title text-center pb-0 fs-4">Modification</h5>
+                                <h5 class="card-title text-center pb-0 fs-4">Modification formation</h5>
                                 <form method="post" action="{{ url('formations/' . $formation?->id) }}"
                                     enctype="multipart/form-data" class="row g-3">
                                     @csrf
@@ -643,7 +643,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="text-center p-3">
+                                    <div class="text-center p-1">
                                         <button type="submit" class="btn btn-primary btn-sm">Enregister les modifications</button>
                                     </div>
                                 </form>
