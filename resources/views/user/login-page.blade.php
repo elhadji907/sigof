@@ -68,9 +68,10 @@
                         <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
 
                             <div class="d-flex justify-content-center py-4">
-                                <a href="{{ route('accueil') }}" class="logo d-flex align-items-center w-auto" target="_blank">
+                                <a href="{{ route('accueil') }}" class="logo d-flex align-items-center w-auto"
+                                    target="_blank">
                                     {{-- <img src="{{ asset('assets/img/logo_sigle.png') }}" alt=""> --}}
-                                    <span class="d-none d-lg-block">ONFP</span>
+                                    <span class="d-none d-lg-block">ONFP-SIGOF</span>
                                 </a>
                             </div><!-- End Logo -->
 
@@ -89,6 +90,7 @@
                                         <label for="email" class="form-label">Email<span
                                                 class="text-danger mx-1">*</span></label>
                                         <div class="input-group has-validation">
+                                            <span class="input-group-text" id="inputGroupPrepend">@</span>
                                             <input type="email" name="email"
                                                 class="form-control form-control-sm @error('email') is-invalid @enderror"
                                                 id="email" required placeholder="Votre adresse e-mail"
@@ -104,13 +106,17 @@
                                         <div class="col-12">
                                             <label for="password" class="form-label">Mot de passe<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="password" name="password"
-                                                class="form-control form-control-sm  @error('password') is-invalid @enderror"
-                                                id="password" required placeholder="Votre mot de passe">
-                                            <div class="invalid-feedback">
-                                                @error('password')
-                                                    {{ $message }}
-                                                @enderror
+                                            <div class="input-group has-validation">
+                                                <span class="input-group-text" id="inputGroupPrepend"><i
+                                                        class="bi bi-key"></i></span>
+                                                <input type="password" name="password"
+                                                    class="form-control form-control-sm  @error('password') is-invalid @enderror"
+                                                    id="password" required placeholder="Votre mot de passe">
+                                                <div class="invalid-feedback">
+                                                    @error('password')
+                                                        {{ $message }}
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
 
@@ -123,7 +129,8 @@
                                             </div>
                                         </div>
                                         <div class="col-12">
-                                            <button class="btn btn-primary btn-sm w-100" type="submit">Se connecter</button>
+                                            <button class="btn btn-primary btn-sm w-100" type="submit">Se
+                                                connecter</button>
                                         </div>
                                         {{-- <div class="col-12">
                                             @if (Route::has('password.request'))

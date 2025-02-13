@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
@@ -12,10 +11,10 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
 {
@@ -25,7 +24,7 @@ class ProfileController extends Controller
      */
     public function profilePage(Request $request): View
     {
-        $user = Auth::user();
+        $user    = Auth::user();
         $projets = Projet::where('statut', 'ouvert')
             ->get();
 
@@ -34,7 +33,7 @@ class ProfileController extends Controller
             ->where('sigle', 'CIN')
             ->count();
 
-        if (!empty($usercin) && $usercin > '0') {
+        if (! empty($usercin) && $usercin > '0') {
             $user_cin = $usercin;
         } else {
             $user_cin = null;
@@ -81,42 +80,42 @@ class ProfileController extends Controller
                     ->where('sigle', 'AC')
                     ->count();
 
-                if (!empty($usercin) && $usercin > '0') {
+                if (! empty($usercin) && $usercin > '0') {
                     $user_cin = $usercin;
                 } else {
                     $user_cin = null;
                 }
 
                 return view('profile.profile-operateur-page', [
-                    'user' => $request->user(),
-                    'projets' => $projets,
+                    'user'          => $request->user(),
+                    'projets'       => $projets,
                     'count_projets' => $count_projets,
-                    'files' => $files,
-                    'user_files' => $user_files,
-                    'user_cin' => $user_cin,
+                    'files'         => $files,
+                    'user_files'    => $user_files,
+                    'user_cin'      => $user_cin,
                 ]);
             } else {
                 return view('profile.profile-page', [
-                    'user' => $request->user(),
-                    'projets' => $projets,
+                    'user'          => $request->user(),
+                    'projets'       => $projets,
                     'count_projets' => $count_projets,
                     'individuelles' => $individuelles,
-                    'formations' => $formations,
-                    'collectives' => $collectives,
-                    'files' => $files,
-                    'user_files' => $user_files,
-                    'user_cin' => $user_cin,
+                    'formations'    => $formations,
+                    'collectives'   => $collectives,
+                    'files'         => $files,
+                    'user_files'    => $user_files,
+                    'user_cin'      => $user_cin,
                 ]);
             }
         }
 
         return view('profile.profile-page', [
-            'user' => $request->user(),
-            'projets' => $projets,
+            'user'          => $request->user(),
+            'projets'       => $projets,
             'count_projets' => $count_projets,
-            'files' => $files,
-            'user_files' => $user_files,
-            'user_cin' => $user_cin,
+            'files'         => $files,
+            'user_files'    => $user_files,
+            'user_cin'      => $user_cin,
         ]);
     }
 
@@ -163,11 +162,13 @@ class ProfileController extends Controller
         $user = User::findOrFail($id);
 
         if (request('image')) {
-            Storage::disk('public')->delete($user->image);
-            $imagePath = request('image')->store('avatars', 'public');
-            $file = $request->file('image');
+            if (! empty($user->image)) {
+                Storage::disk('public')->delete($user->image);
+            }
+            $imagePath       = request('image')->store('avatars', 'public');
+            $file            = $request->file('image');
             $filenameWithExt = $file->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $filename        = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // Remove unwanted characters
             $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
             $filename = preg_replace("/\s+/", '-', $filename);
