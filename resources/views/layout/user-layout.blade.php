@@ -272,6 +272,7 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .Présent {
             background-color: #198754;
             color: white;
@@ -280,6 +281,7 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
         .Présente {
             background-color: #198754;
             color: white;
@@ -389,6 +391,15 @@
         }
 
         .invalide {
+            background-color: #DC3545;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
+        .fin {
             background-color: #DC3545;
             color: white;
             padding: 4px 8px;
