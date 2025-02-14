@@ -50,12 +50,12 @@
                         <table class="table datatables align-middle justify-content-center" id="table-agrements">
                             <thead>
                                 <tr>
-                                    <th width="40%">Commission agrément</th>
-                                    <th width="10%" class="text-center">Session</th>
-                                    <th width="5%" class="text-center">Année</th>
-                                    <th width="10%">Lieu</th>
-                                    <th width="10%">PV</th>
-                                    <th width="10%">Fin agrément</th>
+                                    <th>Commission agrément</th>
+                                    <th class="text-center">Session</th>
+                                    <th width="5%" class="text-center">Date</th>
+                                    <th>Lieu</th>
+                                    <th>PV</th>
+                                    <th>Fin agrément</th>
                                     <th width="5%" class="text-center">Operateurs</th>
                                     <th width="5%" class="text-center">Statut</th>
                                     <th width="5%" class="text-center" scope="col"><i class="bi bi-gear"></i>
@@ -68,7 +68,8 @@
                                     <tr>
                                         <td>{{ $commissionagrement?->commission }}</td>
                                         <td style="text-align: center;">{{ $commissionagrement?->session }}</td>
-                                        <td style="text-align: center;">{{ $commissionagrement?->annee }}</td>
+                                        <td style="text-align: center;">{{ $commissionagrement?->date?->format('d/m/Y') }}
+                                        </td>
                                         <td>{{ $commissionagrement?->lieu }}</td>
                                         <td>{{ $commissionagrement?->description }}</td>
                                         <td>{{ $commissionagrement?->date?->translatedFormat('l d F Y') }}
@@ -192,6 +193,18 @@
                             </div>
 
                             <div class="mb-3">
+                                <label for="floatingInput">Date agrément<span class="text-danger mx-1">*</span></label>
+                                <input type="date" name="date_agrement" value="{{ old('date_agrement') }}"
+                                    class="form-control form-control-sm @error('date_agrement') is-invalid @enderror"
+                                    id="date_agrement" placeholder="Date">
+                                @error('date_agrement')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
                                 <label for="floatingInput">Année<span class="text-danger mx-1">*</span></label>
                                 <input type="number" min="2020" name="annee" value="{{ old('annee') }}"
                                     class="form-control form-control-sm @error('annee') is-invalid @enderror"
@@ -224,7 +237,7 @@
                                     </span>
                                 @enderror
                             </div>
-                          
+
 
                         </div>
                         <div class="modal-footer">
@@ -285,6 +298,19 @@
                                         </option>
                                     </select>
                                     @error('session')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="floatingInput">Date<span class="text-danger mx-1">*</span></label>
+                                    <input type="date" name="date_agrement"
+                                        value="{{ $commissionagrement?->date?->format('Y-m-d') ?? old('date_agrement') }}"
+                                        class="form-control form-control-sm @error('date_agrement') is-invalid @enderror"
+                                        id="date_agrement" placeholder="Date">
+                                    @error('date_agrement')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>

@@ -22,13 +22,20 @@ class CommissionagrementController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'commission'  => 'required|string|unique:commissionagrements,commission,except,id',
-            'session'     => 'required|string',
-            'annee'       => 'required|string',
-            'description' => 'nullable|string',
-            'lieu'        => 'nullable|string',
+            'commission'    => 'required|string|unique:commissionagrements,commission,except,id',
+            "date_agrement" => "nullable|date|max:10|min:10|date_format:Y-m-d",
+            'session'       => 'required|string',
+            'annee'         => 'required|string',
+            'description'   => 'nullable|string',
+            'lieu'          => 'nullable|string',
 
         ]);
+
+        if (! empty($request->input('date_agrement'))) {
+            $date_agrement = $request->input('date_agrement');
+        } else {
+            $date_agrement = null;
+        }
 
         $commissionagrement = new Commissionagrement([
 
@@ -37,6 +44,7 @@ class CommissionagrementController extends Controller
             'description' => $request->input('description'),
             'lieu'        => $request->input('lieu'),
             'annee'       => $request->input('annee'),
+            'date'        => $date_agrement,
 
         ]);
 
@@ -51,27 +59,27 @@ class CommissionagrementController extends Controller
         $commissionagrement = Commissionagrement::findOrFail($id);
 
         $request->validate([
-            'commission' => ["required", "string", "unique:commissionagrements,commission,{$id}"],
-            'session'    => 'required|string',
-            'date'       => "nullable|date|min:10|max:10|date_format:Y-m-d",
-            'lieu'       => 'nullable|string',
-            'annee'      => 'required|string',
+            'commission'    => ["required", "string", "unique:commissionagrements,commission,{$id}"],
+            'session'       => 'required|string',
+            'date_agrement' => "nullable|date|min:10|max:10|date_format:Y-m-d",
+            'lieu'          => 'nullable|string',
+            'annee'         => 'required|string',
 
         ]);
 
-        if (! empty($request->input('date'))) {
-            $date = $request->input('date');
+        if (! empty($request->input('date_agrement'))) {
+            $date_agrement = $request->input('date_agrement');
         } else {
-            $date = null;
+            $date_agrement = null;
         }
 
         $commissionagrement->update([
             'commission'  => $request->input('commission'),
             'session'     => $request->input('session'),
-            'date'        => $date,
             'description' => $request->input('description'),
             'lieu'        => $request->input('lieu'),
             'annee'       => $request->input('annee'),
+            'date'        => $date_agrement,
 
         ]);
 
