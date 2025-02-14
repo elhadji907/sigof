@@ -114,7 +114,7 @@
                                         class="bi bi-three-dots"></i></a>
                             </div> --}}
                             {{-- {{ route('showRejeter', ['id' => $commissionagrement->id]) }} --}}
-                            <a href="#">
+                            <a href="{{ route('operateurs.expirer') }}">
                                 <div class="card-body">
                                     <h5 class="card-title">Agréments <span>| expirés</span></h5>
                                     <div class="d-flex align-items-center">
@@ -124,10 +124,10 @@
                                         </div>
                                         <div class="ps-3">
                                             <h6>
-                                                {{ $operateur_rejeter }}
+                                                {{ $operateur_expirer }}
                                             </h6>
                                             <span
-                                                class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_rejeter, 2, ',', ' ') . '%' }}</span>
+                                                class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_expirer, 2, ',', ' ') . '%' }}</span>
                                             {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
                                         </div>
                                     </div>

@@ -39,16 +39,19 @@ class OperateurController extends Controller
         $operateur_agreer  = Operateur::where('statut_agrement', 'agréer')->count();
         $operateur_rejeter = Operateur::where('statut_agrement', 'rejeter')->count();
         $operateur_nouveau = Operateur::where('statut_agrement', 'nouveau')->count();
+        $operateur_expirer = Operateur::where('statut_agrement', 'expirer')->count();
         $operateur_total   = Operateur::where('statut_agrement', 'agréer')->orwhere('statut_agrement', 'rejeter')->orwhere('statut_agrement', 'nouveau')->count();
 
         if (isset($operateur_total) && $operateur_total > '0') {
             $pourcentage_agreer  = ((($operateur_agreer) / ($operateur_total)) * 100);
             $pourcentage_rejeter = ((($operateur_rejeter) / ($operateur_total)) * 100);
             $pourcentage_nouveau = ((($operateur_nouveau) / ($operateur_total)) * 100);
+            $pourcentage_expirer = ((($operateur_expirer) / ($operateur_total)) * 100);
         } else {
             $pourcentage_agreer  = "0";
             $pourcentage_rejeter = "0";
             $pourcentage_nouveau = "0";
+            $pourcentage_expirer= "0";
         }
 
         $total_count = Operateur::get();
@@ -78,8 +81,10 @@ class OperateurController extends Controller
                 "pourcentage_agreer",
                 "pourcentage_rejeter",
                 "operateur_nouveau",
+                "operateur_expirer",
                 "title",
-                "pourcentage_nouveau"
+                "pourcentage_nouveau",
+                "pourcentage_expirer"
             )
         );
     }
@@ -1568,15 +1573,18 @@ class OperateurController extends Controller
         $operateur_agreer  = Operateur::where('statut_agrement', 'agréer')->count();
         $operateur_rejeter = Operateur::where('statut_agrement', 'rejeter')->count();
         $operateur_nouveau = Operateur::where('statut_agrement', 'nouveau')->count();
+        $operateur_expirer = Operateur::where('statut_agrement', 'expirer')->count();
         $operateur_total   = Operateur::where('statut_agrement', 'agréer')->orwhere('statut_agrement', 'rejeter')->orwhere('statut_agrement', 'nouveau')->count();
         if (isset($operateur_total) && $operateur_total > '0') {
             $pourcentage_agreer  = ((($operateur_agreer) / ($operateur_total)) * 100);
             $pourcentage_rejeter = ((($operateur_rejeter) / ($operateur_total)) * 100);
             $pourcentage_nouveau = ((($operateur_nouveau) / ($operateur_total)) * 100);
+            $pourcentage_expirer = ((($operateur_expirer) / ($operateur_total)) * 100);
         } else {
             $pourcentage_agreer  = "0";
             $pourcentage_rejeter = "0";
             $pourcentage_nouveau = "0";
+            $pourcentage_expirer = "0";
         }
 
         /* $total_count = Operateur::get();
@@ -1627,8 +1635,10 @@ class OperateurController extends Controller
                 "pourcentage_agreer",
                 "pourcentage_rejeter",
                 "operateur_nouveau",
+                "operateur_expirer",
                 "title",
-                "pourcentage_nouveau"
+                "pourcentage_nouveau",
+                "pourcentage_expirer"
             )
         );
     }
@@ -1639,6 +1649,19 @@ class OperateurController extends Controller
         $operateurs = Operateur::where('statut_agrement', 'agréer')->get();
         return view(
             'operateurs.agreer',
+            compact(
+                'title',
+                'operateurs'
+            )
+        );
+    }
+
+    public function expirer(Request $request)
+    {
+        $title = "Liste des opérateurs dont l'agrément est arrivé à expiration";
+        $operateurs = Operateur::where('statut_agrement', 'expirer')->get();
+        return view(
+            'operateurs.expirer',
             compact(
                 'title',
                 'operateurs'

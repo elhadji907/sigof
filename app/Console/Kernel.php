@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('backup:clean')->daily()->at('01:00');
         $schedule->command('backup:run')->daily()->at('01:30');
         $schedule->command('email:send-birthday')->dailyAt('00:00');
-        $schedule->command('email:send-finagrement')->dailyAt('00:00');
+        $schedule->command('email:send-finagrement')->dailyAt('08:00');
     }
 
     /**

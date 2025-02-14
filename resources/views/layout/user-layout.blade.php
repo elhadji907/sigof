@@ -219,6 +219,15 @@
             /* border-radius: 5px; */
         }
 
+        .expirer {
+            background-color: #ffcc00;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
         .Absente {
             background-color: #ffcc00;
             color: white;
