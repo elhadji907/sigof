@@ -261,9 +261,9 @@
 
                                 </tbody>
                             </table>
-                            @else
-                                <div class="alert alert-info">Aucune formation créée pour l'instant !</div>
-                            @endif
+                        @else
+                            <div class="alert alert-info">Aucune formation créée pour l'instant !</div>
+                        @endif
                     </div>
                 </div>
 
