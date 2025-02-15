@@ -114,7 +114,7 @@
                                         class="bi bi-three-dots"></i></a>
                             </div> --}}
                             {{-- {{ route('showRejeter', ['id' => $commissionagrement->id]) }} --}}
-                            <a href="{{ url('/expirer') }}">
+                            <a href="{{ route('operateurs.expirer') }}">
                                 <div class="card-body">
                                     <h5 class="card-title">Agréments <span>| expirés</span></h5>
                                     <div class="d-flex align-items-center">
