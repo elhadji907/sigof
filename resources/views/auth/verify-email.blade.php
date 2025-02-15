@@ -32,7 +32,7 @@
 </x-guest-layout> --}}
 
 @extends('layout.user-layout')
-@section('title', 'SIGOF')
+@section('title', 'ONFP')
 @section('space-work')
 
     <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
