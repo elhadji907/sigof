@@ -29,6 +29,7 @@ use Illuminate\Validation\Rules;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -438,6 +439,10 @@ class UserController extends Controller
             } else {
                 $this->authorize('delete', $user);
             }
+        }
+
+        if (! empty($user->image)) {
+            Storage::disk('public')->delete($user->image);
         }
 
         $user->roles()->detach();
