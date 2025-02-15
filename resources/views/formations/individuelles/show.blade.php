@@ -448,15 +448,18 @@
                                                                 @endcan
                                                                 @can('email-formation')
                                                                     <hr>
-                                                                    <form action="{{ route('sendFormationEmail') }}"
+                                                                    {{-- <form action="{{ route('sendFormationEmail') }}"
                                                                         method="post">
                                                                         @csrf
-                                                                        {{-- @method('PUT') --}}
                                                                         <input type="hidden" name="id"
                                                                             value="{{ $formation->id }}">
                                                                         <button
                                                                             class="show_confirm_valider btn btn-sm mx-1">Démarrage
                                                                             (e-mail)</button>
+                                                                    </form> --}}
+                                                                    <form action="{{ route('send-training-start-email', ['trainingId' => $formation->id]) }}" method="POST">
+                                                                        @csrf
+                                                                        <button type="submit" class="btn btn-primary">Informer les demandeurs du démarrage de la formation</button>
                                                                     </form>
 
                                                                     <form action="{{ route('sendWelcomeEmail') }}"

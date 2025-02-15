@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Notifications\Notifiable;
 
 /**
  * Class Individuelle
@@ -113,6 +114,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  */
 class Individuelle extends Model
 {
+	use Notifiable;
 	use HasFactory;
 	use SoftDeletes;
 	use \App\Helpers\UuidForKey;

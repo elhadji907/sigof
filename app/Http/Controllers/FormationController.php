@@ -26,6 +26,7 @@ use App\Models\Statut;
 use App\Models\TypesFormation;
 use App\Models\Validationformation;
 use App\Models\Validationindividuelle;
+use Artisan;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -3151,6 +3152,22 @@ class FormationController extends Controller
         }
 
         Alert::success('Enregistrement réussi !');
+
+        return redirect()->back();
+    }
+
+    public function sendTrainingStartEmail(Request $reques, $trainingId)
+    {
+        $formation = Formation::findOrFail($trainingId);
+
+        foreach ($formation?->individuelles as $key => $individuelle) {
+            // Exécuter la commande Artisan pour envoyer les e-mails
+            Artisan::call('email:notify-training-start', [
+                'formations_id' => $formation->id, // Passer l'ID de la formation
+            ]);
+        }
+
+        Alert::success('Les e-mails ont été envoyés avec succès !');
 
         return redirect()->back();
     }

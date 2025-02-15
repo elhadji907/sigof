@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
@@ -20,7 +19,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('backup:run')->daily()->at('01:30');
         $schedule->command('email:send-birthday')->dailyAt('00:00');
         $schedule->command('email:send-finagrement')->dailyAt('08:00');
-        $schedule->command('email:notify-end-agreements')->daily();
+        $schedule->command('email:notify-end-agreements')->dailyAt('08:00');
+        $schedule->command('email:send-training-reminders')->dailyAt('08:00');
 
     }
 

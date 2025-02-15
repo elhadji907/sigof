@@ -457,6 +457,8 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('demandesmt', [IndividuelleController::class, 'demandesmt'])->name('demandesmt');
         Route::get('demandesdl', [IndividuelleController::class, 'demandesdl'])->name('demandesdl');
 
+        Route::post('/send-training-start-email/{trainingId}', [FormationController::class, 'sendTrainingStartEmail'])->name('send-training-start-email');
+
         /* Vues ressouces */
         Route::resource('/users', UserController::class);
         Route::resource('/permissions', PermissionController::class);
