@@ -357,8 +357,8 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('operateurs/index', [OperateurController::class, 'index'])->name('operateurs.report');
         Route::post('operateurs/index', [OperateurController::class, 'generateReport']);
 
-        Route::get('agreer', [OperateurController::class, 'agreer'])->name('operateurs.agreer');
-        Route::get('expirer', [OperateurController::class, 'expirer'])->name('operateurs.expirer');
+        Route::get('/operateurs/agreer', [OperateurController::class, 'agreer'])->name('operateurs.agreer');
+        Route::get('/operateurs/expirer', [OperateurController::class, 'expirer'])->name('operateurs.expirer');
 
         Route::get('modules/rapports', [ModuleController::class, 'rapports'])->name('modules.rapport');
         Route::post('modules/rapports', [ModuleController::class, 'generateRapport']);
