@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'SIGOF - Profil')
+@section('title', 'ONFP | Profil')
 @section('space-work')
     <div class="pagetitle">
         <h1>Profil</h1>
