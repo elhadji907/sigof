@@ -109,6 +109,10 @@
                                 </div>
                             @endcan
                             <h5 class="card-title">Liste demandes collectives</h5>
+                            
+                            @foreach ($collectives as $collective)                                
+                            @endforeach
+                            @if (!empty($collective))
                             <table class="table datatables align-middle" id="table-collectives">
                                 <thead>
                                     <tr>
@@ -126,14 +130,14 @@
                                 <tbody>
                                     <?php $i = 1; ?>
                                     @foreach ($collectives as $collective)
-                                        @isset($collective?->numero)
+                                        @if(!empty($collective?->numero))
                                             <tr>
                                                 <td>{{ $collective?->numero }}
                                                 </td>
                                                 <td>{{ $collective?->name }}
-                                                    @isset($collective?->sigle)
+                                                    @if(!empty($collective?->sigle))
                                                         {{ '(' . $collective?->sigle . ')' }}
-                                                    @endisset
+                                                    @endif
                                                 </td>
                                                 <td><a href="mailto:{{ $collective->user->email }}">{{ $collective->user->email }}</a>
                                                 </td>
@@ -183,10 +187,13 @@
                                                     @endcan
                                                 </td>
                                             </tr>
-                                        @endisset
+                                        @endif
                                     @endforeach
                                 </tbody>
                             </table>
+                            @else
+                                <div class="alert alert-info">Aucune demande collective reçue pour l'instant !</div>
+                            @endif
                             <!-- End Table with stripped rows -->
                         </div>
                     </div>

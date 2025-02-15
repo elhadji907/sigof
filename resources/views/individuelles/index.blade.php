@@ -81,7 +81,10 @@
                             </div>
                             {{-- <p>Le tableau des demandes individuelles</p> --}}
                             <!-- Table with stripped rows -->
-                            @isset($individuelles)
+
+                            @foreach ($individuelles as $individuelle)
+                            @endforeach
+                            @if (!empty($individuelle))
                                 <table class="table datatables align-middle" id="table-individuelles">
                                     <thead>
                                         <tr>
@@ -99,7 +102,7 @@
                                     <tbody>
                                         <?php $i = 1; ?>
                                         @foreach ($individuelles as $individuelle)
-                                            @isset($individuelle?->numero)
+                                            @if (!empty($individuelle?->numero))
                                                 <tr>
                                                     <td style="text-align: center">{{ $individuelle?->numero }}</td>
                                                     <td style="text-align: center">{{ $individuelle?->user?->cin }}</td>
@@ -137,7 +140,8 @@
                                                                                 method="post">
                                                                                 @csrf
                                                                                 @method('DELETE')
-                                                                                <button type="submit" class="dropdown-item show_confirm"
+                                                                                <button type="submit"
+                                                                                    class="dropdown-item show_confirm"
                                                                                     title="Supprimer"><i
                                                                                         class="bi bi-trash"></i>Supprimer</button>
                                                                             </form>
@@ -148,12 +152,14 @@
                                                         </span>
                                                     </td>
                                                 </tr>
-                                            @endisset
+                                            @endif
                                         @endforeach
 
                                     </tbody>
                                 </table>
-                            @endisset
+                                @else
+                                    <div class="alert alert-info">Aucune demande individuelle reçue pour l'instant !</div>
+                                @endif
                             <!-- End Table with stripped rows -->
 
                         </div>

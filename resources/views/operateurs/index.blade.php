@@ -364,6 +364,8 @@
                                 </table>
 
                             </div>
+                        @else
+                            <div class="alert alert-info">Aucun opérateur enregistré pour l'instant !</div>
                         @endif
                         <!-- End Table with stripped rows -->
 
