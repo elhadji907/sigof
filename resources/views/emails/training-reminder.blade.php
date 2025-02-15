@@ -36,7 +36,7 @@
         <strong>{{ $reminderType }}</strong>.
     </p>
 
-    <p>Cette formation se déroulera à <strong>{{ $formation?->lieu. ', '. $formation?->departement?->nom}}</strong> du
+    <p>Cette formation se déroulera à <strong>{{ $formation?->lieu . ', ' . $formation?->departement?->nom }}</strong> du
         <strong>{{ $formation?->date_debut?->format('d/m/Y') }}</strong> au
         <strong>{{ $formation?->date_fin?->format('d/m/Y') }}</strong>, et sera animée par
         <strong>{{ $formation?->operateur?->user?->operateur }}
