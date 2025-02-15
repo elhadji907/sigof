@@ -21,7 +21,6 @@
         ({{ $individuelle?->formation?->operateur?->user?->username }})
     </p>
     <p>Cordialement,</p>
-    <p>L'équipe de l'ONFP</p>
     @include('emails.footer_mail')
 </body>
 
