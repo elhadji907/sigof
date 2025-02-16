@@ -76,6 +76,57 @@
                     </div>
                 </div>
             </div> --}}
+                <div class="col-lg-12">
+
+                    @if (!empty($count_formations))
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Formations en cours</h5>
+
+                                @foreach ($formations as $formation)
+                                    @if (!empty($formation->module->name))
+                                        @if (!empty($formation->duree_formation) && count($formation->emargements) > 0)
+                                            @php
+                                                $progress = round(
+                                                    (count($formation->emargements) / $formation->duree_formation) *
+                                                        100,
+                                                );
+
+                                                // Déterminer la couleur en fonction du pourcentage
+                                                if ($progress <= 20) {
+                                                    $color = 'bg-danger'; // Rouge
+                                                } elseif ($progress <= 40) {
+                                                    $color = 'bg-warning'; // Jaune
+                                                } elseif ($progress <= 60) {
+                                                    $color = 'bg-info'; // Bleu clair
+                                                } elseif ($progress <= 80) {
+                                                    $color = 'bg-primary'; // Bleu foncé
+                                                } else {
+                                                    $color = 'bg-success'; // Vert
+                                                }
+                                            @endphp
+
+                                            <!-- Nom de la formation -->
+                                            <p class="mt-3"><strong> {{ $formation->module->name }}</strong></p>
+
+                                            <div class="progress mt-0">
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated {{ $color }}"
+                                                    role="progressbar" style="width: {{ $progress }}%"
+                                                    aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
+                                                    {{ $progress }}%
+                                                </div>
+                                            </div>
+                                        @endif
+                                    @elseif (!empty($formation->collectivemodule->module))
+                                        {{-- Pour les demandes collectives --}}
+                                    @else
+                                        {{-- Si les deux conditions ne sont pas vérifiées --}}
+                                    @endif
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+                </div>
                 <div class="col-lg-6">
                     <div class="card">
                         <div class="card-body">

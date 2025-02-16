@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
@@ -9,13 +8,14 @@ use App\Models\Departement;
 use App\Models\Direction;
 use App\Models\Employee;
 use App\Models\Fonction;
+use App\Models\Formation;
 use App\Models\Individuelle;
+use App\Models\Ingenieur;
 use App\Models\Interne;
 use App\Models\Module;
 use App\Models\Operateur;
 use App\Models\Region;
 use App\Models\User;
-use App\Models\Ingenieur;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -24,12 +24,12 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -47,50 +47,56 @@ class UserController extends Controller
 
     public function homePage()
     {
-        $total_user = User::count();
+        $total_user        = User::count();
         $email_verified_at = DB::table(table: 'users')->where('email_verified_at', '!=', null)->count();
-        $total_arrive = Arrive::where('type', null)->count();
-        $total_depart = Depart::count();
-        $total_interne = Interne::count();
+        $total_arrive      = Arrive::where('type', null)->count();
+        $total_depart      = Depart::count();
+        $total_interne     = Interne::count();
+
+        $formations = Formation::where('statut', 'démarrer')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $count_formations = Formation::where('statut', 'démarrer')->count();
 
         $total_courrier = $total_arrive + $total_depart + $total_interne;
 
         if ($total_courrier != 0) {
-            $pourcentage_arrive = ($total_arrive / $total_courrier) * 100;
-            $pourcentage_depart = ($total_depart / $total_courrier) * 100;
+            $pourcentage_arrive  = ($total_arrive / $total_courrier) * 100;
+            $pourcentage_depart  = ($total_depart / $total_courrier) * 100;
             $pourcentage_interne = ($total_interne / $total_courrier) * 100;
         } else {
-            $pourcentage_arrive = 0;
-            $pourcentage_depart = 0;
+            $pourcentage_arrive  = 0;
+            $pourcentage_depart  = 0;
             $pourcentage_interne = 0;
         }
 
         $total_individuelle = Individuelle::count();
-        $roles = Role::orderBy('created_at', 'desc')->get();
+        $roles              = Role::orderBy('created_at', 'desc')->get();
         /* return view("home-page", compact("total_user", 'roles', 'total_arrive', 'total_depart', 'total_individuelle')); */
 
         /* $individuelles = Individuelle::skip(0)->take(1000)->get(); */
         $individuelles = Individuelle::get();
-        $departements = Departement::orderBy("created_at", "desc")->get();
-        $modules = Module::orderBy("created_at", "desc")->get();
+        $departements  = Departement::orderBy("created_at", "desc")->get();
+        $modules       = Module::orderBy("created_at", "desc")->get();
 
-        $today = date('Y-m-d');
-        $annee = date('Y');
+        $today        = date('Y-m-d');
+        $annee        = date('Y');
         $annee_lettre = 'Diagramme à barres, année: ' . date('Y');
-        $count_today = Individuelle::where("created_at", "LIKE", "{$today}%")->count();
+        $count_today  = Individuelle::where("created_at", "LIKE", "{$today}%")->count();
 
-        $janvier = DB::table('individuelles')->whereMonth("created_at", "01")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $fevrier = DB::table('individuelles')->whereMonth("created_at", "02")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $mars = DB::table('individuelles')->whereMonth("created_at", "03")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $avril = DB::table('individuelles')->whereMonth("created_at", "04")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $mai = DB::table('individuelles')->whereMonth("created_at", "05")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $juin = DB::table('individuelles')->whereMonth("created_at", "06")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $juillet = DB::table('individuelles')->whereMonth("created_at", "07")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $aout = DB::table('individuelles')->whereMonth("created_at", "08")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $janvier   = DB::table('individuelles')->whereMonth("created_at", "01")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $fevrier   = DB::table('individuelles')->whereMonth("created_at", "02")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $mars      = DB::table('individuelles')->whereMonth("created_at", "03")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $avril     = DB::table('individuelles')->whereMonth("created_at", "04")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $mai       = DB::table('individuelles')->whereMonth("created_at", "05")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $juin      = DB::table('individuelles')->whereMonth("created_at", "06")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $juillet   = DB::table('individuelles')->whereMonth("created_at", "07")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $aout      = DB::table('individuelles')->whereMonth("created_at", "08")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
         $septembre = DB::table('individuelles')->whereMonth("created_at", "09")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $octobre = DB::table('individuelles')->whereMonth("created_at", "10")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $novembre = DB::table('individuelles')->whereMonth("created_at", "11")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $decembre = DB::table('individuelles')->whereMonth("created_at", "12")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $octobre   = DB::table('individuelles')->whereMonth("created_at", "10")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $novembre  = DB::table('individuelles')->whereMonth("created_at", "11")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        $decembre  = DB::table('individuelles')->whereMonth("created_at", "12")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
 
         $masculin = Individuelle::join('users', 'users.id', 'individuelles.users_id')
             ->select('individuelles.*')
@@ -166,7 +172,9 @@ class UserController extends Controller
                 'total_interne',
                 'pourcentage_arrive',
                 'pourcentage_depart',
-                'pourcentage_interne'
+                'pourcentage_interne',
+                'count_formations',
+                'formations'
             )
         );
     }
@@ -210,20 +218,20 @@ class UserController extends Controller
             $password = Hash::make($request->email);
         }
         $user = User::create([
-            'username' => $request->username,
+            'username'  => $request->username,
             'firstname' => $request->firstname,
-            'name' => $request->name,
-            'email' => $request->email,
+            'name'      => $request->name,
+            'email'     => $request->email,
             'telephone' => $request->telephone,
-            'adresse' => $request->adresse,
-            'password' => $password,
+            'adresse'   => $request->adresse,
+            'password'  => $password,
         ]);
 
         if (request('image')) {
-            $imagePath = request('image')->store('avatars', 'public');
-            $file = $request->file('image');
+            $imagePath       = request('image')->store('avatars', 'public');
+            $file            = $request->file('image');
             $filenameWithExt = $file->getClientOriginalName();
-            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $filename        = pathinfo($filenameWithExt, PATHINFO_FILENAME);
             // Remove unwanted characters
             $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
             $filename = preg_replace("/\s+/", '-', $filename);
@@ -286,9 +294,9 @@ class UserController extends Controller
             ]);
 
             Employee::create([
-                'users_id' => $user?->id,
+                'users_id'      => $user?->id,
                 /* 'cin'           => $request?->input('employe'), */
-                'matricule' => $request?->input('matricule'),
+                'matricule'     => $request?->input('matricule'),
                 'directions_id' => $request?->input('direction'),
             ]);
             Alert::success('Effectuée ! ', 'employé ajouté');
@@ -302,14 +310,13 @@ class UserController extends Controller
                 "initiale" => ['required', 'string', 'min:2', 'max:5', "unique:ingenieurs,initiale,Null,{$user?->ingenieur?->id},deleted_at,NULL"],
                 'fonction' => ['required', 'string'],
             ]);
-            
 
             $ingenieur = Ingenieur::create([
-                "users_id" => $user?->id,
-                "name" => $user?->firstname . ' ' . $user?->name,
-                "initiale" => $request->input("initiale"),
-                "fonction" => $request->input("fonction"),
-                "email" => $user?->email,
+                "users_id"  => $user?->id,
+                "name"      => $user?->firstname . ' ' . $user?->name,
+                "initiale"  => $request->input("initiale"),
+                "fonction"  => $request->input("fonction"),
+                "email"     => $user?->email,
                 "telephone" => $user?->telephone,
             ]);
 
@@ -324,31 +331,31 @@ class UserController extends Controller
         } else {
 
             $this->validate($request, [
-                'civilite' => ['nullable', 'string', 'max:10'],
-                'username' => ["required", "string", "max:25", Rule::unique(User::class)->ignore($id)],
-                "cin" => ["nullable", "string", "min:12", "max:14", Rule::unique(User::class)->ignore($id)],
-                'firstname' => ['required', 'string', 'max:150'],
-                'name' => ['required', 'string', 'max:50'],
+                'civilite'       => ['nullable', 'string', 'max:10'],
+                'username'       => ["required", "string", "max:25", Rule::unique(User::class)->ignore($id)],
+                "cin"            => ["nullable", "string", "min:12", "max:14", Rule::unique(User::class)->ignore($id)],
+                'firstname'      => ['required', 'string', 'max:150'],
+                'name'           => ['required', 'string', 'max:50'],
                 'date_naissance' => ['date', 'nullable', 'max:10', 'min:10', 'date_format:Y-m-d'],
                 'lieu_naissance' => ['string', 'nullable'],
-                'image' => ['image', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-                'telephone' => ['required', 'string', 'max:25', 'min:9'],
-                'adresse' => ['required', 'string', 'max:255'],
-                'roles.*' => ['string', 'max:255', 'nullable', 'max:255'],
-                "email" => ["lowercase", 'email', "max:255", Rule::unique(User::class)->ignore($id)],
+                'image'          => ['image', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+                'telephone'      => ['required', 'string', 'max:25', 'min:9'],
+                'adresse'        => ['required', 'string', 'max:255'],
+                'roles.*'        => ['string', 'max:255', 'nullable', 'max:255'],
+                "email"          => ["lowercase", 'email', "max:255", Rule::unique(User::class)->ignore($id)],
             ]);
 
-            if (!empty($request->date_naissance)) {
+            if (! empty($request->date_naissance)) {
                 $date_naissance = $request->date_naissance;
             } else {
                 $date_naissance = null;
             }
 
             if (request('image')) {
-                $imagePath = request('image')->store('avatars', 'public');
-                $file = $request->file('image');
+                $imagePath       = request('image')->store('avatars', 'public');
+                $file            = $request->file('image');
                 $filenameWithExt = $file->getClientOriginalName();
-                $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+                $filename        = pathinfo($filenameWithExt, PATHINFO_FILENAME);
                 // Remove unwanted characters
                 $filename = preg_replace("/[^A-Za-z0-9 ]/", '', $filename);
                 $filename = preg_replace("/\s+/", '-', $filename);
@@ -370,23 +377,23 @@ class UserController extends Controller
             }
 
             $user->update([
-                'civilite' => $request->civilite,
-                'username' => $request->username,
-                'cin' => $request->cin,
-                'firstname' => $request->firstname,
-                'name' => $request->name,
-                'date_naissance' => $date_naissance,
-                'lieu_naissance' => $request->lieu_naissance,
-                'situation_familiale' => $request->situation_familiale,
+                'civilite'                  => $request->civilite,
+                'username'                  => $request->username,
+                'cin'                       => $request->cin,
+                'firstname'                 => $request->firstname,
+                'name'                      => $request->name,
+                'date_naissance'            => $date_naissance,
+                'lieu_naissance'            => $request->lieu_naissance,
+                'situation_familiale'       => $request->situation_familiale,
                 'situation_professionnelle' => $request->situation_professionnelle,
-                'email' => $request->email,
-                'telephone' => $request->telephone,
-                'adresse' => $request->adresse,
-                'twitter' => $request->twitter,
-                'facebook' => $request->facebook,
-                'instagram' => $request->instagram,
-                'linkedin' => $request->linkedin,
-                'updated_by' => Auth::user()->id,
+                'email'                     => $request->email,
+                'telephone'                 => $request->telephone,
+                'adresse'                   => $request->adresse,
+                'twitter'                   => $request->twitter,
+                'facebook'                  => $request->facebook,
+                'instagram'                 => $request->instagram,
+                'linkedin'                  => $request->linkedin,
+                'updated_by'                => Auth::user()->id,
             ]);
 
             $user->syncRoles($request->roles);
@@ -422,10 +429,10 @@ class UserController extends Controller
             $user_update_name = $user_update->firstname . " " . $user_update->firstname;
         }
 
-        $roles = Role::pluck('name', 'name')->all();
-        $userRoles = $user->roles->pluck('name', 'name')->all();
+        $roles      = Role::pluck('name', 'name')->all();
+        $userRoles  = $user->roles->pluck('name', 'name')->all();
         $directions = Direction::orderBy('created_at', 'desc')->get();
-        $fonctions = Fonction::orderBy('created_at', 'desc')->get();
+        $fonctions  = Fonction::orderBy('created_at', 'desc')->get();
 
         return view("user.show", compact("user", "user_create_name", "user_update_name", "roles", "userRoles", "directions", "fonctions"));
     }
@@ -486,7 +493,7 @@ class UserController extends Controller
         } elseif ($request->date_value == "1") {
             $this->validate($request, [
                 'from_date' => 'required|date',
-                'to_date' => 'required|date',
+                'to_date'   => 'required|date',
             ]);
 
             $now = Carbon::now()->format('H:i:s');
@@ -495,7 +502,7 @@ class UserController extends Controller
 
             $to_date = date_format(date_create($request->to_date), 'd/m/Y');
 
-            $users = User::whereBetween(DB::raw('DATE(date_naissance)'), array($request->from_date, $request->to_date))->get();
+            $users = User::whereBetween(DB::raw('DATE(date_naissance)'), [$request->from_date, $request->to_date])->get();
 
             $count = $users->count();
 
@@ -538,7 +545,7 @@ class UserController extends Controller
         } elseif ($request->date_value == "1") {
             $this->validate($request, [
                 'from_date' => 'required|date',
-                'to_date' => 'required|date',
+                'to_date'   => 'required|date',
             ]);
 
             $now = Carbon::now()->format('H:i:s');
@@ -547,7 +554,7 @@ class UserController extends Controller
 
             $to_date = date_format(date_create($request->to_date), 'd/m/Y');
 
-            $users = User::whereBetween(DB::raw('DATE(date_naissance)'), array($request->from_date, $request->to_date))->get();
+            $users = User::whereBetween(DB::raw('DATE(date_naissance)'), [$request->from_date, $request->to_date])->get();
 
             $count = $users->count();
 
@@ -703,11 +710,11 @@ class UserController extends Controller
     public function generateReport(Request $request)
     {
         $this->validate($request, [
-            'cin' => 'nullable|string',
-            'name' => 'nullable|string',
+            'cin'       => 'nullable|string',
+            'name'      => 'nullable|string',
             'firstname' => 'nullable|string',
             'telephone' => 'nullable|string',
-            'email' => 'nullable|email',
+            'email'     => 'nullable|email',
         ]);
 
         if ($request?->cin == null && $request->firstname == null && $request->telephone == null && $request->name == null && $request->email == null) {
@@ -733,7 +740,7 @@ class UserController extends Controller
             $title = $count . ' utilisateurs trouvées';
         }
 
-        $roles = Role::pluck('name', 'name')->all();
+        $roles        = Role::pluck('name', 'name')->all();
         $departements = Departement::orderBy("created_at", "DESC")->get();
         /* $modules = Module::orderBy("created_at", "desc")->get(); */
 
