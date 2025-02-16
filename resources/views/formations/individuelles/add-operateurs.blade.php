@@ -139,7 +139,7 @@
                                         </table>
                                     </div>
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-outline-primary"><i
+                                        <button type="submit" class="btn btn-outline-primary btn-sm"><i
                                                 class="bi bi-check2-circle"></i>&nbsp;Sélectionner</button>
                                     </div>
                             </form>

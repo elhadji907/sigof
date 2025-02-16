@@ -127,6 +127,28 @@
                         </div>
                     </div>
                 </div>
+
+                @if (!empty($nouvelle_formation_count))
+                    <div class="col-12">
+                        <a href="{{ route('nouvellesformations') }}">
+                            <div class="card shadow-lg border-0 rounded-lg">
+                                <div class="card-body d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <h5 class="card-title text-primary d-flex align-items-center">
+                                            <i class="bi bi-graduation-cap me-0"></i> Nouvelle <span class="fw-bold">&nbsp;|
+                                                Formation</span>
+                                        </h5>
+                                        <p class="text-muted">Nouvelles formations disponibles.</p>
+                                    </div>
+                                    <div class="card-icon bg-info text-white rounded-circle d-flex align-items-center justify-content-center"
+                                        style="width: 30px; height: 30px; font-size: 1.2rem;">
+                                        {{ $nouvelle_formation_count }}
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endif
             </div>
             {{-- Fin Photo de profil --}}
 
@@ -185,7 +207,8 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#files">Fichiers</button>
+                                    <button class="nav-link" data-bs-toggle="tab"
+                                        data-bs-target="#files">Fichiers</button>
                                 </li>
 
                                 <li class="nav-item">
@@ -254,41 +277,55 @@
                                             @endif
                                         </h5>
                                     </div> --}}
-                                    @isset(Auth::user()->cin)
+                                    @if (!empty(Auth::user()->cin))
                                         <div class="row">
-                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">CIN</div>
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">CIN
+                                            </div>
                                             <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 {{ Auth::user()->cin }}</div>
                                         </div>
-                                    @endisset
+                                    @endif
 
-                                    @isset(Auth::user()->username)
+                                    @if (!empty(Auth::user()->username))
                                         <div class="row">
-                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Username
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
+                                                Username
                                             </div>
                                             <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 {{ Auth::user()->username }}</div>
                                         </div>
-                                    @endisset
+                                    @endif
 
-                                    @isset(Auth::user()->firstname)
+                                    @if (!empty(Auth::user()->firstname))
                                         <div class="row">
-                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Prénom
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
+                                                Prénom
                                             </div>
                                             <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 {{ Auth::user()->firstname }}</div>
                                         </div>
-                                    @endisset
+                                    @endif
 
-                                    @isset(Auth::user()->name)
+                                    @if (!empty(Auth::user()->name))
                                         <div class="row">
-                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Nom</div>
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Nom
+                                            </div>
                                             <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 {{ Auth::user()->name }}</div>
                                         </div>
-                                    @endisset
+                                    @endif
 
-                                    @isset(Auth::user()->email)
+                                    @if (!empty(Auth::user()->date_naissance))
+                                        <div class="row">
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Date
+                                                naissance
+                                            </div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                {{ Auth::user()->date_naissance->translatedFormat('l jS F Y') }}</div>
+                                        </div>
+                                    @endif
+
+                                    @if (!empty(Auth::user()->email))
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Email
                                             </div>
@@ -296,26 +333,28 @@
                                                     href="mailto:{{ Auth::user()->email }}">{{ Auth::user()->email }}</a>
                                             </div>
                                         </div>
-                                    @endisset
+                                    @endif
 
-                                    @isset(Auth::user()->telephone)
+                                    @if (!empty(Auth::user()->telephone))
                                         <div class="row">
-                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Téléphone
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
+                                                Téléphone
                                             </div>
                                             <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8"><a
                                                     href="tel:+221{{ Auth::user()->telephone }}">{{ Auth::user()->telephone }}</a>
                                             </div>
                                         </div>
-                                    @endisset
+                                    @endif
 
-                                    @isset(Auth::user()->adresse)
+                                    @if (!empty(Auth::user()->adresse))
                                         <div class="row">
-                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Adresse
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
+                                                Adresse
                                             </div>
                                             <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 {{ Auth::user()->adresse }}</div>
                                         </div>
-                                    @endisset
+                                    @endif
                                 </div>
                             </div>
                             {{-- Fin aperçu --}}
@@ -711,7 +750,7 @@
                                             </div>
                                         </div> --}}
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-info">Sauvegarder les
+                                            <button type="submit" class="btn btn-info btn-sm">Sauvegarder les
                                                 modifications</button>
                                         </div>
                                         @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())

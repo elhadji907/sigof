@@ -17,7 +17,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Support\Facades\Storage;
 
 class IndividuelleController extends Controller
 {
@@ -1349,6 +1348,18 @@ class IndividuelleController extends Controller
         $formation_count = $individuelles->count();
 
         return view("individuelles.show-formation", compact("formation_count", "individuelles"));
+    }
+
+    public function nouvellesformations(Request $request)
+    {
+        $user = Auth::user();
+
+        $nouvelle_formations = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
+            ->select('formations.*')
+            ->where('individuelles.users_id', $user->id)
+            ->where('formations.statut', 'nouvelle')->get();
+
+        return view("individuelles.nouvelle_formations", compact("nouvelle_formations"));
     }
 
     public function demandesdg(Request $request)

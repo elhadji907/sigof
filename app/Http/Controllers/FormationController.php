@@ -1137,7 +1137,7 @@ class FormationController extends Controller
     public function giveformationmodules($idformation, Request $request)
     {
         $request->validate([
-            'collectivemodule' => ['required'],
+            'module' => ['required'],
         ]);
 
         $formation = Formation::findOrFail($idformation);
@@ -1203,7 +1203,7 @@ class FormationController extends Controller
 
         $domaines = Domaine::orderBy("created_at", "desc")->get();
 
-        return view("formations.individuelles.add-modules-individuelles", compact('formation', 'modules', 'module', 'localite', 'moduleFormation', 'domaines'));
+        return view("formations.individuelles.add-modules-individuelles", compact('formation', 'modules', 'localite', 'moduleFormation', 'domaines'));
     }
 
     public function addcollectivemoduleformations($idformation, $idlocalite)
@@ -2703,6 +2703,7 @@ class FormationController extends Controller
                 ->where('individuelles.projets_id', $projet?->id)
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), [$request->from_date, $request->to_date])
                 ->get();
+                
         } elseif (! empty($request->region)) {
             $region = Region::where('nom', $request->region)->first();
 

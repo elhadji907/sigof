@@ -30,7 +30,7 @@
         'callback_then' => 'callbackThen',
         'callback_catch' => 'callbackCatch',
     ]) !!}
-    <title>Page de connexion</title>
+    <title>Connexion</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -60,18 +60,18 @@
 <body>
     <main>
         <div class="container">
-
             <section
                 class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+                        <div
+                            class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6 d-flex flex-column align-items-center justify-content-center">
 
                             <div class="d-flex justify-content-center py-4">
                                 <a href="{{ route('accueil') }}" class="logo d-flex align-items-center w-auto"
                                     target="_blank">
                                     {{-- <img src="{{ asset('assets/img/logo_sigle.png') }}" alt=""> --}}
-                                    <span class="d-none d-lg-block">ONFP-SIGOF</span>
+                                    <span class="d-none d-lg-block">ONFP</span>
                                 </a>
                             </div><!-- End Logo -->
 
@@ -87,18 +87,20 @@
                                     <form class="row g-3 needs-validation" novalidate method="POST"
                                         action="{{ route('login') }}">
                                         @csrf
-                                        <label for="email" class="form-label">Email<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <div class="input-group has-validation">
-                                            <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                            <input type="email" name="email"
-                                                class="form-control form-control-sm @error('email') is-invalid @enderror"
-                                                id="email" required placeholder="Votre adresse e-mail"
-                                                value="{{ old('email') }}" autofocus>
-                                            <div class="invalid-feedback">
-                                                @error('email')
-                                                    {{ $message }}
-                                                @enderror
+                                        <div class="col-12">
+                                            <label for="email" class="form-label">Email<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <div class="input-group has-validation">
+                                                <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                                <input type="email" name="email"
+                                                    class="form-control form-control-sm @error('email') is-invalid @enderror"
+                                                    id="email" required placeholder="Votre adresse e-mail"
+                                                    value="{{ old('email') }}" autofocus>
+                                                <div class="invalid-feedback">
+                                                    @error('email')
+                                                        {{ $message }}
+                                                    @enderror
+                                                </div>
                                             </div>
                                         </div>
 

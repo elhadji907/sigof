@@ -886,7 +886,7 @@
                                                     class="bi bi-person"></i></span>
                                             <input type="text" name="username"
                                                 class="form-control form-control-sm @error('username') is-invalid @enderror"
-                                                id="username" required placeholder="Votre username"
+                                                id="username" required placeholder="ex : jean221"
                                                 value="{{ old('username') }}" autocomplete="username">
                                             <div class="invalid-feedback">
                                                 @error('username')
@@ -1019,7 +1019,7 @@
                                                     class="bi bi-person"></i></span>
                                             <input type="text" name="username"
                                                 class="form-control form-control-sm @error('username') is-invalid @enderror"
-                                                id="username" required placeholder="Sigle"
+                                                id="username" required placeholder="ex : CFP/MBACKE"
                                                 value="{{ old('username') }}" autocomplete="username">
                                             <div class="invalid-feedback">
                                                 @error('username')

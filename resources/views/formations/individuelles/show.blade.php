@@ -1512,32 +1512,27 @@
                                             {{ 'Bénéficiaire : ' . $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}
                                         </div>
                                         <hr>
-                                        <label for="retrait" class="form-label">Qui va retirer le diplôme ?<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <div class="col-6 col-md-6 col-lg-6 col-sm-6 col-xs-6 col-xxl-6">
-                                            <label class="form-check-label" for="moi">
-                                                Le propriétaire
-                                            </label>
-                                            <input type="radio" name="personne" value="moi"
-                                                class="form-check-input @error('moi') is-invalid @enderror">
-                                            @error('moi')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
-                                                </span>
-                                            @enderror
+                                        <label for="retrait" class="form-label">
+                                            Qui va retirer le diplôme ?<span class="text-danger mx-1">*</span>
+                                        </label>
+                                        <div class="d-flex gap-3">
+                                            <div class="form-check">
+                                                <input type="radio" id="moi" name="personne" value="moi"
+                                                    class="form-check-input @error('personne') is-invalid @enderror">
+                                                <label class="form-check-label" for="moi">Le propriétaire</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input type="radio" id="autre" name="personne" value="autre"
+                                                    class="form-check-input @error('personne') is-invalid @enderror">
+                                                <label class="form-check-label" for="autre">Une autre personne</label>
+                                            </div>
                                         </div>
-                                        <div class="col-6 col-md-6 col-lg-6 col-sm-6 col-xs-6 col-xxl-6">
-                                            <label class="form-check-label" for="autre">
-                                                Une autre personne
-                                            </label>
-                                            <input type="radio" name="personne" value="autre"
-                                                class="form-check-input @error('autre') is-invalid @enderror">
-                                            @error('autre')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
-                                                </span>
-                                            @enderror
-                                        </div>
+                                        @error('personne')
+                                            <span class="invalid-feedback d-block" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                        
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 pt-3">

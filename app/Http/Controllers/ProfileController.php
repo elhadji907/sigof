@@ -64,6 +64,11 @@ class ProfileController extends Controller
 
         $formations = $individuelles->where('formations_id', '!=', null)->count();
 
+        $nouvelle_formation_count = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
+            ->select('formations.*')
+            ->where('individuelles.users_id', $user->id)
+            ->where('formations.statut', 'nouvelle')->count();
+
         $collectives = Collective::where('users_id', $user->id)
             ->get();
 
@@ -85,37 +90,39 @@ class ProfileController extends Controller
                 } else {
                     $user_cin = null;
                 }
-
                 return view('profile.profile-operateur-page', [
-                    'user'          => $request->user(),
-                    'projets'       => $projets,
-                    'count_projets' => $count_projets,
-                    'files'         => $files,
-                    'user_files'    => $user_files,
-                    'user_cin'      => $user_cin,
+                    'user'                      => $request->user(),
+                    'projets'                   => $projets,
+                    'count_projets'             => $count_projets,
+                    'nouvelle_formation_count' => $nouvelle_formation_count,
+                    'files'                     => $files,
+                    'user_files'                => $user_files,
+                    'user_cin'                  => $user_cin,
                 ]);
             } else {
                 return view('profile.profile-page', [
-                    'user'          => $request->user(),
-                    'projets'       => $projets,
-                    'count_projets' => $count_projets,
-                    'individuelles' => $individuelles,
-                    'formations'    => $formations,
-                    'collectives'   => $collectives,
-                    'files'         => $files,
-                    'user_files'    => $user_files,
-                    'user_cin'      => $user_cin,
+                    'user'                      => $request->user(),
+                    'projets'                   => $projets,
+                    'count_projets'             => $count_projets,
+                    'individuelles'             => $individuelles,
+                    'formations'                => $formations,
+                    'nouvelle_formation_count' => $nouvelle_formation_count,
+                    'collectives'               => $collectives,
+                    'files'                     => $files,
+                    'user_files'                => $user_files,
+                    'user_cin'                  => $user_cin,
                 ]);
             }
         }
 
         return view('profile.profile-page', [
-            'user'          => $request->user(),
-            'projets'       => $projets,
-            'count_projets' => $count_projets,
-            'files'         => $files,
-            'user_files'    => $user_files,
-            'user_cin'      => $user_cin,
+            'user'                      => $request->user(),
+            'projets'                   => $projets,
+            'count_projets'             => $count_projets,
+            'nouvelle_formation_count' => $nouvelle_formation_count,
+            'files'                     => $files,
+            'user_files'                => $user_files,
+            'user_cin'                  => $user_cin,
         ]);
     }
 
