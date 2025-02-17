@@ -156,7 +156,7 @@ class EmargementController extends Controller
 
         $formation = Formation::findOrFail($idformation);
 
-        if ($formation->statut == 'terminer') {
+        if ($formation->statut == "Terminée") {
             Alert::warning('Désolé !', 'Cette formation a déjà été exécutée.');
         } elseif ($formation->statut == 'annuler') {
             Alert::warning('Désolé !', 'La formation a été annulée.');

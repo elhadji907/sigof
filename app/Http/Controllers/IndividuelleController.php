@@ -93,7 +93,7 @@ class IndividuelleController extends Controller
         $retenue = Individuelle::where('statut', 'retenue')
         ->count();
 
-        $terminer = Individuelle::where('statut', 'terminer')
+        $terminer = Individuelle::where('statut', "Terminée")
         ->count();
 
         $rejeter = Individuelle::where('statut', 'rejeter')
@@ -103,7 +103,7 @@ class IndividuelleController extends Controller
         $pourcentage_femmes = ($feminin / $individuelles->count()) * 100;
 
         return view("individuelles.index", compact("pourcentage_femmes",
-        "pourcentage_hommes", "rejeter", "terminer", "retenue", "nouvelle",
+        "pourcentage_hommes", "rejeter", "Terminée", "retenue", "nouvelle",
         "attente", "individuelles", "modules", "departements", "count_today",
         'janvier', 'fevrier', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout',
         'septembre', 'octobre', 'novembre', 'decembre', 'annee', 'annee_lettre',

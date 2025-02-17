@@ -10,7 +10,7 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('/home') }}">Accueil</a></li>
                         <li class="breadcrumb-item">Tables</li>
-                        <li class="breadcrumb-item active">Formation {{ $type_formation . ' ' . $formation?->name }}</li>
+                        <li class="breadcrumb-item active">Formation {{ $type_formation }}</li>
                     </ol>
                 </nav>
             </div>

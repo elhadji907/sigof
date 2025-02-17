@@ -276,7 +276,7 @@ class ModuleController extends Controller
             $individuelle = 'demandeur';
             if (isset($request->statut) && $request->statut == "nouvelle") {
                 $statut = 'nouveau';
-            } elseif (isset($request->statut) && $request->statut == "terminer") {
+            } elseif (isset($request->statut) && $request->statut == "Terminée") {
                 $statut = 'a terminé la formation';
             } elseif (isset($request->statut) && $request->statut == "rejeter") {
                 $statut = 'rejeté';
@@ -291,7 +291,7 @@ class ModuleController extends Controller
             $individuelle = 'demandeurs';
             if (isset($request->statut) && $request->statut == "nouvelle") {
                 $statut = 'nouveaux';
-            } elseif (isset($request->statut) && $request->statut == "terminer") {
+            } elseif (isset($request->statut) && $request->statut == "Terminée") {
                 $statut = 'ont terminé leur formation';
             } elseif (isset($request->statut) && $request->statut == "rejeter") {
                 $statut = 'rejetés';

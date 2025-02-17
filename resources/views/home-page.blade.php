@@ -113,8 +113,34 @@
                                                 </div>
                                             </div>
                                         @endif
-                                    @elseif (!empty($formation->collectivemodule->module))
+                                    @elseif (!empty($formation->collectivemodule->module) && count($formation->emargementcollectives) > 0)
                                         {{-- Pour les demandes collectives --}}
+                                        @php
+                                            $progress = round(
+                                                (count($formation->emargementcollectives) / $formation->duree_formation) * 100,
+                                            );
+                                            // Déterminer la couleur en fonction du pourcentage
+                                            if ($progress <= 20) {
+                                                $color = 'bg-danger'; // Rouge
+                                            } elseif ($progress <= 40) {
+                                                $color = 'bg-warning'; // Jaune
+                                            } elseif ($progress <= 60) {
+                                                $color = 'bg-info'; // Bleu clair
+                                            } elseif ($progress <= 80) {
+                                                $color = 'bg-primary'; // Bleu foncé
+                                            } else {
+                                                $color = 'bg-success'; // Vert
+                                            }
+                                        @endphp
+                                        <!-- Nom de la formation -->
+                                        <p class="mt-3"><strong> {{ $formation->collectivemodule->module }}</strong></p>
+                                        <div class="progress mt-0">
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated {{ $color }}"
+                                                role="progressbar" style="width: {{ $progress }}%"
+                                                aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
+                                                {{ $progress }}%
+                                            </div>
+                                        </div>
                                     @else
                                         {{-- Si les deux conditions ne sont pas vérifiées --}}
                                     @endif
@@ -368,7 +394,8 @@
                                             </div>
                                             <div class="ps-3">
                                                 <h6>
-                                                    <span class="text-primary">{{ number_format($feminin, 0, '', ' ') }}</span>
+                                                    <span
+                                                        class="text-primary">{{ number_format($feminin, 0, '', ' ') }}</span>
                                                 </h6>
                                                 <span
                                                     class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_femmes, 2, ',', ' ') . '%' }}</span>

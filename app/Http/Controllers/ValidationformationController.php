@@ -19,13 +19,13 @@ class ValidationformationController extends Controller
         if ($count == '0' || empty($formation->operateur)) {
             Alert::warning('Désolez !', 'action non autorisée');
         } else {
-            if ($formation->statut == 'terminer') {
+            if ($formation->statut == "Terminée") {
                 Alert::warning('Désolez !', 'formation déjà exécutée');
-            } elseif ($formation->statut == 'démarrer') {
+            } elseif ($formation->statut == "Démarrée") {
                 Alert::warning('Désolez !', 'formation en cours...');
             } else {
                 $formation->update([
-                    'statut'             => 'démarrer',
+                    'statut'             => "Démarrée",
                     'validated_by'       =>  Auth::user()->firstname . ' ' . Auth::user()->name,
                 ]);
 
@@ -33,7 +33,7 @@ class ValidationformationController extends Controller
 
                 $validated_by = new Validationformation([
                     'validated_id'       =>       Auth::user()->id,
-                    'action'             =>      'démarrer',
+                    'action'             =>      "Démarrée",
                     'formations_id'      =>      $formation->id
                 ]);
 
@@ -57,7 +57,7 @@ class ValidationformationController extends Controller
 
         if ($formation->statut == 'annuler') {
             Alert::warning('Désolez !', 'formation déjà annulée');
-        } elseif ($formation->statut == 'terminer') {
+        } elseif ($formation->statut == "Terminée") {
             Alert::warning('Désolez !', 'formation déjà exécutée');
         } else {
             $formation->update([

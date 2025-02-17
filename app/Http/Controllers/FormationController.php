@@ -945,7 +945,7 @@ class FormationController extends Controller
         $individuelle = Individuelle::findOrFail($request->input('individuelleid'));
         $formation    = Formation::findOrFail($idformation);
 
-        if ($formation->statut == 'terminer' && $individuelle->note_obtenue > 0) {
+        if ($formation->statut == "Terminée" && $individuelle->note_obtenue > 0) {
             Alert::warning('Avertissement !', 'Ce demandeur ne peut pas être retiré.');
         } else {
             $individuelle->update([
@@ -987,7 +987,7 @@ class FormationController extends Controller
         $listecollective = Listecollective::findOrFail($request->input('listecollectiveid'));
         $formation       = Formation::findOrFail($idformation);
 
-        if ($formation->statut == 'terminer' && $listecollective->note_obtenue > 0) {
+        if ($formation->statut == "Terminée" && $listecollective->note_obtenue > 0) {
             Alert::warning('Avertissement !', 'Ce demandeur ne peut pas être retiré.');
         } else {
             $listecollective->update([
@@ -1011,7 +1011,7 @@ class FormationController extends Controller
 
         $formation = Formation::findOrFail($request->input('formationid'));
 
-        if ($formation->statut != 'terminer') {
+        if ($formation->statut != "Terminée") {
             Alert::warning('Action impossible !', 'La formation n\'est pas encore achevée.');
         } else {
             $formation->update([
@@ -1435,7 +1435,7 @@ class FormationController extends Controller
             Alert::warning('Désolez !', 'action non autorisée');
         } else {
 
-            /* if ($formation->statut == 'terminer') {
+            /* if ($formation->statut == "Terminée") {
             Alert::warning('Désolé !', 'Cette formation a déjà été exécutée.');
             } else */
 
@@ -1495,7 +1495,7 @@ class FormationController extends Controller
                 $formes_total = $formes_h_count + $formes_f_count;
 
                 $formation->update([
-                    'statut'       => 'terminer',
+                    'statut'       => "Terminée",
                     'forme_h'      => $formes_h_count,
                     'forme_f'      => $formes_f_count,
                     'total'        => $formes_total,
@@ -1507,7 +1507,7 @@ class FormationController extends Controller
 
                 $validated_by = new Validationformation([
                     'validated_id'  => Auth::user()->id,
-                    'action'        => 'terminer',
+                    'action'        => "Terminée",
                     'formations_id' => $formation->id,
                 ]);
 
@@ -1529,13 +1529,13 @@ class FormationController extends Controller
         if ($count == '0' || empty($formation->operateur)) {
             Alert::warning('Désolez !', 'action non autorisée');
         } else {
-            if ($formation->statut == 'terminer') {
+            if ($formation->statut == "Terminée") {
                 Alert::warning('Désolé !', 'Cette formation a déjà été exécutée.');
-            } elseif ($formation->statut == 'démarrer') {
+            } elseif ($formation->statut == "Démarrée") {
                 Alert::warning('Désolez !', 'formation en cours...');
             } else {
                 $formation->update([
-                    'statut'       => 'démarrer',
+                    'statut'       => "Démarrée",
                     'validated_by' => Auth::user()->firstname . ' ' . Auth::user()->name,
                 ]);
 
@@ -1543,7 +1543,7 @@ class FormationController extends Controller
 
                 $validated_by = new Validationformation([
                     'validated_id'  => Auth::user()->id,
-                    'action'        => 'démarrer',
+                    'action'        => "Démarrée",
                     'formations_id' => $formation->id,
                 ]);
 
@@ -1586,7 +1586,7 @@ class FormationController extends Controller
                 $appreciation = "Excellent ";
             }
 
-            if ($individuelle->formation->statut == 'terminer') {
+            if ($individuelle->formation->statut == "Terminée") {
                 $individuelle->update([
                     "note_obtenue" => $value,
                     "appreciation" => $appreciation,
@@ -1669,7 +1669,7 @@ class FormationController extends Controller
 
         /*  $validated_by = new Validationindividuelle([
         'validated_id'       =>      Auth::user()->id,
-        'action'             =>      'terminer',
+        'action'             =>      "Terminée",
         'listecollectives_id'   =>      $listecollective->id
         ]);
 
@@ -2313,7 +2313,7 @@ class FormationController extends Controller
 
         $formation = Formation::find($request->input('id'));
 
-        if ($formation->statut == 'terminer') {
+        if ($formation->statut == "Terminée") {
 
             $title = 'PV Evaluation de la formation en  ' . $formation->name;
 
@@ -2360,7 +2360,7 @@ class FormationController extends Controller
 
         $formation = Formation::find($request->input('id'));
 
-        if ($formation->statut == 'terminer') {
+        if ($formation->statut == "Terminée") {
 
             $title = 'PV Evaluation de la formation en  ' . $formation->name;
 
@@ -2436,7 +2436,7 @@ class FormationController extends Controller
 
         $formation = Formation::find($request->input('id'));
 
-        if ($formation->statut == 'terminer') {
+        if ($formation->statut == "Terminée") {
 
             $title = 'PV Evaluation de la formation en  ' . $formation->name;
 
@@ -2538,7 +2538,7 @@ class FormationController extends Controller
 
         $formation = Formation::findOrFail($idformation);
 
-        if ($formation->statut == 'terminer') {
+        if ($formation->statut == "Terminée") {
             Alert::warning('Désolé !', 'Cette formation a déjà été exécutée.');
         } elseif ($formation->statut == 'annuler') {
             Alert::warning('Désolé !', 'La formation a été annulée.');
@@ -2582,7 +2582,7 @@ class FormationController extends Controller
 
         $formation = Formation::find($request->input('id'));
 
-        if ($formation->statut == 'terminer') {
+        if ($formation->statut == "Terminée") {
 
             $title = 'Lettre de mission évaluation formation en  ' . $formation->name;
 
@@ -2679,7 +2679,7 @@ class FormationController extends Controller
 
         $retenus_total = $retenus_h_count + $retenus_f_count;
 
-        if ($formation->statut == 'terminer') {
+        if ($formation->statut == "Terminée") {
 
             $title = 'Attestation de bonne execution ' . $formation->name;
 

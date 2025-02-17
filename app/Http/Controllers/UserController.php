@@ -53,11 +53,11 @@ class UserController extends Controller
         $total_depart      = Depart::count();
         $total_interne     = Interne::count();
 
-        $formations = Formation::where('statut', 'démarrer')
+        $formations = Formation::where('statut', "Démarrée")
             ->orderBy('created_at', 'desc')
             ->get();
 
-        $count_formations = Formation::where('statut', 'démarrer')->count();
+        $count_formations = Formation::where('statut', "Démarrée")->count();
 
         $total_courrier = $total_arrive + $total_depart + $total_interne;
 
@@ -117,7 +117,7 @@ class UserController extends Controller
         $retenue = Individuelle::where('statut', 'retenue')
             ->count();
 
-        $terminer = Individuelle::where('statut', 'terminer')
+        $terminer = Individuelle::where('statut', "Terminée")
             ->count();
 
         $rejeter = Individuelle::where('statut', 'rejeter')

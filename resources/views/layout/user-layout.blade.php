@@ -182,6 +182,15 @@
             /* border-radius: 5px; */
         }
 
+        .Retirée {
+            background-color: #0DCAF0;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
         .renew {
             background-color: #ffcc00;
             color: white;
@@ -227,6 +236,15 @@
             /* border-radius: 5px; */
         }
 
+        .Expiré {
+            background-color: #ffcc00;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
         .Absente {
             background-color: #ffcc00;
             color: white;
@@ -237,6 +255,15 @@
         }
 
         .démarrer {
+            background-color: #0DCAF0;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
+        .Démarrée {
             background-color: #0DCAF0;
             color: white;
             padding: 4px 8px;
@@ -264,6 +291,15 @@
         }
 
         .terminer {
+            background-color: #198754;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
+        .Terminée {
             background-color: #198754;
             color: white;
             padding: 4px 8px;

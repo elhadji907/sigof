@@ -733,7 +733,7 @@
                                     <div class="alert alert-info mt-5">Aucun ingénieur pour le moment !!!</div>
                                 @endif
                                 <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                    @if(!empty($ingenieur))
+                                    @if (!empty($ingenieur))
                                         <h1 class="card-title">
                                             Liste des formations
                                             @if (!empty($ingenieur))
@@ -765,7 +765,8 @@
                                                                     href="#">{{ $ingenieurformation->types_formation?->name }}</a>
                                                             </td>
                                                             <td>{{ $ingenieurformation?->name }}</td>
-                                                            <td>{{ $ingenieurformation->departement?->region?->nom }}</td>
+                                                            <td>{{ $ingenieurformation->departement?->region?->nom }}
+                                                            </td>
                                                             {{-- <td>{{ $ingenieurformation->module?->name }}</td> --}}
                                                             {{-- <td>{{ $ingenieurformation->niveau_qualification }}</td> --}}
                                                             <td class="text-center">
@@ -783,7 +784,8 @@
                                                                 <span class="d-flex align-items-baseline"><a
                                                                         href="{{ route('formations.show', $ingenieurformation->id) }}"
                                                                         class="btn btn-primary btn-sm"
-                                                                        title="voir détails"><i class="bi bi-eye"></i></a>
+                                                                        title="voir détails"><i
+                                                                            class="bi bi-eye"></i></a>
                                                                     <div class="filter">
                                                                         <a class="icon" href="#"
                                                                             data-bs-toggle="dropdown"><i
@@ -824,7 +826,7 @@
                         {{-- Evaluation --}}
                         <div class="tab-content pt-2">
                             <div class="tab-pane fade module-overview" id="evaluation-overview">
-                                @if(!empty($module))
+                                @if (!empty($module))
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <form method="post"
                                             action="{{ url('notedemandeurs', ['$idformation' => $formation->id]) }}"
@@ -879,18 +881,20 @@
                                                                 <td>{{ $individuelle?->user->lieu_naissance }}</td>
                                                                 <td class="text-center"><input type="number"
                                                                         value="{{ $individuelle?->note_obtenue }}"
-                                                                        name="notes[]" placeholder="note" step="0.01"
-                                                                        min="0" max="20">
+                                                                        name="notes[]" placeholder="note"
+                                                                        step="0.01" min="0" max="20">
                                                                     <input type="hidden" name="individuelles[]"
                                                                         value="{{ $individuelle?->id }}">
                                                                 </td>
-                                                                <td style="text-align: center; vertical-align: middle;">
+                                                                <td
+                                                                    style="text-align: center; vertical-align: middle;">
                                                                     @can('evaluer-formation')
                                                                         <button type="button"
                                                                             class="btn btn-outline-primary btn-sm"
                                                                             data-bs-toggle="modal"
                                                                             data-bs-target="#EditDemandeurModal{{ $individuelle->id }}">
-                                                                            <i class="bi bi-plus" title="Observations"></i>
+                                                                            <i class="bi bi-plus"
+                                                                                title="Observations"></i>
                                                                         </button>
                                                                     @endcan
                                                                 </td>
@@ -950,22 +954,28 @@
                                                         class="bi bi-three-dots"></i></a>
                                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                     <li>
-                                                        <form action="{{ route('feuillePresenceFinale') }}" method="post" target="_blank">
+                                                        <form action="{{ route('feuillePresenceFinale') }}"
+                                                            method="post" target="_blank">
                                                             @csrf
-                                                            <input type="hidden" name="idformation" value="{{ $formation->id }}">
-                                                            <input type="hidden" name="idmodule" value="{{ $formation?->module?->id }}">
+                                                            <input type="hidden" name="idformation"
+                                                                value="{{ $formation->id }}">
+                                                            <input type="hidden" name="idmodule"
+                                                                value="{{ $formation?->module?->id }}">
                                                             <input type="hidden" name="idlocalite"
-                                                                value="{{ $formation?->departement?->region?->id }}">                                                            
+                                                                value="{{ $formation?->departement?->region?->id }}">
                                                             <button class="btn btn-sm mx-1">Feuille présence</button>
                                                         </form>
                                                     </li>
                                                     <li>
-                                                        <form action="{{ route('etatTransport') }}" method="post" target="_blank">
+                                                        <form action="{{ route('etatTransport') }}" method="post"
+                                                            target="_blank">
                                                             @csrf
-                                                            <input type="hidden" name="idformation" value="{{ $formation->id }}">
-                                                            <input type="hidden" name="idmodule" value="{{ $formation?->module?->id }}">
+                                                            <input type="hidden" name="idformation"
+                                                                value="{{ $formation->id }}">
+                                                            <input type="hidden" name="idmodule"
+                                                                value="{{ $formation?->module?->id }}">
                                                             <input type="hidden" name="idlocalite"
-                                                                value="{{ $formation?->departement?->region?->id }}">                                                            
+                                                                value="{{ $formation?->departement?->region?->id }}">
                                                             <button class="btn btn-sm mx-1">Etat transport</button>
                                                         </form>
                                                     </li>
@@ -1000,15 +1010,16 @@
                                                             {{ count($emargement?->formation?->individuelles) }}</td>
                                                         <td class="text-center">
                                                             @if (!empty($emargement?->file))
-                                                            <div>
-                                                                <a class="btn btn-outline-secondary btn-sm" title="Feuille émargement"
-                                                                    target="_blank" href="{{ asset($emargement->getFileEmargement()) }}">
-                                                                    <i class="bi bi-file-earmark-pdf"></i>
-                                                                </a>
-                                                            </div>
-                                                        @else
-                                                            <div class="badge bg-warning">Aucun</div>
-                                                        @endif
+                                                                <div>
+                                                                    <a class="btn btn-outline-secondary btn-sm"
+                                                                        title="Feuille émargement" target="_blank"
+                                                                        href="{{ asset($emargement->getFileEmargement()) }}">
+                                                                        <i class="bi bi-file-earmark-pdf"></i>
+                                                                    </a>
+                                                                </div>
+                                                            @else
+                                                                <div class="badge bg-warning">Aucun</div>
+                                                            @endif
                                                         </td>
                                                         <td>{{ $emargement?->observations }}</td>
                                                         <td class="text-center">
@@ -1078,7 +1089,7 @@
                         {{-- Retrait attestation --}}
                         <div class="tab-content pt-2">
                             <div class="tab-pane fade attestation-overview pt-1" id="retrait-attestation-overview">
-                                @if(!empty($module))
+                                @if (!empty($module))
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         {{-- <form method="post"
                                                 action="{{ url('notedemandeurs', ['$idformation' => $formation->id]) }}"
@@ -1524,7 +1535,8 @@
                                             <div class="form-check">
                                                 <input type="radio" id="autre" name="personne" value="autre"
                                                     class="form-check-input @error('personne') is-invalid @enderror">
-                                                <label class="form-check-label" for="autre">Une autre personne</label>
+                                                <label class="form-check-label" for="autre">Une autre
+                                                    personne</label>
                                             </div>
                                         </div>
                                         @error('personne')
@@ -1532,7 +1544,7 @@
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                        
+
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 pt-3">
@@ -2057,7 +2069,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <div class="mb-3">
                                         <label for="feuille" class="form-label">Joindre scan feuille de prsénce
