@@ -7,8 +7,10 @@ use App\Models\Collectivemodule;
 use App\Models\Departement;
 use App\Models\Domaine;
 use App\Models\Emargement;
+use App\Models\Emargementcollective;
 use App\Models\Evaluateur;
 use App\Models\Feuillepresence;
+use App\Models\Feuillepresencecollective;
 use App\Models\Formation;
 use App\Models\Indisponible;
 use App\Models\Individuelle;
@@ -660,7 +662,8 @@ class FormationController extends Controller
         $module_collective = $formation?->collectivemodule;
         $ingenieur         = $formation?->ingenieur;
         /* $emargements = $formation->emargements->unique('jour'); */
-        $emargements = $formation->emargements;
+        $emargements           = $formation->emargements;
+        $emargementcollectives = $formation->emargementcollectives;
 
         $count_demandes = count($formation->individuelles);
 
@@ -715,6 +718,7 @@ class FormationController extends Controller
                 "collectiveModule",
                 "collectiveModuleCheck",
                 "referentiels",
+                "emargementcollectives",
                 "emargements",
             )
         );
@@ -2033,6 +2037,11 @@ class FormationController extends Controller
                 ->get();
         } */
 
+        $feuillepresenceIndividuelle = DB::table('feuillepresences')
+            ->where('emargements_id', $emargement?->id)
+            ->pluck('emargements_id', 'emargements_id')
+            ->all();
+
         $title = 'Feuille de présence de la formation en  ' . $formation->name;
 
         $dompdf  = new Dompdf();
@@ -2044,6 +2053,7 @@ class FormationController extends Controller
             'formation',
             /* 'individuelles', */
             'emargement',
+            'feuillepresenceIndividuelle',
             'title'
         )));
 
@@ -2066,6 +2076,43 @@ class FormationController extends Controller
         $dompdf->stream($name, ['Attachment' => false]);
     }
 
+    public function feuillePresenceColJour(Request $request)
+    {
+
+        $formation = Formation::find($request->input('idformation'));
+        $emargementcollective = Emargementcollective::findOrFail($request->input('idemargement'));
+
+        $feuillepresenceListecollective = DB::table('feuillepresencecollectives')
+            ->where('emargementcollectives_id', $emargementcollective?->id)
+            ->pluck('emargementcollectives_id', 'emargementcollectives_id')
+            ->all();
+
+        $title = 'Feuille de présence de la formation en  ' . $formation->name;
+
+        $dompdf  = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Formation');
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('formations.collectives.feuillepresencecoljour', compact(
+            'formation',
+            'emargementcollective',
+            'feuillepresenceListecollective',
+            'title'
+        )));
+
+        // (Optional) Setup the paper size and orientation (portrait ou landscape)
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        $name = 'Feuille de présence de la formation en  ' . $formation->name . ', code ' . $formation->code . '.pdf';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($name, ['Attachment' => false]);
+    }
+
     public function feuillePresenceTous(Request $request)
     {
 
@@ -2073,6 +2120,30 @@ class FormationController extends Controller
         $emargement = Emargement::findOrFail($request->input('idemargement'));
 
         $feuillepresences = Feuillepresence::where('emargements_id', $request->idemargement)
+            ->get();
+
+        foreach ($feuillepresences as $key => $feuillepresence) {
+            $feuillepresence->update([
+                'presence' => "Oui",
+
+            ]);
+
+            $feuillepresence->save();
+        }
+
+        Alert::success("Modification réussie", "La modification a été effectuée avec succès.");
+
+        return redirect()->back();
+
+    }
+
+    public function feuillePresenceColTous(Request $request)
+    {
+
+        $formation  = Formation::find($request->input('idformation'));
+        $emargement = Emargementcollective::findOrFail($request->input('idemargement'));
+
+        $feuillepresences = Feuillepresencecollective::where('emargementcollectives_id', $request->idemargement)
             ->get();
 
         foreach ($feuillepresences as $key => $feuillepresence) {
@@ -2703,7 +2774,7 @@ class FormationController extends Controller
                 ->where('individuelles.projets_id', $projet?->id)
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), [$request->from_date, $request->to_date])
                 ->get();
-                
+
         } elseif (! empty($request->region)) {
             $region = Region::where('nom', $request->region)->first();
 
@@ -3148,6 +3219,58 @@ class FormationController extends Controller
                     'emargements_id'   => $emargement->id,
                     'individuelles_id' => $individuelle->id,
                     'presence'         => null,
+                ]);
+            }
+        }
+
+        Alert::success('Enregistrement réussi !');
+
+        return redirect()->back();
+    }
+
+    public function ajouterJoursCol(Request $request)
+    {
+
+        $formation = Formation::findOrFail($request->idformation);
+
+        $this->validate($request, [
+            'jour' => "required|numeric",
+            /* 'date' => 'nullable|date|min:10|max:10|date_format:Y-m-d', */
+        ]);
+
+        if (count($formation->listecollectives) <= 0) {
+
+            Alert::warning('Impossible !', 'Aucun bénéficiaire dans cette formation');
+
+            return redirect()->back();
+        }
+
+        $nbre_jours = $request->jour;
+
+        $emargement_count = Emargementcollective::where('formations_id', $request->idformation)->count();
+
+        if (! empty($emargement_count)) {
+            $nbre_jours       = $nbre_jours + $emargement_count + 1;
+            $emargement_count = $emargement_count + 1;
+        } else {
+            $emargement_count = 1;
+            $nbre_jours       = $nbre_jours + $emargement_count;
+        }
+
+        $i = $emargement_count;
+
+        for ($i = $emargement_count; $i < $nbre_jours; $i++) {
+            $emargement = Emargementcollective::create([
+                'jour'          => 'Jour ' . $i,
+                'formations_id' => $request->idformation,
+
+            ]);
+
+            foreach ($formation->listecollectives as $key => $listecollective) {
+                $feuillepresence = Feuillepresencecollective::create([
+                    'emargementcollectives_id' => $emargement->id,
+                    'listecollectives_id'      => $listecollective->id,
+                    'presence'                 => null,
                 ]);
             }
         }

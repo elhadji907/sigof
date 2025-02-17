@@ -114,4 +114,14 @@ class Listecollective extends Model
     {
         return $this->belongsTo(Formation::class, 'formations_id')->latest();
     }
+
+    public function feuillepresencecollective()
+	{
+		return $this->hasOne(Feuillepresencecollective::class, 'listecollectives_id');
+	}
+
+    public function feuillepresencecollectives()
+	{
+		return $this->hasMany(Feuillepresencecollective::class, 'listecollectives_id');
+	}
 }

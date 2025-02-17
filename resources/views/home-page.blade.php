@@ -82,7 +82,6 @@
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">Formations en cours</h5>
-
                                 @foreach ($formations as $formation)
                                     @if (!empty($formation->module->name))
                                         @if (!empty($formation->duree_formation) && count($formation->emargements) > 0)
@@ -91,7 +90,6 @@
                                                     (count($formation->emargements) / $formation->duree_formation) *
                                                         100,
                                                 );
-
                                                 // Déterminer la couleur en fonction du pourcentage
                                                 if ($progress <= 20) {
                                                     $color = 'bg-danger'; // Rouge
@@ -105,10 +103,8 @@
                                                     $color = 'bg-success'; // Vert
                                                 }
                                             @endphp
-
                                             <!-- Nom de la formation -->
                                             <p class="mt-3"><strong> {{ $formation->module->name }}</strong></p>
-
                                             <div class="progress mt-0">
                                                 <div class="progress-bar progress-bar-striped progress-bar-animated {{ $color }}"
                                                     role="progressbar" style="width: {{ $progress }}%"

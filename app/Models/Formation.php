@@ -551,4 +551,9 @@ class Formation extends Model
     {
         return $this->hasMany(Emargement::class, 'formations_id');
     }
+
+	public function emargementcollectives()
+    {
+        return $this->hasMany(Emargementcollective::class, 'formations_id');
+    }
 }

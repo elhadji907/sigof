@@ -70,6 +70,12 @@
 
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
+                                        data-bs-target="#emargement-overview">Émargement
+                                    </button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab"
                                         data-bs-target="#ingenieur-overview">Ingénieur
                                     </button>
                                 </li>
@@ -1070,6 +1076,147 @@
                             </div>
                         </div>
 
+                        {{-- Emargement --}}
+                        <div class="tab-content pt-2">
+                            <div class="tab-pane fade module-overview" id="emargement-overview">
+                                <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h1 class="card-title">Feuilles de présence</h1>
+                                        <span class="d-flex align-items-baseline">
+                                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#ajouterJoursCol{{ $formation->id }}">ajouter
+                                            </button>
+                                            <div class="filter">
+                                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                        class="bi bi-three-dots"></i></a>
+                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                    <li>
+                                                        <form action="{{ route('feuillePresenceFinale') }}" method="post" target="_blank">
+                                                            @csrf
+                                                            <input type="hidden" name="idformation" value="{{ $formation->id }}">
+                                                            <input type="hidden" name="idmodule" value="{{ $formation?->collectivemodule?->id }}">
+                                                            <input type="hidden" name="idlocalite"
+                                                                value="{{ $formation?->departement?->region?->id }}">                                                            
+                                                            <button class="btn btn-sm mx-1">Feuille présence</button>
+                                                        </form>
+                                                    </li>
+                                                    <li>
+                                                        <form action="{{ route('etatTransport') }}" method="post" target="_blank">
+                                                            @csrf
+                                                            <input type="hidden" name="idformation" value="{{ $formation->id }}">
+                                                            <input type="hidden" name="idmodule" value="{{ $formation?->collectivemodule?->id }}">
+                                                            <input type="hidden" name="idlocalite"
+                                                                value="{{ $formation?->departement?->region?->id }}">                                                            
+                                                            <button class="btn btn-sm mx-1">Etat transport</button>
+                                                        </form>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </span>
+                                    </div>
+                                    <div class="row g-3">
+                                        <table class="table table-bordered table-hover datatables"
+                                            id="table-evaluation">
+                                            <thead>
+                                                <tr>
+                                                    <th width="5%" class="text-center">N°</th>
+                                                    <th width="10%" class="text-center">Jours</th>
+                                                    <th width="10%" class="text-center">Date</th>
+                                                    <th width="10%" class="text-center">Effectif</th>
+                                                    <th width="10%" class="text-center">SCAN</th>
+                                                    <th>Observations</th>
+                                                    <th width="5%" class="text-center"><i class="bi bi-gear"></i>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php $i = 1; ?>
+                                                @foreach ($emargementcollectives as $emargementcollective)
+                                                    <tr valign="middle">
+                                                        <td class="text-center">{{ $i++ }}</td>
+                                                        <td class="text-center">{{ $emargementcollective?->jour }}</td>
+                                                        <td class="text-center">
+                                                            {{ $emargementcollective?->date?->format('d/m/Y') }}</td>
+                                                        <td class="text-center">
+                                                            {{ count($emargementcollective?->formation?->listecollectives ) }}</td>
+                                                        <td class="text-center">
+                                                            @if (!empty($emargementcollective?->file))
+                                                            <div>
+                                                                <a class="btn btn-outline-secondary btn-sm" title="Feuille émargement"
+                                                                    target="_blank" href="{{ asset($emargementcollective->getFileEmargement()) }}">
+                                                                    <i class="bi bi-file-earmark-pdf"></i>
+                                                                </a>
+                                                            </div>
+                                                        @else
+                                                            <div class="badge bg-warning">Aucun</div>
+                                                        @endif
+                                                        </td>
+                                                        <td>{{ $emargementcollective?->observations }}</td>
+                                                        <td class="text-center">
+                                                            <span class="d-flex mt-2 align-items-baseline">
+                                                                <form
+                                                                    action="{{ route('formationemargementcollective', [
+                                                                        '$idformation' => $formation->id,
+                                                                        '$idmodule' => $formation->collectivemodule->id,
+                                                                        '$idlocalite' => $formation->departement->id,
+                                                                    ]) }}"
+                                                                    method="get">
+                                                                    @csrf
+                                                                    <input type="hidden" name="idformation"
+                                                                        value="{{ $formation?->id }}">
+                                                                    <input type="hidden" name="idmodule"
+                                                                        value="{{ $formation?->collectivemodule?->id }}">
+                                                                    <input type="hidden" name="idlocalite"
+                                                                        value="{{ $formation?->departement?->region?->id }}">
+                                                                    <input type="hidden" name="idemargement"
+                                                                        value="{{ $emargementcollective?->id }}">
+                                                                    <button type="submit"
+                                                                        class="btn btn-outline-primary btn-rounded btn-sm"><i
+                                                                            class="bi bi-eye"
+                                                                            title="Ajouter bénéficiaires"></i></button>
+                                                                </form>
+                                                                <div class="filter">
+                                                                    <a class="icon" href="#"
+                                                                        data-bs-toggle="dropdown"><i
+                                                                            class="bi bi-three-dots"></i></a>
+                                                                    <ul
+                                                                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                        <li>
+                                                                            <button type="button"
+                                                                                class="dropdown-item btn btn-sm mx-1"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#EditEmargementModal{{ $emargementcollective->id }}">
+                                                                                <i class="bi bi-pencil"
+                                                                                    title="Modifier"></i> Modifier
+                                                                            </button>
+                                                                        </li>
+                                                                        <li>
+                                                                            <form
+                                                                                action="{{ url('emargementcollectives', $emargementcollective->id) }}"
+                                                                                method="post">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit"
+                                                                                    class="dropdown-item show_confirm"><i
+                                                                                        class="bi bi-trash"></i>Supprimer</button>
+                                                                            </form>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                            </span>
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         {{-- Retrait attestation --}}
                         <div class="tab-content pt-2">
                             <div class="tab-pane fade attestation-overview pt-1" id="retrait-attestation-overview">
@@ -1358,12 +1505,65 @@
                         <button type="button" class="btn btn-secondary btn-sm"
                             data-bs-dismiss="modal">Fermer</button>
                         <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-printer"></i>
-                            Vavilider</button>
+                            Valider</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    
+    {{-- Jours formation --}}
+    <div class="modal fade" id="ajouterJoursCol{{ $formation->id }}" tabindex="-1" role="dialog"
+        aria-labelledby="ajouterJoursColLabel{{ $formation->id }}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form method="post" action="{{ route('formations.ajouterJoursCol') }}"
+                    enctype="multipart/form-data" class="row g-3">
+                    @csrf
+                    @method('patch')
+                    <div class="card-header text-center bg-gradient-default">
+                        <h1 class="h4 text-black mb-0">AJOUTER JOUR</h1>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" name="idformation" value="{{ $formation->id }}">
+                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                            <div class="mb-3">
+                                <label>Nombre de jours<span class="text-danger mx-1">*</span></label>
+                                <input type="number" min="1" max="1" name="jour"
+                                    value="{{ '1' ?? old('jour') }}"
+                                    class="form-control form-control-sm @error('jour') is-invalid @enderror"
+                                    id="jour" placeholder="Nombre de jour">
+                                @error('jour')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        {{-- <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                <div class="mb-3">
+                                    <label>Date<span class="text-danger mx-1">*</span></label>
+                                    <input type="date" name="date" value="{{ old('date') }}"
+                                        class="datepicker form-control form-control-sm @error('date') is-invalid @enderror"
+                                        id="date" placeholder="jj/mm/aaaa">
+                                    @error('date')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div> --}}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm"
+                            data-bs-dismiss="modal">Fermer</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Ajouter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     {{-- Membres du jury --}}
     <div class="modal fade" id="EditMembresJuryModal{{ $formation->id }}" tabindex="-1" role="dialog"
         aria-labelledby="EditMembresJuryModalLabel{{ $formation->id }}" aria-hidden="true">
@@ -1627,7 +1827,7 @@
                         <button type="button" class="btn btn-secondary btn btn-sm"
                             data-bs-dismiss="modal">Fermer</button>
                         <button type="submit" class="btn btn-primary btn btn-sm"><i class="bi bi-printer"></i>
-                            Vavilider</button>
+                            Valider</button>
                     </div>
                 </form>
             </div>

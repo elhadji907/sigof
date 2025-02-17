@@ -58,6 +58,8 @@ use App\Http\Controllers\RegionController;
 use App\Http\Controllers\EmargementController;
 use App\Http\Controllers\SMSController;
 use App\Http\Controllers\FeuillepresenceController;
+use App\Http\Controllers\FeuillepresencecollectiveController;
+use App\Http\Controllers\EmargementcollectiveController;
 
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SecteurController;
@@ -190,7 +192,9 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::post('feuillePresence', [FormationController::class, 'feuillePresence'])->name('feuillePresence');
         Route::post('feuillePresenceCol', [FormationController::class, 'feuillePresenceCol'])->name('feuillePresenceCol');
         Route::post('feuillePresenceJour', [FormationController::class, 'feuillePresenceJour'])->name('feuillePresenceJour');
+        Route::post('feuillePresenceColJour', [FormationController::class, 'feuillePresenceColJour'])->name('feuillePresenceColJour');
         Route::post('feuillePresenceTous', [FormationController::class, 'feuillePresenceTous'])->name('feuillePresenceTous');
+        Route::post('feuillePresenceColTous', [FormationController::class, 'feuillePresenceColTous'])->name('feuillePresenceColTous');
         Route::post('feuillePresenceFinale', [FormationController::class, 'feuillePresenceFinale'])->name('feuillePresenceFinale');
         Route::post('etatTransport', [FormationController::class, 'etatTransport'])->name('etatTransport');
 
@@ -210,6 +214,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::put('formationdemandeurs/{idformation}/{idmodule}/{idlocalite}', [FormationController::class, 'giveformationdemandeurs']);
 
         Route::get('formationemargement', [EmargementController::class, 'formationemargement'])->name('formationemargement');
+        Route::get('formationemargementcollective', [EmargementcollectiveController::class, 'formationemargementcollective'])->name('formationemargementcollective');
 
         Route::get('formationdemandeurscollectives/{idformation}/{idcollectivemodule}/{idlocalite}', [FormationController::class, 'addformationdemandeurscollectives']);
         Route::put('formationdemandeurscollectives/{idformation}/{idcollectivemodule}/{idlocalite}', [FormationController::class, 'giveformationdemandeurscollectives']);
@@ -285,6 +290,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::patch('/updateAgentSuivi', [FormationController::class, 'updateAgentSuivi'])->name('formations.updateAgentSuivi');
         Route::patch('/updateMembresJury', [FormationController::class, 'updateMembresJury'])->name('formations.updateMembresJury');
         Route::patch('/ajouterJours', [FormationController::class, 'ajouterJours'])->name('formations.ajouterJours');
+        Route::patch('/ajouterJoursCol', [FormationController::class, 'ajouterJoursCol'])->name('formations.ajouterJoursCol');
         Route::patch('/updateObservationsCollective', [FormationController::class, 'updateObservationsCollective'])->name('listecollectives.updateObservationsCollective');
         Route::patch('/updateAttestations', [FormationController::class, 'updateAttestations'])->name('individuelles.updateAttestations');
         Route::patch('/updateAttestationsCol', [FormationController::class, 'updateAttestationsCol'])->name('individuelles.updateAttestationsCol');
@@ -521,6 +527,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::resource('/antennes', AntenneController::class);
         Route::resource('/emargements', EmargementController::class);
         Route::resource('/feuillepresences', FeuillepresenceController::class);
+        Route::resource('/feuillepresencecollectives', FeuillepresencecollectiveController::class);
     });
     Route::resource('/contacts', ContactController::class);
 });

@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('feuillepresences', function (Blueprint $table) {
+        Schema::create('feuillepresencecollectives', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->increments('id');
-            $table->char('uuid', 36);
+            $table->uuid('uuid');
             $table->string('presence', 200)->nullable();
             $table->string('signature', 200)->nullable();
-            $table->unsignedInteger('emargements_id');
-            $table->unsignedInteger('individuelles_id');
+            $table->unsignedInteger('emargementcollectives_id');
+            $table->unsignedInteger('listecollectives_id');
             $table->softDeletes();
             $table->nullableTimestamps();
         });
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('feuillepresences');
+        Schema::dropIfExists('feuillepresencecollectives');
     }
 };

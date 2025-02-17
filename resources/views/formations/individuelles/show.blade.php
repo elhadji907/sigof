@@ -733,10 +733,10 @@
                                     <div class="alert alert-info mt-5">Aucun ingénieur pour le moment !!!</div>
                                 @endif
                                 <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                    @isset($ingenieur)
+                                    @if(!empty($ingenieur))
                                         <h1 class="card-title">
                                             Liste des formations
-                                            @if (isset($ingenieur))
+                                            @if (!empty($ingenieur))
                                                 de {{ $ingenieur?->name }}
                                             @endif
                                         </h1>
@@ -816,7 +816,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                    @endisset
+                                    @endif
                                 </div>
 
                             </div>
@@ -824,7 +824,7 @@
                         {{-- Evaluation --}}
                         <div class="tab-content pt-2">
                             <div class="tab-pane fade module-overview" id="evaluation-overview">
-                                @isset($module)
+                                @if(!empty($module))
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <form method="post"
                                             action="{{ url('notedemandeurs', ['$idformation' => $formation->id]) }}"
@@ -931,7 +931,7 @@
                                             @endcan
                                         </form>
                                     </div>
-                                @endisset
+                                @endif
                             </div>
                         </div>
                         {{-- Emargement --}}
@@ -1078,7 +1078,7 @@
                         {{-- Retrait attestation --}}
                         <div class="tab-content pt-2">
                             <div class="tab-pane fade attestation-overview pt-1" id="retrait-attestation-overview">
-                                @isset($module)
+                                @if(!empty($module))
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         {{-- <form method="post"
                                                 action="{{ url('notedemandeurs', ['$idformation' => $formation->id]) }}"
@@ -1202,7 +1202,7 @@
                                                 </div>
                                             </form> --}}
                                     </div>
-                                @endisset
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -1688,7 +1688,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-sm"
                             data-bs-dismiss="modal">Fermer</button>
-                        <button type="submit" class="btn btn-primary btn-sm">Vavilider</button>
+                        <button type="submit" class="btn btn-primary btn-sm">Valider</button>
                     </div>
                 </form>
             </div>
@@ -1954,7 +1954,7 @@
                         <button type="button" class="btn btn-secondary btn-sm"
                             data-bs-dismiss="modal">Fermer</button>
                         <button type="submit" class="btn btn-primary btn-sm">
-                            Vavilider</button>
+                            Valider</button>
                     </div>
                 </form>
             </div>

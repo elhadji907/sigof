@@ -107,7 +107,9 @@
                 </tr>
                 <tr class="heading">
                     <td colspan="4">{{ __('Code formation : ') }}
-                        {{ $formation?->code }}
+                        @if (!empty($formation?->code))
+                            {{ $formation?->code . 'C' }}
+                        @endif
                     </td>
                     <td colspan="2"><b>{{ __('Responsable suivi : ') }}</b>
                         @if(!empty($formation?->date_suivi))
@@ -115,16 +117,16 @@
                         @endif
                     </td>
                     <td colspan="1"><b>{{ __('Date : ') }}</b>
-                        @if(!empty($emargement?->date))
-                            {{ $emargement?->date?->format('d/m/Y') }}
+                        @if(!empty($emargementcollective?->date))
+                            {{ $emargementcollective?->date?->format('d/m/Y') }}
                         @endif
                     </td>
-                    <td colspan="2"><b>{{ $emargement?->jour }}</b>
+                    <td colspan="2"><b>{{ $emargementcollective?->jour }}</b>
                     </td>
                 </tr>
                 <tr class="heading">
                     <td colspan="4">{{ __('Intitulé formation : ') }}
-                        {{ $formation?->module?->name }}
+                        {{ $formation?->collectivemodule?->module }}
                     </td>
                     <td colspan="5"><b>{{ __('Opérateur : ') }}</b>
                         {{ $formation?->operateur?->user?->operateur . ' (' . $formation?->operateur?->user?->username . ')' }}
@@ -169,21 +171,20 @@
             </thead>
             <tbody>
                 <?php $i = 1; ?>
-                @foreach ($formation?->individuelles as $individuelle)
+                @foreach ($formation?->listecollectives as $listecollective)
                     <tr class="item" style="text-align: center;">
                         <td>{{ $i++ }}</td>
-                        <td>{{ $individuelle->user->cin }}</td>
+                        <td>{{ $listecollective?->cin }}</td>
                         {{-- <td>{{ $individuelle?->user?->civilite }}</td> --}}
-                        <td>{{ ucwords($individuelle?->user?->firstname) }}</td>
-                        <td>{{ strtoupper($individuelle?->user?->name) }}</td>
-                        <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>
-                        <td>{{ strtoupper($individuelle?->user?->lieu_naissance) }}</td>
-                        <td>{{ $individuelle?->user?->telephone }}</td>
+                        <td>{{ ucwords($listecollective?->prenom) }}</td>
+                        <td>{{ strtoupper($listecollective?->nom) }}</td>
+                        <td>{{ $listecollective?->date_naissance?->format('d/m/Y') }}</td>
+                        <td>{{ strtoupper($listecollective?->lieu_naissance) }}</td>
+                        <td>{{ $listecollective?->telephone }}</td>
                         <td>
                             {{-- {{ ucwords($individuelle?->feuillepresence) }} --}}
-
-                            @foreach ($individuelle?->feuillepresences as $feuillepresence)
-                            {{ ucwords(in_array($feuillepresence?->emargements_id, $feuillepresenceIndividuelle) ? $feuillepresence?->presence : '') }}
+                            @foreach ($listecollective?->feuillepresencecollectives as $feuillepresencecollective)
+                            {{ ucwords(in_array($feuillepresencecollective?->emargementcollectives_id, $feuillepresenceListecollective) ? $feuillepresencecollective?->presence : '') }}
                         @endforeach
                         </td>
                         <td></td>
