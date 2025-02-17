@@ -2221,6 +2221,35 @@ class FormationController extends Controller
         $dompdf->stream($name, ['Attachment' => false]);
     }
 
+    public function feuillePresenceColFinale(Request $request)
+    {
+
+        $formation = Formation::find($request->input('idformation'));
+
+        $title = 'Feuille de présence de la formation en  ' . $formation->name;
+
+        $dompdf  = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Formation');
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('formations.collectives.feuillepresencecolfinale', compact(
+            'formation',
+            'title'
+        )));
+
+        // (Optional) Setup the paper size and orientation (portrait ou landscape)
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        $name = 'Feuille de présence de la formation en  ' . $formation->name . ', code ' . $formation->code . '.pdf';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($name, ['Attachment' => false]);
+    }
+
     public function etatTransport(Request $request)
     {
 
@@ -2234,6 +2263,35 @@ class FormationController extends Controller
         $dompdf->setOptions($options);
 
         $dompdf->loadHtml(view('formations.individuelles.etatTransport', compact(
+            'formation',
+            'title'
+        )));
+
+        // (Optional) Setup the paper size and orientation (portrait ou landscape)
+        $dompdf->setPaper('A4', 'landscape');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        $name = 'Feuille de présence de la formation en  ' . $formation->name . ', code ' . $formation->code . '.pdf';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($name, ['Attachment' => false]);
+    }
+
+    public function etatTransportCol(Request $request)
+    {
+
+        $formation = Formation::find($request->input('idformation'));
+
+        $title = 'Feuille de présence de la formation en  ' . $formation->name;
+
+        $dompdf  = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Formation');
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('formations.collectives.etatTransportCol', compact(
             'formation',
             'title'
         )));

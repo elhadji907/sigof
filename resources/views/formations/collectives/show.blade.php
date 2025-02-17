@@ -1092,7 +1092,7 @@
                                                         class="bi bi-three-dots"></i></a>
                                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                     <li>
-                                                        <form action="{{ route('feuillePresenceFinale') }}" method="post" target="_blank">
+                                                        <form action="{{ route('feuillePresenceColFinale') }}" method="post" target="_blank">
                                                             @csrf
                                                             <input type="hidden" name="idformation" value="{{ $formation->id }}">
                                                             <input type="hidden" name="idmodule" value="{{ $formation?->collectivemodule?->id }}">
@@ -1102,7 +1102,7 @@
                                                         </form>
                                                     </li>
                                                     <li>
-                                                        <form action="{{ route('etatTransport') }}" method="post" target="_blank">
+                                                        <form action="{{ route('etatTransportCol') }}" method="post" target="_blank">
                                                             @csrf
                                                             <input type="hidden" name="idformation" value="{{ $formation->id }}">
                                                             <input type="hidden" name="idmodule" value="{{ $formation?->collectivemodule?->id }}">
