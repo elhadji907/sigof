@@ -76,7 +76,7 @@
                                                 <td>
                                                     @if (isset($collective?->module?->name))
                                                         @isset($collective?->statut_demande)
-                                                            @if ($collective?->statut_demande == 'attente')
+                                                            @if ($collective?->statut_demande == 'Attente')
                                                                 <span
                                                                     class="badge bg-secondary text-white">{{ $collective?->statut_demande }}
                                                                 </span>
@@ -84,7 +84,7 @@
                                                                 <span
                                                                     class="badge bg-success text-white">{{ $collective?->statut_demande }}
                                                                 </span>
-                                                            @elseif ($collective?->statut_demande == 'rejeter')
+                                                            @elseif ($collective?->statut_demande == 'Rejetée')
                                                                 <span
                                                                     class="badge bg-danger text-white">{{ $collective?->statut_demande }}
                                                                 </span>

@@ -136,7 +136,7 @@ class ListecollectiveController extends Controller
         $listecollective = Listecollective::findOrFail($id);
 
         $listecollective->update([
-            'statut'    =>  'attente',
+            'statut'    =>  'Attente',
         ]);
         $listecollective->save();
         Alert::success('Bravo !', 'La demande a été validée.');

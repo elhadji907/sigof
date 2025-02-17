@@ -331,7 +331,7 @@
                                                     <option value="nouveau">
                                                         nouveau
                                                     </option>
-                                                    <option value="rejeter">
+                                                    <option value='Rejetée'>
                                                         rejeter
                                                     </option>
                                                     <option value="sous réserve">
@@ -340,7 +340,7 @@
                                                     <option value="retenu">
                                                         retenu
                                                     </option>
-                                                    <option value="attente">
+                                                    <option value='Attente'>
                                                         attente
                                                     </option> --}}
                                                 </select>

@@ -181,7 +181,7 @@ class CollectiveController extends Controller
                 "bp"                        =>       $request->input("bp"),
                 "statut_juridique"          =>       $request->input("statut"),
                 "autre_statut_juridique"    =>       $request->input("autre_statut"),
-                "statut_demande"            =>       'nouvelle',
+                "statut_demande"            =>       'Nouvelle',
                 "civilite_responsable"      =>       $request->input("civilite"),
                 "prenom_responsable"        =>       $request->input("prenom"),
                 "nom_responsable"           =>       $request->input("nom"),
@@ -311,7 +311,7 @@ class CollectiveController extends Controller
             "bp"                     =>  $request->input("bp"),
             "statut_juridique"       =>  $request->input("statut"),
             "autre_statut_juridique" =>  $request->input("autre_statut"),
-            "statut_demande"         =>  'nouvelle',
+            "statut_demande"         =>  'Nouvelle',
             "civilite_responsable"   =>  $request->input("civilite"),
             "prenom_responsable"     =>  $request->input("prenom"),
             "nom_responsable"        =>  $request->input("nom"),
@@ -376,7 +376,7 @@ class CollectiveController extends Controller
         foreach (Auth::user()->roles as $key => $role) {
         }
 
-        if ($collective->statut_demande != 'nouvelle' && !empty($role?->name) && ($role?->name != 'super-admin')) {
+        if ($collective->statut_demande != 'Nouvelle' && !empty($role?->name) && ($role?->name != 'super-admin')) {
             Alert::warning('Attention ! ', 'action impossible demande déjà traitée.');
             return redirect()->back();
         }
@@ -480,7 +480,7 @@ class CollectiveController extends Controller
 
         $this->authorize('delete', $collective);
 
-        if ($collective->statut_demande != 'nouvelle') {
+        if ($collective->statut_demande != 'Nouvelle') {
             Alert::warning('Attention !', 'Cette action est impossible, la demande a déjà été traitée.');
             return redirect()->back();
         } else {

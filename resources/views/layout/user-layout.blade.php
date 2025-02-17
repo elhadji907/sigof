@@ -94,7 +94,25 @@
             /* border-radius: 5px; */
         }
 
+        .Nouvelle {
+            background-color: #ff9966;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
         .nouveau {
+            background-color: #36e0e0;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
+        .Nouveau {
             background-color: #36e0e0;
             color: white;
             padding: 4px 8px;
@@ -112,7 +130,25 @@
             /* border-radius: 5px; */
         }
 
+        .Rejetée {
+            background-color: #DC3545;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
         .annuler {
+            background-color: #DC3545;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
+        .Annulée {
             background-color: #DC3545;
             color: white;
             padding: 4px 8px;
@@ -131,6 +167,14 @@
         }
 
         .attente {
+            background-color: #6C757D;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+        }
+
+        .Attente {
             background-color: #6C757D;
             color: white;
             padding: 4px 8px;
@@ -191,8 +235,8 @@
             /* border-radius: 5px; */
         }
 
-        .renew {
-            background-color: #ffcc00;
+        .Retiré {
+            background-color: #0DCAF0;
             color: white;
             padding: 4px 8px;
             text-align: center;
@@ -200,8 +244,8 @@
             /* border-radius: 5px; */
         }
 
-        .Nouvelle {
-            background-color: #0DCAF0;
+        .renew {
+            background-color: #ffcc00;
             color: white;
             padding: 4px 8px;
             text-align: center;
@@ -372,6 +416,24 @@
         }
 
         .retenu {
+            background-color: #0DCAF0;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
+        .Retenu {
+            background-color: #0DCAF0;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
+        .Retenue {
             background-color: #0DCAF0;
             color: white;
             padding: 4px 8px;

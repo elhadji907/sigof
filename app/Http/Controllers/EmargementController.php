@@ -158,14 +158,14 @@ class EmargementController extends Controller
 
         if ($formation->statut == "Terminée") {
             Alert::warning('Désolé !', 'Cette formation a déjà été exécutée.');
-        } elseif ($formation->statut == 'annuler') {
+        } elseif ($formation->statut == 'Annulée') {
             Alert::warning('Désolé !', 'La formation a été annulée.');
         } else {
             foreach ($request->individuelles as $individuelle) {
                 $individuelle = Individuelle::findOrFail($individuelle);
                 $individuelle->update([
                     "formations_id" => $idformation,
-                    "statut"        => 'retenu',
+                    "statut"        => 'Retenu',
                 ]);
 
                 $individuelle->save();
@@ -173,7 +173,7 @@ class EmargementController extends Controller
 
             $validated_by = new Validationindividuelle([
                 'validated_id'     => Auth::user()->id,
-                'action'           => 'retenu',
+                'action'           => 'Retenu',
                 'individuelles_id' => $individuelle->id,
             ]);
 

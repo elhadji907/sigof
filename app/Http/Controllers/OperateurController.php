@@ -37,10 +37,10 @@ class OperateurController extends Controller
         $operateurs        = Operateur::orderBy('created_at', 'desc')->get();
         $departements      = Departement::orderBy("created_at", "desc")->get();
         $operateur_agreer  = Operateur::where('statut_agrement', 'agréer')->count();
-        $operateur_rejeter = Operateur::where('statut_agrement', 'rejeter')->count();
+        $operateur_rejeter = Operateur::where('statut_agrement', 'Rejetée')->count();
         $operateur_nouveau = Operateur::where('statut_agrement', 'nouveau')->count();
         $operateur_expirer = Operateur::where('statut_agrement', 'expirer')->count();
-        $operateur_total   = Operateur::where('statut_agrement', 'agréer')->orwhere('statut_agrement', 'rejeter')->orwhere('statut_agrement', 'nouveau')->count();
+        $operateur_total   = Operateur::where('statut_agrement', 'agréer')->orwhere('statut_agrement', 'Rejetée')->orwhere('statut_agrement', 'nouveau')->count();
 
         if (isset($operateur_total) && $operateur_total > '0') {
             $pourcentage_agreer  = ((($operateur_agreer) / ($operateur_total)) * 100);
@@ -1014,7 +1014,7 @@ class OperateurController extends Controller
         if ($moduleoperateur_count > 0) {
             if ($operateur->statut_agrement == 'nouveau' || $operateur->statut_agrement == 'non retenu') {
                 $operateur->update([
-                    'statut_agrement' => 'retenu',
+                    'statut_agrement' => 'Retenu',
                 ]);
 
                 $operateur->save();
@@ -1035,7 +1035,7 @@ class OperateurController extends Controller
         /* Cette partie consistait à faire une validation automatique */
 
         /* $count_agreer = $operateur->operateurmodules->where('statut', 'agréer')->count();
-    $count_rejeter = $operateur->operateurmodules->where('statut', 'rejeter')->count();
+    $count_rejeter = $operateur->operateurmodules->where('statut', 'Rejetée')->count();
     $count_nouveau = $operateur->operateurmodules->where('statut', 'nouveau')->count();
 
     if ($count_agreer > 0) {
@@ -1050,8 +1050,8 @@ class OperateurController extends Controller
     return redirect()->back();
     } elseif ($count_rejeter > 0) {
     $operateur->update([
-    'statut_agrement'    => 'rejeter',
-    'motif'              => 'rejeter',
+    'statut_agrement'    => 'Rejetée',
+    'motif'              => 'Rejetée',
     'date',"max:10", "min:10", "date_format:Y-m-d"               =>  date('Y-m-d'),
     ]);
     Alert::warning("Dommage !", "l'opérateur " . $operateur?->user?->username . " n'a pas été agréé");
@@ -1072,7 +1072,7 @@ class OperateurController extends Controller
 
         $operateur = Operateur::findOrFail($id);
 
-        if ($operateur->statut_agrement == 'nouveau' || $operateur->statut_agrement == 'retenu') {
+        if ($operateur->statut_agrement == 'Nouveau' || $operateur->statut_agrement == 'Retenue') {
             $operateur->update([
                 'statut_agrement' => 'non retenu',
                 'motif'           => $request->input('motif'),
@@ -1198,7 +1198,7 @@ class OperateurController extends Controller
             return redirect()->back();
         }
         $operateur->update([
-            'statut_agrement'        => 'retirer',
+            'statut_agrement'        => 'Retiré',
             'commissionagrements_id' => null,
         ]);
 
@@ -1206,7 +1206,7 @@ class OperateurController extends Controller
 
         $validateoperateur = new Validationoperateur([
             'validated_id'  => Auth::user()->id,
-            'action'        => 'retirer',
+            'action'        => 'Retiré',
             'session'       => $operateur?->session_agrement,
             'operateurs_id' => $operateur?->id,
 
@@ -1571,10 +1571,10 @@ class OperateurController extends Controller
 
         $departements      = Departement::orderBy("created_at", "desc")->get();
         $operateur_agreer  = Operateur::where('statut_agrement', 'agréer')->count();
-        $operateur_rejeter = Operateur::where('statut_agrement', 'rejeter')->count();
+        $operateur_rejeter = Operateur::where('statut_agrement', 'Rejetée')->count();
         $operateur_nouveau = Operateur::where('statut_agrement', 'nouveau')->count();
         $operateur_expirer = Operateur::where('statut_agrement', 'expirer')->count();
-        $operateur_total   = Operateur::where('statut_agrement', 'agréer')->orwhere('statut_agrement', 'rejeter')->orwhere('statut_agrement', 'nouveau')->count();
+        $operateur_total   = Operateur::where('statut_agrement', 'agréer')->orwhere('statut_agrement', 'Rejetée')->orwhere('statut_agrement', 'nouveau')->count();
         if (isset($operateur_total) && $operateur_total > '0') {
             $pourcentage_agreer  = ((($operateur_agreer) / ($operateur_total)) * 100);
             $pourcentage_rejeter = ((($operateur_rejeter) / ($operateur_total)) * 100);

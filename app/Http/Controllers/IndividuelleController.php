@@ -84,27 +84,27 @@ class IndividuelleController extends Controller
         ->where('users.civilite', "Mme")
         ->count();
 
-        $attente = Individuelle::where('statut', 'attente')
+        $attente = Individuelle::where('statut', 'Attente')
         ->count();
 
-        $nouvelle = Individuelle::where('statut', 'nouvelle')
+        $nouvelle = Individuelle::where('statut', 'Nouvelle')
         ->count();
 
-        $retenue = Individuelle::where('statut', 'retenue')
+        $retenue = Individuelle::where('statut', 'Retenue')
         ->count();
 
         $terminer = Individuelle::where('statut', "Terminée")
         ->count();
 
-        $rejeter = Individuelle::where('statut', 'rejeter')
+        $rejeter = Individuelle::where('statut', 'Rejetée')
         ->count();
 
         $pourcentage_hommes = ($masculin / $individuelles->count()) * 100;
         $pourcentage_femmes = ($feminin / $individuelles->count()) * 100;
 
         return view("individuelles.index", compact("pourcentage_femmes",
-        "pourcentage_hommes", "rejeter", "Terminée", "retenue", "nouvelle",
-        "attente", "individuelles", "modules", "departements", "count_today",
+        "pourcentage_hommes", 'Rejetée', "Terminée", "retenue", "Nouvelle",
+        'Attente', "individuelles", "modules", "departements", "count_today",
         'janvier', 'fevrier', 'mars', 'avril', 'mai', 'juin', 'juillet', 'aout',
         'septembre', 'octobre', 'novembre', 'decembre', 'annee', 'annee_lettre',
         'masculin', 'feminin'));*/
@@ -220,7 +220,7 @@ class IndividuelleController extends Controller
                     "regions_id"                       => $regionid,
                     "modules_id"                       => $module_find->id,
                     /* 'autre_module'                      =>  $request->input('autre_module'), */
-                    'statut'                           => 'nouvelle',
+                    'statut'                           => 'Nouvelle',
                     'users_id'                         => $user->id,
                 ]);
             } else {
@@ -252,7 +252,7 @@ class IndividuelleController extends Controller
                     "regions_id"                       => $regionid,
                     "modules_id"                       => $module->id,
                     /* 'autre_module'                      =>  $request->input('autre_module'), */
-                    'statut'                           => 'nouvelle',
+                    'statut'                           => 'Nouvelle',
                     'users_id'                         => $user->id,
                 ]);
             }
@@ -398,7 +398,7 @@ class IndividuelleController extends Controller
                     "modules_id"                       => $module_find->id,
                     "projets_id"                       => $request?->idprojet,
                     'autre_module'                     => $request->input('module'),
-                    'statut'                           => 'nouvelle',
+                    'statut'                           => 'Nouvelle',
                     'users_id'                         => $user->id,
                 ]);
             } else {
@@ -433,7 +433,7 @@ class IndividuelleController extends Controller
                     "modules_id"                       => $module->id,
                     "projets_id"                       => $request?->idprojet,
                     'autre_module'                     => $request->input('module'),
-                    'statut'                           => 'nouvelle',
+                    'statut'                           => 'Nouvelle',
                     'users_id'                         => $user->id,
                 ]);
             }
@@ -605,7 +605,7 @@ class IndividuelleController extends Controller
                 "regions_id"                       => $regionid,
                 "modules_id"                       => $module_find->id,
                 /* 'autre_module'                      =>  $request->input('autre_module'), */
-                'statut'                           => 'nouvelle',
+                'statut'                           => 'Nouvelle',
                 'users_id'                         => $user->id,
             ]);
         } else {
@@ -637,7 +637,7 @@ class IndividuelleController extends Controller
                 "regions_id"                       => $regionid,
                 "modules_id"                       => $module->id,
                 /* 'autre_module'                      =>  $request->input('autre_module'), */
-                'statut'                           => 'nouvelle',
+                'statut'                           => 'Nouvelle',
                 'users_id'                         => $user->id,
             ]);
         }
@@ -677,7 +677,7 @@ class IndividuelleController extends Controller
         if ($individuelle->projet && $individuelle->projet->statut != 'ouvert') {
             Alert::warning('Avertissement !', 'La modification a échoué.');
             return redirect()->back();
-        } elseif ($individuelle->statut != 'nouvelle' && ! empty($role?->name) && ($role?->name === 'Demandeur')) {
+        } elseif ($individuelle->statut != 'Nouvelle' && ! empty($role?->name) && ($role?->name === 'Demandeur')) {
             Alert::warning('Attention ! ', 'action impossible demande déjà traitée.');
             return redirect()->back();
         } else {
@@ -946,7 +946,7 @@ class IndividuelleController extends Controller
 
         foreach (Auth::user()->roles as $key => $role) {
         }
-        if ($individuelle->statut != 'nouvelle' && ! empty($role?->name) && ($role?->name != 'super-admin')) {
+        if ($individuelle->statut != 'Nouvelle' && ! empty($role?->name) && ($role?->name != 'super-admin')) {
             Alert::warning('Attention ! ', 'action impossible demande déjà traitée.');
             return redirect()->back();
         } else {
@@ -1227,7 +1227,7 @@ class IndividuelleController extends Controller
                     "regions_id"                       => $regionid,
                     "modules_id"                       => $module_find->id,
                     /* 'autre_module'                      =>  $request->input('autre_module'), */
-                    'statut'                           => 'nouvelle',
+                    'statut'                           => 'Nouvelle',
                     'users_id'                         => $user->id,
                     'projets_id'                       => $projet->id,
                 ]);
@@ -1263,7 +1263,7 @@ class IndividuelleController extends Controller
                     "regions_id"                       => $regionid,
                     "modules_id"                       => $module->id,
                     /* 'autre_module'                      =>  $request->input('autre_module'), */
-                    'statut'                           => 'nouvelle',
+                    'statut'                           => 'Nouvelle',
                     'users_id'                         => $user->id,
                     'projets_id'                       => $projet->id,
                 ]);
@@ -1357,7 +1357,7 @@ class IndividuelleController extends Controller
         $nouvelle_formations = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
             ->select('formations.*')
             ->where('individuelles.users_id', $user->id)
-            ->where('formations.statut', 'nouvelle')->get();
+            ->where('formations.statut', 'Nouvelle')->get();
 
         return view("individuelles.nouvelle_formations", compact("nouvelle_formations"));
     }

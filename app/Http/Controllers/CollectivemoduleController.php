@@ -31,7 +31,7 @@ class CollectivemoduleController extends Controller
             if (isset($module_find)) {
                 $collectivemodule = Collectivemodule::create([
                     'module'            => $request->input('module_name'),
-                    'statut'            => 'attente',
+                    'statut'            => 'Attente',
                     'collectives_id'    => $request->input('collective'),
                 ]);
             } else {
@@ -43,7 +43,7 @@ class CollectivemoduleController extends Controller
                 $module->save();
                 $collectivemodule = Collectivemodule::create([
                     'module'            => $request->input('module_name'),
-                    'statut'            => 'attente',
+                    'statut'            => 'Attente',
                     'collectives_id'    => $request->input('collective'),
                 ]);
             }
@@ -105,7 +105,7 @@ class CollectivemoduleController extends Controller
         $collectivemodule = Collectivemodule::findOrFail($request->id);
 
         $collectivemodule->update([
-            'statut' => 'attente'
+            'statut' => 'Attente'
         ]);
 
         $collectivemodule->save();
@@ -124,7 +124,7 @@ class CollectivemoduleController extends Controller
 
         $collectivemodule->update([
             'motif' => $request->motif,
-            'statut' => 'rejeter'
+            'statut' => 'Rejetée'
         ]);
 
         $collectivemodule->save();
@@ -147,7 +147,7 @@ class CollectivemoduleController extends Controller
         $formation->save();
 
         $collectivemodule->update([
-            'statut' => 'attente',
+            'statut' => 'Attente',
             'formations_id' => null
         ]);
 

@@ -77,13 +77,13 @@
                                                                     <p><span class="{{ $validationindividuelle->action }}">
                                                                             {{ $validationindividuelle->action }}
                                                                         </span>
-                                                                        {{-- @if ($validationindividuelle->action == 'attente')
+                                                                        {{-- @if ($validationindividuelle->action == 'Attente')
                                                                             <span
                                                                                 class="badge rounded-pill bg-warning">{{ $validationindividuelle->action }}</span>
                                                                         @elseif ($validationindividuelle->action == 'accepter')
                                                                             <span
                                                                                 class="badge rounded-pill bg-info">{{ $validationindividuelle->action }}</span>
-                                                                        @elseif ($validationindividuelle->action == 'rejeter')
+                                                                        @elseif ($validationindividuelle->action == 'Rejetée')
                                                                             <span
                                                                                 class="badge rounded-pill bg-danger">{{ $validationindividuelle->action }}</span>
                                                                             <p>{!! substr($validationindividuelle?->motif, 0, 25) . ' ...' !!}</p>
@@ -131,8 +131,8 @@
                                                 <button class="btn btn-sm mx-1" data-bs-toggle="modal"
                                                     data-bs-target="#RejetDemandeModal">Rejeter
                                                 </button>
-                                                {{-- @elseif($individuelle?->statut == 'rejeter') --}}
-                                                {{--  @elseif($individuelle?->statut == 'attente') --}}
+                                                {{-- @elseif($individuelle?->statut == 'Rejetée') --}}
+                                                {{--  @elseif($individuelle?->statut == 'Attente') --}}
                                                 {{-- <form
                                                         action="{{ route('validation-individuelles.update', $individuelle?->id) }}"
                                                         method="post">

@@ -67,7 +67,7 @@ class ProfileController extends Controller
         $nouvelle_formation_count = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
             ->select('formations.*')
             ->where('individuelles.users_id', $user->id)
-            ->where('formations.statut', 'nouvelle')->count();
+            ->where('formations.statut', 'Nouvelle')->count();
 
         $collectives = Collective::where('users_id', $user->id)
             ->get();

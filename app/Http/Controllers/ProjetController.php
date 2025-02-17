@@ -77,7 +77,7 @@ class ProjetController extends Controller
             'effectif'           =>  $request->input('effectif'),
             'type_localite'      =>  $request->input('type'),
             'type_projet'        =>  $request->input('type_projet'),
-            'statut'             =>  'attente',
+            'statut'             =>  'Attente',
 
         ]);
 

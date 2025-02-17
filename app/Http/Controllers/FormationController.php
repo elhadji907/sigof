@@ -333,7 +333,7 @@ class FormationController extends Controller
             "projets_id"          => $request->input('projet'),
             "programmes_id"       => $request->input('programme'),
             "choixoperateurs_id"  => $request->input('choixoperateur'),
-            "statut"              => "nouvelle",
+            "statut"              => "Nouvelle",
             "annee"               => $anneeEnCours,
 
         ]);
@@ -341,7 +341,7 @@ class FormationController extends Controller
         $formation->save();
 
         $statut = new Statut([
-            "statut"        => "nouvelle",
+            "statut"        => "Nouvelle",
             "formations_id" => $formation->id,
         ]);
 
@@ -682,9 +682,9 @@ class FormationController extends Controller
 
         $collectivemodules = Collectivemodule::join('collectives', 'collectives.id', 'collectivemodules.collectives_id')
             ->select('collectivemodules.*')
-            ->where('collectives.statut_demande', 'attente')
-            ->orwhere('collectivemodules.statut', ['retenu'])
-            ->orwhere('collectivemodules.statut', ['retirer'])
+            ->where('collectives.statut_demande', 'Attente')
+            ->orwhere('collectivemodules.statut', ['Retenu'])
+            ->orwhere('collectivemodules.statut', ['Retiré'])
             ->orwhere('collectivemodules.statut', ['former'])
             ->get();
 
@@ -838,9 +838,9 @@ class FormationController extends Controller
                 ->where('individuelles.projets_id', $formation?->projets_id)
                 ->where('modules.name', 'LIKE', "%{$module->name}%")
                 ->where('regions.nom', $region->nom)
-                ->where('individuelles.statut', 'attente')
-            /* ->orwhere('individuelles.statut', 'retirer')
-                ->orwhere('individuelles.statut', 'retenu') */
+                ->where('individuelles.statut', 'Attente')
+            /* ->orwhere('individuelles.statut', 'Retirée')
+                ->orwhere('individuelles.statut', 'Retenue') */
                 ->get();
 
             $retirer_individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
@@ -849,7 +849,7 @@ class FormationController extends Controller
                 ->where('individuelles.projets_id', $formation?->projets_id)
                 ->where('modules.name', 'LIKE', "%{$module->name}%")
                 ->where('regions.nom', $region->nom)
-                ->where('individuelles.statut', 'retirer')
+                ->where('individuelles.statut', 'Retirée')
                 ->get();
         } else {
             $individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
@@ -857,16 +857,16 @@ class FormationController extends Controller
                 ->select('individuelles.*')
                 ->where('modules.name', 'LIKE', "%{$module->name}%")
                 ->where('regions.nom', $region->nom)
-                ->where('individuelles.statut', 'attente')
-            /* ->orwhere('individuelles.statut', 'retirer')
-                ->orwhere('individuelles.statut', 'retenu') */
+                ->where('individuelles.statut', 'Attente')
+            /* ->orwhere('individuelles.statut', 'Retirée')
+                ->orwhere('individuelles.statut', 'Retenue') */
                 ->get();
             $retirer_individuelles = Individuelle::join('modules', 'modules.id', 'individuelles.modules_id')
                 ->join('regions', 'regions.id', 'individuelles.regions_id')
                 ->select('individuelles.*')
                 ->where('modules.name', 'LIKE', "%{$module->name}%")
                 ->where('regions.nom', $region->nom)
-                ->where('individuelles.statut', 'retirer')
+                ->where('individuelles.statut', 'Retirée')
                 ->get();
         }
 
@@ -907,16 +907,16 @@ class FormationController extends Controller
 
         $formation = Formation::findOrFail($idformation);
 
-        if ($formation->statut == 'terminerr') {
+        if ($formation->statut == 'Terminée') {
             Alert::warning('Désolé !', 'Cette formation a déjà été exécutée.');
-        } elseif ($formation->statut == 'annuler') {
+        } elseif ($formation->statut == 'Annulée') {
             Alert::warning('Désolé !', 'La formation a été annulée.');
         } else {
             foreach ($request->individuelles as $individuelle) {
                 $individuelle = Individuelle::findOrFail($individuelle);
                 $individuelle->update([
                     "formations_id" => $idformation,
-                    "statut"        => 'retenu',
+                    "statut"        => 'Retenue',
                 ]);
 
                 $individuelle->save();
@@ -924,7 +924,7 @@ class FormationController extends Controller
 
             $validated_by = new Validationindividuelle([
                 'validated_id'     => Auth::user()->id,
-                'action'           => 'retenu',
+                'action'           => 'Retenue',
                 'individuelles_id' => $individuelle->id,
             ]);
 
@@ -950,7 +950,7 @@ class FormationController extends Controller
         } else {
             $individuelle->update([
                 "formations_id" => null,
-                "statut"        => 'retirer',
+                "statut"        => 'Retirée',
                 "motif_rejet"   => $individuelle->motif_rejet . ' retirer de la formation ' . $formation->name . ' pour mitif : ' . $request->input('motif'),
             ]);
 
@@ -966,7 +966,7 @@ class FormationController extends Controller
 
             $validated_by = new Validationindividuelle([
                 'validated_id'     => Auth::user()->id,
-                'action'           => 'retirer',
+                'action'           => 'Retirée',
                 'motif'            => $request->input('motif') . ', pour la formation : ' . $formation->name,
                 'individuelles_id' => $individuelle->id,
             ]);
@@ -992,7 +992,7 @@ class FormationController extends Controller
         } else {
             $listecollective->update([
                 "formations_id" => null,
-                "statut"        => 'retirer',
+                "statut"        => 'Retirée',
                 "motif_rejet"   => $request->motif,
             ]);
 
@@ -1168,7 +1168,7 @@ class FormationController extends Controller
         $collective       = $collectivemodule?->collective;
 
         $collectivemodule->update([
-            "statut" => 'retenu',
+            "statut" => 'Retenue',
         ]);
 
         $collectivemodule->save();
@@ -1272,9 +1272,9 @@ class FormationController extends Controller
 
         $collectivemodules = Collectivemodule::join('collectives', 'collectives.id', 'collectivemodules.collectives_id')
             ->select('collectivemodules.*')
-            ->where('collectives.statut_demande', 'attente')
-            ->where('collectivemodules.statut', 'attente')
-            ->orwhere('collectivemodules.statut', 'retenu')
+            ->where('collectives.statut_demande', 'Attente')
+            ->where('collectivemodules.statut', 'Attente')
+            ->orwhere('collectivemodules.statut', 'Retenue')
             ->get();
 
         $collectiveModule = DB::table('collectivemodules')
@@ -1314,14 +1314,14 @@ class FormationController extends Controller
 
                 $collectivemodule->update([
                     "formations_id" => null,
-                    "statut"        => 'attente',
+                    "statut"        => 'Attente',
                 ]);
 
                 $collectivemodule->save();
 
                 $collectivemodule->update([
                     "formations_id" => $idformation,
-                    "statut"        => 'retenu',
+                    "statut"        => 'Retenue',
                 ]);
 
                 $collectivemodule->save();
@@ -1333,7 +1333,7 @@ class FormationController extends Controller
 
                 $collectivemodule->update([
                     "formations_id" => $idformation,
-                    "statut"        => 'retenu',
+                    "statut"        => 'Retenue',
                 ]);
 
                 $collectivemodule->save();
@@ -1346,7 +1346,7 @@ class FormationController extends Controller
         } else {
             $collectivemodule->update([
                 "formations_id" => $idformation,
-                "statut"        => 'retenu',
+                "statut"        => 'Retenue',
             ]);
 
             $collectivemodule->save();
@@ -1369,7 +1369,7 @@ class FormationController extends Controller
 
         $collectivemodule->update([
             "formations_id" => null,
-            "statut"        => 'attente',
+            "statut"        => 'Attente',
         ]);
 
         $collectivemodule->save();
@@ -1439,9 +1439,9 @@ class FormationController extends Controller
             Alert::warning('Désolé !', 'Cette formation a déjà été exécutée.');
             } else */
 
-            if ($formation->statut == 'annuler') {
+            if ($formation->statut == 'Annulée') {
                 Alert::warning('Désolez !', 'formation déjà annulée');
-            } elseif ($formation->statut == 'attente') {
+            } elseif ($formation->statut == 'Attente') {
                 Alert::warning('Désolez !', 'la formation n\'a pas encore démarrée');
             } else {
 
@@ -2540,14 +2540,14 @@ class FormationController extends Controller
 
         if ($formation->statut == "Terminée") {
             Alert::warning('Désolé !', 'Cette formation a déjà été exécutée.');
-        } elseif ($formation->statut == 'annuler') {
+        } elseif ($formation->statut == 'Annulée') {
             Alert::warning('Désolé !', 'La formation a été annulée.');
         } else {
             $listecollectiveformations = Listecollective::where('formations_id', $idformation)->get();
             foreach ($listecollectiveformations as $key => $listecollectiveformation) {
                 $listecollectiveformation->update([
                     "formations_id" => null,
-                    "statut"        => 'attente',
+                    "statut"        => 'Attente',
                 ]);
                 $listecollectiveformation->save();
             }
@@ -2557,7 +2557,7 @@ class FormationController extends Controller
 
                 $listecollective->update([
                     "formations_id" => $idformation,
-                    "statut"        => 'retenu',
+                    "statut"        => 'Retenue',
                 ]);
 
                 $listecollective->save();
@@ -2565,7 +2565,7 @@ class FormationController extends Controller
 
             /*  $validated_by = new Validationcollective([
             'validated_id'       =>      Auth::user()->id,
-            'action'             =>      'retenu',
+            'action'             =>      'Retenue',
             'collectives_id'   =>      $listecollective->id
             ]);
 

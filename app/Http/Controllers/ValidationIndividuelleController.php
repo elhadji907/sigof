@@ -15,22 +15,22 @@ class ValidationIndividuelleController extends Controller
 
         foreach (Auth::user()->roles as $role) {
             if (! empty($role?->name) && ($role?->name != 'super-admin')) {
-                if ($individuelle->statut == 'attente') {
+                if ($individuelle->statut == 'Attente') {
                     Alert::warning('Désolez !', 'demande déjà validée');
                 } elseif ($individuelle->statut == 'programmer') {
                     Alert::warning('Désolez !', 'demande déjà programmée');
-                } elseif ($individuelle->statut == 'retenue') {
+                } elseif ($individuelle->statut == 'Retenue') {
                     Alert::warning('Désolez !', 'demande déjà traitée');
                 } elseif ($individuelle->statut == "Terminée") {
                     Alert::warning('Désolez !', 'demandeur déjà formé');
-                } elseif ($individuelle->statut == 'rejeter') {
+                } elseif ($individuelle->statut == 'Rejetée') {
                     Alert::warning('Désolez !', 'demandeur déjà rejetée');
                 } else {
                     Alert::warning('Désolez !', 'action impossible');
                 }
             } else {
                 $individuelle->update([
-                    'statut'       => 'attente',
+                    'statut'       => 'Attente',
                     'validated_by' => Auth::user()->firstname . ' ' . Auth::user()->name,
                 ]);
 
@@ -38,7 +38,7 @@ class ValidationIndividuelleController extends Controller
 
                 $validated_by = new Validationindividuelle([
                     'validated_id'     => Auth::user()->id,
-                    'action'           => 'attente',
+                    'action'           => 'Attente',
                     'individuelles_id' => $individuelle->id,
                 ]);
 
@@ -58,19 +58,19 @@ class ValidationIndividuelleController extends Controller
 
         $individuelle = Individuelle::findOrFail($id);
 
-        if ($individuelle->statut == 'rejeter') {
+        if ($individuelle->statut == 'Rejetée') {
             Alert::warning('Désolez !', 'demande déjà rejetée');
         } elseif ($individuelle->statut == 'programmer') {
             Alert::warning('Désolez !', 'demande déjà programmée');
-        } elseif ($individuelle->statut == 'attente') {
+        } elseif ($individuelle->statut == 'Attente') {
             Alert::warning('Désolez !', 'demande déjà traitée');
-        } elseif ($individuelle->statut == 'retenue') {
+        } elseif ($individuelle->statut == 'Retenue') {
             Alert::warning('Désolez !', 'demande déjà traitée');
         } elseif ($individuelle->statut == "Terminée") {
             Alert::warning('Désolez !', 'demandeur déjà formé');
         } else {
             $individuelle->update([
-                'statut'      => 'rejeter',
+                'statut'      => 'Rejetée',
                 'canceled_by' => Auth::user()->firstname . ' ' . Auth::user()->name,
             ]);
 
@@ -78,7 +78,7 @@ class ValidationIndividuelleController extends Controller
 
             $validated_by = new Validationindividuelle([
                 'validated_id'     => Auth::user()->id,
-                'action'           => 'rejeter',
+                'action'           => 'Rejetée',
                 'motif'            => $request->input('motif'),
                 'individuelles_id' => $individuelle->id,
             ]);

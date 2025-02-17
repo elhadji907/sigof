@@ -264,7 +264,7 @@
                                                 },
                                                 {
                                                     value: {{ $attente }},
-                                                    name: 'attente'
+                                                    name: 'Attente'
                                                 },
                                                 {
                                                     value: {{ $retenue }},
@@ -276,7 +276,7 @@
                                                 },
                                                 {
                                                     value: {{ $rejeter }},
-                                                    name: 'rejeter'
+                                                    name: 'Rejetée'
                                                 }
                                             ]
                                         }]

@@ -55,13 +55,13 @@ class ValidationformationController extends Controller
 
         $formation   = Formation::findOrFail($id);
 
-        if ($formation->statut == 'annuler') {
+        if ($formation->statut == 'Annulée') {
             Alert::warning('Désolez !', 'formation déjà annulée');
         } elseif ($formation->statut == "Terminée") {
             Alert::warning('Désolez !', 'formation déjà exécutée');
         } else {
             $formation->update([
-                'statut'                => 'annuler',
+                'statut'                => 'Annulée',
                 'canceled_by'           =>  Auth::user()->firstname . ' ' . Auth::user()->name,
             ]);
 
@@ -69,7 +69,7 @@ class ValidationformationController extends Controller
 
             $validated_by = new Validationformation([
                 'validated_id'       =>      Auth::user()->id,
-                'action'             =>      'annuler',
+                'action'             =>      'Annulée',
                 'motif'              =>      $request->input('motif'),
                 'formations_id'   =>      $formation->id
             ]);

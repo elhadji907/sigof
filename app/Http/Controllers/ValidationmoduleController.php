@@ -47,11 +47,11 @@ class ValidationmoduleController extends Controller
 
         $operateurmodule   = Operateurmodule::findOrFail($id);
 
-        if ($operateurmodule->statut == 'rejeter') {
+        if ($operateurmodule->statut == 'Rejetée') {
             Alert::warning('Désolez', 'déjà rejeté');
         } else {
             $operateurmodule->update([
-                'statut'             =>  'rejeter',
+                'statut'             =>  'Rejetée',
                 'motif'              =>  $request->input('motif'),
                 'users_id'           =>  Auth::user()->id,
             ]);
@@ -59,7 +59,7 @@ class ValidationmoduleController extends Controller
             $operateurmodule->save();
 
             $moduleoperateurstatut = new Moduleoperateurstatut([
-                'statut'                =>  "rejeter",
+                'statut'                =>  'Rejetée',
                 'motif'                 =>  $request->input('motif'),
                 'validated_id'          =>  Auth::user()->id,
                 'operateurmodules_id'   =>  $operateurmodule->id,

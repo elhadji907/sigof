@@ -60,14 +60,14 @@ class ValidationoperateurController extends Controller
         $operateur   = Operateur::findOrFail($id);
 
         $operateur->update([
-            'statut_agrement'    =>  'rejeter',
+            'statut_agrement'    =>  'Rejetée',
             'motif'              =>  $request->input('motif'),
         ]);
 
         $operateur->save();
 
         $validationoperateur = new Validationoperateur([
-            'action'                =>  "rejeter",
+            'action'                =>  'Rejetée',
             'motif'                 =>  $request->input('motif'),
             'validated_id'          =>  Auth::user()->id,
             'session'               =>  $operateur?->session_agrement,

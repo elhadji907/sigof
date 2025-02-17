@@ -373,13 +373,13 @@
                                             <option value="nouvelle">
                                                 nouvelle
                                             </option>
-                                            <option value="attente">
+                                            <option value='Attente'>
                                                 attente
                                             </option>
                                             <option value="former">
                                                 former
                                             </option>
-                                            <option value="rejeter">
+                                            <option value='Rejetée'>
                                                 rejeter
                                             </option>
                                             <option value="retenu">

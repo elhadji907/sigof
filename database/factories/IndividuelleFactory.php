@@ -63,7 +63,7 @@ class IndividuelleFactory extends Factory
             'niveau_etude'                          =>      $this->faker->randomElement($array = array('Aucun', 'Arabe', 'Elementaire', 'Secondaire', 'Supérieur', 'Moyen')),
             'numero'                                =>      $numero_individuelle,
             'telephone'                             =>      $this->faker->unique(true)->numberBetween(70, 79) . rand(10, 99) . rand(10, 99) . rand(0, 9) . rand(0, 9) . rand(0, 9),
-            'statut'                                =>      $this->faker->randomElement($array = array('nouvelle', 'attente')),
+            'statut'                                =>      $this->faker->randomElement($array = array('Nouvelle', 'Attente')),
             'qualification'                         =>      $this->faker->word,
             'projetprofessionnel'                   =>      $this->faker->text,
             'projet_poste_formation'                =>      $this->faker->randomElement($array = array('Poursuivre mes études', 'Chercher un emploi', 'Lancer mon entreprise', 'Retourner dans mon entreprise', 'Aucun de ces projets')),

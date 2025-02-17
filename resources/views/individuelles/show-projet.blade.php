@@ -100,7 +100,7 @@
                                                 <span class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}
                                                 </span>
                                                 {{-- @isset($individuelle?->statut)
-                                                            @if ($individuelle?->statut == 'attente')
+                                                            @if ($individuelle?->statut == 'Attente')
                                                                 <span
                                                                     class="badge bg-secondary text-white">{{ $individuelle?->statut }}
                                                                 </span>
@@ -108,7 +108,7 @@
                                                                 <span
                                                                     class="badge bg-success text-white">{{ $individuelle?->statut }}
                                                                 </span>
-                                                            @elseif ($individuelle?->statut == 'rejeter')
+                                                            @elseif ($individuelle?->statut == 'Rejetée')
                                                                 <span
                                                                     class="badge bg-danger text-white">{{ $individuelle?->statut }}
                                                                 </span>

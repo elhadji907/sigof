@@ -108,19 +108,19 @@ class UserController extends Controller
             ->where('users.civilite', "Mme")
             ->count();
 
-        $attente = Individuelle::where('statut', 'attente')
+        $attente = Individuelle::where('statut', 'Attente')
             ->count();
 
-        $nouvelle = Individuelle::where('statut', 'nouvelle')
+        $nouvelle = Individuelle::where('statut', 'Nouvelle')
             ->count();
 
-        $retenue = Individuelle::where('statut', 'retenue')
+        $retenue = Individuelle::where('statut', 'Retenue')
             ->count();
 
         $terminer = Individuelle::where('statut', "Terminée")
             ->count();
 
-        $rejeter = Individuelle::where('statut', 'rejeter')
+        $rejeter = Individuelle::where('statut', 'Rejetée')
             ->count();
 
         if ($individuelles->count() > 0) {
@@ -143,11 +143,11 @@ class UserController extends Controller
                 'total_individuelle',
                 "pourcentage_femmes",
                 "pourcentage_hommes",
-                "rejeter",
+                'rejeter',
                 "terminer",
                 "retenue",
                 "nouvelle",
-                "attente",
+                'attente',
                 "individuelles",
                 "modules",
                 "departements",
