@@ -70,8 +70,8 @@ class ReferentielController extends Controller
         $referentiel = Referentiel::find($id);
 
         $this->validate($request, [
-            "intitule"      => ['required', 'string', 'max:250', Rule::unique(Referentiel::class)->ignore($id)],
-            "titre"         => ['required', 'string', 'max:250', Rule::unique(Referentiel::class)->ignore($id)],
+            /* "intitule"      => ['required', 'string', 'max:250', Rule::unique(Referentiel::class)->ignore($id)],
+            "titre"         => ['required', 'string', 'max:250', Rule::unique(Referentiel::class)->ignore($id)], */
             "categorie"     => ['nullable', 'string'],
             "reference"     => ['nullable', 'string'],
         ]);

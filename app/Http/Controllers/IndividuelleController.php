@@ -9,6 +9,7 @@ use App\Models\Individuelle;
 use App\Models\Module;
 use App\Models\Projet;
 use App\Models\Region;
+use App\Models\Formation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -1354,7 +1355,7 @@ class IndividuelleController extends Controller
     {
         $user = Auth::user();
 
-        $nouvelle_formations = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
+        $nouvelle_formations = Formation::join('individuelles', 'formations.id', 'individuelles.formations_id')
             ->select('formations.*')
             ->where('individuelles.users_id', $user->id)
             ->where('formations.statut', 'Nouvelle')->get();

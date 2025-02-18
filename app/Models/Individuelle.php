@@ -35,6 +35,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string|null $autres_diplomes_pros
  * @property string|null $telephone
  * @property string|null $motivation
+ * @property string|null $confirme
  * @property string|null $motif
  * @property int|null $annee_diplome
  * @property int|null $annee_diplome_professionelle
@@ -240,6 +241,7 @@ class Individuelle extends Model
 		'users_id',
 		'retrait_diplome',
 		'diplome_retirer_by',
+		'confirme',
 		'regions_id'
 	];
 

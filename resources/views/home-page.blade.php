@@ -77,7 +77,6 @@
                 </div>
             </div> --}}
                 <div class="col-lg-12">
-
                     @if (!empty($count_formations))
                         <div class="card">
                             <div class="card-body">
