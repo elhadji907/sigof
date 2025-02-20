@@ -267,11 +267,11 @@
                                                 },
                                                 {
                                                     value: {{ $retenue }},
-                                                    name: 'sélectionner'
+                                                    name: 'sélectionnés'
                                                 },
                                                 {
                                                     value: {{ $terminer }},
-                                                    name: 'former'
+                                                    name: 'formés'
                                                 },
                                                 {
                                                     value: {{ $rejeter }},

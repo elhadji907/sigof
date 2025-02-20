@@ -685,7 +685,7 @@ class FormationController extends Controller
             ->where('collectives.statut_demande', 'Attente')
             ->orwhere('collectivemodules.statut', ['Retenu'])
             ->orwhere('collectivemodules.statut', ['Retiré'])
-            ->orwhere('collectivemodules.statut', ['former'])
+            ->orwhere('collectivemodules.statut', ['formés'])
             ->get();
 
         $collectiveModule = DB::table('collectivemodules')
@@ -1590,7 +1590,7 @@ class FormationController extends Controller
                 $individuelle->update([
                     "note_obtenue" => $value,
                     "appreciation" => $appreciation,
-                    "statut"       => 'former',
+                    "statut"       => 'formés',
                 ]);
             } else {
                 Alert::warning('Désolé !', 'La formation n\'est pas encore achevée.');
@@ -1601,7 +1601,7 @@ class FormationController extends Controller
 
             $validated_by = new Validationindividuelle([
                 'validated_id'     => Auth::user()->id,
-                'action'           => 'former',
+                'action'           => 'formés',
                 'individuelles_id' => $individuelle->id,
             ]);
 
@@ -1645,7 +1645,7 @@ class FormationController extends Controller
             $listecollective->update([
                 "note_obtenue" => $value,
                 "appreciation" => $appreciation,
-                "statut"       => 'former',
+                "statut"       => 'formés',
             ]);
 
             $listecollective->save();
@@ -1653,7 +1653,7 @@ class FormationController extends Controller
             $collectivemodule = $listecollective->collectivemodule;
 
             $collectivemodule->update([
-                "statut" => 'former',
+                "statut" => 'formés',
             ]);
 
             $collectivemodule->save();
@@ -1661,7 +1661,7 @@ class FormationController extends Controller
             $collective = $collectivemodule->collective;
 
             $collective->update([
-                "statut_demande" => 'former',
+                "statut_demande" => 'formés',
             ]);
 
             $collective->save();
@@ -2826,7 +2826,7 @@ class FormationController extends Controller
 
             $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
-                ->where('individuelles.statut', 'former')
+                ->where('individuelles.statut', 'formés')
                 ->where('individuelles.modules_id', 'LIKE', "%{$module?->id}%")
                 ->where('individuelles.regions_id', $region?->id)
                 ->where('individuelles.projets_id', $projet?->id)
@@ -2838,7 +2838,7 @@ class FormationController extends Controller
 
             $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
-                ->where('individuelles.statut', 'former')
+                ->where('individuelles.statut', 'formés')
                 ->where('individuelles.regions_id', $region?->id)
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), [$request->from_date, $request->to_date])
                 ->get();
@@ -2847,7 +2847,7 @@ class FormationController extends Controller
 
             $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
-                ->where('individuelles.statut', 'former')
+                ->where('individuelles.statut', 'formés')
                 ->where('individuelles.projets_id', $projet?->id)
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), [$request->from_date, $request->to_date])
                 ->get();
@@ -2856,14 +2856,14 @@ class FormationController extends Controller
 
             $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
-                ->where('individuelles.statut', 'former')
+                ->where('individuelles.statut', 'formés')
                 ->where('individuelles.modules_id', 'LIKE', "%{$module?->id}%")
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), [$request->from_date, $request->to_date])
                 ->get();
         } else {
             $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
-                ->where('individuelles.statut', 'former')
+                ->where('individuelles.statut', 'formés')
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), [$request->from_date, $request->to_date])
                 ->get();
         }
@@ -2921,14 +2921,14 @@ class FormationController extends Controller
             $module = Collectivemodule::where('module', $request->module)->first();
             $formes = Listecollective::join('formations', 'formations.id', 'listecollectives.formations_id')
                 ->select('listecollectives.*')
-                ->where('listecollectives.statut', 'former')
+                ->where('listecollectives.statut', 'formés')
                 ->where('listecollectives.collectivemodules_id', 'LIKE', "%{$module?->id}%")
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), [$request->from_date, $request->to_date])
                 ->get();
         } else {
             $formes = Listecollective::join('formations', 'formations.id', 'listecollectives.formations_id')
                 ->select('listecollectives.*')
-                ->where('listecollectives.statut', 'former')
+                ->where('listecollectives.statut', 'formés')
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), [$request->from_date, $request->to_date])
                 ->get();
         }
@@ -3011,7 +3011,7 @@ class FormationController extends Controller
 
             $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
-                ->where('individuelles.statut', 'former')
+                ->where('individuelles.statut', 'formés')
                 ->where('individuelles.modules_id', 'LIKE', "%{$module?->id}%")
                 ->where('individuelles.regions_id', $region?->id)
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), [$request->from_date, $request->to_date])
@@ -3022,7 +3022,7 @@ class FormationController extends Controller
 
             $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
-                ->where('individuelles.statut', 'former')
+                ->where('individuelles.statut', 'formés')
                 ->where('individuelles.regions_id', $region?->id)
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), [$request->from_date, $request->to_date])
                 ->get();
@@ -3032,7 +3032,7 @@ class FormationController extends Controller
 
             $formes = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
-                ->where('individuelles.statut', 'former')
+                ->where('individuelles.statut', 'formés')
                 ->where('individuelles.modules_id', 'LIKE', "%{$module?->id}%")
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), [$request->from_date, $request->to_date])
                 ->get();
@@ -3040,7 +3040,7 @@ class FormationController extends Controller
             $title_region_module = '';
             $formes              = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
                 ->select('individuelles.*')
-                ->where('individuelles.statut', 'former')
+                ->where('individuelles.statut', 'formés')
                 ->whereBetween(DB::raw('DATE(formations.date_debut)'), [$request->from_date, $request->to_date])
                 ->get();
         }

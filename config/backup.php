@@ -217,7 +217,7 @@ return [
 
             'from' => [
                 'address' => env('MAIL_FROM_ADDRESS', 'danilobadji@gmail.com'),
-                'name' => env('MAIL_FROM_NAME', 'SIGOF'),
+                'name' => env('MAIL_FROM_NAME', 'ONFP'),
             ],
         ],
 
