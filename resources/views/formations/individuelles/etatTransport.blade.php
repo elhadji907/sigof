@@ -13,6 +13,7 @@
             max-width: 1000px;
             margin: auto;
             /* padding: 30px; */
+            margin-top: 0cm;
             font-size: 12px;
             line-height: 18px;
             color: color: rgb(0, 0, 0);
@@ -88,7 +89,7 @@
 </head>
 
 <body>
-    <h6 valign="top" style="text-align: center;">
+    <div style="text-align: center;">
         <b>REPUBLIQUE DU SENEGAL<br></b>
         Un Peuple - Un But - Une Foi<br>
         <b>********<br>
@@ -97,7 +98,7 @@
             <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/logo-onfp.jpg'))) }}"
                 style="width: 100%; max-width: 300px" />
         </b>
-    </h6>
+    </div>
     <div class="invoice-box">
         <table class="table table-responsive">
             <thead>
@@ -167,7 +168,7 @@
                     <td><b>Téléphone</b></td>
                     <td><b>Nbre Jours</b></td>
                     <td><b>Montant/Jours</b></td>
-                    <td><b>Montants (CFA)</b></td>
+                    <td><b>Montants (F CFA)</b></td>
                     <td><b>Emargement</b></td>
                 </tr>
             </thead>
@@ -194,9 +195,10 @@
                     </tr>
                 @endforeach
 
-                <tr class="heading" style="text-align: center;">
-                    <td colspan="8"><b>{{ __('TOTAL') }}</b></td>
-                    <td colspan="2"><b>{{ number_format($total, 0, ',', ' ') . 'F CFA' }}</b></td>
+                <tr class="total" style="text-align: center; font-size: 1.2em; font-weight: bold;">
+                    <td colspan="8"><b>TOTAL</b></td>
+                    <td colspan="1"><b>{{ number_format($total, 0, ',', ' ') }}</b></td>
+                    <td colspan="1"></td>
                 </tr>
             </tbody>
         </table>

@@ -146,7 +146,7 @@
         <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/entete_lettre_mission.png'))) }}"
             style="width: 100%; max-width: 300px" />
     </h6> --}}    
-    <h6 valign="top" style="text-align: center;">
+        <div style="text-align: center;">
         <b>REPUBLIQUE DU SENEGAL<br></b>
         Un Peuple - Un But - Une Foi<br>
         <b>********<br>
@@ -155,7 +155,7 @@
             <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/logo-onfp.jpg'))) }}"
                 style="width: 100%; max-width: 300px" />
         </b>
-    </h6>
+    </div>
     <div class="invoice-box">
         <table class="table table-responsive">
             <thead>
