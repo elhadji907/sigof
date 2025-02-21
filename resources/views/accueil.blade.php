@@ -956,18 +956,18 @@
 
                                     <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
                                         <div class="form-check">
-                                            <input class="form-check-input" name="terms" type="checkbox"
-                                                value="" id="acceptTerms" required>
+                                            <input class="form-check-input @error('termes') is-invalid @enderror"
+                                                name="termes" type="checkbox" value="1" id="acceptTerms"
+                                                required>
                                             <label class="form-check-label" for="acceptTerms">J'accepte les
                                                 <button style="color: blue" type="button"
                                                     class="btn btn-default btn-sm" data-bs-toggle="modal"
                                                     data-bs-target="#largeModal">
                                                     termes et conditions
-                                                    <span class="text-danger mx-1">*</span>
                                                 </button>
-                                            </label>
+                                                <span class="text-danger mx-1">*</span></label>
                                             <div class="invalid-feedback">
-                                                @error('password_confirmation')
+                                                @error('termes')
                                                     {{ $message }}
                                                 @enderror
                                             </div>
@@ -1086,8 +1086,9 @@
 
                                     <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
                                         <div class="form-check">
-                                            <input class="form-check-input" name="terms" type="checkbox"
-                                                value="" id="acceptTerms" required>
+                                            <input class="form-check-input @error('termes') is-invalid @enderror"
+                                                name="termes" type="checkbox" value="1" id="acceptTerms"
+                                                required>
                                             <label class="form-check-label" for="acceptTerms">J'accepte les
                                                 <button style="color: blue" type="button"
                                                     class="btn btn-default btn-sm" data-bs-toggle="modal"
@@ -1096,7 +1097,7 @@
                                                 </button>
                                                 <span class="text-danger mx-1">*</span></label>
                                             <div class="invalid-feedback">
-                                                @error('password_confirmation')
+                                                @error('termes')
                                                     {{ $message }}
                                                 @enderror
                                             </div>

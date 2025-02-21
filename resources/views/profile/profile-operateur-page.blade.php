@@ -48,8 +48,8 @@
                                             class="bi bi-linkedin" title="compte linkedin"></i></a>
                                 @endif
                                 @if (!empty(Auth::user()?->web))
-                                    <a href="{{ Auth::user()?->web }}" class="web" target="_blank"><i class="bi bi-globe"
-                                            title="site web"></i></a>
+                                    <a href="{{ Auth::user()?->web }}" class="web" target="_blank"><i
+                                            class="bi bi-globe" title="site web"></i></a>
                                 @endif
                             </div>
                         </div>
@@ -250,7 +250,7 @@
                                     {{-- @if (!empty(Auth::user()?->web))
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Site web</div>
-                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8"><a href="{{ Auth::user()?->web }}" class="web"
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8"><a href="{{ 'https://'.Auth::user()?->web }}" class="web"
                                                     target="_blank"><i class="bi bi-globe" title="site web"></i></a></div>
                                         </div>
                                     @endif --}}
@@ -376,7 +376,8 @@
                                                     src="{{ asset(Auth::user()?->getImage()) }}" width="50"
                                                     height="auto">
                                                 <div class="pt-2">
-                                                    <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png, .svg, .gif"
+                                                    <input type="file" name="image" id="image"
+                                                        accept=".jpg, .jpeg, .png, .svg, .gif"
                                                         class="form-control @error('image') is-invalid @enderror btn btn-primary btn-sm">
                                                     @error('image')
                                                         <span class="text-danger">{{ $message }}</span>

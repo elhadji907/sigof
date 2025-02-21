@@ -34,6 +34,7 @@ class RegisteredUserController extends Controller
         $request->validate([
             'username' => ['required', 'string', 'min:3', 'max:25', 'unique:' . User::class],
             'email'    => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'termes'    => ['required', 'accepted'], // 'accepted' est plus approprié pour un champ de type checkbox
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 

@@ -73,7 +73,8 @@
                 class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
                 <div class="container">
                     <div class="row justify-content-center">
-                        <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6 d-flex flex-column align-items-center justify-content-center">
+                        <div
+                            class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6 d-flex flex-column align-items-center justify-content-center">
 
                             <div class="d-flex justify-content-center py-4">
                                 <a href="{{ route('accueil') }}" class="logo d-flex align-items-center w-auto"
@@ -93,7 +94,7 @@
                                             <p class="text-center small">Entrez vos informations pour créer un compte</p>
                                         </a>
                                     </div> --}}
-                                    
+
                                     <div class="pt-0 pb-2">
                                         <h5 class="card-title text-center pb-0 fs-4">Création compte personnel</h5>
                                         <p class="text-center small">Entrez vos informations pour créer un compte</p>
@@ -187,19 +188,20 @@
 
                                                 <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
                                                     <div class="form-check">
-                                                        <input class="form-check-input" name="terms"
-                                                            type="checkbox" value="" id="acceptTerms" required>
+                                                        <input
+                                                            class="form-check-input @error('termes') is-invalid @enderror"
+                                                            name="termes" type="checkbox" value="1"
+                                                            id="acceptTerms" required>
                                                         <label class="form-check-label" for="acceptTerms">J'accepte
                                                             les
                                                             <button style="color: blue" type="button"
                                                                 class="btn btn-default btn-sm" data-bs-toggle="modal"
                                                                 data-bs-target="#largeModal">
                                                                 termes et conditions
-                                                                <span class="text-danger mx-1">*</span>
                                                             </button>
-                                                        </label>
+                                                            <span class="text-danger mx-1">*</span></label>
                                                         <div class="invalid-feedback">
-                                                            @error('password_confirmation')
+                                                            @error('termes')
                                                                 {{ $message }}
                                                             @enderror
                                                         </div>

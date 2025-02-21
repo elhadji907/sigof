@@ -15,8 +15,8 @@ class Kernel extends ConsoleKernel
         //$schedule->command('backup:run')->everyMinute();
         /* $schedule->command('backup:clean')->everyFiveMinutes();
         $schedule->command('backup:run')->everyFiveMinutes(); */
-        $schedule->command('backup:clean')->daily()->at('00:00');
-        $schedule->command('backup:run')->daily()->at('01:00');
+        $schedule->command('backup:clean')->dailyAt('01:00'); // Nettoyage tous les jours à 1h du matin
+        $schedule->command('backup:run')->dailyAt('02:00');   // Sauvegarde tous les jours à 2h du matin
         $schedule->command('email:send-birthday')->dailyAt('00:00');
         $schedule->command('email:send-finagrement')->dailyAt('08:00');
         $schedule->command('email:notify-end-agreements')->dailyAt('08:00');

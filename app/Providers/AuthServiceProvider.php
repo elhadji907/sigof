@@ -48,7 +48,7 @@ class AuthServiceProvider extends ServiceProvider
         VerifyEmail::toMailUsing(function (object $notifiable, string $url) {
             return (new MailMessage)
                 ->subject('ONFP | Confirmation du compte')
-                ->line('Vous venez de créer un compte sur sigof.sn. Pour activer votre compte il vous suffit de cliquer sur ce lien.')
+                ->line('Vous venez de créer un compte sur la plate-forme SIGOF(Système intégré de Gestion des opérations de Formation) de l\'ONFP. Pour activer votre compte il vous suffit de cliquer sur ce lien.')
                 ->action('Valider mon compte', $url);
         });
     }
