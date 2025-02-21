@@ -108,7 +108,11 @@
                                                 <div class="progress-bar progress-bar-striped progress-bar-animated {{ $color }}"
                                                     role="progressbar" style="width: {{ $progress }}%"
                                                     aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
-                                                    {{ $progress }}%
+                                                    @if ($progress == 100) 
+                                                        terminée
+                                                    @else 
+                                                        {{ $progress }}%
+                                                    @endif
                                                 </div>
                                             </div>
                                         @endif
@@ -137,7 +141,11 @@
                                             <div class="progress-bar progress-bar-striped progress-bar-animated {{ $color }}"
                                                 role="progressbar" style="width: {{ $progress }}%"
                                                 aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
-                                                {{ $progress }}%
+                                                @if ($progress == 100) 
+                                                    terminée
+                                                @else 
+                                                    {{ $progress }}%
+                                                @endif
                                             </div>
                                         </div>
                                     @else

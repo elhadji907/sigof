@@ -2079,7 +2079,7 @@ class FormationController extends Controller
     public function feuillePresenceColJour(Request $request)
     {
 
-        $formation = Formation::find($request->input('idformation'));
+        $formation            = Formation::find($request->input('idformation'));
         $emargementcollective = Emargementcollective::findOrFail($request->input('idemargement'));
 
         $feuillepresenceListecollective = DB::table('feuillepresencecollectives')
@@ -3237,51 +3237,62 @@ class FormationController extends Controller
     public function ajouterJours(Request $request)
     {
 
-        $formation = Formation::findOrFail($request->idformation);
-
         $this->validate($request, [
             'jour' => "required|numeric",
             /* 'date' => 'nullable|date|min:10|max:10|date_format:Y-m-d', */
         ]);
 
-        if (count($formation->individuelles) <= 0) {
+        $formation = Formation::findOrFail($request->idformation);
 
-            Alert::warning('Impossible !', 'Aucun bénéficiaire dans cette formation');
+        if (! empty($formation->duree_formation)) {
 
-            return redirect()->back();
-        }
+            if (count($formation->individuelles) <= 0) {
 
-        $nbre_jours = $request->jour;
+                Alert::warning('Impossible !', 'Aucun bénéficiaire dans cette formation');
 
-        $emargement_count = Emargement::where('formations_id', $request->idformation)->count();
-
-        if (! empty($emargement_count)) {
-            $nbre_jours       = $nbre_jours + $emargement_count + 1;
-            $emargement_count = $emargement_count + 1;
-        } else {
-            $emargement_count = 1;
-            $nbre_jours       = $nbre_jours + $emargement_count;
-        }
-
-        $i = $emargement_count;
-
-        for ($i = $emargement_count; $i < $nbre_jours; $i++) {
-            $emargement = Emargement::create([
-                'jour'          => 'Jour ' . $i,
-                'formations_id' => $request->idformation,
-
-            ]);
-
-            foreach ($formation->individuelles as $key => $individuelle) {
-                $feuillepresence = Feuillepresence::create([
-                    'emargements_id'   => $emargement->id,
-                    'individuelles_id' => $individuelle->id,
-                    'presence'         => null,
-                ]);
+                return redirect()->back();
             }
-        }
 
-        Alert::success('Enregistrement réussi !');
+            $nbre_jours = $request->jour;
+
+            $emargement_count = Emargement::where('formations_id', $request->idformation)->count();
+
+            if ($emargement_count < $formation->duree_formation) {
+                if (! empty($emargement_count)) {
+                    $nbre_jours       = $nbre_jours + $emargement_count + 1;
+                    $emargement_count = $emargement_count + 1;
+                } else {
+                    $emargement_count = 1;
+                    $nbre_jours       = $nbre_jours + $emargement_count;
+                }
+
+                $i = $emargement_count;
+
+                for ($i = $emargement_count; $i < $nbre_jours; $i++) {
+                    $emargement = Emargement::create([
+                        'jour'          => 'Jour ' . $i,
+                        'formations_id' => $request->idformation,
+
+                    ]);
+
+                    foreach ($formation->individuelles as $key => $individuelle) {
+                        $feuillepresence = Feuillepresence::create([
+                            'emargements_id'   => $emargement->id,
+                            'individuelles_id' => $individuelle->id,
+                            'presence'         => null,
+                        ]);
+                    }
+                }
+
+                Alert::success('Enregistrement réussi !');
+
+            } else {
+                Alert::warning('Attention !', 'Vous avez atteint le nombre maximum de feuilles de présence à créer, car elles ne peuvent pas dépasser le nombre de jours de formation.');
+            }
+
+        } else {
+            Alert::warning('Attention !', 'renseignez d\'abord la durée (nombre de jours) de formation');
+        }
 
         return redirect()->back();
     }
@@ -3289,51 +3300,60 @@ class FormationController extends Controller
     public function ajouterJoursCol(Request $request)
     {
 
-        $formation = Formation::findOrFail($request->idformation);
-
         $this->validate($request, [
             'jour' => "required|numeric",
             /* 'date' => 'nullable|date|min:10|max:10|date_format:Y-m-d', */
         ]);
 
-        if (count($formation->listecollectives) <= 0) {
+        $formation = Formation::findOrFail($request->idformation);
 
-            Alert::warning('Impossible !', 'Aucun bénéficiaire dans cette formation');
+        if (! empty($formation->duree_formation)) {
 
-            return redirect()->back();
-        }
+            if (count($formation->listecollectives) <= 0) {
 
-        $nbre_jours = $request->jour;
+                Alert::warning('Impossible !', 'Aucun bénéficiaire dans cette formation');
 
-        $emargement_count = Emargementcollective::where('formations_id', $request->idformation)->count();
-
-        if (! empty($emargement_count)) {
-            $nbre_jours       = $nbre_jours + $emargement_count + 1;
-            $emargement_count = $emargement_count + 1;
-        } else {
-            $emargement_count = 1;
-            $nbre_jours       = $nbre_jours + $emargement_count;
-        }
-
-        $i = $emargement_count;
-
-        for ($i = $emargement_count; $i < $nbre_jours; $i++) {
-            $emargement = Emargementcollective::create([
-                'jour'          => 'Jour ' . $i,
-                'formations_id' => $request->idformation,
-
-            ]);
-
-            foreach ($formation->listecollectives as $key => $listecollective) {
-                $feuillepresence = Feuillepresencecollective::create([
-                    'emargementcollectives_id' => $emargement->id,
-                    'listecollectives_id'      => $listecollective->id,
-                    'presence'                 => null,
-                ]);
+                return redirect()->back();
             }
-        }
 
-        Alert::success('Enregistrement réussi !');
+            $nbre_jours = $request->jour;
+
+            $emargement_count = Emargementcollective::where('formations_id', $request->idformation)->count();
+
+            if ($emargement_count < $formation->duree_formation) {
+                if (! empty($emargement_count)) {
+                    $nbre_jours       = $nbre_jours + $emargement_count + 1;
+                    $emargement_count = $emargement_count + 1;
+                } else {
+                    $emargement_count = 1;
+                    $nbre_jours       = $nbre_jours + $emargement_count;
+                }
+
+                $i = $emargement_count;
+
+                for ($i = $emargement_count; $i < $nbre_jours; $i++) {
+                    $emargement = Emargementcollective::create([
+                        'jour'          => 'Jour ' . $i,
+                        'formations_id' => $request->idformation,
+
+                    ]);
+
+                    foreach ($formation->listecollectives as $key => $listecollective) {
+                        $feuillepresence = Feuillepresencecollective::create([
+                            'emargementcollectives_id' => $emargement->id,
+                            'listecollectives_id'      => $listecollective->id,
+                            'presence'                 => null,
+                        ]);
+                    }
+                }
+                Alert::success('Enregistrement réussi !');
+
+            } else {
+                Alert::warning('Attention !', 'Vous avez atteint le nombre maximum de feuilles de présence à créer, car elles ne peuvent pas dépasser le nombre de jours de formation.');
+            }
+        } else {
+            Alert::warning('Attention !', 'renseignez d\'abord la durée (nombre de jours) de formation');
+        }
 
         return redirect()->back();
     }
