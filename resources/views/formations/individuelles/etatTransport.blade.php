@@ -173,23 +173,31 @@
             </thead>
             <tbody>
                 <?php $i = 1; ?>
+                <?php $total = 0; ?>
                 @foreach ($formation?->individuelles as $individuelle)
+                    <?php
+                    $presence_count = $individuelle?->feuillepresences?->where('presence', 'Oui')?->count() ?? 0;
+                    $montant = $formation?->indemnite_transport_jour * $presence_count;
+                    $total += $montant;
+                    ?>
                     <tr class="item" style="text-align: center;">
                         <td>{{ $i++ }}</td>
                         <td>{{ $individuelle->user->cin }}</td>
-                        {{-- <td>{{ $individuelle?->user?->civilite }}</td> --}}
                         <td>{{ ucwords($individuelle?->user?->firstname) }}</td>
                         <td>{{ strtoupper($individuelle?->user?->name) }}</td>
-                        {{-- <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td> --}}
                         <td>{{ strtoupper($individuelle?->departement?->nom) }}</td>
                         <td>{{ $individuelle?->user?->telephone }}</td>
-                        <td>{{ $individuelle?->feuillepresences?->where('presence', 'Oui')?->count() }}</td>
+                        <td>{{ $presence_count }}</td>
                         <td>{{ number_format($formation?->indemnite_transport_jour, 0, ',', ' ') }}</td>
-                        <td>{{ number_format($formation?->indemnite_transport_jour * $individuelle?->feuillepresences?->where('presence', 'Oui')?->count(), 0, ',', ' ') }}
-                        </td>
+                        <td>{{ number_format($montant, 0, ',', ' ') }}</td>
                         <td></td>
                     </tr>
                 @endforeach
+
+                <tr class="heading" style="text-align: center;">
+                    <td colspan="8"><b>{{ __('TOTAL') }}</b></td>
+                    <td colspan="2"><b>{{ number_format($total, 0, ',', ' ') . 'F CFA' }}</b></td>
+                </tr>
             </tbody>
         </table>
         {{--  <h4 valign="top">
