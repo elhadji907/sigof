@@ -343,6 +343,15 @@
             /* border-radius: 5px; */
         }
 
+        .confirmer {
+            background-color: #198754;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
         .Terminée {
             background-color: #198754;
             color: white;
@@ -497,6 +506,15 @@
         }
 
         .fin {
+            background-color: #DC3545;
+            color: white;
+            padding: 4px 8px;
+            text-align: center;
+            border-radius: 25% 10%;
+            /* border-radius: 5px; */
+        }
+
+        .décliner {
             background-color: #DC3545;
             color: white;
             padding: 4px 8px;

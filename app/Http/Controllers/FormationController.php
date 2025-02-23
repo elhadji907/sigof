@@ -3299,7 +3299,6 @@ class FormationController extends Controller
 
     public function ajouterJoursCol(Request $request)
     {
-
         $this->validate($request, [
             'jour' => "required|numeric",
             /* 'date' => 'nullable|date|min:10|max:10|date_format:Y-m-d', */
@@ -3372,5 +3371,38 @@ class FormationController extends Controller
         Alert::success('Les e-mails ont été envoyés avec succès !');
 
         return redirect()->back();
+    }
+
+    public function confirmer(Request $request, $id)
+    {
+        $individuelle = Individuelle::findOrFail($id);
+
+        $individuelle->update([
+            'confirmation' => 'confirmer',
+        ]);
+
+        Alert::success('Félicitations !', 'Merci pour votre confiance');
+
+        return redirect()->back();
+
+    }
+
+    public function decliner(Request $request, $id)
+    {
+        $this->validate($request, [
+            'motif' => "required|string",
+        ]);
+
+        $individuelle = Individuelle::findOrFail($id);
+
+        $individuelle->update([
+            'confirmation'      => 'décliner',
+            'motif_declinaison' => $request->motif,
+        ]);
+
+        Alert::success('Dommage !', 'Nous espérons vous retrouver bientôt');
+
+        return redirect()->back();
+
     }
 }

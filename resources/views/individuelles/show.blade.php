@@ -112,7 +112,6 @@
                                         </ul>
                                     </nav>
                                 </span>
-                                {{-- @if (auth()->user()->hasRole('super-admin')) --}}
                                 @can('user-view')
                                     <span class="d-flex align-items-baseline">
                                         <span class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}</span>
@@ -127,32 +126,13 @@
                                                     @method('PUT')
                                                     <button class="show_confirm_valider btn btn-sm mx-1">Accepter</button>
                                                 </form>
-                                                {{-- @if ($individuelle?->statut == 'accepter') --}}
                                                 <button class="btn btn-sm mx-1" data-bs-toggle="modal"
                                                     data-bs-target="#RejetDemandeModal">Rejeter
                                                 </button>
-                                                {{-- @elseif($individuelle?->statut == 'Rejetée') --}}
-                                                {{--  @elseif($individuelle?->statut == 'Attente') --}}
-                                                {{-- <form
-                                                        action="{{ route('validation-individuelles.update', $individuelle?->id) }}"
-                                                        method="post">
-                                                        @csrf
-                                                        @method('PUT')
-                                                        <button
-                                                            class="show_confirm_valider btn btn-sm mx-1">Accepter</button>
-                                                    </form>
-                                                    <button class="btn btn-sm mx-1" data-bs-toggle="modal"
-                                                        data-bs-target="#RejetDemandeModal">Rejeter
-                                                    </button> --}}
-                                                {{-- @else --}}
-                                                {{-- <button class="btn btn-sm mx-1">Aucune action
-                                                        possible</button> --}}
-                                                {{-- @endif --}}
                                             </ul>
                                         </div>
                                     </span>
                                 @endcan
-                                {{-- @endif --}}
                             </div>
                             <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                 <form method="post" action="{{ url('individuelles/' . $individuelle?->id) }}"

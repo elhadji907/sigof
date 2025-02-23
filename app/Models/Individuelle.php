@@ -7,14 +7,14 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 
 /**
  * Class Individuelle
- * 
+ *
  * @property int $id
  * @property string $uuid
  * @property string|null $numero
@@ -35,7 +35,8 @@ use Illuminate\Notifications\Notifiable;
  * @property string|null $autres_diplomes_pros
  * @property string|null $telephone
  * @property string|null $motivation
- * @property string|null $confirme
+ * @property string|null $confirmation
+ * @property string|null $motif_declinaison
  * @property string|null $motif
  * @property int|null $annee_diplome
  * @property int|null $annee_diplome_professionelle
@@ -92,7 +93,7 @@ use Illuminate\Notifications\Notifiable;
  * @property string|null $deleted_at
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
+ *
  * @property Antenne|null $antenne
  * @property Arrondissement|null $arrondissement
  * @property Commune|null $commune
@@ -115,243 +116,251 @@ use Illuminate\Notifications\Notifiable;
  */
 class Individuelle extends Model
 {
-	use Notifiable;
-	use HasFactory;
-	use SoftDeletes;
-	use \App\Helpers\UuidForKey;
-	protected $table = 'individuelles';
+    use Notifiable;
+    use HasFactory;
+    use SoftDeletes;
+    use \App\Helpers\UuidForKey;
+    protected $table = 'individuelles';
 
-	protected $casts = [
-		'note' => 'float',
-		'annee_diplome' => 'int',
-		'annee_diplome_professionelle' => 'int',
-		'nbre_enfant' => 'int',
-		'nbre_pieces' => 'int',
-		'nbre_enfants' => 'int',
-		'note_obtenue' => 'float',
-		'demandeurs_id' => 'int',
-		'etudes_id' => 'int',
-		'antennes_id' => 'int',
-		'diplomes_id' => 'int',
-		'conventions_id' => 'int',
-		'diplomespros_id' => 'int',
-		'modules_id' => 'int',
-		'formations_id' => 'int',
-		'zones_id' => 'int',
-		'localites_id' => 'int',
-		'projets_id' => 'int',
-		'programmes_id' => 'int',
-		'communes_id' => 'int',
-		'arrondissements_id' => 'int',
-		'departements_id' => 'int',
-		'users_id' => 'int',
-		'regions_id' => 'int',
-		'date_depot' => 'datetime'
-	];
+    protected $casts = [
+        'note'                         => 'float',
+        'annee_diplome'                => 'int',
+        'annee_diplome_professionelle' => 'int',
+        'nbre_enfant'                  => 'int',
+        'nbre_pieces'                  => 'int',
+        'nbre_enfants'                 => 'int',
+        'note_obtenue'                 => 'float',
+        'demandeurs_id'                => 'int',
+        'etudes_id'                    => 'int',
+        'antennes_id'                  => 'int',
+        'diplomes_id'                  => 'int',
+        'conventions_id'               => 'int',
+        'diplomespros_id'              => 'int',
+        'modules_id'                   => 'int',
+        'formations_id'                => 'int',
+        'zones_id'                     => 'int',
+        'localites_id'                 => 'int',
+        'projets_id'                   => 'int',
+        'programmes_id'                => 'int',
+        'communes_id'                  => 'int',
+        'arrondissements_id'           => 'int',
+        'departements_id'              => 'int',
+        'users_id'                     => 'int',
+        'regions_id'                   => 'int',
+        'date_depot'                   => 'datetime',
+        'frais_transport'              => 'float',
+        'frais_logement'               => 'float',
+        'frais_formation'              => 'float',
+        'frais'                        => 'float',
+    ];
 
-	protected $dates = [
-		'date_depot',
-		'date1'
-	];
+    protected $dates = [
+        'date_depot',
+        'date1',
+    ];
 
-	protected $fillable = [
-		'uuid',
-		'numero',
-		'experience',
-		'projetprofessionnel',
-		'prerequis',
-		'information',
-		'date_depot',
-		'note',
-		'statut',
-		'type',
-		'qualification',
-		'niveau_etude',
-		'diplome_academique',
-		'autre_diplome_academique',
-		'option_diplome_academique',
-		'etablissement_academique',
-		'diplome_professionnel',
-		'autre_diplome_professionnel',
-		'specialite_diplome_professionnel',
-		'etablissement_professionnel',
-		'projet_poste_formation',
-		'etablissement',
-		'adresse',
-		'option',
-		'autres_diplomes',
-		'autres_diplomes_pros',
-		'telephone',
-		'motivation',
-		'motif',
-		'annee_diplome',
-		'annee_diplome_professionelle',
-		'nbre_enfant',
-		'activite_travail',
-		'travail_renumeration',
-		'activite_avenir',
-		'handicap',
-		'situation_economique',
-		'victime_social',
-		'autre_victime',
-		'salaire',
-		'preciser_handicap',
-		'optiondiplome',
-		'dossier',
-		'autre_diplomes_fournis',
-		'items1',
-		'date1',
-		'item1',
-		'item2',
-		'file1',
-		'file2',
-		'file3',
-		'file4',
-		'attestation',
-		'suivi',
-		'informations_suivi',
-		'nbre_pieces',
-		'autre_module',
-		'nbre_enfants',
-		'note_obtenue',
-		'niveau_maitrise',
-		'observations',
-		'appreciation',
-		'motif_rejet',
-		'created_by',
-		'updated_by',
-		'deleted_by',
-		'validated_by',
-		'canceled_by',
-		'demandeurs_id',
-		'etudes_id',
-		'antennes_id',
-		'diplomes_id',
-		'conventions_id',
-		'diplomespros_id',
-		'modules_id',
-		'formations_id',
-		'zones_id',
-		'localites_id',
-		'projets_id',
-		'programmes_id',
-		'communes_id',
-		'arrondissements_id',
-		'departements_id',
-		'users_id',
-		'retrait_diplome',
-		'diplome_retirer_by',
-		'confirme',
-		'regions_id'
-	];
+    protected $fillable = [
+        'uuid',
+        'numero',
+        'experience',
+        'projetprofessionnel',
+        'prerequis',
+        'information',
+        'date_depot',
+        'note',
+        'statut',
+        'type',
+        'qualification',
+        'niveau_etude',
+        'diplome_academique',
+        'autre_diplome_academique',
+        'option_diplome_academique',
+        'etablissement_academique',
+        'diplome_professionnel',
+        'autre_diplome_professionnel',
+        'specialite_diplome_professionnel',
+        'etablissement_professionnel',
+        'projet_poste_formation',
+        'etablissement',
+        'adresse',
+        'option',
+        'autres_diplomes',
+        'autres_diplomes_pros',
+        'telephone',
+        'motivation',
+        'motif',
+        'annee_diplome',
+        'annee_diplome_professionelle',
+        'nbre_enfant',
+        'activite_travail',
+        'travail_renumeration',
+        'activite_avenir',
+        'handicap',
+        'situation_economique',
+        'victime_social',
+        'autre_victime',
+        'salaire',
+        'preciser_handicap',
+        'optiondiplome',
+        'dossier',
+        'autre_diplomes_fournis',
+        'items1',
+        'date1',
+        'item1',
+        'item2',
+        'file1',
+        'file2',
+        'file3',
+        'file4',
+        'attestation',
+        'suivi',
+        'informations_suivi',
+        'nbre_pieces',
+        'autre_module',
+        'nbre_enfants',
+        'note_obtenue',
+        'niveau_maitrise',
+        'observations',
+        'appreciation',
+        'motif_rejet',
+        'created_by',
+        'updated_by',
+        'deleted_by',
+        'validated_by',
+        'canceled_by',
+        'demandeurs_id',
+        'etudes_id',
+        'antennes_id',
+        'diplomes_id',
+        'conventions_id',
+        'diplomespros_id',
+        'modules_id',
+        'formations_id',
+        'zones_id',
+        'localites_id',
+        'projets_id',
+        'programmes_id',
+        'communes_id',
+        'arrondissements_id',
+        'departements_id',
+        'users_id',
+        'retrait_diplome',
+        'diplome_retirer_by',
+        'confirmation',
+        'motif_declinaison',
+        'frais_transport',
+        'frais_logement',
+        'frais_formation',
+        'frais',
+        'regions_id',
+    ];
 
-	
-	public function validationindividuelles()
-	{
-		return $this->hasMany(Validationindividuelle::class, 'individuelles_id')->latest();
-	}
+    public function validationindividuelles()
+    {
+        return $this->hasMany(Validationindividuelle::class, 'individuelles_id')->latest();
+    }
 
-	public function indisponibles()
-	{
-		return $this->hasMany(Indisponible::class, 'individuelles_id')->latest();
-	}
+    public function indisponibles()
+    {
+        return $this->hasMany(Indisponible::class, 'individuelles_id')->latest();
+    }
 
-	public function antenne()
-	{
-		return $this->belongsTo(Antenne::class, 'antennes_id')->latest();
-	}
+    public function antenne()
+    {
+        return $this->belongsTo(Antenne::class, 'antennes_id')->latest();
+    }
 
-	public function arrondissement()
-	{
-		return $this->belongsTo(Arrondissement::class, 'arrondissements_id')->latest();
-	}
+    public function arrondissement()
+    {
+        return $this->belongsTo(Arrondissement::class, 'arrondissements_id')->latest();
+    }
 
-	public function user()
-	{
-		return $this->belongsTo(User::class, 'users_id')->latest();
-	}
-	public function commune()
-	{
-		return $this->belongsTo(Commune::class, 'communes_id')->latest();
-	}
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'users_id')->latest();
+    }
+    public function commune()
+    {
+        return $this->belongsTo(Commune::class, 'communes_id')->latest();
+    }
 
-	public function convention()
-	{
-		return $this->belongsTo(Convention::class, 'conventions_id')->latest();
-	}
+    public function convention()
+    {
+        return $this->belongsTo(Convention::class, 'conventions_id')->latest();
+    }
 
-	public function demandeur()
-	{
-		return $this->belongsTo(Demandeur::class, 'demandeurs_id')->latest();
-	}
+    public function demandeur()
+    {
+        return $this->belongsTo(Demandeur::class, 'demandeurs_id')->latest();
+    }
 
-	public function departement()
-	{
-		return $this->belongsTo(Departement::class, 'departements_id')->latest();
-	}
+    public function departement()
+    {
+        return $this->belongsTo(Departement::class, 'departements_id')->latest();
+    }
 
-	public function diplome()
-	{
-		return $this->belongsTo(Diplome::class, 'diplomes_id')->latest();
-	}
+    public function diplome()
+    {
+        return $this->belongsTo(Diplome::class, 'diplomes_id')->latest();
+    }
 
-	public function diplomespro()
-	{
-		return $this->belongsTo(Diplomespro::class, 'diplomespros_id')->latest();
-	}
+    public function diplomespro()
+    {
+        return $this->belongsTo(Diplomespro::class, 'diplomespros_id')->latest();
+    }
 
-	public function etude()
-	{
-		return $this->belongsTo(Etude::class, 'etudes_id')->latest();
-	}
+    public function etude()
+    {
+        return $this->belongsTo(Etude::class, 'etudes_id')->latest();
+    }
 
-	public function formation()
-	{
-		return $this->belongsTo(Formation::class, 'formations_id')->latest();
-	}
+    public function formation()
+    {
+        return $this->belongsTo(Formation::class, 'formations_id')->latest();
+    }
 
-	public function localite()
-	{
-		return $this->belongsTo(Localite::class, 'localites_id')->latest();
-	}
+    public function localite()
+    {
+        return $this->belongsTo(Localite::class, 'localites_id')->latest();
+    }
 
-	public function module()
-	{
-		return $this->belongsTo(Module::class, 'modules_id')->latest();
-	}
+    public function module()
+    {
+        return $this->belongsTo(Module::class, 'modules_id')->latest();
+    }
 
-	public function programme()
-	{
-		return $this->belongsTo(Programme::class, 'programmes_id')->latest();
-	}
+    public function programme()
+    {
+        return $this->belongsTo(Programme::class, 'programmes_id')->latest();
+    }
 
-	public function projet()
-	{
-		return $this->belongsTo(Projet::class, 'projets_id')->latest();
-	}
+    public function projet()
+    {
+        return $this->belongsTo(Projet::class, 'projets_id')->latest();
+    }
 
-	public function region()
-	{
-		return $this->belongsTo(Region::class, 'regions_id')->latest();
-	}
+    public function region()
+    {
+        return $this->belongsTo(Region::class, 'regions_id')->latest();
+    }
 
-	public function zone()
-	{
-		return $this->belongsTo(Zone::class, 'zones_id')->latest();
-	}
-	
-	public function feuillepresence()
-	{
-		return $this->hasOne(Feuillepresence::class, 'individuelles_id');
-	}
+    public function zone()
+    {
+        return $this->belongsTo(Zone::class, 'zones_id')->latest();
+    }
+
+    public function feuillepresence()
+    {
+        return $this->hasOne(Feuillepresence::class, 'individuelles_id');
+    }
 
     public function emargement()
     {
         return $this->belongsTo(Emargement::class, 'emargements_id');
     }
 
-	public function feuillepresences()
-	{
-		return $this->hasMany(Feuillepresence::class, 'individuelles_id');
-	}
+    public function feuillepresences()
+    {
+        return $this->hasMany(Feuillepresence::class, 'individuelles_id');
+    }
 }

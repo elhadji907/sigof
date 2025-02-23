@@ -12,7 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('individuelles', function (Blueprint $table) {
-            $table->string('confirme', 200)->nullable();
+            $table->string('confirmation', 200)->nullable();
+            $table->longText('motif_declinaison')->nullable();
+            $table->string('provenance', 200)->nullable();
+            $table->double('frais_transport', 200)->nullable();
+            $table->double('frais_logement', 200)->nullable();
+            $table->double('frais_formation', 200)->nullable();
+            $table->double('frais', 200)->nullable();
         });
     }
 
@@ -22,7 +28,12 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('individuelles', function (Blueprint $table) {
-            $table->dropColumn('confirme');
+            $table->dropColumn('confirmation');
+            $table->dropColumn('motif_declinaison');
+            $table->dropColumn('provenance');
+            $table->dropColumn('frais_transport');
+            $table->dropColumn('frais_logement');
+            $table->dropColumn('frais');
         });
     }
 };
