@@ -174,6 +174,9 @@
             <tbody>
                 <?php $i = 1; ?>
                 @foreach ($formation?->listecollectives as $listecollective)
+                    <?php
+                    $presence_count = $individuelle?->feuillepresences?->where('presence', 'Oui')?->count() ?? 0;
+                    ?>
                     <tr class="item" style="text-align: center;">
                         <td>{{ $i++ }}</td>
                         <td>{{ $listecollective?->cin }}</td>
@@ -182,8 +185,16 @@
                         <td>{{ remove_accents_uppercase($listecollective?->nom) }}</td>
                         <td>{{ $listecollective?->date_naissance?->format('d/m/Y') }}</td>
                         <td>{{ remove_accents_uppercase($listecollective?->lieu_naissance) }}</td>
-                        <td>{{ $listecollective?->telephone }}</td>
-                        <td>{{ $listecollective?->feuillepresencecollectives?->where('presence', 'Oui')?->count() }}</td>
+                        <td>
+                            {{ substr($listecollective?->telephone, 0, 2) .
+                                ' ' .
+                                substr($listecollective?->telephone, 2, 3) .
+                                ' ' .
+                                substr($listecollective?->telephone, 5, 2) .
+                                ' ' .
+                                substr($listecollective?->telephone, 7, 2) }}
+                        </td>
+                        <td>{{ $presence_count }}</td>
                         <td></td>
                     </tr>
                 @endforeach

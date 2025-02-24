@@ -172,6 +172,9 @@
             <tbody>
                 <?php $i = 1; ?>
                 @foreach ($formation?->individuelles as $individuelle)
+                    <?php
+                    $presence_count = $individuelle?->feuillepresences?->where('presence', 'Oui')?->count() ?? 0;
+                    ?>
                     <tr class="item" style="text-align: center;">
                         <td>{{ $i++ }}</td>
                         <td>{{ $individuelle->user->cin }}</td>
@@ -189,7 +192,7 @@
                                 ' ' .
                                 substr($individuelle?->user?->telephone, 7, 2) }}
                         </td>
-                        <td>{{ $individuelle?->feuillepresences?->where('presence', 'Oui')?->count() }}</td>
+                        <td>{{ $presence_count }}</td>
                         <td></td>
                     </tr>
                 @endforeach

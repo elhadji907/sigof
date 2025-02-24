@@ -174,7 +174,15 @@
                         <td>{{ remove_accents_uppercase($listecollective?->nom) }}</td>
                         <td>{{ $listecollective?->date_naissance?->format('d/m/Y') }}</td>
                         <td>{{ remove_accents_uppercase($listecollective?->lieu_naissance) }}</td>
-                        <td>{{ $listecollective?->telephone }}</td>
+                        <td>                            
+                            {{ substr($listecollective?->telephone, 0, 2) .
+                                ' ' .
+                                substr($listecollective?->telephone, 2, 3) .
+                                ' ' .
+                                substr($listecollective?->telephone, 5, 2) .
+                                ' ' .
+                                substr($listecollective?->telephone, 7, 2) }}
+                        </td>
                         <td></td>
                     </tr>
                 @endforeach

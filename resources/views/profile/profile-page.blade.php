@@ -1099,6 +1099,9 @@
                             </div>
                         </div>
                         @foreach ($projets as $projet)
+                            <?php
+                            $projet_count = $projet?->individuelles?->where('projets_id', $projet?->id)?->where('users_id', $user?->id)?->count() ?? 0;
+                            ?>
                             <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                                 <div class="card info-card sales-card">
                                     <div class="filter">
@@ -1113,7 +1116,7 @@
                                                 <div
                                                     class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                                     <i class="bi bi-person-plus-fill"></i>
-                                                    <span>{{ count($projet?->individuelles?->where('projets_id', $projet?->id)?->where('users_id', $user?->id)) }}</span>
+                                                    <span>{{ $projet_count }}</span>
                                                 </div>
                                                 <div class="ps-3">
                                                     <span>
