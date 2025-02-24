@@ -127,7 +127,7 @@
                                                                     <hr>
                                                                     <li>                                                                        
                                                                         <a class="dropdown-item btn btn-sm"
-                                                                        href="{{ route('commissionagrements.jury', $commissionagrement?->id) }}"
+                                                                        href="{{ route('jurycommissionagrements.jury', $commissionagrement?->id) }}"
                                                                         class="mx-1" title="Modifier"><i
                                                                             class="bi bi-people"></i>Membres du jury</a>
 

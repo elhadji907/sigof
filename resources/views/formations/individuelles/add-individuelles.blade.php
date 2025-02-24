@@ -62,7 +62,7 @@
                                                 @if (!empty($formation->projets_id))
                                                     <th>Projet</th>
                                                 @endif
-                                                <th><i class="bi bi-gear"></i></th>
+                                                <th width='5%'><i class="bi bi-gear"></i></th>
                                             </tr>
                                         </thead>
                                         <tbody>

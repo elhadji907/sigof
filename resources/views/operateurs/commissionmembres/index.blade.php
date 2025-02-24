@@ -43,7 +43,7 @@
                                 </button>
                             </div>
                             <h5 class="card-title">Membres du jury</h5>
-                            <table class="table datatables align-middle justify-content-center" id="table-ingenieurs">
+                            <table class="table datatables align-middle justify-content-center" id="table-jury">
                                 <thead>
                                     <tr>
                                         <th width='8%'>Civilité</th>
@@ -53,6 +53,7 @@
                                         <th>structure</th>
                                         <th>Email</th>
                                         <th class="text-center">Téléphone</th>
+                                        <th class="text-center">Jury</th>
                                         <th class="text-center" width='8%'>#</th>
                                     </tr>
                                 </thead>
@@ -68,6 +69,9 @@
                                             <td><a href="mailto:{{ $membre->email }}">{{ $membre->email }}</a></td>
                                             <td class="text-center"><a
                                                     href="tel:+221{{ $membre->telephone }}">{{ $membre->telephone }}</a></td>
+                                            <td class="text-center"><span
+                                                    class="text-primary fw-bold">{{ count($membre?->commissionagrements) }}</span>
+                                            </td>
                                             <td style="text-align: center;">
                                                 <span class="d-flex mt-2 align-items-baseline"><a
                                                         href="{{ route('commissionmembres.show', $membre->id) }}"
@@ -324,7 +328,7 @@
 
 @push('scripts')
     <script>
-        new DataTable('#table-ingenieurs', {
+        new DataTable('#table-jury', {
             layout: {
                 topStart: {
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],

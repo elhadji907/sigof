@@ -72,9 +72,9 @@ class CommissionmembreController extends Controller
 
     public function show($id)
     {
-        $membres = Commissionmembre::get();
+        $membre = Commissionmembre::findOrFail($id);
 
-        return view('operateurs.commissionmembres.show', compact('membres'));
+        return view('operateurs.commissionmembres.show', compact('membre'));
     }
 
 

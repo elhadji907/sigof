@@ -22,7 +22,7 @@
                         <div class="row">
                             <div class="col-sm-12 pt-0">
                                 <span class="d-flex mt-0 align-items-baseline"><a
-                                        href="{{ route('commissionagrements.show', $commissionagrement->id) }}"
+                                        href="{{ route('commissionagrements.index') }}"
                                         class="btn btn-success btn-sm" title="retour"><i
                                             class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                     <p> | {{ $commissionagrement?->commission }}</p>

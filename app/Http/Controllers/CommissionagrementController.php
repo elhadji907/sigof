@@ -129,7 +129,7 @@ class CommissionagrementController extends Controller
         ->where('commissionagrements_id', '!=', $id)
         ->pluck('id', 'id')
         ->all(); */
-
+        
         return view('operateurs.commissionagrements.show',
             compact('commissionagrement',
                 'operateurs',
@@ -309,7 +309,7 @@ class CommissionagrementController extends Controller
 
         $commissionagrement = Commissionagrement::findOrFail($id);
         
-        $commissionagrement->commissionmembres()->attach($request->membres);
+        $commissionagrement->commissionmembres()->sync($request->membres);
 
         Alert::success('Bravo !', 'Membres ajoutés avec succès');
 
