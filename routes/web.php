@@ -471,6 +471,8 @@ Route::group(['middleware' => ['XSS']], function () {
         
         Route::put('/confirmer/{id}', [FormationController::class, 'confirmer'])->name('confirmer');
         Route::put('/decliner/{id}', [FormationController::class, 'decliner'])->name('decliner');
+        Route::get('/commissionagrements/{id}', [CommissionagrementController::class, 'jury'])->name('commissionagrements.jury');
+        Route::patch('/addMembreJury/{id}', [CommissionagrementController::class, 'addMembreJury'])->name('addMembreJury');
 
         /* Vues ressouces */
         Route::resource('/users', UserController::class);

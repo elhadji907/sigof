@@ -13,10 +13,6 @@ class Commissionmembre extends Model
     use \App\Helpers\UuidForKey;
     protected $table = 'commissionmembres';
 
-    protected $casts = [
-        'commissionagrements_id' => 'int',
-    ];
-
     protected $fillable = [
         'uuid',
         'civilite',
@@ -28,11 +24,11 @@ class Commissionmembre extends Model
         'telephone',
         'signature',
         'description',
-        'commissionagrements_id',
     ];
     
 	public function commissionagrements()
-	{
-		return $this->belongsToMany(Commissionagrement::class, 'commissionagrementcommissionmembres');
-	}
+    {
+        return $this->belongsToMany(Commissionagrement::class, 'commissionagrementcommissionmembres')
+                    ->withTimestamps();
+    }
 }

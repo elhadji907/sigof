@@ -23,7 +23,7 @@ class CommissionmembreController extends Controller
             "fonction"  => "required|string",
             "structure" => "required|string",
             "email"     => "required|email",
-            "telephone" => "required|string|min:7|max:7",
+            "telephone" => "required|string|min:9|max:9",
         ]);
 
         $membre = Commissionmembre::create([
@@ -50,7 +50,7 @@ class CommissionmembreController extends Controller
             "fonction"  => "required|string",
             "structure" => "required|string",
             "email"     => "required|email",
-            "telephone" => "required|string|min:7|max:7",
+            "telephone" => "required|string|min:9|max:9",
         ]);
 
         $membre = Commissionmembre::findOrFail($id);

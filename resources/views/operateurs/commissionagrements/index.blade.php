@@ -125,13 +125,18 @@
                                                                         </form>
                                                                     </li>
                                                                     <hr>
-                                                                    <li>
-                                                                        <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                                    <li>                                                                        
+                                                                        <a class="dropdown-item btn btn-sm"
+                                                                        href="{{ route('commissionagrements.jury', $commissionagrement?->id) }}"
+                                                                        class="mx-1" title="Modifier"><i
+                                                                            class="bi bi-people"></i>Membres du jury</a>
+
+                                                                       {{--  <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                             data-bs-toggle="modal"
                                                                             data-bs-target="#EditagrementModal{{ $commissionagrement?->id }}">
                                                                             <i class="bi bi-people" title="Membres"></i> Membres
                                                                             jury
-                                                                        </button>
+                                                                        </button> --}}
                                                                     </li>
                                                                 @endcan
                                                             </ul>

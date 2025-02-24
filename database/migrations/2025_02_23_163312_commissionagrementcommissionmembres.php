@@ -17,23 +17,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create($this->tableName, function (Blueprint $table) {
-            $table->engine = 'InnoDB';
-            
-            $table->increments('id');
-            $table->unsignedInteger('commissionagrements_id');
-            $table->unsignedInteger('commissionmembres_id');
-            
-            // Indexes
-            $table->index(['commissionmembres_id'], 'idx_commissionmembres');
-            $table->index(['commissionagrements_id'], 'idx_commissionagrements');
-            
-            // Timestamps and soft deletes
-            $table->softDeletes();
+        Schema::create('commissionagrementcommissionmembres', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('commissionagrement_id')
+                ->constrained('commissionagrements')
+                ->onDelete('cascade')
+                ->name('fk_agrement_membre_agrement');
+
+            $table->foreignId('commissionmembre_id')
+                ->constrained('commissionmembres')
+                ->onDelete('cascade')
+                ->name('fk_agrement_membre_membre');
+
             $table->timestamps();
-            
         });
-        
+
     }
 
     /**

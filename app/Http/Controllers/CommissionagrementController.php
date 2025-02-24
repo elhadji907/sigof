@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Commissionagrement;
+use App\Models\Commissionmembre;
 use App\Models\Historiqueagrement;
 use App\Models\Operateur;
 use App\Models\Operateurmodule;
@@ -285,5 +286,33 @@ class CommissionagrementController extends Controller
         return view('operateurs.agrements.show_rejeter',
             compact('operateurs',
                 'commissionagrement'));
+    }
+
+    public function jury($id)
+    {
+        $commissionagrement = Commissionagrement::findOrFail($id);
+
+        $membres = Commissionmembre::get();
+
+        $membreJury = $commissionagrement->commissionmembres->pluck('id', 'id')->all();
+
+        return view('operateurs.commissionagrements.add_membres_commsions',
+            compact('commissionagrement', 'membres', 'membreJury'));
+    }
+
+    public function addMembreJury(Request $request, $id)
+    {
+        $request->validate([
+            'membres' => ['required'],
+
+        ]);
+
+        $commissionagrement = Commissionagrement::findOrFail($id);
+        
+        $commissionagrement->commissionmembres()->attach($request->membres);
+
+        Alert::success('Bravo !', 'Membres ajoutés avec succès');
+
+        return redirect()->back();
     }
 }

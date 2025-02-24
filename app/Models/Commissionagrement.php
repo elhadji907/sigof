@@ -38,7 +38,8 @@ class Commissionagrement extends Model
 	}
      
 	public function commissionmembres()
-	{
-		return $this->belongsToMany(Commissionmembre::class, 'commissionagrementcommissionmembres');
-	}
+    {
+        return $this->belongsToMany(Commissionmembre::class, 'commissionagrementcommissionmembres')
+                    ->withTimestamps();
+    }
 }

@@ -30,16 +30,15 @@
                             </div>
                         </div>
                         @isset($commissionagrement->operateurs)
-                            <h5 class="pt-2"><u><b>Opérateurs</b> :</u>
-                                <span class="badge bg-secondary"> {{ count($commissionagrement?->operateurs) }}
+                            <h5 class="pt-2"><u><b>Membres du jury</b> :</u>
+                                <span class="badge bg-secondary"> {{ count($commissionagrement?->commissionmembres) }}
                                 </span>
                             </h5>
                         @endisset
-                        <form method="post"
-                            action="{{ url('commisionagrement', ['$idcommissionagrement' => $commissionagrement->id]) }}"
+                        <form method="post" action="{{ route('addMembreJury', $commissionagrement->id) }}"
                             enctype="multipart/form-data" class="row g-3">
                             @csrf
-                            @method('PUT')
+                            @method('patch')
                             <div class="row mb-0">
                                 {{-- <div class="form-check col-md-2 pt-3">
                                     <label for="#">Choisir tout</label>
@@ -49,91 +48,78 @@
                                     <table class="table datatables align-middle" id="table-operateurs">
                                         <thead>
                                             <tr>
-                                                <th><input type="checkbox" class="form-check-input" id="checkAll">N°
-                                                    agrément</th>
-                                                <th>Opérateurs</th>
-                                                <th>Sigle</th>
-                                                <th class="text-center">Modules</th>
-                                                {{-- <th width="15%" class="text-center">Statut</th> --}}
-                                                <th width="5%" class="text-center">Type</th>
-                                                <th><i class="bi bi-gear"></i></th>
+                                                <th><input type="checkbox" class="form-check-input" id="checkAll"></th>
+                                                <th width='8%'>Civilité</th>
+                                                <th>Prénom</th>
+                                                <th>Nom</th>
+                                                <th>Fonction</th>
+                                                <th>structure</th>
+                                                <th>Email</th>
+                                                <th class="text-center">Téléphone</th>
+                                                <th class="text-center" width='8%'>#</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php $i = 1; ?>
-                                            @foreach ($operateurs as $operateur)
-                                                {{-- @isset($operateur?->numero_agrement) --}}
-                                                    <tr>
-                                                        <td>
-                                                            <input type="checkbox" name="operateurs[]"
-                                                                value="{{ $operateur?->id }}"
-                                                                {{ in_array($operateur?->id, $operateurAgrement) ? 'checked' : '' }}
-                                                                {{ in_array($operateur?->id, $operateurAgrementCheck) ? 'disabled' : '' }}
-                                                                {{-- hidden or disabled --}}
-                                                                class="form-check-input @error('operateurs') is-invalid @enderror">
-                                                            {{ $operateur?->numero_agrement }}
-                                                            @error('operateurs')
-                                                                <span class="invalid-feedback" role="alert">
-                                                                    <div>{{ $message }}</div>
-                                                                </span>
-                                                            @enderror
-                                                        </td>
-                                                        <td>{{ $operateur?->user?->operateur }}</td>
-                                                        <td>{{ $operateur?->user?->username }}</td>
-                                                        <td style="text-align: center;">
-                                                            @foreach ($operateur?->operateurmodules as $operateurmodule)
-                                                                @if ($loop->last)
-                                                                    <a href="#"><span
-                                                                            class="badge bg-info">{{ $loop->count }}</span></a>
-                                                                @endif
-                                                            @endforeach
-                                                        </td>
-                                                        {{-- <td class="text-center">
-                                                            <span
-                                                                class="{{ $operateur->statut_agrement }}">{{ $operateur->statut_agrement }}</span>
-                                                        </td> --}}
-                                                        <td class="text-center">
-                                                            <span
-                                                                class="{{ $operateur->type_demande }}">{{ $operateur->type_demande }}</span>
-                                                        </td>
-                                                        <td>
-                                                            <span class="d-flex align-items-baseline"><a
-                                                                    href="{{ route('operateurs.show', $operateur?->id) }}"
-                                                                    class="btn btn-primary btn-sm" title="voir détails"><i
-                                                                        class="bi bi-eye"></i></a>
-                                                                <div class="filter">
-                                                                    <a class="icon" href="#"
-                                                                        data-bs-toggle="dropdown"><i
-                                                                            class="bi bi-three-dots"></i></a>
-                                                                    <ul
-                                                                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                        <li>
-                                                                            <button type="button"
-                                                                                class="dropdown-item btn btn-sm mx-1"
-                                                                                data-bs-toggle="modal"
-                                                                                data-bs-target="#EditOperateurModal{{ $operateur?->id }}">
-                                                                                <i class="bi bi-pencil" title="Modifier"></i>
-                                                                                Modifier
-                                                                            </button>
-                                                                        </li>
-                                                                        {{-- <li>
-                                                                                <form
-                                                                                    action="{{ route('operateurs.destroy', $operateur->id) }}"
-                                                                                    method="post">
-                                                                                    @csrf
-                                                                                    @method('DELETE')
-                                                                                    <button type="submit"
-                                                                                        class="dropdown-item show_confirm"
-                                                                                        title="Supprimer"><i
-                                                                                            class="bi bi-trash"></i>Supprimer</button>
-                                                                                </form>
-                                                                            </li> --}}
-                                                                    </ul>
-                                                                </div>
+                                            @foreach ($membres as $membre)
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" name="membres[]" value="{{ $membre?->id }}"
+                                                            {{ in_array($membre?->id, $membreJury) ? 'checked' : '' }}
+                                                            class="form-check-input @error('membres') is-invalid @enderror">
+                                                        {{ $membre?->civilite }}
+                                                        @error('membres')
+                                                            <span class="invalid-feedback" role="alert">
+                                                                <div>{{ $message }}</div>
                                                             </span>
-                                                        </td>
-                                                    </tr>
-                                               {{--  @endisset --}}
+                                                        @enderror
+                                                    </td>
+                                                    <td>{{ $membre->civilite }}</td>
+                                                    <td>{{ $membre->prenom }}</td>
+                                                    <td>{{ $membre->nom }}</td>
+                                                    <td>{{ $membre->fonction }}</td>
+                                                    <td>{{ $membre->structure }}</td>
+                                                    <td><a href="mailto:{{ $membre->email }}">{{ $membre->email }}</a>
+                                                    </td>
+                                                    <td class="text-center"><a
+                                                            href="tel:+221{{ $membre->telephone }}">{{ $membre->telephone }}</a>
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        <span class="d-flex mt-2 align-items-baseline"><a
+                                                                href="{{ route('commissionmembres.show', $membre->id) }}"
+                                                                class="btn btn-warning btn-sm mx-1" title="Voir détails">
+                                                                <i class="bi bi-eye"></i></a>
+                                                            {{-- <div class="filter">
+                                                                <a class="icon" href="#"
+                                                                    data-bs-toggle="dropdown"><i
+                                                                        class="bi bi-three-dots"></i></a>
+                                                                <ul
+                                                                    class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                    <li>
+                                                                        <button type="button"
+                                                                            class="dropdown-item btn btn-sm mx-1"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#EditmembreModal{{ $membre->id }}">
+                                                                            <i class="bi bi-pencil" title="Modifier"></i>
+                                                                            Modifier
+                                                                        </button>
+                                                                    </li>
+                                                                    <li>
+                                                                        <form
+                                                                            action="{{ route('commissionmembres.destroy', $membre->id) }}"
+                                                                            method="post">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button type="submit"
+                                                                                class="dropdown-item show_confirm"><i
+                                                                                    class="bi bi-trash"></i>Supprimer</button>
+                                                                        </form>
+                                                                    </li>
+                                                                </ul>
+                                                            </div> --}}
+                                                        </span>
+                                                    </td>
+                                                </tr>
                                             @endforeach
                                         </tbody>
                                     </table>
