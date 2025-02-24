@@ -175,7 +175,7 @@
                 <?php $i = 1; ?>
                 @foreach ($formation?->listecollectives as $listecollective)
                     <?php
-                    $presence_count = $individuelle?->feuillepresences?->where('presence', 'Oui')?->count() ?? 0;
+                    $presence_count = $listecollective?->feuillepresencecollectives?->where('presence', 'Oui')?->count() ?? 0;
                     ?>
                     <tr class="item" style="text-align: center;">
                         <td>{{ $i++ }}</td>
