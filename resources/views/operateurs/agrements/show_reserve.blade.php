@@ -44,15 +44,17 @@
                                     <table class="table datatables align-middle" id="table-operateurs">
                                         <thead>
                                             <tr>
-                                                <th width="35%">Opérateurs</th>
-                                                <th width="25%">Adresse</th>
+                                                <th>Opérateurs</th>
+                                                <th width="10%">Email</th>
+                                                <th width="10%">Telephone</th>
+                                                {{-- <th width="25%">Adresse</th> --}}
                                                 {{-- <th>Domaine</th>
                                                 <th>Niveau qualification</th> --}}
                                                 {{-- <th>Modules</th> --}}
-                                                <th>N° agrément</th>
+                                                <th width="10%">N° agrément</th>
                                                 {{-- <th class="text-center">Modules</th> --}}
                                                 {{-- <th width="15%" class="text-center">Statut</th> --}}
-                                                <th width="25%">Motif</th>
+                                                <th width="20%">Motif</th>
                                                 <th width="5%"><i class="bi bi-gear"></i></th>
                                             </tr>
                                         </thead>
@@ -61,8 +63,15 @@
                                             @foreach ($operateurs as $operateur)
                                                 @isset($operateur?->numero_agrement)
                                                     <tr>
-                                                        <td>{{ $operateur?->user?->operateur . ' (' . $operateur?->user?->username . ')' }}</td>
-                                                        <td>{{ $operateur?->user?->adresse }}</td>
+                                                        <td>{{ $operateur?->user?->operateur . ' (' . $operateur?->user?->username . ')' }}
+                                                        </td>
+                                                        <td><a
+                                                                href="mailto:{{ $operateur?->user?->email }}">{{ $operateur?->user?->email }}</a>
+                                                        </td>
+                                                        <td><a href="tel:+{{ $operateur?->user?->fixe }}">{{ $operateur?->user?->fixe . ' ' . $operateur?->user?->telephone }}
+                                                            </a>
+                                                        </td>
+                                                        {{-- <td>{{ $operateur?->user?->adresse }}</td> --}}
                                                         {{-- <td>{{ count($operateur?->operateurmodules) }}</td> --}}
                                                         <td>{{ $operateur?->numero_agrement }}</td>
                                                         {{-- <td style="text-align: center;">

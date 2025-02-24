@@ -67,8 +67,8 @@
                                     <table class="table datatables align-middle" id="table-operateurs">
                                         <thead>
                                             <tr>
-                                                <th width="35%">Opérateurs</th>
-                                                <th width="15%">Adresse</th>
+                                                <th>Opérateurs</th>
+                                                {{-- <th width="15%">Adresse</th> --}}
                                                 <th width="10%">Domaine</th>
                                                 <th width="15%">Modules</th>
                                                 <th width="15%">Niveau qualification</th>
@@ -84,7 +84,7 @@
                                                 <tr>
                                                     <td>{{ $operateurmodule?->operateur?->user?->operateur . ' (' . $operateurmodule?->operateur?->user?->username . ')' }}
                                                     </td>
-                                                    <td>{{ $operateurmodule?->operateur?->user?->adresse }}</td>
+                                                    {{-- <td>{{ $operateurmodule?->operateur?->user?->adresse }}</td> --}}
                                                     <td>{{ $operateurmodule?->domaine }}</td>
                                                     <td>{{ $operateurmodule?->module }}</td>
                                                     <td>{{ $operateurmodule?->categorie }}</td>

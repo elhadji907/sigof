@@ -54,7 +54,7 @@
                                     <th class="text-center">Session</th>
                                     <th width="5%" class="text-center">Date</th>
                                     <th>Lieu</th>
-                                    <th>PV</th>
+                                    {{-- <th>PV</th> --}}
                                     <th>Fin agrément</th>
                                     <th width="5%" class="text-center">Operateurs</th>
                                     <th width="5%" class="text-center">Statut</th>
@@ -71,7 +71,7 @@
                                         <td style="text-align: center;">{{ $commissionagrement?->date?->format('d/m/Y') }}
                                         </td>
                                         <td>{{ $commissionagrement?->lieu }}</td>
-                                        <td>{{ $commissionagrement?->description }}</td>
+                                        {{-- <td>{{ $commissionagrement?->description }}</td> --}}
                                         <td>{{ $commissionagrement?->date?->translatedFormat('l d F Y') }}
                                         </td>
                                         <td style="text-align: center;">
@@ -123,6 +123,15 @@
                                                                                 class="dropdown-item show_confirm"><i
                                                                                     class="bi bi-trash"></i>Supprimer</button>
                                                                         </form>
+                                                                    </li>
+                                                                    <hr>
+                                                                    <li>
+                                                                        <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#EditagrementModal{{ $commissionagrement?->id }}">
+                                                                            <i class="bi bi-people" title="Membres"></i> Membres
+                                                                            jury
+                                                                        </button>
                                                                     </li>
                                                                 @endcan
                                                             </ul>
@@ -216,10 +225,10 @@
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <label for="floatingInput">Etablissement PV</label>
+                                <label for="floatingInput">Région</label>
                                 <input type="text" name="description" value="{{ old('description') }}"
                                     class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                    id="description" placeholder="Ex: Fait à Dakar le 12/12/2024">
+                                    id="description" placeholder="Ex: Dakar">
                                 @error('description')
                                     <span class="invalid-feedback" role="alert">
                                         <div>{{ $message }}</div>
@@ -330,11 +339,11 @@
                                     @enderror
                                 </div>
                                 <div class="mb-3">
-                                    <label for="floatingInput">Etablissement PV</label>
+                                    <label for="floatingInput">Région</label>
                                     <input type="text" name="description"
                                         value="{{ $commissionagrement?->description ?? old('description') }}"
                                         class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                        id="description" placeholder="Ex: Fait à Dakar le 12/12/2024">
+                                        id="description" placeholder="Ex: Dakar">
                                     @error('description')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>

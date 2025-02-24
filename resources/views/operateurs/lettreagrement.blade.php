@@ -113,6 +113,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 @foreach ($operateurs as $operateur)
+
     <body>
         <div style="text-align: center;">
             <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/entete.png'))) }}"
@@ -215,7 +216,15 @@
                     la propriété de l'Office.</li>
 
             </ul>
-            <table>
+            <h3 style="text-align: right;">
+                {{ 'Fait à ' . $operateur?->commissionagrement?->description . ', le ' . $operateur?->commissionagrement?->date?->format('d/m/Y') }}
+                <br>
+                <div class="page-number" id="footer">
+                    <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/signature_op_dg.png'))) }}"
+                        style="display: block; width: 100%;" />
+                </div>
+            </h3>
+            {{-- <table>
                 <h3 style="text-align: right;">{{ $operateur?->commissionagrement?->description }}</h3>
                 <h3>L'Opérateur
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -229,7 +238,7 @@
                     <br><small class="small fst-italic">(Lu et
                         approuvé - Signature)</small>
                 </h3>
-            </table>
+            </table> --}}
         </div>
         {{-- <div class="invoice-box" style="margin-top: 0cm;">
         <table>
@@ -249,6 +258,13 @@
             </thead>
         </table>
     </div> --}}
+    
+    <footer>
+        <div class="page-number" id="footer">
+            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/pied.png'))) }}"
+                style="display: block; width: 100%;" />
+        </div>
+    </footer>
     </body>
 
     {{-- <div style="page-break-after: always;"></div> --}}

@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP | Liste des ingénieurs')
+@section('title', 'ONFP | Liste des Membres du jury')
 @section('space-work')
     @can('ingenieur-view')
         <section class="section register">
@@ -37,93 +37,67 @@
                     @endif
                     <div class="card">
                         <div class="card-body">
-                            {{-- @can('role-create') --}}
                             <div class="pt-1">
-                                {{-- <a href="{{ route('ingenieurs.create') }}" class="btn btn-primary float-end btn-rounded"><i
-                                    class="fas fa-plus"></i>
-                                <i class="bi bi-person-plus" title="Ajouter"></i> </a> --}}
-                                @can('ingenieur-create')
-                                    <button type="button" class="btn btn-primary btn-sm float-end btn-rounded" data-bs-toggle="modal"
-                                        data-bs-target="#AddingenieurModal">Ajouter
-                                    </button>
-                                @endcan
+                                <button type="button" class="btn btn-primary btn-sm float-end btn-rounded"
+                                    data-bs-toggle="modal" data-bs-target="#AddmembresjuryModal">Ajouter
+                                </button>
                             </div>
-                            {{-- @endcan --}}
-                            <h5 class="card-title">Ingénieurs</h5>
-                            <!-- Table with stripped rows -->
+                            <h5 class="card-title">Membres du jury</h5>
                             <table class="table datatables align-middle justify-content-center" id="table-ingenieurs">
                                 <thead>
                                     <tr>
-                                        {{-- <th class="text-center" scope="col">N°</th>
-                                    <th>Matricule</th> --}}
-                                        <th>Name</th>
-                                        <th>Initiale</th>
+                                        <th width='8%'>Civilité</th>
+                                        <th>Prénom</th>
+                                        <th>Nom</th>
                                         <th>Fonction</th>
-                                        {{-- <th>Spécialité</th> --}}
+                                        <th>structure</th>
                                         <th>Email</th>
-                                        <th>Téléphone</th>
-                                        <th>Formations</th>
-                                        <th class="text-center" scope="col">#</th>
+                                        <th class="text-center">Téléphone</th>
+                                        <th class="text-center" width='8%'>#</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php $i = 1; ?>
-                                    @foreach ($ingenieurs as $ingenieur)
+                                    @foreach ($membres as $membre)
                                         <tr>
-                                            {{-- <td style="text-align: center;">{{ $i++ }}</td>
-                                        <td>{{ $ingenieur->matricule }}</td> --}}
-                                            <td>{{ $ingenieur->name }}</td>
-                                            <td>{{ $ingenieur->initiale }}</td>
-                                            <td>{{ $ingenieur->fonction }}</td>
-                                            {{-- <td>{{ $ingenieur->specialite }}</td> --}}
-                                            <td><a href="mailto:{{ $ingenieur->email }}">{{ $ingenieur->email }}</a></td>
-                                            <td><a href="tel:+221{{ $ingenieur->telephone }}">{{ $ingenieur->telephone }}</a>
-                                            </td>
+                                            <td>{{ $membre->civilite }}</td>
+                                            <td>{{ $membre->prenom }}</td>
+                                            <td>{{ $membre->nom }}</td>
+                                            <td>{{ $membre->fonction }}</td>
+                                            <td>{{ $membre->structure }}</td>
+                                            <td><a href="mailto:{{ $membre->email }}">{{ $membre->email }}</a></td>
+                                            <td class="text-center"><a
+                                                    href="tel:+221{{ $membre->telephone }}">{{ $membre->telephone }}</a></td>
                                             <td style="text-align: center;">
-                                                @foreach ($ingenieur->formations as $formation)
-                                                    @if ($loop->last)
-                                                        <a class="text-primary fw-bold"
-                                                            href="#">{!! $loop->count ?? '0' !!}</a>
-                                                    @endif
-                                                @endforeach
+                                                <span class="d-flex mt-2 align-items-baseline"><a
+                                                        href="{{ route('commissionmembres.show', $membre->id) }}"
+                                                        class="btn btn-warning btn-sm mx-1" title="Voir détails">
+                                                        <i class="bi bi-eye"></i></a>
+                                                    <div class="filter">
+                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                class="bi bi-three-dots"></i></a>
+                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                            <li>
+                                                                <button type="button" class="dropdown-item btn btn-sm mx-1"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#EditmembreModal{{ $membre->id }}">
+                                                                    <i class="bi bi-pencil" title="Modifier"></i> Modifier
+                                                                </button>
+                                                            </li>
+                                                            <li>
+                                                                <form
+                                                                    action="{{ route('commissionmembres.destroy', $membre->id) }}"
+                                                                    method="post">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit" class="dropdown-item show_confirm"><i
+                                                                            class="bi bi-trash"></i>Supprimer</button>
+                                                                </form>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </span>
                                             </td>
-
-                                            <td style="text-align: center;">
-                                                @can('ingenieur-show')
-                                                    <span class="d-flex mt-2 align-items-baseline"><a
-                                                            href="{{ route('ingenieurs.show', $ingenieur->id) }}"
-                                                            class="btn btn-warning btn-sm mx-1" title="Voir détails">
-                                                            <i class="bi bi-eye"></i></a>
-                                                        <div class="filter">
-                                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                    class="bi bi-three-dots"></i></a>
-                                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                @can('ingenieur-update')
-                                                                    <li>
-                                                                        <button type="button" class="dropdown-item btn btn-sm mx-1"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#EditingenieurModal{{ $ingenieur->id }}">
-                                                                            <i class="bi bi-pencil" title="Modifier"></i> Modifier
-                                                                        </button>
-                                                                    </li>
-                                                                @endcan
-                                                                @can('ingenieur-delete')
-                                                                    <li>
-                                                                        <form action="{{ url('ingenieurs', $ingenieur->id) }}"
-                                                                            method="post">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                            <button type="submit" class="dropdown-item show_confirm"><i
-                                                                                    class="bi bi-trash"></i>Supprimer</button>
-                                                                        </form>
-                                                                    </li>
-                                                                @endcan
-                                                            </ul>
-                                                        </div>
-                                                    </span>
-                                                @endcan
-                                            </td>
-
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -134,37 +108,50 @@
 
                 </div>
             </div>
-            <!-- Add ingenieur -->
-            <div class="modal fade" id="AddingenieurModal" tabindex="-1">
+
+            <!-- Add membre -->
+            <div class="modal fade" id="AddmembresjuryModal" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form method="post" action="{{ url('ingenieurs') }}" enctype="multipart/form-data" class="row g-3">
+                        <form method="post" action="{{ route('commissionmembres.store') }}" enctype="multipart/form-data"
+                            class="row g-3">
                             @csrf
                             <div class="card-header text-center bg-gradient-default">
-                                <h1 class="h4 text-black mb-0">Ajouter ingénieur</h1>
+                                <h1 class="h4 text-black mb-0">Ajouter membre</h1>
                             </div>
                             <div class="modal-body">
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="name" value="{{ old('name') }}"
-                                        class="form-control form-control-sm @error('name') is-invalid @enderror" id="name"
-                                        placeholder="Ingénieur" autofocus>
-                                    @error('name')
+                                    <input type="text" name="civilite" value="{{ old('civilite') }}"
+                                        class="form-control form-control-sm @error('civilite') is-invalid @enderror"
+                                        id="civilite" placeholder="M. ou Mme" autofocus>
+                                    @error('civilite')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                    <label for="floatingInput">Ingénieur<span class="text-danger mx-1">*</span></label>
+                                    <label for="floatingInput">Civilité<span class="text-danger mx-1">*</span></label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="initiale" value="{{ old('initiale') }}"
-                                        class="form-control form-control-sm @error('initiale') is-invalid @enderror"
-                                        id="initiale" placeholder="initiale">
-                                    @error('initiale')
+                                    <input type="text" name="prenom" value="{{ old('prenom') }}"
+                                        class="form-control form-control-sm @error('prenom') is-invalid @enderror"
+                                        id="prenom" placeholder="prenom">
+                                    @error('prenom')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                    <label for="floatingInput">Initiale<span class="text-danger mx-1">*</span></label>
+                                    <label for="floatingInput">Prénom<span class="text-danger mx-1">*</span></label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="nom" value="{{ old('nom') }}"
+                                        class="form-control form-control-sm @error('nom') is-invalid @enderror" id="nom"
+                                        placeholder="nom">
+                                    @error('nom')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Nom<span class="text-danger mx-1">*</span></label>
                                 </div>
                                 <div class="form-floating mb-3">
                                     <input type="text" name="fonction" value="{{ old('fonction') }}"
@@ -178,7 +165,18 @@
                                     <label for="floatingInput">Fonction<span class="text-danger mx-1">*</span></label>
                                 </div>
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="email" value="{{ old('email') }}"
+                                    <input type="text" name="structure" value="{{ old('structure') }}"
+                                        class="form-control form-control-sm @error('structure') is-invalid @enderror"
+                                        id="structure" placeholder="structure">
+                                    @error('structure')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                    <label for="floatingInput">Structure<span class="text-danger mx-1">*</span></label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="email" name="email" value="{{ old('email') }}"
                                         class="form-control form-control-sm @error('email') is-invalid @enderror"
                                         id="email" placeholder="email">
                                     @error('email')
@@ -197,11 +195,12 @@
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                    <label for="floatingInput">Telephone<span class="text-danger mx-1">*</span></label>
+                                    <label for="floatingInput">Téléphone<span class="text-danger mx-1">*</span></label>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                <button type="button" class="btn btn-secondary btn-sm"
+                                    data-bs-dismiss="modal">Fermer</button>
                                 <button type="submit" class="btn btn-primary btn-sm">
                                     Enregistrer</button>
                             </div>
@@ -209,52 +208,63 @@
                     </div>
                 </div>
             </div>
-            <!-- End Add ingenieur-->
+            <!-- End Add membre-->
 
-            <!-- Edit ingenieur -->
-            @foreach ($ingenieurs as $ingenieur)
-                <div class="modal fade" id="EditingenieurModal{{ $ingenieur->id }}" tabindex="-1" role="dialog"
-                    aria-labelledby="EditingenieurModalLabel{{ $ingenieur->id }}" aria-hidden="true">
+            <!-- Edit membre -->
+            @foreach ($membres as $membre)
+                <div class="modal fade" id="EditmembreModal{{ $membre->id }}" tabindex="-1" role="dialog"
+                    aria-labelledby="EditmembreModalLabel{{ $membre->id }}" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form method="post" action="{{ route('ingenieurs.update', $ingenieur->id) }}"
+                            <form method="post" action="{{ route('commissionmembres.update', $membre->id) }}"
                                 enctype="multipart/form-data" class="row g-3">
                                 @csrf
                                 @method('patch')
                                 <div class="card-header text-center bg-gradient-default">
-                                    <h1 class="h4 text-black mb-0">Modifier ingénieur</h1>
+                                    <h1 class="h4 text-black mb-0">Modifier membre</h1>
                                 </div>
-                                <input type="hidden" name="id" value="{{ $ingenieur->id }}">
+                                <input type="hidden" name="id" value="{{ $membre->id }}">
                                 <div class="modal-body">
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="name" value="{{ $ingenieur->name ?? old('name') }}"
-                                            class="form-control form-control-sm @error('name') is-invalid @enderror"
-                                            id="name" placeholder="Ingénieur" autofocus>
-                                        @error('name')
+                                        <input type="text" name="civilite"
+                                            value="{{ $membre->civilite ?? old('civilite') }}"
+                                            class="form-control form-control-sm @error('civilite') is-invalid @enderror"
+                                            id="civilite" placeholder="M. ou Mme" autofocus>
+                                        @error('civilite')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                        <label for="floatingInput">Ingénieur<span class="text-danger mx-1">*</span></label>
+                                        <label for="floatingInput">Civilité<span class="text-danger mx-1">*</span></label>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="initiale"
-                                            value="{{ $ingenieur->initiale ?? old('initiale') }}"
-                                            class="form-control form-control-sm @error('initiale') is-invalid @enderror"
-                                            id="initiale" placeholder="initiale">
-                                        @error('initiale')
+                                        <input type="text" name="prenom" value="{{ $membre->prenom ?? old('prenom') }}"
+                                            class="form-control form-control-sm @error('prenom') is-invalid @enderror"
+                                            id="prenom" placeholder="prenom">
+                                        @error('prenom')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                        <label for="floatingInput">Initiale<span class="text-danger mx-1">*</span></label>
+                                        <label for="floatingInput">Prénom<span class="text-danger mx-1">*</span></label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="text" name="nom" value="{{ $membre->nom ?? old('nom') }}"
+                                            class="form-control form-control-sm @error('nom') is-invalid @enderror"
+                                            id="nom" placeholder="nom">
+                                        @error('nom')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                        <label for="floatingInput">Nom<span class="text-danger mx-1">*</span></label>
                                     </div>
                                     <div class="form-floating mb-3">
                                         <input type="text" name="fonction"
-                                            value="{{ $ingenieur->fonction ?? old('fonction') }}"
+                                            value="{{ $membre->fonction ?? old('fonction') }}"
                                             class="form-control form-control-sm @error('fonction') is-invalid @enderror"
                                             id="fonction" placeholder="fonction">
-                                        @error('specialite')
+                                        @error('fonction')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
                                             </span>
@@ -262,7 +272,19 @@
                                         <label for="floatingInput">Fonction<span class="text-danger mx-1">*</span></label>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="email" value="{{ $ingenieur->email ?? old('email') }}"
+                                        <input type="text" name="structure"
+                                            value="{{ $membre->structure ?? old('structure') }}"
+                                            class="form-control form-control-sm @error('structure') is-invalid @enderror"
+                                            id="structure" placeholder="structure">
+                                        @error('structure')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                        <label for="floatingInput">Structure<span class="text-danger mx-1">*</span></label>
+                                    </div>
+                                    <div class="form-floating mb-3">
+                                        <input type="email" name="email" value="{{ $membre->email ?? old('email') }}"
                                             class="form-control form-control-sm @error('email') is-invalid @enderror"
                                             id="email" placeholder="email">
                                         @error('email')
@@ -273,8 +295,8 @@
                                         <label for="floatingInput">Email<span class="text-danger mx-1">*</span></label>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input type="number" min="0" name="telephone"
-                                            value="{{ $ingenieur->telephone ?? old('telephone') }}"
+                                        <input type="number" name="telephone" min="0"
+                                            value="{{ $membre->telephone ?? old('telephone') }}"
                                             class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                             id="telephone" placeholder="7xxxxxxxx">
                                         @error('telephone')
@@ -282,11 +304,12 @@
                                                 <div>{{ $message }}</div>
                                             </span>
                                         @enderror
-                                        <label for="floatingInput">Telephone<span class="text-danger mx-1">*</span></label>
+                                        <label for="floatingInput">Téléphone<span class="text-danger mx-1">*</span></label>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                    <button type="button" class="btn btn-secondary btn-sm"
+                                        data-bs-dismiss="modal">Fermer</button>
                                     <button type="submit" class="btn btn-primary btn-sm">Modifier</button>
                                 </div>
                             </form>
@@ -294,7 +317,7 @@
                     </div>
                 </div>
             @endforeach
-            <!-- End Edit ingenieur-->
+            <!-- End Edit membre-->
         </section>
     @endcan
 @endsection

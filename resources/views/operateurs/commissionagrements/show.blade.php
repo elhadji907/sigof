@@ -187,7 +187,7 @@
                                                             value="{{ $commissionagrement->id }}">
                                                         <input type="hidden" name="value2" value="50">
                                                         <input type="hidden" name="value1" value="0">
-                                                        <button type="submit" class="dropdown-item btn btn-sm">Fiche de
+                                                        <button type="submit" class="dropdown-item btn btn-sm">Fiches de
                                                             synthèse</button>
                                                     </form>
                                                 </li>
@@ -196,10 +196,9 @@
                                     </div>
                                 </span>
                             @endif
-
                             <h5 class="card-title">
                                 <a href="{{ route('addopCommission', ['id' => $commissionagrement->id]) }}"
-                                    class="btn btn-success btn-sm" title="ajouter"><i class="bi bi-plus"></i></a>
+                                    class="btn btn-success btn-sm" title="ajouter">intégrer opérateurs</a>
                             </h5>
                         </div>
                         {{-- <form method="post"

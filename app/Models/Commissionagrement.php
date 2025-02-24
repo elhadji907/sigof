@@ -36,4 +36,9 @@ class Commissionagrement extends Model
 	{
 		return $this->hasMany(Operateur::class, 'commissionagrements_id');
 	}
+     
+	public function commissionmembres()
+	{
+		return $this->belongsToMany(Commissionmembre::class, 'commissionagrementcommissionmembres');
+	}
 }

@@ -199,11 +199,14 @@
             <li>reconnait que toute production faite dans le cadre des actions de formation qui lui sont confiées, est
                 la propriété de l'Office.</li>
         </ul>
-        <h3 style="text-align: right;">{{ $operateur?->commissionagrement?->description }} <br>
+        <h3 style="text-align: right;">
+            {{ 'Fait à ' . $operateur?->commissionagrement?->description . ', le ' . $operateur?->commissionagrement?->date?->format('d/m/Y') }}
+            <br>
             <div class="page-number" id="footer">
                 <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/signature_op_dg.png'))) }}"
                     style="display: block; width: 100%;" />
             </div>
+        </h3>
     </div>
     {{--     <div class="invoice-box" style="margin-top: 0cm;">
         L'Opérateur

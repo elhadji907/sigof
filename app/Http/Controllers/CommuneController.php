@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Arrondissement;
@@ -9,13 +8,13 @@ use Illuminate\Validation\Rule;
 
 class CommuneController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $communes = Commune::orderBy("created_at", "desc")->get();
-        
-        return view("localites.communes.index",compact("communes"));
+
+        return view("localites.communes.index", compact("communes"));
     }
 
-    
     public function create()
     {
         $arrondissements = Arrondissement::orderBy("created_at", "desc")->get();
@@ -25,12 +24,12 @@ class CommuneController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            "nom" => "required|string|unique:communes,nom,except,id",
+            "nom"            => "required|string|unique:communes,nom,except,id",
             "arrondissement" => "required|string",
         ]);
 
         $commune = Commune::create([
-            "nom" => $request->input("nom"),
+            "nom"                => $request->input("nom"),
             "arrondissements_id" => $request->input("arrondissement"),
         ]);
 
@@ -38,13 +37,12 @@ class CommuneController extends Controller
 
         $status = "commune de " . $commune->nom . " ajouté avec succès";
 
-        return  redirect()->route("communes.index")->with("status", $status);
+        return redirect()->route("communes.index")->with("status", $status);
     }
 
-    
     public function edit($id)
     {
-        $commune = Commune::find($id);
+        $commune         = Commune::find($id);
         $arrondissements = Arrondissement::orderBy("created_at", "desc")->get();
         return view("localites.communes.update", compact("commune", "arrondissements"));
     }
@@ -52,12 +50,12 @@ class CommuneController extends Controller
     {
         $commune = Commune::find($id);
         $this->validate($request, [
-            'nom' => ['required', 'string', 'max:25', Rule::unique(Commune::class)->ignore($id)],
+            'nom'            => ['required', 'string', 'max:25', Rule::unique(Commune::class)->ignore($id)],
             "arrondissement" => ['required', 'string'],
         ]);
 
         $commune->update([
-            'nom' => $request->nom,
+            'nom'                => $request->nom,
             'arrondissements_id' => $request->arrondissement,
         ]);
 

@@ -60,6 +60,7 @@ use App\Http\Controllers\SMSController;
 use App\Http\Controllers\FeuillepresenceController;
 use App\Http\Controllers\FeuillepresencecollectiveController;
 use App\Http\Controllers\EmargementcollectiveController;
+use App\Http\Controllers\CommissionmembreController;
 
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SecteurController;
@@ -533,6 +534,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::resource('/emargements', EmargementController::class);
         Route::resource('/feuillepresences', FeuillepresenceController::class);
         Route::resource('/feuillepresencecollectives', FeuillepresencecollectiveController::class);
+        Route::resource('/commissionmembres', CommissionmembreController::class);
     });
     Route::resource('/contacts', ContactController::class);
 });
