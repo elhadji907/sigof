@@ -188,6 +188,13 @@ class EmargementController extends Controller
     public function destroy($id)
     {
         $emargement = Emargement::find($id);
+
+        $feuillesPresences = $emargement->feuillesPresences;
+
+        foreach ($feuillesPresences as $key => $feuillesPresence) {
+            $feuillesPresence->delete();
+        }
+
         $emargement->delete();
 
         Alert::success('Opération réussie !', 'La suppression a été effectuée avec succès.');

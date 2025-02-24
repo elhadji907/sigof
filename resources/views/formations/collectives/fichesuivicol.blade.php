@@ -167,9 +167,9 @@
                         <td>{{ $listecollective?->cin }}</td>
                         <td>{{ $listecollective->civilite }}</td>
                         <td>{{ ucwords($listecollective?->prenom) }}</td>
-                        <td>{{ strtoupper($listecollective?->nom) }}</td>
+                        <td>{{ remove_accents_uppercase($listecollective?->nom) }}</td>
                         <td>{{ $listecollective?->date_naissance?->format('d/m/Y') }}</td>
-                        <td>{{ strtoupper($listecollective?->lieu_naissance) }}</td>
+                        <td>{{ remove_accents_uppercase($listecollective?->lieu_naissance) }}</td>
                         <td>{{ $listecollective?->telephone }}</td>
                         <td></td>
                     </tr>

@@ -110,7 +110,7 @@
                         {{ $formation->code }}
                     </td>
                     <td colspan="2"><b>{{ __('Responsable suivi : ') }}</b>
-                        @if(!empty($formation?->date_suivi))
+                        @if (!empty($formation?->date_suivi))
                             {{ $formation?->suivi_dossier }}
                         @endif
                     </td>
@@ -177,10 +177,18 @@
                         <td>{{ $individuelle->user->cin }}</td>
                         {{-- <td>{{ $individuelle?->user?->civilite }}</td> --}}
                         <td>{{ ucwords($individuelle?->user?->firstname) }}</td>
-                        <td>{{ strtoupper($individuelle?->user?->name) }}</td>
+                        <td>{{ remove_accents_uppercase($individuelle?->user?->name) }}</td>
                         <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>
-                        <td>{{ strtoupper($individuelle?->user?->lieu_naissance) }}</td>
-                        <td>{{ $individuelle?->user?->telephone }}</td>
+                        <td>{{ remove_accents_uppercase($individuelle?->user?->lieu_naissance) }}</td>
+                        <td>
+                            {{ substr($individuelle?->user?->telephone, 0, 2) .
+                                ' ' .
+                                substr($individuelle?->user?->telephone, 2, 3) .
+                                ' ' .
+                                substr($individuelle?->user?->telephone, 5, 2) .
+                                ' ' .
+                                substr($individuelle?->user?->telephone, 7, 2) }}
+                        </td>
                         <td>{{ $individuelle?->feuillepresences?->where('presence', 'Oui')?->count() }}</td>
                         <td></td>
                     </tr>

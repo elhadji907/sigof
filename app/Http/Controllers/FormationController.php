@@ -2255,7 +2255,7 @@ class FormationController extends Controller
 
         $formation = Formation::find($request->input('idformation'));
 
-        $title = 'Feuille de présence de la formation en  ' . $formation->name;
+        $title = 'Etat transport de la formation en  ' . $formation->name;
 
         $dompdf  = new Dompdf();
         $options = $dompdf->getOptions();
@@ -2273,7 +2273,7 @@ class FormationController extends Controller
         // Render the HTML as PDF
         $dompdf->render();
 
-        $name = 'Feuille de présence de la formation en  ' . $formation->name . ', code ' . $formation->code . '.pdf';
+        $name = 'Etat transport de la formation en  ' . $formation->name . ', code ' . $formation->code . '.pdf';
 
         // Output the generated PDF to Browser
         $dompdf->stream($name, ['Attachment' => false]);
@@ -2284,7 +2284,7 @@ class FormationController extends Controller
 
         $formation = Formation::find($request->input('idformation'));
 
-        $title = 'Feuille de présence de la formation en  ' . $formation->name;
+        $title = 'Etat transport de la formation en  ' . $formation->name;
 
         $dompdf  = new Dompdf();
         $options = $dompdf->getOptions();
@@ -2302,7 +2302,7 @@ class FormationController extends Controller
         // Render the HTML as PDF
         $dompdf->render();
 
-        $name = 'Feuille de présence de la formation en  ' . $formation->name . ', code ' . $formation->code . '.pdf';
+        $name = 'Etat transport de la formation en  ' . $formation?->collectivemodule?->module . ', code ' . $formation->code . '.pdf';
 
         // Output the generated PDF to Browser
         $dompdf->stream($name, ['Attachment' => false]);

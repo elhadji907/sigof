@@ -42,6 +42,12 @@ class Emargement extends Model
 		return $this->belongsTo(Individuelle::class, 'individuelles_id');
 	}
 
+	
+	public function feuillesPresences()
+    {
+        return $this->hasMany(Feuillepresence::class, 'emargements_id');
+    }
+
 	public function formation()
 	{
 		return $this->belongsTo(Formation::class, 'formations_id');

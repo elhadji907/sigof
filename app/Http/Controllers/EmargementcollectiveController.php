@@ -5,6 +5,7 @@ use App\Models\Emargementcollective;
 use App\Models\Formation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class EmargementcollectiveController extends Controller
 {
@@ -38,5 +39,24 @@ class EmargementcollectiveController extends Controller
                 'feuillepresenceListecollective',
             )
         );
+    }
+
+    public function destroy($id)
+    {
+        $emargementcollective = Emargementcollective::findOrFail($id);
+
+        $feuillesPresenceCollectives = $emargementcollective->feuillesPresenceCollectives;
+
+        foreach ($feuillesPresenceCollectives as $key => $feuillesPresenceCollective) {
+            $feuillesPresenceCollective->delete();
+        }
+
+        /* $feuillepresenceListecollective = $emargementcollective->feui */
+
+        $emargementcollective->delete();
+
+        Alert::success('Bravo', 'Suppression effectuée avec succès');
+
+        return redirect()->back();
     }
 }

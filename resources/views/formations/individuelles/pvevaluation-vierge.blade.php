@@ -220,9 +220,9 @@
                         <td>{{ $individuelle->user->cin }}</td>
                         <td>{{ $individuelle?->user?->civilite }}</td>
                         <td>{{ ucwords($individuelle?->user?->firstname) }}</td>
-                        <td>{{ strtoupper($individuelle?->user?->name) }}</td>
+                        <td>{{ remove_accents_uppercase($individuelle?->user?->name) }}</td>
                         <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>
-                        <td>{{ strtoupper($individuelle?->user?->lieu_naissance) }}</td>
+                        <td>{{ remove_accents_uppercase($individuelle?->user?->lieu_naissance) }}</td>
                         <td>{{ $individuelle?->user?->telephone }}</td>
                         <td></td>
                         <td></td>

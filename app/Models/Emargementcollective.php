@@ -41,6 +41,11 @@ class Emargementcollective extends Model
 	{
 		return $this->belongsTo(Listecollective::class, 'listecollectives_id');
 	}
+	
+	public function feuillesPresenceCollectives()
+    {
+        return $this->hasMany(Feuillepresencecollective::class, 'emargementcollectives_id');
+    }
 
 	public function formation()
 	{

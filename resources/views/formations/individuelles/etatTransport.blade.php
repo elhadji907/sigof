@@ -164,7 +164,7 @@
                     <td><b>Prénom</b></td>
                     <td><b>NOM</b></td>
                     {{-- <td><b>Date naissance</b></td> --}}
-                    <td><b>Lieu de provenance</b></td>
+                    <td><b>Provenance</b></td>
                     <td><b>Téléphone</b></td>
                     <td><b>Nbre Jours</b></td>
                     <td><b>Montant/Jours</b></td>
@@ -185,9 +185,17 @@
                         <td>{{ $i++ }}</td>
                         <td>{{ $individuelle->user->cin }}</td>
                         <td>{{ ucwords($individuelle?->user?->firstname) }}</td>
-                        <td>{{ strtoupper($individuelle?->user?->name) }}</td>
-                        <td>{{ strtoupper($individuelle?->departement?->nom) }}</td>
-                        <td>{{ $individuelle?->user?->telephone }}</td>
+                        <td>{{ remove_accents_uppercase($individuelle?->user?->name) }}</td>
+                        <td>{{ remove_accents_uppercase($individuelle?->departement?->nom) }}</td>
+                        <td>
+                            {{ substr($individuelle?->user?->telephone, 0, 2) .
+                                ' ' .
+                                substr($individuelle?->user?->telephone, 2, 3) .
+                                ' ' .
+                                substr($individuelle?->user?->telephone, 5, 2) .
+                                ' ' .
+                                substr($individuelle?->user?->telephone, 7, 2) }}
+                        </td>
                         <td>{{ $presence_count }}</td>
                         <td>{{ number_format($formation?->indemnite_transport_jour, 0, ',', ' ') }}</td>
                         <td>{{ number_format($montant, 0, ',', ' ') }}</td>

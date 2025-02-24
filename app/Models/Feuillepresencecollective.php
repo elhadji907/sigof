@@ -31,4 +31,9 @@ class Feuillepresencecollective extends Model
 	{
 		return $this->belongsTo(Listecollective::class, 'listecollectives_id');
 	}
+
+	public function emargementCollective()
+    {
+        return $this->belongsTo(Emargementcollective::class, 'emargementcollectives_id');
+    }
 }

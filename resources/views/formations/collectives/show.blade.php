@@ -1193,7 +1193,7 @@
                                                                         </li>
                                                                         <li>
                                                                             <form
-                                                                                action="{{ url('emargementcollectives', $emargementcollective->id) }}"
+                                                                                action="{{ route('emargementcollectives.destroy', $emargementcollective->id) }}"
                                                                                 method="post">
                                                                                 @csrf
                                                                                 @method('DELETE')

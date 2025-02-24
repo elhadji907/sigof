@@ -31,4 +31,10 @@ class Feuillepresence extends Model
 	{
 		return $this->belongsTo(Individuelle::class, 'individuelles_id');
 	}
+	
+
+	public function emargement()
+    {
+        return $this->belongsTo(Emargement::class, 'emargements_id');
+    }
 }

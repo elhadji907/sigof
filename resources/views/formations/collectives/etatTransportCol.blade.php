@@ -175,23 +175,42 @@
             </thead>
             <tbody>
                 <?php $i = 1; ?>
+                <?php $total = 0; ?>
                 @foreach ($formation?->listecollectives as $listecollective)
+                    <?php
+                    $presence_count = $listecollective?->feuillepresencecollectives?->where('presence', 'Oui')?->count() ?? 0;
+                    $montant = $formation?->indemnite_transport_jour * $presence_count;
+                    $total += $montant;
+                    ?>
                     <tr class="item" style="text-align: center;">
                         <td>{{ $i++ }}</td>
                         <td>{{ $listecollective?->cin }}</td>
                         {{-- <td>{{ $individuelle?->user?->civilite }}</td> --}}
                         <td>{{ ucwords($listecollective?->prenom) }}</td>
-                        <td>{{ strtoupper($listecollective?->nom) }}</td>
+                        <td>{{ remove_accents_uppercase($listecollective?->nom) }}</td>
                         {{-- <td>{{ $listecollective?->user?->date_naissance?->format('d/m/Y') }}</td> --}}
-                        <td>{{ strtoupper($listecollective?->departement?->nom) }}</td>
-                        <td>{{ $listecollective?->telephone }}</td>
-                        <td>{{ $listecollective?->feuillepresencecollectives?->where('presence', 'Oui')?->count() }}</td>
-                        <td>{{ number_format($formation?->indemnite_transport_jour, 0, ',', ' ') }}</td>
-                        <td>{{ number_format($formation?->indemnite_transport_jour * $listecollective?->feuillepresencecollectives?->where('presence', 'Oui')?->count(), 0, ',', ' ') }}
+                        <td>{{ remove_accents_uppercase($listecollective?->departement?->nom) }}</td>
+                        <td>{{ substr($listecollective?->telephone, 0, 2) .
+                            ' ' .
+                            substr($listecollective?->telephone, 2, 3) .
+                            ' ' .
+                            substr($listecollective?->telephone, 5, 2) .
+                            ' ' .
+                            substr($listecollective?->telephone, 7, 2) }}
+
                         </td>
+                        <td>{{ $presence_count }}
+                        </td>
+                        <td>{{ number_format($formation?->indemnite_transport_jour, 0, ',', ' ') }}</td>
+                        <td>{{ number_format($montant, 0, ',', ' ') }}</td>
                         <td></td>
                     </tr>
                 @endforeach
+                <tr class="total" style="text-align: center; font-size: 1.2em; font-weight: bold;">
+                    <td colspan="8"><b>TOTAL</b></td>
+                    <td colspan="1"><b>{{ number_format($total, 0, ',', ' ') }}</b></td>
+                    <td colspan="1"></td>
+                </tr>
             </tbody>
         </table>
         {{--  <h4 valign="top">
