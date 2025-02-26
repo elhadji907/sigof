@@ -41,6 +41,9 @@ class AuthenticatedSessionController extends Controller
         $services = Service::get();
         $posts = Poste::orderBy("created_at", "desc")->limit(4)->get();
 
+        foreach ($posts as $key => $postNotEmpty) {
+        }
+
         /* $count_today = Individuelle::where("created_at", "LIKE",  "{$today}%")->count(); */
         /* $count_today = Module::where("domaines_id", "!=",  null)->count(); */
         $count_today = Module::distinct()->count();
@@ -76,6 +79,7 @@ class AuthenticatedSessionController extends Controller
                 'anciennete',
                 'antennes',
                 'services',
+                'postNotEmpty',
                 'posts',
             )
         );

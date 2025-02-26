@@ -252,6 +252,7 @@
                                 </p>
                             </div>
                         </div>
+<<<<<<< HEAD
                     </div> --}}
 
             </div>
@@ -277,8 +278,33 @@
                     @endforeach
                 </div>
             @endif
+=======
+                    </div>
+>>>>>>> refs/remotes/origin/main
 
-            </div>
+                    @if (!empty($postNotEmpty))
+                        <div class="row stats-row gy-4 mt-5" data-aos="fade-up" data-aos-delay="500">
+                            @foreach ($posts as $post)
+                                @if (!empty($post->image))
+                                    <div class="col-12 col-md-12 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                        <a href="#" data-bs-toggle="modal"
+                                            data-bs-target="#ShowPostModal{{ $post->id }}">
+                                            <div class="stat-item">
+                                                <img class="rounded-circle" alt="{{ $post->titre }}"
+                                                    src="{{ asset($post->getPoste()) }}" width="50"
+                                                    height="auto">
+                                                <div class="stat-content">
+                                                    <p>{{ $post?->titre }}</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
+
+                </div>
 
         </section>
 
@@ -1316,31 +1342,31 @@
                 </div>
             </div>
         @endforeach
+        
         @foreach ($posts as $post)
+<<<<<<< HEAD
             {{-- <div class="modal fade" id="ShowPostModal{{ $post->id }}" tabindex="-1">
                 <div class="modal-dialog modal-lg">
+=======
+            <div class="modal fade" id="ShowPostModal{{ $post->id }}" tabindex="-1">
+                <div class="modal-dialog">
+>>>>>>> refs/remotes/origin/main
                     <div class="modal-content">
-                        <section class="pricing section light-background">
-                            <div class="container section-title" data-aos="fade-up">
-                                <h1 class="h4 text-black mb-0">{{ $post->titre }}</h1>
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ $post->titre }}</h5>
+                            {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                <img src="{{ asset($post->getPoste()) }}" class="d-block w-100 main-image rounded-4"
+                                    alt="{{ $post->legende }}">
                             </div>
-                            <div class="modal-body">
-                                <div class="row g-3">
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                                        <img src="{{ asset($post->getPoste()) }}"
-                                            class="d-block w-100 main-image rounded-4" alt="{{ $post->legende }}">
-                                    </div>
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                                        <p>{{ $post->name }}</p>
-                                    </div>
-
-                                </div>
-                                <div class="modal-footer mt-2">
-                                    <button type="button" class="btn btn-secondary btn-sm"
-                                        data-bs-dismiss="modal">Fermer</button>
-                                </div>
-                            </div>
-                        </section>
+                            <p class="small fst-italic pt-1">{{ $post->name }}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                data-bs-dismiss="modal">Fermer</button>
+                        </div>
                     </div>
                 </div>
             </div> --}}
