@@ -540,6 +540,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::resource('/commissionmembres', CommissionmembreController::class);
     });
     Route::resource('/contacts', ContactController::class);
+    Route::get('/services-details', [ContactController::class, 'servicesDetails'])->name('services.details');
 });
 
 require __DIR__ . '/auth.php';

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Models\Antenne;
 
 class ContactController extends Controller
 {
@@ -108,5 +109,14 @@ class ContactController extends Controller
         Alert::success('Mis en évidence !');
 
         return redirect()->back();
+    }
+
+
+    public function servicesDetails() 
+    {
+        
+        $antennes = Antenne::get();
+
+        return view('service-details', compact('antennes'));
     }
 }

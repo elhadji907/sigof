@@ -209,3 +209,37 @@
         }
     }
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const videoLinks = document.querySelectorAll(".video-link");
+        const videoFrame = document.getElementById("video-frame");
+        const videoTitle = document.getElementById("video-title");
+        const videoDescription = document.getElementById("video-description");
+
+        videoLinks.forEach(link => {
+            link.addEventListener("click", function(event) {
+                event.preventDefault(); // Évite le rechargement de la page
+
+                // Retirer la classe active des autres liens et l'ajouter au lien sélectionné
+                videoLinks.forEach(l => l.classList.remove("active"));
+                this.classList.add("active");
+
+                // Mettre à jour la vidéo
+                const videoURL = this.getAttribute("data-video");
+                if (videoURL) {
+                    videoFrame.src = videoURL;
+                }
+
+                // Mise à jour du titre
+                videoTitle.textContent = this.getAttribute("data-title") ||
+                    "Vidéo non disponible";
+
+                // Mise à jour de la description avec du HTML
+                const descriptionHTML = this.getAttribute("data-description") ||
+                    "<ul><li>Aucune description disponible.</li></ul>";
+                videoDescription.innerHTML = descriptionHTML;
+            });
+        });
+    });
+</script>

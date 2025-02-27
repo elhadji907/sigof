@@ -31,6 +31,26 @@
     <!-- Main CSS File -->
     <link href="{{ asset('asset/css/main.css') }}" rel="stylesheet">
 
+    <style>
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* Ratio 16:9 */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+
     {{-- Pour sweetAlert --}}
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
