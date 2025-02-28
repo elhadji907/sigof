@@ -132,20 +132,20 @@
                 @foreach ($modules as $module)
                     <tr class="item">
                         <td style="text-align: center;">{{ $i++ }}</td>
-                        <td>{{ $module?->name }}</td>
+                        <td>{{ remove_accents_uppercase($module?->name) }}</td>
 
                         {{-- Vérifier si le domaine est identique au précédent --}}
                         @if ($module?->domaine?->name == $previousDomaine)
                             <td></td> {{-- Laisser la cellule vide pour éviter la répétition --}}
                         @else
-                            <td>{{ $module?->domaine?->name }}</td>
+                            <td>{{ remove_accents_uppercase($module?->domaine?->name) }}</td>
                         @endif
 
                         {{-- Vérifier si le secteur est identique au précédent --}}
                         @if ($module?->domaine?->secteur?->name == $previousSecteur)
                             <td></td> {{-- Laisser la cellule vide pour éviter la répétition --}}
                         @else
-                            <td>{{ $module?->domaine?->secteur?->name }}</td>
+                            <td>{{ remove_accents_uppercase($module?->domaine?->secteur?->name) }}</td>
                         @endif
                     </tr>
 
