@@ -63,6 +63,8 @@
                                     <i class="bi bi-arrow-right-circle"></i><span>Soumettre demande agrément
                                         opérateur</span>
                                 </a>
+
+                                <a href="#"><i class="bi bi-filetype-pdf"></i><span>Nos modules (PDF)</span></a>
                             </div>
                         </div>
 
@@ -80,7 +82,7 @@
                             <i class="bi bi-headset help-icon"></i>
                             <h4>Besoin d’aide ?</h4>
                             <p class="d-flex align-items-center mt-2 mb-0"><i class="bi bi-telephone me-2"></i>
-                                <span>+221 33 827 92 51</span>
+                                <span>+221 77 291 33 97</span>
                             </p>
                             <p class="d-flex align-items-center mt-1 mb-0"><i class="bi bi-envelope me-2"></i>
                                 <a href="mailto:onfp@onfp.sn">onfp@onfp.sn</a>
