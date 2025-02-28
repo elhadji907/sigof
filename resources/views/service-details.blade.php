@@ -31,14 +31,14 @@
                                 <a href="#" class="video-link active"
                                     data-video="https://www.youtube.com/embed/SJjW_yaZBP4"
                                     data-title="Création d’un compte personnel"
-                                    data-description="<ul><li><i class='bi bi-check-circle'></i> <span>Découvrez comment créer un compte personnel.</span></li><li><i class='bi bi-check-circle'></i> <span>Accédez aux services numériques de l’ONFP.</span></li><li><i class='bi bi-check-circle'></i> <span>Profitez d’une interface simple et rapide.</span></li></ul>">
+                                    data-description="Cette vidéo vous explique comment créer un compte pour soumettre une demande de formation, qu'elle soit individuelle ou collective, auprès de l'ONFP.">
                                     <i class="bi bi-arrow-right-circle"></i><span>Créer un compte personnel</span>
                                 </a>
 
                                 <a href="#" class="video-link"
                                     data-video="https://www.youtube.com/embed/ANOTHER_VIDEO_ID"
                                     data-title="Création d’un compte opérateur"
-                                    data-description="<ul><li>Apprenez à créer un compte opérateur.</li><li>Gérez efficacement vos formations.</li><li>Accédez aux fonctionnalités avancées.</li></ul>">
+                                    data-description="Cette vidéo vous guide dans la création d'un compte afin de déposer une demande d'agrément en tant qu'opérateur de formation potentiel auprès de l'ONFP.">
                                     <i class="bi bi-arrow-right-circle"></i><span>Créer un compte opérateur</span>
                                 </a>
                             </div>
@@ -78,14 +78,8 @@
                         <div class="video-content mt-4">
                             <h3 id="video-title" class="fw-bold">Création d’un compte personnel</h3>
                             <div id="video-description">
-                                <ul>
-                                    <li><i class='bi bi-check-circle'></i> <span>Découvrez comment créer un compte
-                                            personnel.</span></li>
-                                    <li><i class='bi bi-check-circle'></i> <span>Accédez aux services numériques de
-                                            l’ONFP.</span></li>
-                                    <li><i class='bi bi-check-circle'></i> <span>Profitez d’une interface simple et
-                                            rapide.</span></li>
-                                </ul>
+                                Cette vidéo vous explique comment créer un compte pour soumettre une demande de
+                                formation, qu'elle soit individuelle ou collective, auprès de l'ONFP.
                             </div>
                         </div>
                     </div>
