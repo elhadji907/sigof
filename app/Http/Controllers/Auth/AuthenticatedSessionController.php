@@ -46,7 +46,7 @@ class AuthenticatedSessionController extends Controller
             foreach ($posts as $key => $postNotEmpty) {
             }
         } else {
-            $postNotEmpt = null;
+            $postNotEmpty = null;
         }
 
         /* $count_today = Individuelle::where("created_at", "LIKE",  "{$today}%")->count(); */
