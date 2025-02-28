@@ -49,6 +49,10 @@
             width: 100%;
             height: 100%;
         }
+
+        .empty-cell {
+            border: none;
+        }
     </style>
 
     {{-- Pour sweetAlert --}}

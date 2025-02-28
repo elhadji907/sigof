@@ -126,6 +126,10 @@ class ContactController extends Controller
             ->whereNotNull('modules.domaines_id')                                                   // Vérifie que l'ID du domaine n'est pas nul
             ->whereNotNull('domaines.secteurs_id')                                                  // Vérifie que l'ID du secteur n'est pas nul
             ->get();
+            
+        $modules = $modules->sortBy(function ($module) {
+            return $module->domaine->name; // Trie par le nom du domaine
+        });
 
         $title = 'Nos modules de formation';
 
@@ -140,7 +144,7 @@ class ContactController extends Controller
         )));
 
         // (Optional) Setup the paper size and orientation
-        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->setPaper('A4', 'landscape');
 
         // Render the HTML as PDF
         $dompdf->render();

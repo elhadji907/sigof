@@ -9,29 +9,18 @@
     <link href="{{ asset('assets/img/favicon-onfp.png') }}" rel="icon">
     <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
     <style>
-        /* @page {
-            margin: 0cm 0cm;
-        } */
-
         @page {
-            size: 21cm 29.7cm;
-            margin-top: 1cm;
-            margin-bottom: 0cm;
+            margin: 0cm 0cm;
         }
 
         .invoice-box {
-            max-width: 800px;
+            max-width: 1000px;
             margin: auto;
-            padding-top: 0px;
-            padding-bottom: 25px;
-            padding-left: 25px;
-            padding-right: 25px;
-            border: 0px solid #eee;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-            font-size: 13px;
-            line-height: 22px;
-            font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-            /* color: #555; */
+            /* padding: 30px; */
+            font-size: 12px;
+            line-height: 18px;
+            color: color: rgb(0, 0, 0);
+            ;
         }
 
         /** RTL **/
@@ -41,7 +30,7 @@
 
         .invoice-box table tr.heading td {
             background: rgb(255, 255, 255);
-            border: 0px solid #000000;
+            border: 1px solid #000000;
             border-collapse: collapse;
             font-weight: bold;
         }
@@ -72,22 +61,11 @@
 
         table td,
         table th {
-            border-left: 1px solid rgb(0, 0, 0);
-            border-right: 1px solid rgb(0, 0, 0);
-            border-top: 1px solid rgb(0, 0, 0);
-            border-bottom: 1px solid rgb(0, 0, 0);
+            /* border-left: 0;
+            border-right: 0px solid rgb(0, 0, 0);
+            border-top: 0;
+            border-bottom: 0px solid rgb(0, 0, 0); */
             border: 1px solid;
-        }
-
-        .Oui {
-            color: #198754;
-            text-align: center;
-        }
-
-        .Non {
-            color: #DC3545;
-            padding: 4px 8px;
-            text-align: center;
         }
 
         footer {
@@ -96,6 +74,12 @@
             left: 0cm;
             right: 0cm;
             height: 2cm;
+
+            /** Extra personal styles **/
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            text-align: center;
+            line-height: 1.5cm;
         }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -115,53 +99,43 @@
     <h4 style="text-align: center;">NOS MODULES DE FORMATION</h4>
     <div class="invoice-box">
         <table class="table table-bordered table-striped table-hover">
-            <tbody>
-                <tr class="item">
-                    <td style="text-align: center;"><b>N°</b></td>
-                    <td><b>MODULES / SPECIALITE</b></td>
-                    <td><b>DOMAINES</b></td>
-                    <td><b>SECTEURS</b></td>
+            <thead class="thead-dark">
+                <tr>
+                    <th style="text-align: center;"><b>N°</b></th>
+                    <th><b>MODULES / SPÉCIALITE</b></th>
+                    <th><b>DOMAINES</b></th>
+                    <th><b>SECTEURS</b></th>
+                    <th><b>NIVEAU ENTRE</b></th>
+                    <th><b>TITRE / ATTESTATION</b></th>
                 </tr>
-
+            </thead>
+            <tbody>
                 <?php
                 $i = 1;
-                $previousDomaine = null;
-                $previousSecteur = null;
                 ?>
 
                 @foreach ($modules as $module)
                     <tr class="item">
                         <td style="text-align: center;">{{ $i++ }}</td>
                         <td>{{ remove_accents_uppercase($module?->name) }}</td>
-
-                        {{-- Vérifier si le domaine est identique au précédent --}}
-                        @if ($module?->domaine?->name == $previousDomaine)
-                            <td></td> {{-- Laisser la cellule vide pour éviter la répétition --}}
-                        @else
-                            <td>{{ remove_accents_uppercase($module?->domaine?->name) }}</td>
-                        @endif
-
-                        {{-- Vérifier si le secteur est identique au précédent --}}
-                        @if ($module?->domaine?->secteur?->name == $previousSecteur)
-                            <td></td> {{-- Laisser la cellule vide pour éviter la répétition --}}
-                        @else
-                            <td>{{ remove_accents_uppercase($module?->domaine?->secteur?->name) }}</td>
-                        @endif
+                        <td>{{ remove_accents_uppercase($module?->domaine?->name) }}</td>
+                        {{-- Afficher le secteur normalement --}}
+                        <td>{{ remove_accents_uppercase($module?->domaine?->secteur?->name) }}</td>
+                        <td></td>
+                        <td></td>
                     </tr>
-
-                    {{-- Mettre à jour les variables pour la prochaine itération --}}
-                    <?php
-                    $previousDomaine = $module?->domaine?->name;
-                    $previousSecteur = $module?->domaine?->secteur?->name;
-                    ?>
                 @endforeach
             </tbody>
         </table>
+
     </div>
     <footer>
         <div class="page-number" id="footer">
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/pied.png'))) }}"
-                style="display: block; width: 100%;" />
+            {{--  <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/pied.png'))) }}"
+                style="display: block; width: 100%;" /> --}}
+
+            {{-- Cité SIPRES 1, lot 2, 2 voies Liberté 6 extension VDN /Tél : (+221) 33 827 92 51 / Fax : 33 827 92 55 BP:
+            21013 Dakar-Ponty - Site web: onfp.sn / Email: onfp@onfp.sn --}}
         </div>
     </footer>
 </body>
