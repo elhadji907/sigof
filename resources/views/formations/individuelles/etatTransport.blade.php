@@ -184,7 +184,7 @@
                     <tr class="item" style="text-align: center;">
                         <td>{{ $i++ }}</td>
                         <td>{{ $individuelle->user->cin }}</td>
-                        <td>{{ ucwords($individuelle?->user?->firstname) }}</td>
+                        <td>{{ format_proper_name($individuelle?->user?->firstname) }}</td>
                         <td>{{ remove_accents_uppercase($individuelle?->user?->name) }}</td>
                         <td>{{ remove_accents_uppercase($individuelle?->departement?->nom) }}</td>
                         <td>

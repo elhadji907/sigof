@@ -174,7 +174,7 @@
                         <td>{{ $i++ }}</td>
                         <td>{{ $individuelle->user->cin }}</td>
                         {{-- <td>{{ $individuelle?->user?->civilite }}</td> --}}
-                        <td>{{ ucwords($individuelle?->user?->firstname) }}</td>
+                        <td>{{ format_proper_name($individuelle?->user?->firstname) }}</td>
                         <td>{{ remove_accents_uppercase($individuelle?->user?->name) }}</td>
                         <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>
                         <td>{{ remove_accents_uppercase($individuelle?->user?->lieu_naissance) }}</td>

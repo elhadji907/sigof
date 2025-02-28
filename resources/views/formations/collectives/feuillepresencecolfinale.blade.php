@@ -181,7 +181,7 @@
                         <td>{{ $i++ }}</td>
                         <td>{{ $listecollective?->cin }}</td>
                         {{-- <td>{{ $individuelle?->user?->civilite }}</td> --}}
-                        <td>{{ ucwords($listecollective?->prenom) }}</td>
+                        <td>{{ format_proper_name($listecollective?->prenom) }}</td>
                         <td>{{ remove_accents_uppercase($listecollective?->nom) }}</td>
                         <td>{{ $listecollective?->date_naissance?->format('d/m/Y') }}</td>
                         <td>{{ remove_accents_uppercase($listecollective?->lieu_naissance) }}</td>
