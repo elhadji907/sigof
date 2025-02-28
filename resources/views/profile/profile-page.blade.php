@@ -302,7 +302,7 @@
                                                 Prénom
                                             </div>
                                             <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                                {{ Auth::user()->firstname }}</div>
+                                                {{ format_proper_name(Auth::user()->firstname) }}</div>
                                         </div>
                                     @endif
 

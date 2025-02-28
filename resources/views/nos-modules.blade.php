@@ -112,15 +112,15 @@
         <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/entete.png'))) }}"
             style="width: 100%; max-width: 370px" />
     </div>
-    <h4 style="text-align: center;">MODULES</h4>
+    <h4 style="text-align: center;">NOS MODULES DE FORMATION</h4>
     <div class="invoice-box">
-        <table class="table table-responsive">
+        <table class="table table-bordered table-striped table-hover">
             <tbody>
                 <tr class="item">
-                    <td style="text-align: center;">N°</td>
-                    <td>MODULES / SPECIALITE</td>
-                    <td>DOMAINES</td>
-                    <td>SECTEURS</td>
+                    <td style="text-align: center;"><b>N°</b></td>
+                    <td><b>MODULES / SPECIALITE</b></td>
+                    <td><b>DOMAINES</b></td>
+                    <td><b>SECTEURS</b></td>
                 </tr>
 
                 <?php
