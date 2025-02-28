@@ -352,7 +352,7 @@
                                                 Adresse
                                             </div>
                                             <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                                {{ Auth::user()->adresse }}</div>
+                                                {{ remove_accents_uppercase(Auth::user()->adresse) }}</div>
                                         </div>
                                     @endif
                                 </div>
