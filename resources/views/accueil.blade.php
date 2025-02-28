@@ -118,9 +118,9 @@
                                             <i class="bi bi-arrow-right-circle mr-2 text-blue-500"></i>
                                             <span>Comment devenir opérateur ?</span>
                                         </a>
-                                        <a href="{{ route('services.details') }}"
-                                            class="flex items-center text-gray-700 hover:text-blue-500 transition duration-300">
-                                            <i class="bi bi-arrow-right-circle mr-2 text-blue-500"></i>
+                                        <a href="{{ route('nos-modules') }}"
+                                            class="flex items-center text-gray-700 hover:text-blue-500 transition duration-300" target="_blank">
+                                            <i class="bi bi-filetype-pdf"></i>
                                             <span>Quels sont nos modules de formation ?</span>
                                         </a>
                                     </div>

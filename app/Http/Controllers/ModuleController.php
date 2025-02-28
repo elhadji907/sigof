@@ -1,8 +1,6 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\Departement;
 use App\Models\Domaine;
 use App\Models\Individuelle;
 use App\Models\Module;
@@ -24,9 +22,9 @@ class ModuleController extends Controller
     }
     public function index()
     {
-        $modules = Module::orderBy("created_at", "desc")->get();
+        $modules  = Module::orderBy("created_at", "desc")->get();
         $domaines = Domaine::orderBy("created_at", "desc")->get();
-        $regions = Region::orderBy("created_at", "desc")->get();
+        $regions  = Region::orderBy("created_at", "desc")->get();
 
         $total_count = Module::count();
 
@@ -59,15 +57,15 @@ class ModuleController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            "name"             => ["required", "string", Rule::unique(Module::class)->ignore($id)],
-            "domaine"          => ["required", "string"],
+            "name"    => ["required", "string", Rule::unique(Module::class)->ignore($id)],
+            "domaine" => ["required", "string"],
         ]);
 
         $module = Module::findOrFail($id);
 
         $module->update([
-            'name'            => $request->input('name'),
-            'domaines_id'     => $request->input('domaine'),
+            'name'        => $request->input('name'),
+            'domaines_id' => $request->input('domaine'),
         ]);
 
         $module->save();
@@ -80,7 +78,7 @@ class ModuleController extends Controller
     public function modulelocalite($idlocalite, $idmodule)
     {
         $localite = Region::findOrFail($idlocalite);
-        $module = Module::findOrFail($idmodule);
+        $module   = Module::findOrFail($idmodule);
 
         $individuelles = Individuelle::where('regions_id', $idlocalite)->where('modules_id', $idmodule)->get();
 
@@ -90,7 +88,7 @@ class ModuleController extends Controller
     public function modulelocalitestatut($idlocalite, $idmodule, $statut)
     {
         $localite = Region::findOrFail($idlocalite);
-        $module = Module::findOrFail($idmodule);
+        $module   = Module::findOrFail($idmodule);
 
         $individuelles = Individuelle::where('regions_id', $idlocalite)
             ->where('modules_id', $idmodule)
@@ -111,12 +109,11 @@ class ModuleController extends Controller
     public function modulestatutlocalite($idlocalite, $idmodule, $statut)
     {
         $localite = Region::findOrFail($idlocalite);
-        $module = Module::findOrFail($idmodule);
+        $module   = Module::findOrFail($idmodule);
 
         $individuelles = Individuelle::where('regions_id', $idlocalite)
             ->where('modules_id', $idmodule)
             ->where('statut', $statut)->get();
-
 
         return view("modules.modulestatutlocalite", compact("module", "localite", "individuelles", "statut"));
     }
@@ -124,13 +121,13 @@ class ModuleController extends Controller
     public function addModule(Request $request)
     {
         $this->validate($request, [
-            "name"             => ["required", "string", Rule::unique(Module::class)],
-            "domaine"          => ["nullable", "string"],
+            "name"    => ["required", "string", Rule::unique(Module::class)],
+            "domaine" => ["nullable", "string"],
         ]);
 
         $module = Module::create([
-            'name'            => $request->input('name'),
-            'domaines_id'     => $request->input('domaine'),
+            'name'        => $request->input('name'),
+            'domaines_id' => $request->input('domaine'),
         ]);
 
         $module->save();
@@ -142,7 +139,7 @@ class ModuleController extends Controller
 
     public function destroy($id)
     {
-        $module   = Module::find($id);
+        $module = Module::find($id);
 
         $module->delete();
 
@@ -152,7 +149,7 @@ class ModuleController extends Controller
     }
     public function rapports(Request $request)
     {
-        $title = 'rapports opérateurs';
+        $title   = 'rapports opérateurs';
         $regions = Region::orderBy("created_at", "desc")->get();
         return view('modules.rapports', compact(
             'title',
@@ -172,11 +169,10 @@ class ModuleController extends Controller
         $individuelles = Individuelle::join('modules', 'individuelles.modules_id', 'modules.id')
             ->select('individuelles.*')
             ->where('statut', 'LIKE', "%{$request->statut}%")
-            ->where('regions_id',  "{$request->region}")
+            ->where('regions_id', "{$request->region}")
             ->where('modules.name', 'LIKE', "%{$request->module}%")
             ->distinct()
             ->get();
-
 
         $count = $individuelles->count();
 
@@ -220,7 +216,7 @@ class ModuleController extends Controller
             'title',
             'regions',
         ));
-    }/* 
+    } /*
     public function reports(Request $request)
     {
         $title = 'rapports opérateurs';
@@ -269,7 +265,6 @@ class ModuleController extends Controller
             ->distinct()
             ->get();
 
-
         $count = $individuelles->count();
 
         if (isset($count) && $count <= "1") {
@@ -313,4 +308,5 @@ class ModuleController extends Controller
             'regions',
         ));
     } */
+
 }

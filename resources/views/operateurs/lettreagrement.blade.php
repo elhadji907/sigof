@@ -188,13 +188,25 @@
                             <b>{{ __('TITRE OU NIVEAU DE QUALIFICATION CORRESPONDANT ') }}</b>
                         </td>
                     </tr>
-                    @foreach ($operateur?->operateurmodules?->where('statut', 'agréer') as $operateurmodule)
+                    {{-- @foreach ($operateur?->operateurmodules?->where('statut', 'agréer') as $operateurmodule)
                         <tr class="item" style="text-align: center;">
                             <td colspan="2">{{ $operateurmodule?->domaine }}</td>
                             <td colspan="2">{{ $operateurmodule?->module }}</td>
                             <td colspan="5">{{ $operateurmodule?->categorie }}</td>
                         </tr>
+                    @endforeach --}}
+                    <?php
+                    $operateurmodules = $operateur?->operateurmodules?->where('statut', 'agréer') ?? collect();
+                    ?>
+
+                    @foreach ($operateurmodules as $operateurmodule)
+                        <tr class="item" style="text-align: center;">
+                            <td colspan="2">{{ $operateurmodule->domaine ?? 'Domaine non défini' }}</td>
+                            <td colspan="2">{{ $operateurmodule->module ?? 'Module non défini' }}</td>
+                            <td colspan="5">{{ $operateurmodule->categorie ?? 'Catégorie non définie' }}</td>
+                        </tr>
                     @endforeach
+
                 </tbody>
             </table>
             Le présent agrément est valable deux (2) ans renouvelables une fois. Durant cette période, l'opérateur
@@ -258,13 +270,13 @@
             </thead>
         </table>
     </div> --}}
-    
-    <footer>
-        <div class="page-number" id="footer">
-            <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/pied.png'))) }}"
-                style="display: block; width: 100%;" />
-        </div>
-    </footer>
+
+        <footer>
+            <div class="page-number" id="footer">
+                <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/pied.png'))) }}"
+                    style="display: block; width: 100%;" />
+            </div>
+        </footer>
     </body>
 
     {{-- <div style="page-break-after: always;"></div> --}}

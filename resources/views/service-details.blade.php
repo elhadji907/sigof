@@ -63,8 +63,8 @@
                                     <i class="bi bi-arrow-right-circle"></i><span>Soumettre demande agrément
                                         opérateur</span>
                                 </a>
-
-                                <a href="#"><i class="bi bi-filetype-pdf"></i><span>Nos modules (PDF)</span></a>
+                                <a href="{{ route('nos-modules') }}" target="_blank"><i class="bi bi-filetype-pdf"></i><span>Nos modules
+                                        (PDF)</span></a>
                             </div>
                         </div>
 

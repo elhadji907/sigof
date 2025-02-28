@@ -1,11 +1,12 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\Antenne;
 use App\Models\Contact;
+use App\Models\Module;
+use Dompdf\Dompdf;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
-use App\Models\Antenne;
 
 class ContactController extends Controller
 {
@@ -29,18 +30,18 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate([
-            'emailadresse'  =>  ['required', 'email'],
-            'telephone'     =>  ['required', 'string', 'max:9', 'min:9'],
-            'objet'         =>  ['required', 'string'],
-            'message'       =>  ['required', 'string'],
+            'emailadresse' => ['required', 'email'],
+            'telephone'    => ['required', 'string', 'max:9', 'min:9'],
+            'objet'        => ['required', 'string'],
+            'message'      => ['required', 'string'],
 
         ]);
 
         $contact = new Contact([
-            'email'         => $data['emailadresse'],
-            'telephone'     => $data['telephone'],
-            'objet'         => $data['objet'],
-            'message'       => $data['message'],
+            'email'     => $data['emailadresse'],
+            'telephone' => $data['telephone'],
+            'objet'     => $data['objet'],
+            'message'   => $data['message'],
         ]);
 
         $contact->save();
@@ -53,26 +54,25 @@ class ContactController extends Controller
         return redirect()->back();
     }
 
-
     public function update(Request $request, $id)
     {
         $data = request()->validate([
-            'telephone'     =>  ['required', 'string', 'max:9', 'min:9'],
-            'objet'         =>  ['required', 'string'],
-            'message'       =>  ['required', 'string'],
-            'reponse'       =>  ['nullable', 'string'],
-            'statut'        =>  ['nullable', 'string'],
+            'telephone' => ['required', 'string', 'max:9', 'min:9'],
+            'objet'     => ['required', 'string'],
+            'message'   => ['required', 'string'],
+            'reponse'   => ['nullable', 'string'],
+            'statut'    => ['nullable', 'string'],
 
         ]);
 
         $contact = Contact::findOrFail($id);
 
         $contact->update([
-            'telephone'     => $data['telephone'],
-            'objet'         => $data['objet'],
-            'message'       => $data['message'],
-            'reponse'       => $data['reponse'],
-            'statut'        => $data['statut'],
+            'telephone' => $data['telephone'],
+            'objet'     => $data['objet'],
+            'message'   => $data['message'],
+            'reponse'   => $data['reponse'],
+            'statut'    => $data['statut'],
         ]);
 
         $contact->save();
@@ -82,11 +82,10 @@ class ContactController extends Controller
         return redirect()->back();
     }
 
-
     public function destroy($id)
     {
 
-        $Contact   = Contact::find($id);
+        $Contact = Contact::find($id);
 
         $Contact->delete();
 
@@ -99,9 +98,9 @@ class ContactController extends Controller
     {
 
         $une = Contact::findOrFail(request('alaune'));
-        
+
         $une->update([
-            'statut' => 'Evidence'
+            'statut' => 'Evidence',
         ]);
 
         $une->save();
@@ -111,12 +110,51 @@ class ContactController extends Controller
         return redirect()->back();
     }
 
-
-    public function servicesDetails() 
+    public function servicesDetails()
     {
-        
+
         $antennes = Antenne::get();
 
         return view('service-details', compact('antennes'));
+    }
+
+    public function nosModules(Request $request)
+    {
+        $modules = Module::join('domaines', 'domaines.id', '=', 'modules.domaines_id')
+            ->join('secteurs', 'secteurs.id', '=', 'domaines.secteurs_id')                          // Ajout de la jointure entre domaines et secteurs
+            ->select('modules.*', 'domaines.name as domaine_name', 'secteurs.name as secteur_name') // Sélectionner les champs nécessaires
+            ->whereNotNull('modules.domaines_id')                                                   // Vérifie que l'ID du domaine n'est pas nul
+            ->whereNotNull('domaines.secteurs_id')                                                  // Vérifie que l'ID du secteur n'est pas nul
+            ->get();
+
+        $title = 'Nos modules de formation';
+
+        $dompdf  = new Dompdf();
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('Courier');
+        $dompdf->setOptions($options);
+
+        $dompdf->loadHtml(view('nos-modules', compact(
+            'modules',
+            'title'
+        )));
+
+        // (Optional) Setup the paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        $anne = date('d');
+        $anne = $anne . ' ' . date('m');
+        $anne = $anne . ' ' . date('Y');
+        $anne = $anne . ' à ' . date('H') . 'h';
+        $anne = $anne . ' ' . date('i') . 'min';
+        $anne = $anne . ' ' . date('s') . 's';
+
+        $name = ' Nos modules de formation - ' . $anne . '.pdf';
+
+        // Output the generated PDF to Browser
+        $dompdf->stream($name, ['Attachment' => false]);
     }
 }

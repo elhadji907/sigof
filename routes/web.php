@@ -541,6 +541,7 @@ Route::group(['middleware' => ['XSS']], function () {
     });
     Route::resource('/contacts', ContactController::class);
     Route::get('/services-details', [ContactController::class, 'servicesDetails'])->name('services.details');
+    Route::get('nos-modules', [ContactController::class, 'nosModules'])->name('nos-modules');
 });
 
 require __DIR__ . '/auth.php';
