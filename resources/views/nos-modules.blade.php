@@ -10,12 +10,19 @@
     <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
     <style>
         @page {
-            margin: 0cm 0cm;
+            /* margin: 0cm 0cm; */
+            margin-top: 0.5cm;
+            margin-bottom: 0cm;
         }
 
         .invoice-box {
             max-width: 1000px;
-            margin: auto;
+            margin-bottom: 50px;
+            /* Laisse de l'espace pour le footer */
+            margin-left: 50px;
+            /* Laisse de l'espace pour le footer */
+            margin-right: 50px;
+            /* Laisse de l'espace pour le footer */
             /* padding: 30px; */
             font-size: 12px;
             line-height: 18px;
@@ -68,18 +75,37 @@
             border: 1px solid;
         }
 
-        footer {
+        /* footer {
             position: fixed;
             bottom: 0cm;
             left: 0cm;
             right: 0cm;
             height: 2cm;
 
-            /** Extra personal styles **/
             background-color: #ffffff;
             color: rgb(0, 0, 0);
             text-align: center;
             line-height: 1.5cm;
+        } */
+
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #ffffff;
+            color: black;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 12px;
+            border-top: none;
+        }
+
+        .footer-separator {
+            width: 90%;
+            margin: 0 auto 0px;
+            border: 0;
+            border-top: 2px solid #000000;
+            opacity: 0.7;
         }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -129,13 +155,16 @@
         </table>
 
     </div>
-    <footer>
-        <div class="page-number" id="footer">
-            {{--  <img src="data:image/png;base64,{{ base64_encode(file_get_contents(public_path('assets/img/pied.png'))) }}"
-                style="display: block; width: 100%;" /> --}}
 
-            {{-- Cité SIPRES 1, lot 2, 2 voies Liberté 6 extension VDN /Tél : (+221) 33 827 92 51 / Fax : 33 827 92 55 BP:
-            21013 Dakar-Ponty - Site web: onfp.sn / Email: onfp@onfp.sn --}}
+    <footer class="footer">
+        <hr class="footer-separator">
+        <div class="container text-center">
+            <p>
+                Cité SIPRES 1, lot 2, 2 voies Liberté 6 extension VDN |
+                Tél : (+221) 33 827 92 51 | Fax : 33 827 92 55 |
+                BP: 21013 Dakar-Ponty | Site web: <a href="https://onfp.sn">onfp.sn</a> |
+                Email: <a href="mailto:onfp@onfp.sn">onfp@onfp.sn</a>
+            </p>
         </div>
     </footer>
 </body>

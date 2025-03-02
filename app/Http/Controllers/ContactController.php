@@ -5,6 +5,7 @@ use App\Models\Antenne;
 use App\Models\Contact;
 use App\Models\Module;
 use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -126,28 +127,49 @@ class ContactController extends Controller
             ->whereNotNull('modules.domaines_id')                                                   // Vérifie que l'ID du domaine n'est pas nul
             ->whereNotNull('domaines.secteurs_id')                                                  // Vérifie que l'ID du secteur n'est pas nul
             ->get();
-            
+
         $modules = $modules->sortBy(function ($module) {
             return $module->domaine->name; // Trie par le nom du domaine
         });
 
         $title = 'Nos modules de formation';
 
-        $dompdf  = new Dompdf();
-        $options = $dompdf->getOptions();
-        $options->setDefaultFont('Courier');
-        $dompdf->setOptions($options);
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isPhpEnabled', true);
 
-        $dompdf->loadHtml(view('nos-modules', compact(
-            'modules',
-            'title'
-        )));
-
-        // (Optional) Setup the paper size and orientation
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml(view('nos-modules', compact('modules', 'title'))->render());
         $dompdf->setPaper('A4', 'landscape');
 
-        // Render the HTML as PDF
         $dompdf->render();
+
+        $canvas = $dompdf->getCanvas();
+        $canvas->page_script(function ($pageNumber, $pageCount, $canvas, $fontMetrics) {
+            $text = "Page $pageNumber sur $pageCount";
+
+            // Obtenir les dimensions de la page (en pixels)
+            $canvasWidth  = $canvas->get_width();
+            $canvasHeight = $canvas->get_height();
+
+            /*  // Positionnement horizontal : centré
+            $textWidth = $fontMetrics->getTextWidth($text, "Arial", 10);  // Calculer la largeur du texte
+            $x = ($canvasWidth - $textWidth) / 2;  // Centrer le texte horizontalement */
+
+                                                                         // Positionnement horizontal : complètement à droite
+            $textWidth = $fontMetrics->getTextWidth($text, "Arial", 10); // Calculer la largeur du texte
+            $x         = $canvasWidth - $textWidth - 10;                 // Positionner à 10 pixels du bord droit
+
+                                                                // Positionnement vertical : juste en dessous du footer
+            $footerHeight = 30;                                 // Hauteur estimée du footer (ajuster si nécessaire)
+            $y            = $canvasHeight - $footerHeight + 10; // 10 pixels en dessous du footer
+
+            // Choisir la police et la taille de texte
+            $font = $fontMetrics->get_font("Arial", "normal");
+
+            // Ajouter le texte de la pagination
+            $canvas->text($x, $y, $text, $font, 10);
+        });
 
         $anne = date('d');
         $anne = $anne . ' ' . date('m');
@@ -158,7 +180,6 @@ class ContactController extends Controller
 
         $name = ' Nos modules de formation - ' . $anne . '.pdf';
 
-        // Output the generated PDF to Browser
         $dompdf->stream($name, ['Attachment' => false]);
     }
 }
