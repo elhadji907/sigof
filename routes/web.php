@@ -250,7 +250,8 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('collectiveformations/{idformation}/{idlocalite}', [FormationController::class, 'addcollectiveformations']);
         Route::put('collectiveformations/{idformation}/{idlocalite}', [FormationController::class, 'givecollectiveformations']);
 
-        Route::put('indisponibles/{idformation}', [FormationController::class, 'giveindisponibles']);
+        Route::put('indisponibles/{idformation}', [FormationController::class, 'giveindisponibles'])->name('giveindisponibles');
+        Route::put('disponibles/{id}', [FormationController::class, 'givedisponibles'])->name('givedisponibles');
         Route::put('collectiveindisponibles/{idformation}', [FormationController::class, 'givecollectiveindisponibles']);
 
         Route::put('remiseAttestations/{idformation}', [FormationController::class, 'giveremiseAttestations']);

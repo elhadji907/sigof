@@ -558,8 +558,17 @@
                                                                     <td class="text-center">
                                                                         {{ $individuelle?->note_obtenue ?? ' ' }}</td>
                                                                 @else
-                                                                    <td class="text-center"><span
+                                                                    <td class="text-center">
+                                                                        <span
                                                                             class="{{ $individuelle?->confirmation }}">{{ $individuelle?->confirmation ?? ' ' }}</span>
+                                                                        @if (!empty($individuelle?->motif_declinaison))
+                                                                            <!-- Bouton qui ouvre le modal -->
+                                                                            <button class="btn btn-sm mx-1"
+                                                                                data-bs-toggle="modal"
+                                                                                data-bs-target="#declinaisonModal{{ $individuelle->id }}">
+                                                                                <i class="bi bi-plus"></i> Voir
+                                                                            </button>
+                                                                        @endif
                                                                     </td>
                                                                 @endif
                                                                 {{-- Masquer le suivi si la formation n'est pas encore Terminée --}}
@@ -1240,7 +1249,7 @@
             <div class="modal fade" id="indiponibleModal{{ $individuelle->id }}" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form method="post" action="{{ url('indisponibles', ['$idformation' => $formation->id]) }}"
+                        <form method="post" action="{{ route('giveindisponibles', $formation->id) }}"
                             enctype="multipart/form-data" class="row">
                             @csrf
                             @method('PUT')
@@ -1250,6 +1259,16 @@
                                 </h1>
                             </div>
                             <div class="modal-body">
+                                <div class="row g-3">
+                                    @if (!empty($individuelle?->motif_rejet))
+                                        <div class="col-12">
+                                            <span class="form-label">Motif: </span>
+                                            <p class="small fst-italic" style="white-space: pre-line;">
+                                                {{ str_replace(';', ";\n", $individuelle?->motif_rejet) }}
+                                            </p>
+                                        </div>
+                                    @endif
+                                </div>
                                 <div class="row g-3">
                                     <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                         <input type="hidden" name="individuelleid" value="{{ $individuelle->id }}">
@@ -2122,6 +2141,26 @@
                 </div>
             </div>
         @endforeach
+
+        <!-- Modal -->
+        <div class="modal fade" id="declinaisonModal{{ $individuelle->id }}" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Détails</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Affichage du motif de rejet avec retour à la ligne -->
+                        <p style="white-space: pre-line;">
+                            {{ str_replace(';', ";\n", $individuelle?->motif_declinaison) }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 @endsection
 {{-- @push('scripts')

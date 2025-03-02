@@ -103,7 +103,13 @@
                                         @foreach ($formation->individuelles as $individuelle)
                                             <div class="col-lg-9 col-md-8">
                                                 <span
-                                                    class="{{ $individuelle?->confirmation }}">{{ $individuelle?->confirmation }}</span>
+                                                    class="{{ $individuelle?->confirmation }}">{{ $individuelle?->confirmation }}
+                                                </span>
+                                                <span>
+                                                    @if (!empty($individuelle?->motif_declinaison))
+                                                        {{ ', pour raison de : ' . $individuelle?->motif_declinaison }}
+                                                    @endif
+                                                </span>
                                             </div>
                                         @endforeach
                                     </div>
@@ -215,11 +221,6 @@
                                     </div>
                                 @endforeach
                             </div>
-
-
-
-
-
 
                         </div><!-- End Bordered Tabs -->
 
