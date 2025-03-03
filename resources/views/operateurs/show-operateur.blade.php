@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'Mon dossier de demandes agréments')
+@section('title', remove_accents_uppercase('DOSSIER | AGREMENT'))
 @section('space-work')
     <section class="section">
         <div class="row justify-content-center">
