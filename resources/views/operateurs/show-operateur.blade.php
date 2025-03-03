@@ -38,10 +38,15 @@
                             </button>
                             @can('devenir-operateur-agrement-ouvert')
                                 @can('devenir-operateur-agrement-create')
-                                    <button type="button" class="btn btn-warning btn-sm float-end btn-rounded"
-                                        data-bs-toggle="modal" data-bs-target="#AddoperateurModal">
-                                        renouveler agrément
-                                    </button>
+                                    @can('agrement-ouvert')
+                                        <button type="button" class="btn btn-warning btn-sm float-end btn-rounded"
+                                            data-bs-toggle="modal" data-bs-target="#AddoperateurModal">
+                                            renouveler agrément
+                                        </button>
+                                    @elsecan('agrement-fermer')
+                                        <span class="text-danger small fw-bold">Les agréments sont actuellement
+                                            <span class="text-uppercase">fermés</span></span>
+                                    @endcan
                                 @endcan
                             @endcan
                         </div>
@@ -91,8 +96,10 @@
                                                     {{ count($operateur->operateurmodules) }}
                                                 </span>
                                                 @can('devenir-operateur-agrement-ouvert')
-                                                    <a href="{{ route('operateurs.show', $operateur->id) }}" target="_blank">
-                                                        <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
+                                                    @can('agrement-ouvert')
+                                                        <a href="{{ route('operateurs.show', $operateur->id) }}" target="_blank">
+                                                            <i class="bi bi-plus" title="Voir"></i> </a>
+                                                    @endcan
                                                 @endcan
                                             </td>
                                             <td style="text-align: center;">
@@ -105,9 +112,11 @@
                                                 </span>
 
                                                 @can('devenir-operateur-agrement-ouvert')
-                                                    <a href="{{ route('showReference', ['id' => $operateur->id]) }}"
-                                                        target="_blank">
-                                                        <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
+                                                    @can('agrement-ouvert')
+                                                        <a href="{{ route('showReference', ['id' => $operateur->id]) }}"
+                                                            target="_blank">
+                                                            <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
+                                                    @endcan
                                                 @endcan
                                             </td>
                                             <td style="text-align: center;">
@@ -121,9 +130,11 @@
                                                 </span>
 
                                                 @can('devenir-operateur-agrement-ouvert')
-                                                    <a href="{{ route('showEquipement', ['id' => $operateur->id]) }}"
-                                                        target="_blank">
-                                                        <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
+                                                    @can('agrement-ouvert')
+                                                        <a href="{{ route('showEquipement', ['id' => $operateur->id]) }}"
+                                                            target="_blank">
+                                                            <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
+                                                    @endcan
                                                 @endcan
                                             </td>
                                             <td style="text-align: center;">
@@ -134,9 +145,11 @@
                                                     {{ count($operateur->operateurformateurs) }}
                                                 </span>
                                                 @can('devenir-operateur-agrement-ouvert')
-                                                    <a href="{{ route('showFormateur', ['id' => $operateur->id]) }}"
-                                                        target="_blank">
-                                                        <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
+                                                    @can('agrement-ouvert')
+                                                        <a href="{{ route('showFormateur', ['id' => $operateur->id]) }}"
+                                                            target="_blank">
+                                                            <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
+                                                    @endcan
                                                 @endcan
                                             </td>
                                             {{-- <td style="text-align: center;">
@@ -167,12 +180,7 @@
                                                 @endforeach
                                                 @foreach ($operateur?->operateurlocalites as $operateurlocalite)
                                                 @endforeach
-                                                @if (
-                                                    !empty($operateurmodule) &&
-                                                        !empty($operateureference) &&
-                                                        !empty($operateurequipement) &&
-                                                        !empty($operateurformateur) &&
-                                                        !empty($operateurlocalite))
+                                                @if (!empty($operateurmodule) && !empty($operateureference) && !empty($operateurequipement) && !empty($operateurformateur) && !empty($operateurlocalite))
                                                     <span class="badge bg-success text-white">Complètes</span>
                                                 @else
                                                     <span class="badge bg-warning text-white">Incomplètes</span>
@@ -197,41 +205,43 @@
                                                                 href="{{ route('operateurs.show', $operateur->id) }}"
                                                                 class="btn btn-success btn-sm" target="_blank"
                                                                 title="voir détails"><i class="bi bi-eye"></i></a>
-                                                            <div class="filter">
-                                                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                        class="bi bi-three-dots"></i></a>
-                                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                    @can('devenir-operateur-agrement-update')
-                                                                        @can('update', $operateur)
-                                                                            <li>
-                                                                                <button type="button"
-                                                                                    class="dropdown-item btn btn-sm mx-1"
-                                                                                    data-bs-toggle="modal"
-                                                                                    data-bs-target="#EditOperateurModal{{ $operateur->id }}">
-                                                                                    <i class="bi bi-pencil" title="Modifier"></i>
-                                                                                    Modifier
-                                                                                </button>
-                                                                            </li>
+                                                            @can('agrement-ouvert')
+                                                                <div class="filter">
+                                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                            class="bi bi-three-dots"></i></a>
+                                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                        @can('devenir-operateur-agrement-update')
+                                                                            @can('update', $operateur)
+                                                                                <li>
+                                                                                    <button type="button"
+                                                                                        class="dropdown-item btn btn-sm mx-1"
+                                                                                        data-bs-toggle="modal"
+                                                                                        data-bs-target="#EditOperateurModal{{ $operateur->id }}">
+                                                                                        <i class="bi bi-pencil" title="Modifier"></i>
+                                                                                        Modifier
+                                                                                    </button>
+                                                                                </li>
+                                                                            @endcan
                                                                         @endcan
-                                                                    @endcan
-                                                                    @can('devenir-operateur-agrement-delete')
-                                                                        @can('delete', $operateur)
-                                                                            <li>
-                                                                                <form
-                                                                                    action="{{ route('operateurs.destroy', $operateur->id) }}"
-                                                                                    method="post">
-                                                                                    @csrf
-                                                                                    @method('DELETE')
-                                                                                    <button type="submit"
-                                                                                        class="dropdown-item show_confirm"
-                                                                                        title="Supprimer"><i
-                                                                                            class="bi bi-trash"></i>Supprimer</button>
-                                                                                </form>
-                                                                            </li>
+                                                                        @can('devenir-operateur-agrement-delete')
+                                                                            @can('delete', $operateur)
+                                                                                <li>
+                                                                                    <form
+                                                                                        action="{{ route('operateurs.destroy', $operateur->id) }}"
+                                                                                        method="post">
+                                                                                        @csrf
+                                                                                        @method('DELETE')
+                                                                                        <button type="submit"
+                                                                                            class="dropdown-item show_confirm"
+                                                                                            title="Supprimer"><i
+                                                                                                class="bi bi-trash"></i>Supprimer</button>
+                                                                                    </form>
+                                                                                </li>
+                                                                            @endcan
                                                                         @endcan
-                                                                    @endcan
-                                                                </ul>
-                                                            </div>
+                                                                    </ul>
+                                                                </div>
+                                                            @endcan
                                                         </span>
                                                     @endcan
                                                 @endcan
@@ -335,7 +345,8 @@
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="quitus" class="form-label">Quitus fiscal<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="file" name="quitus" id="quitus" accept=".jpg, .jpeg, .png, .svg, .gif"
+                                        <input type="file" name="quitus" id="quitus"
+                                            accept=".jpg, .jpeg, .png, .svg, .gif"
                                             class="form-control @error('quitus') is-invalid @enderror btn btn-outline-primary btn-sm">
                                         @error('quitus')
                                             <span class="text-danger">{{ $message }}</span>
@@ -450,7 +461,7 @@
                                         @enderror
                                     </div> --}}
 
-                                   {{--  <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
+                                    {{--  <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="bp" class="form-label">Boite postal</label>
                                         <input type="text" name="bp"
                                             value="{{ $operateur?->user?->bp ?? old('bp') }}"
@@ -537,7 +548,7 @@
                                         @enderror
                                     </div> --}}
 
-                                 {{--    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
+                                    {{--    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="autre_statut" class="form-label">Si autre ?
                                             précisez</label>
                                         <input type="text" name="autre_statut"
@@ -651,7 +662,8 @@
                                         <label for="quitus" class="form-label">Quitus fiscal<span
                                                 class="text-danger mx-1">*</span></label>
 
-                                        <input type="file" name="quitus" id="quitus" accept=".jpg, .jpeg, .png, .svg, .gif"
+                                        <input type="file" name="quitus" id="quitus"
+                                            accept=".jpg, .jpeg, .png, .svg, .gif"
                                             class="form-control @error('quitus') is-invalid @enderror btn btn-outline-primary btn-sm">
                                         @error('quitus')
                                             <span class="text-danger">{{ $message }}</span>

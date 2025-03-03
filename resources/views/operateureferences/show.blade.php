@@ -40,12 +40,14 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="card-title">EXPERIENCES ET REFERENCES PROFESSIONNELLES</h5>
                             @can('devenir-operateur-agrement-ouvert')
-                                <h5 class="card-title">
-                                    <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#AddRefModal">
-                                        <i class="bi bi-plus" title="Ajouter une référence"></i>
-                                    </button>
-                                </h5>
+                                @can('agrement-visible-par-op')
+                                    <h5 class="card-title">
+                                        <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#AddRefModal">
+                                            <i class="bi bi-plus" title="Ajouter une référence"></i>
+                                        </button>
+                                    </h5>
+                                @endcan
                             @endcan
                         </div>
                         <!-- Table with stripped rows -->
@@ -245,57 +247,60 @@
                             </div>
                             <input type="hidden" name="operateur" value="{{ $operateur->id }}">
                             <div class="modal-body">
-                                
 
-                            <div class="col-12 col-md-12 col-lg-12 mb-2">
-                                <label for="organisme" class="form-label">Dénomination de l'organisme<span
-                                        class="text-danger mx-1">*</span></label>
-                                <input type="text" name="organisme" value="{{ $operateureference->organisme ?? old('organisme') }}"
-                                    class="form-control form-control-sm @error('organisme') is-invalid @enderror"
-                                    placeholder="Dénomination de l'organisme">
-                                @error('organisme')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="col-12 col-md-12 col-lg-12 mb-2">
-                                <label for="periode" class="form-label">Période<span
-                                        class="text-danger mx-1">*</span></label>
-                                <input type="text" name="periode" value="{{ $operateureference->periode ?? old('periode') }}"
-                                    class="form-control form-control-sm @error('periode') is-invalid @enderror"
-                                    placeholder="Période">
-                                @error('periode')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                            </div>
 
-                            <div class="col-12 col-md-12 col-lg-12 mb-2">
-                                <label for="contact" class="form-label">Contact</label>
-                                <input type="number" min="0" name="contact" value="{{ $operateureference->contact ?? old('contact') }}"
-                                    class="form-control form-control-sm @error('contact') is-invalid @enderror"
-                                    placeholder="Contact">
-                                @error('contact')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                            </div>
+                                <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                    <label for="organisme" class="form-label">Dénomination de l'organisme<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="organisme"
+                                        value="{{ $operateureference->organisme ?? old('organisme') }}"
+                                        class="form-control form-control-sm @error('organisme') is-invalid @enderror"
+                                        placeholder="Dénomination de l'organisme">
+                                    @error('organisme')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                    <label for="periode" class="form-label">Période<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" name="periode"
+                                        value="{{ $operateureference->periode ?? old('periode') }}"
+                                        class="form-control form-control-sm @error('periode') is-invalid @enderror"
+                                        placeholder="Période">
+                                    @error('periode')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
 
-                            <div class="col-12 col-md-12 col-lg-12 mb-2">
-                                <label for="contact" class="form-label">Description</label>
-                                <textarea name="description" id="description" cols="30" rows="5"
-                                    class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                    placeholder="Description de l'activité">{{ $operateureference->description ?? old('description') }}</textarea>
+                                <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                    <label for="contact" class="form-label">Contact</label>
+                                    <input type="number" min="0" name="contact"
+                                        value="{{ $operateureference->contact ?? old('contact') }}"
+                                        class="form-control form-control-sm @error('contact') is-invalid @enderror"
+                                        placeholder="Contact">
+                                    @error('contact')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
 
-                                @error('description')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                            </div>
+                                <div class="col-12 col-md-12 col-lg-12 mb-2">
+                                    <label for="contact" class="form-label">Description</label>
+                                    <textarea name="description" id="description" cols="30" rows="5"
+                                        class="form-control form-control-sm @error('description') is-invalid @enderror"
+                                        placeholder="Description de l'activité">{{ $operateureference->description ?? old('description') }}</textarea>
+
+                                    @error('description')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
                                 {{-- <div class="form-floating mb-3">
                                     <input type="text" name="organisme"
                                         value="{{ $operateureference->organisme ?? old('organisme') }}"

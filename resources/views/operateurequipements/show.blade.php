@@ -40,12 +40,14 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="card-title">INFRASTRUCTURES / EQUIPEMENTS</h5>
                             @can('devenir-operateur-agrement-ouvert')
-                                <h5 class="card-title">
-                                    <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#AddRefModal">
-                                        <i class="bi bi-plus" title="Ajouter une référence"></i>
-                                    </button>
-                                </h5>
+                                @can('agrement-visible-par-op')
+                                    <h5 class="card-title">
+                                        <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#AddRefModal">
+                                            <i class="bi bi-plus" title="Ajouter une référence"></i>
+                                        </button>
+                                    </h5>
+                                @endcan
                             @endcan
                         </div>
                         <!-- Table with stripped rows -->
@@ -199,7 +201,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                data-bs-dismiss="modal">Fermer</button>
                             <button type="submit" class="btn btn-primary btn-sm">Ajouter</button>
                         </div>
                     </form>
@@ -298,7 +301,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                <button type="button" class="btn btn-secondary btn-sm"
+                                    data-bs-dismiss="modal">Fermer</button>
                                 <button type="submit" class="btn btn-primary btn-sm">Modifier</button>
                             </div>
                         </form>

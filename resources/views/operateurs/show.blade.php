@@ -263,20 +263,21 @@
                                         <form method="post" action="#" enctype="multipart/form-data" class="row g-3">
                                             @csrf
                                             @method('PUT')
-
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <h5 class="card-title">EXPERIENCES ET REFERENCES PROFESSIONNELLES</h5>
                                                 @can('devenir-operateur-agrement-ouvert')
-                                                    <h5 class="card-title">
-                                                        <a href="{{ route('showReference', ['id' => $operateur?->id]) }}"
-                                                            class="btn btn-outline-primary float-end btn-rounded btn-sm"
-                                                            target="_blank">
-                                                            <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
-                                                        {{-- <button type="button" class="btn btn-outline-primary btn-sm"
+                                                    @can('agrement-visible-par-op')
+                                                        <h5 class="card-title">
+                                                            <a href="{{ route('showReference', ['id' => $operateur?->id]) }}"
+                                                                class="btn btn-outline-primary float-end btn-rounded btn-sm"
+                                                                target="_blank">
+                                                                <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
+                                                            {{-- <button type="button" class="btn btn-outline-primary btn-sm"
                                                     data-bs-toggle="modal" data-bs-target="#AddRefModal">
                                                     <i class="bi bi-plus" title="Ajouter une référence"></i>
                                                 </button> --}}
-                                                    </h5>
+                                                        </h5>
+                                                    @endcan
                                                 @endcan
                                             </div>
 
@@ -339,16 +340,18 @@
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <h5 class="card-title">INFRASTRUCTURES / EQUIPEMENTS</h5>
                                                 @can('devenir-operateur-agrement-ouvert')
-                                                    <h5 class="card-title">
-                                                        <a href="{{ route('showEquipement', ['id' => $operateur?->id]) }}"
-                                                            class="btn btn-outline-primary float-end btn-rounded btn-sm"
-                                                            target="_blank">
-                                                            <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
-                                                        {{-- <button type="button" class="btn btn-outline-primary btn-sm"
+                                                    @can('agrement-visible-par-op')
+                                                        <h5 class="card-title">
+                                                            <a href="{{ route('showEquipement', ['id' => $operateur?->id]) }}"
+                                                                class="btn btn-outline-primary float-end btn-rounded btn-sm"
+                                                                target="_blank">
+                                                                <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
+                                                            {{-- <button type="button" class="btn btn-outline-primary btn-sm"
                                                     data-bs-toggle="modal" data-bs-target="#AddRefModal">
                                                     <i class="bi bi-plus" title="Ajouter une référence"></i>
                                                 </button> --}}
-                                                    </h5>
+                                                        </h5>
+                                                    @endcan
                                                 @endcan
                                             </div>
                                             <table
@@ -416,16 +419,18 @@
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <h5 class="card-title">FORMATEURS</h5>
                                                 @can('devenir-operateur-agrement-ouvert')
-                                                    <h5 class="card-title">
-                                                        <a href="{{ route('showFormateur', ['id' => $operateur?->id]) }}"
-                                                            class="btn btn-outline-primary float-end btn-rounded btn-sm"
-                                                            target="_blank">
-                                                            <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
-                                                        {{-- <button type="button" class="btn btn-outline-primary btn-sm"
+                                                    @can('agrement-visible-par-op')
+                                                        <h5 class="card-title">
+                                                            <a href="{{ route('showFormateur', ['id' => $operateur?->id]) }}"
+                                                                class="btn btn-outline-primary float-end btn-rounded btn-sm"
+                                                                target="_blank">
+                                                                <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
+                                                            {{-- <button type="button" class="btn btn-outline-primary btn-sm"
                                                     data-bs-toggle="modal" data-bs-target="#AddRefModal">
                                                     <i class="bi bi-plus" title="Ajouter une référence"></i>
                                                 </button> --}}
-                                                    </h5>
+                                                        </h5>
+                                                    @endcan
                                                 @endcan
                                             </div>
                                             <table
@@ -491,16 +496,14 @@
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <h5 class="card-title">LOCALITES</h5>
                                                 @can('devenir-operateur-agrement-ouvert')
-                                                    <h5 class="card-title">
-                                                        <a href="{{ route('showLocalite', ['id' => $operateur?->id]) }}"
-                                                            class="btn btn-outline-primary float-end btn-rounded btn-sm"
-                                                            target="_blank">
-                                                            <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
-                                                        {{-- <button type="button" class="btn btn-outline-primary btn-sm"
-                                                    data-bs-toggle="modal" data-bs-target="#AddRefModal">
-                                                    <i class="bi bi-plus" title="Ajouter une référence"></i>
-                                                </button> --}}
-                                                    </h5>
+                                                    @can('agrement-visible-par-op')
+                                                        <h5 class="card-title">
+                                                            <a href="{{ route('showLocalite', ['id' => $operateur?->id]) }}"
+                                                                class="btn btn-outline-primary float-end btn-rounded btn-sm"
+                                                                target="_blank">
+                                                                <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
+                                                        </h5>
+                                                    @endcan
                                                 @endcan
                                             </div>
                                             <table
@@ -530,81 +533,83 @@
                                 {{-- class show et active pour l'affichage par défaut --}}
                                 <div class="tab-content pt-2">
                                     <div class="tab-pane fade show active profile-overview pt-3" id="module-overview">
-                                        <form method="post" action="{{ url('operateurmodules') }}"
-                                            enctype="multipart/form-data" class="row g-3">
-                                            @csrf
-                                            @can('devenir-operateur-agrement-ouvert')
-                                                <div class="col-12 col-md-12 col-lg-12 mb-0">
-                                                    <table class="table table-bordered table-hover" id="dynamicAddRemove">
+                                        @can('agrement-visible-par-op')
+                                            <form method="post" action="{{ url('operateurmodules') }}"
+                                                enctype="multipart/form-data" class="row g-3">
+                                                @csrf
+                                                @can('devenir-operateur-agrement-ouvert')
+                                                    <div class="col-12 col-md-12 col-lg-12 mb-0">
+                                                        <table class="table table-bordered table-hover" id="dynamicAddRemove">
 
-                                                        <tr>
-                                                            <th>MODULE OU SPECIALITE<span class="text-danger mx-1">*</span></th>
-                                                            <th>NIVEAU QUALIFICATION<span class="text-danger mx-1">*</span>
-                                                            </th>
-                                                        </tr>
-                                                        <tr>
-                                                            <input type="hidden" name="operateur"
-                                                                value="{{ $operateur?->id }}">
-                                                            <td>
-                                                                <input type="text" name="module" id="module_operateur"
-                                                                    class="form-control form-control-sm @error('module') is-invalid @enderror"
-                                                                    placeholder="Module ou spécialité" />
-                                                                <div id="moduleList"></div>
-                                                                {{ csrf_field() }}
-                                                                <p class="small fst-italic">
-                                                                    <small>{{ __('Le nombre de modules est limité à deux') }}</small>
-                                                                    <small>
-                                                                        {{ __(' sauf pour les établissements publics ') }}</small>
-                                                                </p>
-                                                            </td>
-                                                            <td><input type="text" name="categorie"
-                                                                    placeholder="Niveau de qualification"
-                                                                    class="form-control form-control-sm @error('categorie') is-invalid @enderror" />
-                                                                <p class="small fst-italic">
-                                                                    <small>{{ __("Préciser le niveau de qualification,l'emploi ou le métier correspondant lorsqu'il s'agit d'une pré-qualification ou qualification") }}</small><br>
-                                                                </p>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>DOMAINE<span class="text-danger mx-1">*</span></th>
-                                                            <th>QUALIFICATION CORRESPONDANTE
-                                                                <span class="text-danger mx-1">*</span>
-                                                            </th>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><input type="text" name="domaine"
-                                                                    placeholder="Domaine d'intervention"
-                                                                    class="form-control form-control-sm @error('domaine') is-invalid @enderror" />
-                                                            </td>
-                                                            <td>
-                                                                <select name="niveau_qualification"
-                                                                    class="form-select form-select-sm @error('niveau_qualification') is-invalid @enderror"
-                                                                    aria-label="Select" id="select-field-civilite"
-                                                                    data-placeholder="Choisir qualification">
-                                                                    <option value="">
-                                                                        {{ old('niveau_qualification') }}
-                                                                    </option>
-                                                                    <option value="Initiation">
-                                                                        Initiation
-                                                                    </option>
-                                                                    <option value="Pré-qualification">
-                                                                        Pré-qualification
-                                                                    </option>
-                                                                    <option value="Qualification">
-                                                                        Qualification
-                                                                    </option>
-                                                                </select>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                    <div class="text-center">
-                                                        <button type="submit" class="btn btn-outline-success btn-sm"><i
-                                                                class="bi bi-printer"></i> Enregistrer</button>
+                                                            <tr>
+                                                                <th>MODULE OU SPECIALITE<span class="text-danger mx-1">*</span></th>
+                                                                <th>NIVEAU QUALIFICATION<span class="text-danger mx-1">*</span>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <input type="hidden" name="operateur"
+                                                                    value="{{ $operateur?->id }}">
+                                                                <td>
+                                                                    <input type="text" name="module" id="module_operateur"
+                                                                        class="form-control form-control-sm @error('module') is-invalid @enderror"
+                                                                        placeholder="Module ou spécialité" />
+                                                                    <div id="moduleList"></div>
+                                                                    {{ csrf_field() }}
+                                                                    <p class="small fst-italic">
+                                                                        <small>{{ __('Le nombre de modules est limité à deux') }}</small>
+                                                                        <small>
+                                                                            {{ __(' sauf pour les établissements publics ') }}</small>
+                                                                    </p>
+                                                                </td>
+                                                                <td><input type="text" name="categorie"
+                                                                        placeholder="Niveau de qualification"
+                                                                        class="form-control form-control-sm @error('categorie') is-invalid @enderror" />
+                                                                    <p class="small fst-italic">
+                                                                        <small>{{ __("Préciser le niveau de qualification,l'emploi ou le métier correspondant lorsqu'il s'agit d'une pré-qualification ou qualification") }}</small><br>
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th>DOMAINE<span class="text-danger mx-1">*</span></th>
+                                                                <th>QUALIFICATION CORRESPONDANTE
+                                                                    <span class="text-danger mx-1">*</span>
+                                                                </th>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><input type="text" name="domaine"
+                                                                        placeholder="Domaine d'intervention"
+                                                                        class="form-control form-control-sm @error('domaine') is-invalid @enderror" />
+                                                                </td>
+                                                                <td>
+                                                                    <select name="niveau_qualification"
+                                                                        class="form-select form-select-sm @error('niveau_qualification') is-invalid @enderror"
+                                                                        aria-label="Select" id="select-field-civilite"
+                                                                        data-placeholder="Choisir qualification">
+                                                                        <option value="">
+                                                                            {{ old('niveau_qualification') }}
+                                                                        </option>
+                                                                        <option value="Initiation">
+                                                                            Initiation
+                                                                        </option>
+                                                                        <option value="Pré-qualification">
+                                                                            Pré-qualification
+                                                                        </option>
+                                                                        <option value="Qualification">
+                                                                            Qualification
+                                                                        </option>
+                                                                    </select>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        <div class="text-center">
+                                                            <button type="submit" class="btn btn-outline-success btn-sm"><i
+                                                                    class="bi bi-printer"></i> Enregistrer</button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            @endcan
+                                                @endcan
 
-                                        </form><!-- End module -->
+                                            </form><!-- End module -->
+                                        @endcan
 
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
                                             <div class="d-flex justify-content-between align-items-center">
@@ -613,31 +618,32 @@
                                                     :&nbsp;
                                                     <span class="{{ $operateur?->statut_agrement }} text-white btn-sm">
                                                         {{ $operateur?->statut_agrement }}</span>
-
-                                                    <div class="filter">
-                                                        <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                class="bi bi-three-dots"></i></a>
-                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                            <li>
-                                                                <form action="{{ route('ficheSyntheseOperateur') }}"
-                                                                    method="post" target="_blank">
-                                                                    @csrf
-                                                                    <input type="hidden" name="id"
-                                                                        value="{{ $operateur?->id }}">
-                                                                    <button class="btn btn-sm mx-1">Fiche synthèse</button>
-                                                                </form>
-                                                            </li>
-                                                            <li>
-                                                                <form action="{{ route('lettreOperateur') }}" method="post"
-                                                                    target="_blank">
-                                                                    @csrf
-                                                                    <input type="hidden" name="id"
-                                                                        value="{{ $operateur?->id }}">
-                                                                    <button class="btn btn-sm mx-1">Lettre agrément</button>
-                                                                </form>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                                    @can('operateur-view')
+                                                        <div class="filter">
+                                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                    class="bi bi-three-dots"></i></a>
+                                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                <li>
+                                                                    <form action="{{ route('ficheSyntheseOperateur') }}"
+                                                                        method="post" target="_blank">
+                                                                        @csrf
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $operateur?->id }}">
+                                                                        <button class="btn btn-sm mx-1">Fiche synthèse</button>
+                                                                    </form>
+                                                                </li>
+                                                                <li>
+                                                                    <form action="{{ route('lettreOperateur') }}" method="post"
+                                                                        target="_blank">
+                                                                        @csrf
+                                                                        <input type="hidden" name="id"
+                                                                            value="{{ $operateur?->id }}">
+                                                                        <button class="btn btn-sm mx-1">Lettre agrément</button>
+                                                                    </form>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    @endcan
                                                     {{-- <div class="filter">
                                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
                                                             class="bi bi-three-dots"></i></a>
@@ -783,7 +789,9 @@
                                                     {{-- <th>Niveau qualification</th> --}}
                                                     <th>Effectif</th>
                                                     <th>Statut</th>
-                                                    <th class="text-center"><i class="bi bi-gear"></i></th>
+                                                    @can('formation-show')
+                                                        <th class="text-center"><i class="bi bi-gear"></i></th>
+                                                    @endcan
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -791,69 +799,73 @@
                                                 @foreach ($operateur?->formations as $formation)
                                                     <tr>
                                                         <td>{{ $formation?->code }}</td>
-                                                        <td><a href="#">{{ $formation->types_formation?->name }}</a>
-                                                        </td>
+                                                        <td>{{ $formation->types_formation?->name }}</td>
                                                         <td>{{ $formation?->name }}</td>
                                                         <td>{{ $formation->departement?->region?->nom }}</td>
-                                                        @isset($formation?->collectivemodule?->module)
+                                                        @if (!empty($formation?->collectivemodule?->module))
                                                             <td>{{ $formation->collectivemodule->module }}</td>
                                                             <td class="text-center">
-                                                                @foreach ($formation->listecollectives as $listecollective)
+                                                                {{-- @foreach ($formation->listecollectives as $listecollective)
                                                                     @if ($loop->last)
                                                                         <a class="text-primary fw-bold"
                                                                             href="{{ route('formations.show', $formation->id) }}">{!! $loop->count ?? '0' !!}</a>
                                                                     @endif
-                                                                @endforeach
+                                                                @endforeach --}}
+                                                                <span
+                                                                    class="text-primary fw-bold">{{ $formation?->listecollectives?->count() ?? 0 }}</span>
                                                             </td>
-                                                        @endisset
-                                                        @isset($formation?->module?->name)
+                                                        @elseif(!empty($formation?->module?->name))
                                                             <td>{{ $formation->module->name }}</td>
                                                             <td class="text-center">
-                                                                @foreach ($formation->individuelles as $individuelle)
+                                                                {{-- @foreach ($formation->individuelles as $individuelle)
                                                                     @if ($loop->last)
                                                                         <a class="text-primary fw-bold"
                                                                             href="{{ route('formations.show', $formation->id) }}">{!! $loop->count ?? '0' !!}</a>
                                                                     @endif
-                                                                @endforeach
+                                                                @endforeach --}}
+                                                                <span
+                                                                    class="text-primary fw-bold">{{ $formation?->individuelles?->count() ?? 0 }}</span>
                                                             </td>
-                                                        @endisset
+                                                        @endif
                                                         <td><a href="#">
                                                                 <span
                                                                     class="{{ $formation?->statut }}">{{ $formation?->statut }}</span>
                                                             </a>
                                                         </td>
-                                                        <td>
-                                                            <span class="d-flex align-items-baseline"><a
-                                                                    href="{{ route('formations.show', $formation->id) }}"
-                                                                    class="btn btn-primary btn-sm" title="voir détails"><i
-                                                                        class="bi bi-eye"></i></a>
-                                                                <div class="filter">
-                                                                    <a class="icon" href="#"
-                                                                        data-bs-toggle="dropdown"><i
-                                                                            class="bi bi-three-dots"></i></a>
-                                                                    <ul
-                                                                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                        <li><a class="dropdown-item btn btn-sm"
-                                                                                href="{{ route('formations.edit', $formation->id) }}"
-                                                                                class="mx-1" title="Modifier"><i
-                                                                                    class="bi bi-pencil"></i>Modifier</a>
-                                                                        </li>
-                                                                        <li>
-                                                                            <form
-                                                                                action="{{ route('formations.destroy', $formation->id) }}"
-                                                                                method="post">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <button type="submit"
-                                                                                    class="dropdown-item show_confirm"
-                                                                                    title="Supprimer"><i
-                                                                                        class="bi bi-trash"></i>Supprimer</button>
-                                                                            </form>
-                                                                        </li>
-                                                                    </ul>
-                                                                </div>
-                                                            </span>
-                                                        </td>
+                                                        @can('formation-show')
+                                                            <td>
+                                                                <span class="d-flex align-items-baseline"><a
+                                                                        href="{{ route('formations.show', $formation->id) }}"
+                                                                        class="btn btn-primary btn-sm" title="voir détails"><i
+                                                                            class="bi bi-eye"></i></a>
+                                                                    <div class="filter">
+                                                                        <a class="icon" href="#"
+                                                                            data-bs-toggle="dropdown"><i
+                                                                                class="bi bi-three-dots"></i></a>
+                                                                        <ul
+                                                                            class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                            <li><a class="dropdown-item btn btn-sm"
+                                                                                    href="{{ route('formations.edit', $formation->id) }}"
+                                                                                    class="mx-1" title="Modifier"><i
+                                                                                        class="bi bi-pencil"></i>Modifier</a>
+                                                                            </li>
+                                                                            <li>
+                                                                                <form
+                                                                                    action="{{ route('formations.destroy', $formation->id) }}"
+                                                                                    method="post">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button type="submit"
+                                                                                        class="dropdown-item show_confirm"
+                                                                                        title="Supprimer"><i
+                                                                                            class="bi bi-trash"></i>Supprimer</button>
+                                                                                </form>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </span>
+                                                            </td>
+                                                        @endcan
                                                     </tr>
                                                 @endforeach
 

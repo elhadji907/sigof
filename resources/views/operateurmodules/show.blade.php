@@ -57,8 +57,10 @@
                                         <tr>
                                             <td style="text-align: center;">{{ $operateurmodule?->operateur?->numero_agrement }}
                                             </td>
-                                            <td style="text-align: center;">{{ $operateurmodule?->operateur?->user?->operateur }}</td>
-                                            <td style="text-align: center;">{{ $operateurmodule?->operateur?->user?->username }}</td>
+                                            <td style="text-align: center;">
+                                                {{ $operateurmodule?->operateur?->user?->operateur }}</td>
+                                            <td style="text-align: center;">{{ $operateurmodule?->operateur?->user?->username }}
+                                            </td>
                                             <td style="text-align: center;">
                                                 @foreach ($operateurmodule?->operateur?->operateurmodules as $operateurmodule)
                                                     @if ($loop->last)
@@ -178,7 +180,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                <button type="button" class="btn btn-secondary btn-sm"
+                                    data-bs-dismiss="modal">Fermer</button>
                                 <button type="submit" class="btn btn-primary btn-sm">Modifier</button>
                             </div>
                         </form>

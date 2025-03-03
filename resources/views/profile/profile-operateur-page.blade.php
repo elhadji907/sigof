@@ -48,8 +48,8 @@
                                             class="bi bi-linkedin" title="compte linkedin"></i></a>
                                 @endif
                                 @if (!empty(Auth::user()?->web))
-                                    <a href="{{ Auth::user()?->web }}" class="web" target="_blank"><i
-                                            class="bi bi-globe" title="site web"></i></a>
+                                    <a href="{{ Auth::user()?->web }}" class="web" target="_blank"><i class="bi bi-globe"
+                                            title="site web"></i></a>
                                 @endif
                             </div>
                         </div>
@@ -72,18 +72,14 @@
                                                 <i class="bi bi-person-plus-fill"></i>
                                             </div>
                                             <div class="ps-3">
-                                                <h6>
-                                                    {{ count(Auth::user()?->operateurs) }}
-                                                    {{-- @foreach (Auth::user()?->operateurs as $operateur)
-                                                        @if (isset($operateur->sigle))
-                                                            @if ($loop->last)
-                                                                {!! $loop->count ?? '0' !!}
-                                                            @endif
-                                                        @else
-                                                            <span class="text-primary">0</span>
-                                                        @endif
-                                                    @endforeach --}}
-                                                </h6>
+                                                <h6>{{ Auth::user()?->operateurs()->count() ?? 0 }}</h6>
+                                                @can('agrement-ouvert')
+                                                    <span class="text-success small fw-bold">Les agréments sont actuellement
+                                                        <span class="text-uppercase">ouverts</span></span>
+                                                @elsecan('agrement-fermer')
+                                                    <span class="text-danger small fw-bold">Les agréments sont actuellement
+                                                        <span class="text-uppercase">fermés</span></span>
+                                                @endcan
                                             </div>
                                         </div>
                                     </div>
@@ -152,7 +148,8 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#files">Fichiers</button>
+                                    <button class="nav-link" data-bs-toggle="tab"
+                                        data-bs-target="#files">Fichiers</button>
                                 </li>
 
                             </ul>
