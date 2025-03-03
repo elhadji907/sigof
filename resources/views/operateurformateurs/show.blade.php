@@ -1,5 +1,6 @@
 @extends('layout.user-layout')
-@section('title', $operateur?->user?->username . ' - formateurs')
+@section('title', remove_accents_uppercase($operateur?->user?->username) . ' | ' .
+    remove_accents_uppercase('formateurs'))
 @section('space-work')
 
     <section class="section register">

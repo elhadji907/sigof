@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Liste module opérateurs')
+@section('title', remove_accents_uppercase('ONFP | Liste module opérateurs'))
 @section('space-work')
 
     <section class="section register">
