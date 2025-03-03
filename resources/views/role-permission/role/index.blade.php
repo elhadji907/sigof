@@ -33,7 +33,7 @@
                     <div class="card-body">
                         {{-- @can('role-create') --}}
                         <div class="pt-0">
-                            <a href="{{ route('roles.create') }}" class="btn btn-primary float-end btn-rounded"><i
+                            <a href="{{ route('roles.create') }}" class="btn btn-primary btn-sm float-end btn-rounded"><i
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a>
                         </div>

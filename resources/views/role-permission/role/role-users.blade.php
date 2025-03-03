@@ -17,7 +17,7 @@
                                     href="{{ route('roles.index') }}" class="btn btn-success btn-sm" title="retour"><i
                                         class="bi bi-arrow-counterclockwise mx-1"></i></a>
                                 | Liste des utilisateurs ayant le role : {{ $roleName }}</span>
-                            <span><a href="{{ route('users.create') }}" class="btn btn-primary float-end btn-rounded"><i
+                            <span><a href="{{ route('users.create') }}" class="btn btn-primary btn-sm float-end btn-rounded"><i
                                         class="fas fa-plus"></i>
                                     <i class="bi bi-person-plus" title="Ajouter"></i> </a></span>
                         </div>
