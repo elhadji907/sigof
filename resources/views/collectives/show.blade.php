@@ -228,13 +228,33 @@
                                             {{-- @endif --}}
                                             @foreach ($collective->collectivemodules as $collectivemodule)
                                             @endforeach
-                                            @isset($collectivemodule)
+                                            {{-- @if ($collectivemodule)
                                                 <button type="button"
                                                     class="btn btn-outline-primary btn-sm float-end btn-rounded"
                                                     data-bs-toggle="modal" data-bs-target="#AddIndividuelleModal">
                                                     <i class="bi bi-person-plus" title="Ajouter module"></i>
                                                 </button>
-                                            @endisset
+                                            @endif --}}
+                                            @if (!empty($ingenieur))
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <h5 class="card-title">
+                                                        {{ $ingenieur?->name }}
+                                                        @can('ingenieur-check')
+                                                            <a class="btn btn-info btn-sm" title=""
+                                                                href="{{ route('ingenieurs.show', $collective?->id) }}"><i
+                                                                    class="bi bi-eye"></i></a>&nbsp;
+                                                            <a href="{{ route('addcollectiveingenieurs', $collective?->id) }}"
+                                                                class="btn btn-primary float-end btn-sm">Changer ingénieur</a>
+                                                        @endcan
+                                                    </h5>
+                                                </div>
+                                            @else
+                                                <div class="pb-2">
+                                                    <a href="{{ route('addcollectiveingenieurs', $collective?->id) }}"
+                                                        class="btn btn-primary float-end btn-sm">imputer
+                                                        ingénieur</a>
+                                                </div>
+                                            @endif
                                         </div>
                                         <p>Liste des membres</p>
                                         @if (!empty($listecollective))
@@ -467,16 +487,16 @@
                                             </thead>
                                             <tbody>
                                                 <?php $i = 1; ?>
-                                                    <tr>
-                                                        <td>{{ $collectives->formation?->code }}</td>
-                                                        <td><a>{{ $collectives->formation?->types_formation?->name }}</a></td>
-                                                        <td>{{ $collectives->formation?->departement?->region?->nom }}</td>
-                                                        <td>{{ $collectives->formation?->collectivemodule?->module }}</td>
-                                                        <td class="text-center"></td>
-                                                        <td class="text-center"><a><span
-                                                                    class="{{ $collectives->formation?->statut }}">{{ $collectives->formation?->statut }}</span></a>
-                                                        </td>
-                                                    </tr>
+                                                <tr>
+                                                    <td>{{ $collectives->formation?->code }}</td>
+                                                    <td><a>{{ $collectives->formation?->types_formation?->name }}</a></td>
+                                                    <td>{{ $collectives->formation?->departement?->region?->nom }}</td>
+                                                    <td>{{ $collectives->formation?->collectivemodule?->module }}</td>
+                                                    <td class="text-center"></td>
+                                                    <td class="text-center"><a><span
+                                                                class="{{ $collectives->formation?->statut }}">{{ $collectives->formation?->statut }}</span></a>
+                                                    </td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     @else
@@ -930,9 +950,9 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div> --}}
-                        <div class="card-header text-center bg-gradient-default">
-                            <h1 class="h4 text-black mb-0">Rejeter module</h1>
-                        </div>
+                            <div class="card-header text-center bg-gradient-default">
+                                <h1 class="h4 text-black mb-0">Rejeter module</h1>
+                            </div>
                             <div class="modal-body">
                                 <input type="hidden" name="id" value="{{ $collectivemodule->id }}">
                                 <label for="motif" class="form-label">Motifs du rejet</label>

@@ -4,12 +4,12 @@ use App\Http\Controllers\AntenneController;
 use App\Http\Controllers\ArriveController;
 use App\Http\Controllers\ArrondissementController;
 use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\CollectiveController;
 use App\Http\Controllers\CollectivemoduleController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommissionagrementController;
+use App\Http\Controllers\CommissionmembreController;
 use App\Http\Controllers\CommuneController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ConventionController;
@@ -23,8 +23,12 @@ use App\Http\Controllers\DirectionController;
 use App\Http\Controllers\DomaineController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\EmailFormationController;
+use App\Http\Controllers\EmargementcollectiveController;
+use App\Http\Controllers\EmargementController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\EvaluateurController;
+use App\Http\Controllers\FeuillepresencecollectiveController;
+use App\Http\Controllers\FeuillepresenceController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\FonctionController;
 use App\Http\Controllers\FormationController;
@@ -55,15 +59,9 @@ use App\Http\Controllers\ProjetlocaliteController;
 use App\Http\Controllers\ProjetmoduleController;
 use App\Http\Controllers\ReferentielController;
 use App\Http\Controllers\RegionController;
-use App\Http\Controllers\EmargementController;
-use App\Http\Controllers\SMSController;
-use App\Http\Controllers\FeuillepresenceController;
-use App\Http\Controllers\FeuillepresencecollectiveController;
-use App\Http\Controllers\EmargementcollectiveController;
-use App\Http\Controllers\CommissionmembreController;
-
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SecteurController;
+use App\Http\Controllers\SMSController;
 use App\Http\Controllers\UneController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ValidationcollectiveController;
@@ -71,10 +69,7 @@ use App\Http\Controllers\ValidationformationController;
 use App\Http\Controllers\ValidationIndividuelleController;
 use App\Http\Controllers\ValidationmoduleController;
 use App\Http\Controllers\ValidationoperateurController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -236,6 +231,9 @@ Route::group(['middleware' => ['XSS']], function () {
 
         Route::get('formationingenieurs/{idformation}', [FormationController::class, 'addformationingenieurs']);
         Route::put('formationingenieurs/{idformation}', [FormationController::class, 'giveformationingenieurs']);
+
+        Route::get('collectiveingenieurs/{id}', [CollectiveController::class, 'addcollectiveingenieurs'])->name('addcollectiveingenieurs');
+        Route::put('collectiveingenieurs/{id}', [CollectiveController::class, 'givecollectiveingenieurs'])->name('givecollectiveingenieurs');
 
         Route::get('formationcollectives/{idformation}/{idlocalite}', [FormationController::class, 'addformationcollectives']);
         Route::put('formationcollectives/{idformation}', [FormationController::class, 'giveformationcollectives'])->name('formationcollectives');
@@ -448,7 +446,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::post('ficheSynthese', [OperateurController::class, 'ficheSynthese'])->name('ficheSynthese');
         Route::post('ficheSyntheseOperateur', [OperateurController::class, 'ficheSyntheseOperateur'])->name('ficheSyntheseOperateur');
 
-        Route::post('lettreAgrement', [OperateurController::class, 'lettreAgrement'])->name('lettreAgrement');                                                
+        Route::post('lettreAgrement', [OperateurController::class, 'lettreAgrement'])->name('lettreAgrement');
         Route::post('lettreOperateur', [OperateurController::class, 'lettreOperateur'])->name('lettreOperateur');
 
         Route::get('arrivesop', [ArriveController::class, 'arrivesop'])->name('arrivesop');
@@ -469,7 +467,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('demandesdl', [IndividuelleController::class, 'demandesdl'])->name('demandesdl');
 
         Route::post('/send-training-start-email/{trainingId}', [FormationController::class, 'sendTrainingStartEmail'])->name('send-training-start-email');
-        
+
         Route::put('/confirmer/{id}', [FormationController::class, 'confirmer'])->name('confirmer');
         Route::put('/decliner/{id}', [FormationController::class, 'decliner'])->name('decliner');
         Route::get('/jurycommissionagrements/{id}', [CommissionagrementController::class, 'jury'])->name('jurycommissionagrements.jury');

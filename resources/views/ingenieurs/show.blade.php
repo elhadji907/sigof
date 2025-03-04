@@ -125,6 +125,102 @@
                         </div>
                     </div>
 
+                    <div class="card">
+                        <div class="card-body">
+                            <span class="d-flex align-items-baseline"><a href="{{ route('ingenieurs.index') }}"
+                                    class="btn btn-success btn-sm" title="retour"><i
+                                        class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                                <p> | retour</p>
+                            </span>
+                            {{-- <div class="pt-0">
+                                <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
+                                    data-bs-target="#AddFormationModal">
+                                    <i class="bi bi-folder-plus" title="Ajouter"></i>
+                                </button>
+                            </div> --}}
+                            <h5 class="card-title">Liste des demandes collectives imputées à {{ $ingenieur->name }}</h5>
+                            {{-- <p>Le tableau des demandes formations</p> --}}
+                            <!-- Table with stripped rows -->
+                            <table class="table datatables" id="table-collectives">
+                                <thead>
+                                    <tr>
+                                        <th>N° DEM.</th>
+                                        <th>Nom structure</th>
+                                        <th>E-mail</th>
+                                        <th>Téléphone</th>
+                                        <th>Région</th>
+                                        <th class="text-center">Modules</th>
+                                        <th class="text-center">Effectif</th>
+                                        <th class="text-center">Statut</th>
+                                        <th class="text-center">#</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $i = 1; ?>
+                                    @foreach ($ingenieur->collectives as $collective)
+                                        <tr>
+                                            <td>{{ $collective?->numero }}
+                                            </td>
+                                            <td>{{ $collective?->name }}
+                                                @if (!empty($collective?->sigle))
+                                                    {{ '(' . $collective?->sigle . ')' }}
+                                                @endif
+                                            </td>
+                                            <td><a
+                                                    href="mailto:{{ $collective->user->email }}">{{ $collective->user->email }}</a>
+                                            </td>
+                                            <td><a
+                                                    href="tel:+221{{ $collective->telephone }}">{{ $collective->telephone }}</a>
+                                            </td>
+                                            <td>{{ $collective->departement?->region?->nom }}</td>
+                                            <td class="text-center">{{ count($collective->collectivemodules) }}</td>
+                                            <td class="text-center">{{ count($collective->listecollectives) }}</td>
+                                            <td>
+                                                <span
+                                                    class="{{ $collective?->statut_demande }}">{{ $collective?->statut_demande }}</span>
+                                            </td>
+                                            <td>
+                                                @can('collective-show')
+                                                    <span class="d-flex align-items-baseline"><a
+                                                            href="{{ route('collectives.show', $collective->id) }}"
+                                                            class="btn btn-primary btn-sm" title="voir détails"><i
+                                                                class="bi bi-eye"></i></a>
+                                                        <div class="filter">
+                                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                    class="bi bi-three-dots"></i></a>
+                                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                @can('collective-update')
+                                                                    <li><a class="dropdown-item btn btn-sm"
+                                                                            href="{{ route('collectives.edit', $collective->id) }}"
+                                                                            class="mx-1" title="Modifier"><i
+                                                                                class="bi bi-pencil"></i>Modifier</a>
+                                                                    </li>
+                                                                @endcan
+                                                                @can('collective-delete')
+                                                                    <li>
+                                                                        <form
+                                                                            action="{{ route('collectives.destroy', $collective->id) }}"
+                                                                            method="post">
+                                                                            @csrf
+                                                                            @method('DELETE')
+                                                                            <button type="submit" class="dropdown-item show_confirm"
+                                                                                title="Supprimer"><i
+                                                                                    class="bi bi-trash"></i>Supprimer</button>
+                                                                        </form>
+                                                                    </li>
+                                                                @endcan
+                                                            </ul>
+                                                        </div>
+                                                    </span>
+                                                @endcan
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             {{-- <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
@@ -390,6 +486,47 @@
 @push('scripts')
     <script>
         new DataTable('#table-formations', {
+            layout: {
+                topStart: {
+                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                }
+            },
+            "order": [
+                [0, 'desc']
+            ],
+            language: {
+                "sProcessing": "Traitement en cours...",
+                "sSearch": "Rechercher&nbsp;:",
+                "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
+                "sInfo": "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                "sInfoFiltered": "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                "sInfoPostFix": "",
+                "sLoadingRecords": "Chargement en cours...",
+                "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
+                "oPaginate": {
+                    "sFirst": "Premier",
+                    "sPrevious": "Pr&eacute;c&eacute;dent",
+                    "sNext": "Suivant",
+                    "sLast": "Dernier"
+                },
+                "oAria": {
+                    "sSortAscending": ": activer pour trier la colonne par ordre croissant",
+                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                },
+                "select": {
+                    "rows": {
+                        _: "%d lignes sÃ©lÃ©ctionnÃ©es",
+                        0: "Aucune ligne sÃ©lÃ©ctionnÃ©e",
+                        1: "1 ligne sÃ©lÃ©ctionnÃ©e"
+                    }
+                }
+            }
+        });
+    </script>
+    <script>
+        new DataTable('#table-collectives', {
             layout: {
                 topStart: {
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
