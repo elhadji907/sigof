@@ -10,9 +10,9 @@
                     <p>Direction générale (Dakar & Thiès)</p>
                     <p>Sipres 1, lot 2</p>
                     <p>2 voies liberté 6, extension VDN</p>
-                    <p class="mt-3"><strong>Téléphone:</strong> <span><a href="tel:+2211338279251">+221 33 827
+                    <p class="mt-3"><strong>Téléphone : </strong> <span><a href="tel:+2211338279251">+221 33 827
                                 92 51</a></span></p>
-                    <p><strong>Email:</strong> <span><a href="mailto:onfp@onfp.sn">onfp@onfp.sn</a></span></p>
+                    <p><strong>Email : </strong> <span><a href="mailto:onfp@onfp.sn">onfp@onfp.sn</a></span></p>
                 </div>
                 <div class="social-links d-flex mt-4">
                     <a href="https://x.com/ONFP_Officiel/" target="_blank"><i class="bi bi-twitter-x"></i></a>
@@ -28,7 +28,7 @@
             </div>
 
             <div class="col-lg-2 col-md-3 footer-links">
-                <h4>Réseaux sociaux</h4>
+                <h4>Services</h4>
                 <ul>
                     <li><a href="#accueil">Accueil</a></li>
                     <li><a href="#apropos">A propos</a></li>
@@ -149,6 +149,7 @@
 
     @include('user.termes')
 
+
     <div class="container copyright text-center mt-4">
         <p>© <span>Copyright</span> <strong class="px-1 sitename">SIGOF</strong> <span></span></p>
         <div class="credits">
@@ -243,4 +244,3 @@
         });
     });
 </script>
-

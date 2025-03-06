@@ -146,7 +146,7 @@
                 </div>
 
                 <div class="col-lg-4 col-md-6 footer-links">
-                    <h4>Réseaux sociaux</h4>
+                    <h4>Services</h4>
                     <ul>
                         <li><a href="#accueil">Accueil</a></li>
                         <li><a href="#apropos">A propos</a></li>
@@ -261,6 +261,73 @@
 
     </footer>
 
+    {{-- Antennes modal --}}
+    @foreach ($antennes as $antenne)
+        <div
+            class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
+            <div class="modal fade" id="antenneModal{{ $antenne?->id }}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <section id="pricing" class="pricing section light-background">
+                            <!-- Section Title -->
+                            <div class="container section-title" data-aos="fade-up">
+                                <h2>{{ $antenne?->name }}</h2>
+                                {{-- <p>{{ $antenne?->adresse }}</p> --}}
+                            </div>
+                            <!-- End Section Title -->
+                            <div class="container" data-aos="fade-up" data-aos-delay="100">
+                                <div class="row justify-content-center">
+                                    <!-- Standard Plan -->
+                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12"
+                                        data-aos="fade-up" data-aos-delay="200">
+                                        <div class="pricing-card popular">
+
+                                            @if (!empty($antenne?->date_ouverture))
+                                                <div class="popular-badge">
+                                                    {{ 'DEPUIS LE ' . mb_strtoupper($antenne?->date_ouverture?->translatedFormat('d F Y'), 'UTF-8') }}
+                                                </div>
+                                            @else
+                                                <div class="popular-badge">{{ $antenne?->code }}</div>
+                                            @endif
+                                            {{-- <h3>Chef : <span
+                                                        class="currency">{{ $antenne?->chef?->user?->firstname . ' ' . $antenne?->chef?->user?->name }}</span>
+                                                </h3> --}}
+                                            <h4>ZONE DE COUVERTURE</h4>
+                                            <ul class="features-list">
+                                                @foreach ($antenne?->regions as $region)
+                                                    @if (!empty($region))
+                                                        <li>
+                                                            <i class="bi bi-check-circle-fill"></i>
+                                                            {{ 'REGION DE ' . $region?->nom }}
+                                                        </li>
+                                                    @endif
+                                                @endforeach
+                                            </ul>
+                                            <h4>CONTACT</h4>
+                                            <p><i class="bi bi-telephone"></i>
+                                                {{ $antenne?->contact . ' / ' . $antenne?->chef?->user?->telephone }}
+                                            </p>
+                                            <p><i class="bi bi-envelope"></i>
+                                                {{ $antenne?->chef?->user?->email }}
+                                            </p>
+                                            <h4>ADRESSE</h4>
+                                            <div class="icon-box">
+                                                <p><i class="bi bi-geo-alt"></i> {{ $antenne?->adresse }}</p>
+                                            </div>
+                                            {{-- <a href="#" class="btn btn-light">
+                                                    En savoir plus
+                                                    <i class="bi bi-arrow-right"></i>
+                                                </a> --}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
     <!-- Scroll Top -->
     <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
             class="bi bi-arrow-up-short"></i></a>
