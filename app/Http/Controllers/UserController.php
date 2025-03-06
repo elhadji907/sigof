@@ -780,4 +780,28 @@ class UserController extends Controller
 
         return Redirect::back();
     }
+
+    public function mescourriers(Request $request)
+    {
+        $user = Auth::user();
+
+       /*  $nouvelle_formations = Formation::join('individuelles', 'formations.id', 'individuelles.formations_id')
+            ->select('formations.*')
+            ->where('individuelles.users_id', $user->id)
+            ->where('formations.statut', 'Nouvelle')->get(); */
+
+        return view("profile.mescourriers", compact("user"));
+    }
+
+    public function ingenieurformations(Request $request)
+    {
+        $user = Auth::user();
+
+        /* $nouvelle_formations = Formation::join('individuelles', 'formations.id', 'individuelles.formations_id')
+            ->select('formations.*')
+            ->where('individuelles.users_id', $user->id)
+            ->where('formations.statut', 'Nouvelle')->get(); */
+
+        return view("profile.formations", compact("user"));
+    }
 }

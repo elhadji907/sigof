@@ -134,7 +134,7 @@
                             <div class="card shadow-lg border-0 rounded-lg">
                                 <div class="card-body d-flex align-items-center justify-content-between">
                                     <div>
-                                        <h5 class="card-title text-primary d-flex align-items-center">
+                                        <h5 class="card-title text-info d-flex align-items-center">
                                             <i class="bi bi-graduation-cap me-0"></i> Nouvelle <span class="fw-bold">&nbsp;|
                                                 Formation</span>
                                         </h5>
@@ -1137,342 +1137,108 @@
             </div>
         </section>
     @endcan
-    {{-- Ingénieurs --}}
-    @can('dg')
-        <section class="section faq">
-            <div class="row">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="d-flex align-items-baseline">
-                                <h5 class="card-title">Liste des formations</h5>
-                            </span>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                            @if (!empty(Auth::user()->ingenieur))
-                                @foreach (Auth::user()->ingenieur->formations as $formation)
-                                @endforeach
-                                @if (!empty($formation))
-                                    <table class="table datatables" id="table-formations">
-                                        <thead>
-                                            <tr>
-                                                <th width='5%' class="text-center">Code</th>
-                                                <th width='15%'>Type formation</th>
-                                                {{-- <th>Bénéficiaires</th> --}}
-                                                <th width='15%'>Localité</th>
-                                                <th width='5%'>Modules</th>
-                                                <th width='15%'>Niveau qualification</th>
-                                                <th width='5%' class="text-center">Statut</th>
-                                                <th width='3%'><i class="bi bi-gear"></i></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php $i = 1; ?>
-                                            @foreach (Auth::user()->ingenieur->formations as $formation)
-                                                <tr>
-                                                    <td style="text-align: center">{{ $formation?->code }}</td>
-                                                    <td>{{ $formation->types_formation?->name }}</td>
-                                                    {{-- <td>{{ $formation?->name }}</td> --}}
-                                                    <td>{{ $formation->departement?->region?->nom }}</td>
-                                                    <td>
-                                                        @isset($formation?->module?->name)
-                                                            {{ $formation?->module?->name }}
-                                                        @endisset
-                                                        @isset($formation?->collectivemodule?->module)
-                                                            {{ $formation?->collectivemodule?->module }}
-                                                        @endisset
-                                                    </td>
-                                                    <td>{{ $formation->type_certification }}</td>
-                                                    <td class="text-center"><a><span
-                                                                class="{{ $formation?->statut }}">{{ $formation?->statut }}</span></a>
-                                                    </td>
-                                                    <td>
-                                                        @can('formation-show')
-                                                            <span class="d-flex align-items-baseline"><a
-                                                                    href="{{ route('formations.show', $formation->id) }}"
-                                                                    class="btn btn-primary btn-sm" title="voir détails"><i
-                                                                        class="bi bi-eye"></i></a>
-                                                                <div class="filter">
-                                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                            class="bi bi-three-dots"></i></a>
-                                                                    <ul
-                                                                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                        @can('formation-update')
-                                                                            <li>
-                                                                                <a class="dropdown-item btn btn-sm"
-                                                                                    href="{{ route('formations.edit', $formation->id) }}"
-                                                                                    class="mx-1" title="Modifier"><i
-                                                                                        class="bi bi-pencil"></i>Modifier</a>
-                                                                            </li>
-                                                                        @endcan
-                                                                        @can('formation-delete')
-                                                                            <li>
-                                                                                <form
-                                                                                    action="{{ route('formations.destroy', $formation->id) }}"
-                                                                                    method="post">
-                                                                                    @csrf
-                                                                                    @method('DELETE')
-                                                                                    <button type="submit"
-                                                                                        class="dropdown-item show_confirm"
-                                                                                        title="Supprimer"><i
-                                                                                            class="bi bi-trash"></i>Supprimer</button>
-                                                                                </form>
-                                                                            </li>
-                                                                        @endcan
-                                                                    </ul>
-                                                                </div>
-                                                            </span>
-                                                        @endcan
-                                                    </td>
-                                                </tr>
-                                            @endforeach
 
-                                        </tbody>
-                                    </table>
-                                @else
-                                    <div class="alert alert-secondary">
-                                        {{ __('Aucune formation ne vous a été attribuée pour le moment.') }} </div>
-                                @endif
-                            @else
-                                <div class="alert alert-secondary"> {{ __("Vous n'êtes pas un ingénieur.") }} </div>
-                            @endif
+    <div class="row">
+        {{-- DIOF --}}
+        @can('dg')
+            @if (!empty($nouvelle_formation_count))
+                <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                    <a href="#">
+                        <div class="card shadow-lg border-0 rounded-lg">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h5 class="card-title text-warning d-flex align-items-center">
+                                        <i class="bi bi-graduation-cap me-0"></i> Demandes <span class="fw-bold">&nbsp;|
+                                            Collectives</span>
+                                    </h5>
+                                    <p class="text-muted">Nouvelles demandes collectives</p>
+                                </div>
+                                <div class="card-icon bg-warning text-white rounded-circle d-flex align-items-center justify-content-center"
+                                    style="width: 30px; height: 30px; font-size: 1.2rem;">
+                                    {{ $nouvelle_formation_count }}
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
-            </div>
-        </section>
-    @endcan
+            @endif
+        @endcan
 
-    {{-- Courriers --}}
-    @can('dg')
-        <section class="section faq">
-            <div class="row">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="d-flex align-items-baseline">
-                                <h5 class="card-title">Liste des courriers</h5>
-                            </span>
+        {{-- DIOF --}}
+        @can('dg')
+            @if (!empty($nouvelle_formation_count))
+                <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                    <a href="#">
+                        <div class="card shadow-lg border-0 rounded-lg">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h5 class="card-title text-secondary d-flex align-items-center">
+                                        <i class="bi bi-graduation-cap me-0"></i> Formations <span class="fw-bold">&nbsp;|
+                                            DIOF</span>
+                                    </h5>
+                                    <p class="text-muted">Nouvelles formations</p>
+                                </div>
+                                <div class="card-icon bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center"
+                                    style="width: 30px; height: 30px; font-size: 1.2rem;">
+                                    {{ $nouvelle_formation_count }}
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                            @if (!empty(Auth::user()->employee))
-                                @foreach (Auth::user()->employee->arrives as $arrive)
-                                @endforeach
-                                @if (!empty($arrive))
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="table-courriers-emp">
-                                            <thead class="table-default">
-                                                <tr>
-                                                    <th style="width:40%;">Imputations</th>
-                                                    <th style="width:15%;" class="text-center">Instructions DG</th>
-                                                    {{-- <th style="width:10%;">Suivi dossier</th> --}}
-                                                    <th class="text-center">
-                                                        @unless (auth()->user()->unReadNotifications->isEmpty())
-                                                            <a class="nav-link nav-icon" href="#"
-                                                                data-bs-toggle="dropdown">
-                                                                <i class="bi bi-bell"></i>
-                                                                <span
-                                                                    class="badge bg-primary badge-number">{!! auth()->user()->unReadNotifications->count() !!}</span>
-                                                            </a><!-- End Notification Icon -->
-                                                            <ul
-                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-                                                                <li class="dropdown-header">
-                                                                    {!! auth()->user()->unReadNotifications->count() !!} nouveaux commentaires non lus
-                                                                    <a href="{{ url('notifications') }}" target="_blank"><span
-                                                                            class="badge rounded-pill bg-primary p-2 ms-2">Voir
-                                                                            tous</span></a>
-                                                                </li>
-                                                            </ul>
-                                                        @endunless
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (Auth::user()->employee?->arrives as $arrive)
-                                                    <?php
-                                                    $i = 1;
-                                                    $x = 0;
-                                                    $y = 0;
-                                                    $z = 0;
-                                                    $xy = 0;
-                                                    $xz = 0;
-                                                    ?>
-                                                    <tr>
-                                                        <td>
-                                                            {{-- @if (isset($arrive?->courrier) && $arrive?->courrier?->type == 'arrive') --}}
-                                                            <h4><a href="{!! route('arrives.show', $arrive?->id) !!}">{!! $arrive?->courrier?->objet ?? '' !!}</a>
-                                                            </h4>
-                                                            @if (isset($arrive->courrier->file))
-                                                                <label for="reference" class="form-label">Scan courrier :
-                                                                </label>
-                                                                <a class="btn btn-outline-secondary btn-sm"
-                                                                    title="télécharger le fichier joint" target="_blank"
-                                                                    href="{{ asset($arrive->courrier->getFile()) }}">
-                                                                    <i class="bi bi-download"></i>
-                                                                </a>
-                                                            @endif
-                                                            {{-- @endif --}}
-                                                            <p>{!! $arrive?->courrier?->message !!}</p>
-                                                            {{-- <p><strong>Type de courrier : </strong> {!! $arrive?->courrier?->type ?? '' !!}</p> --}}
-                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                {{-- format('d/m/Y à H:i:s') --}}
-                                                                <small>Imputer le, {!! Carbon\Carbon::parse($arrive?->courrier?->date_imp)?->translatedFormat('l jS F Y') !!}</small>
-                                                                <span
-                                                                    class="badge badge-info">{!! $arrive?->courrier?->user?->firstname !!}&nbsp;{!! $arrive?->courrier?->user?->name !!}</span>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <p>{!! $arrive?->courrier->description ?? '' !!}</p>
-                                                        </td>
-                                                        {{-- <td>
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        @foreach ($arrive?->employees->unique('id') as $employee)
-                                                            {{ $employee->user->firstname . ' ' . $employee->user->name }}<br>
-                                                        @endforeach
-                                                    </div>
-                                                </td> --}}
-                                                        <td>
-                                                            <h5 class="card-title">Commentaires
-                                                                ({{ count($arrive->courrier->comments) }})
-                                                            </h5>
-                                                            @forelse ($arrive->courrier->comments as $comment)
-                                                                <div class="accordion accordion-flush"
-                                                                    id="accordionFlushExample">
-                                                                    <div class="accordion-item">
-                                                                        <h2 class="accordion-header"
-                                                                            id="flush-heading{{ $x++ }}">
-                                                                            <button class="accordion-button collapsed"
-                                                                                type="button" data-bs-toggle="collapse"
-                                                                                data-bs-target="#flush-collapse{{ $z++ }}"
-                                                                                aria-expanded="false"
-                                                                                aria-controls="flush-collapse{{ $xy++ }}">
-                                                                                Commentaire # {{ $i++ }}
-                                                                            </button>
-                                                                        </h2>
-                                                                        <div id="flush-collapse{{ $xz++ }}"
-                                                                            class="accordion-collapse collapse"
-                                                                            aria-labelledby="flush-heading{{ $y++ }}"
-                                                                            data-bs-parent="#accordionFlushExample">
-                                                                            <div class="accordion-body">
-                                                                                <span>{!! $comment?->user?->firstname . ' ' . $comment?->user?->name !!}</span>
-                                                                                <div class="activity">
-                                                                                    <div
-                                                                                        class="activity-item d-flex col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                                                                        <div
-                                                                                            class="activite-label col-2 col-md-2 col-lg-2 col-sm-2 col-xs-2 col-xxl-2">
-                                                                                            {!! Carbon\Carbon::parse($comment?->created_at)?->diffForHumans() !!}
-                                                                                        </div>
-                                                                                        &nbsp;
-                                                                                        <i
-                                                                                            class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                                                                                        &nbsp;
-                                                                                        <div
-                                                                                            class="activity-content col-10 col-md-10 col-lg-10 col-sm-10 col-xs-10 col-xxl-10">
-                                                                                            {!! $comment->content !!}
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <?php
-                                                                                $a = 1;
-                                                                                $b = '1a';
-                                                                                $c = '1a';
-                                                                                $d = '1a';
-                                                                                $e = '1a';
-                                                                                $f = '1a';
-                                                                                ?>
-                                                                                <h5 class="card-title">Réponses au
-                                                                                    commentaire #
-                                                                                    {{ $i - 1 }}</h5>
-                                                                                <div class="activity">
-                                                                                    @forelse ($comment->comments as $replayComment)
-                                                                                        <div
-                                                                                            class="row col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                                                                            <label for=""
-                                                                                                class="col-1 col-md-1 col-lg-1 col-sm-1 col-xs-1 col-xxl-1"></label>
-                                                                                            <div
-                                                                                                class="col-11 col-md-11 col-lg-11 col-sm-11 col-xs-11 col-xxl-11">
-
-                                                                                                <h2 class="accordion-header"
-                                                                                                    id="flush-heading{{ $b++ }}">
-                                                                                                    <button
-                                                                                                        class="accordion-button collapsed"
-                                                                                                        type="button"
-                                                                                                        data-bs-toggle="collapse"
-                                                                                                        data-bs-target="#flush-collapse{{ $d++ }}"
-                                                                                                        aria-expanded="false"
-                                                                                                        aria-controls="flush-collapse{{ $e++ }}">
-                                                                                                        Réponse #
-                                                                                                        {{ $a++ }}
-                                                                                                    </button>
-                                                                                                </h2>
-                                                                                                {{-- <h5 class="card-title">
-                                                                                                Réponse
-                                                                                                {!! $replayComment?->user?->firstname . ' ' . $replayComment?->user?->name !!}<span></span>
-                                                                                            </h5> --}}
-
-                                                                                                <div id="flush-collapse{{ $f++ }}"
-                                                                                                    class="accordion-collapse collapse"
-                                                                                                    aria-labelledby="flush-heading{{ $c++ }}"
-                                                                                                    data-bs-parent="#accordionFlushExample">
-                                                                                                    <div
-                                                                                                        class="accordion-body">
-                                                                                                        <span>{!! $comment?->user?->firstname . ' ' . $comment?->user?->name !!}</span>
-                                                                                                        <div
-                                                                                                            class="activity-item d-flex">
-                                                                                                            <div
-                                                                                                                class="activite-label col-3 col-md-3 col-lg-3 col-sm-3 col-xs-3 col-xxl-3">
-                                                                                                                {{-- <span class="fw-bold text-dark"></span> --}}
-                                                                                                                {!! Carbon\Carbon::parse($replayComment?->created_at)?->diffForHumans() !!}
-                                                                                                            </div>
-                                                                                                            &nbsp;
-                                                                                                            <i
-                                                                                                                class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-                                                                                                            &nbsp;
-                                                                                                            <div
-                                                                                                                class="activity-content col-8 col-md-8 col-lg-8 col-sm-8 col-xs-8 col-xxl-8">
-                                                                                                                {!! $replayComment?->content !!}
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    @empty
-                                                                                        <div class="alert alert-info">
-                                                                                            Aucune
-                                                                                            réponse à ce commentaire</div>
-                                                                                    @endforelse
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            @empty
-
-                                                                <div class="alert alert-info">Aucun commentaire pour ce
-                                                                    courrier
-                                                                </div>
-                                                            @endforelse
-
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                @else
-                                    <div class="alert alert-info"> {{ __("Vous n'avez pas de courrier à votre nom") }}
-                                    </div>
-                                @endif
-                            @else
-                                <div class="alert alert-info"> {{ __("Vous n'êtes pas encore employé(e)") }} </div>
-                            @endif
-                        </div>
-                    </div>
+                    </a>
                 </div>
-            </div>
-        </section>
-    @endcan
+            @endif
+        @endcan
+
+        {{-- Ingénieurs --}}
+        @can('dg')
+            @if (!empty($count_ingenieur_formations))
+                <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                    <a href="{{ route('ingenieurformations') }}">
+                        <div class="card shadow-lg border-0 rounded-lg">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h5 class="card-title text-primary d-flex align-items-center">
+                                        <i class="bi bi-graduation-cap me-0"></i> Formations <span class="fw-bold">&nbsp;|
+                                            Ingénieurs</span>
+                                    </h5>
+                                    <p class="text-muted">Mes formations</p>
+                                </div>
+                                <div class="card-icon bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
+                                    style="width: 30px; height: 30px; font-size: 1.2rem;">
+                                    {{ $count_ingenieur_formations }}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endif
+        @endcan
+
+        {{-- Courriers --}}
+        @can('dg')
+            @if (!empty($count_courriers))
+                <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                    <a href="{{ route('mescourriers') }}">
+                        <div class="card shadow-lg border-0 rounded-lg">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h5 class="card-title text-success d-flex align-items-center">
+                                        <i class="bi bi-graduation-cap me-0"></i> Courriers <span class="fw-bold">&nbsp;|
+                                            Personnels</span>
+                                    </h5>
+                                    <p class="text-muted">Mes courriers</p>
+                                </div>
+                                <div class="card-icon bg-success text-white rounded-circle d-flex align-items-center justify-content-center"
+                                    style="width: 30px; height: 30px; font-size: 1.2rem;">
+                                    {{ $count_courriers }}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endif
+        @endcan
+    </div>
 @endsection
 
 @push('scripts')
