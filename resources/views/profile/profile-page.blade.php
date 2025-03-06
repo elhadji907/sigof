@@ -1132,38 +1132,6 @@
                                 </div>
                             </div>
                         @endforeach
-                        {{-- <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <div class="card info-card sales-card">
-                        <div class="filter">
-                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                    class="bi bi-three-dots"></i></a>
-                        </div>
-                        <a href="{{ route('devenirOperateur') }}">
-                            <div class="card-body">
-                                <h5 class="card-title">Devenir <span>| opérateur</span></h5>
-                                <div class="d-flex align-items-center">
-                                    <div
-                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-person-plus-fill"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6>
-                                            @foreach (Auth::user()->operateurs as $operateur)
-                                                @if (isset($operateur->sigle))
-                                                    @if ($loop->last)
-                                                        {!! $loop->count ?? '0' !!}
-                                                    @endif
-                                                @else
-                                                    <span class="text-primary">0</span>
-                                                @endif
-                                            @endforeach
-                                        </h6>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div> --}}
                     </div>
                 </div>
             </div>
