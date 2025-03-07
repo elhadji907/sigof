@@ -59,25 +59,26 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                    <div class="card">
-                        <div class="card-body pb-0">
-                            <h5 class="card-title">Demandes <span>| Personnelles</span></h5>
+                @can('demande-view')
+                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                        <div class="card">
+                            <div class="card-body pb-0">
+                                <h5 class="card-title">Demandes <span>| Personnelles</span></h5>
 
-                            <table class="table table-borderless">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Demande</th>
-                                        <th scope="col" class="text-center">Nombre</th>
-                                        <th scope="col" class="text-center">#</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="text-primary">Individuelle</td>
-                                        <td class="text-center">
-                                            {{ count($individuelles) }}
-                                            {{-- @foreach (Auth::user()->individuelles as $individuelle)
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Demande</th>
+                                            <th scope="col" class="text-center">Nombre</th>
+                                            <th scope="col" class="text-center">#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-primary">Individuelle</td>
+                                            <td class="text-center">
+                                                {{ count($individuelles) }}
+                                                {{-- @foreach (Auth::user()->individuelles as $individuelle)
                                                 @if (isset($individuelle->numero) && isset($individuelle->modules_id))
                                                     @if ($loop->last)
                                                         <a class="text-primary"
@@ -87,17 +88,17 @@
                                                     <span class="text-primary">0</span>
                                                 @endif
                                             @endforeach --}}
-                                        </td>
-                                        <td class="text-center">
-                                            <a href="{{ route('demandesIndividuelle') }}" title="voir"><i
-                                                    class="bi bi-eye"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-primary">Collective</td>
-                                        <td class="text-center">
-                                            {{ count($collectives) }}
-                                            {{-- @foreach (Auth::user()->collectives as $collective)
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="{{ route('demandesIndividuelle') }}" title="voir"><i
+                                                        class="bi bi-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-primary">Collective</td>
+                                            <td class="text-center">
+                                                {{ count($collectives) }}
+                                                {{-- @foreach (Auth::user()->collectives as $collective)
                                                 @if (isset($collective->numero))
                                                     @if ($loop->last)
                                                         <a class="text-primary"
@@ -107,13 +108,13 @@
                                                     <span class="text-primary">0</span>
                                                 @endif
                                             @endforeach --}}
-                                        </td>
-                                        <td class="text-center">
-                                            <a href="{{ route('demandesCollective') }}" title="voir"><i
-                                                    class="bi bi-eye"></i></a>
-                                        </td>
-                                    </tr>
-                                    {{-- <tr>
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="{{ route('demandesCollective') }}" title="voir"><i
+                                                        class="bi bi-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                        {{-- <tr>
                                         <td class="text-primary">Prise en charge</td>
                                         <td class="text-center"></td>
                                         <td class="text-center">
@@ -121,12 +122,13 @@
                                                     class="bi bi-eye"></i></a>
                                         </td>
                                     </tr> --}}
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
 
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endcan
 
                 @if (!empty($nouvelle_formation_count))
                     <div class="col-12">
@@ -147,6 +149,9 @@
                                 </div>
                             </div>
                         </a>
+                    </div>
+                @else
+                    <div class="alert alert-info">Aucune notification vous concernant pour l'instant !
                     </div>
                 @endif
             </div>
@@ -1165,7 +1170,7 @@
         @endcan
 
         {{-- DIOF --}}
-        @can('dg')
+        @can('diof')
             @if (!empty($nouvelle_formation_count))
                 <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                     <a href="#">
@@ -1190,7 +1195,7 @@
         @endcan
 
         {{-- Ingénieurs --}}
-        @can('dg')
+        @can('ingenieur')
             @if (!empty($count_ingenieur_formations))
                 <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                     <a href="{{ route('ingenieurformations') }}">

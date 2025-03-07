@@ -64,16 +64,23 @@ class ProfileController extends Controller
 
         $formations = $individuelles->where('formations_id', '!=', null)->count();
 
-        $nouvelle_formation_count = Individuelle::join('formations', 'formations.id', 'individuelles.formations_id')
-            ->select('formations.*')
+        $nouvelle_formation_count = Auth::user()->individuelles()
+            ->join('formations', 'formations.id', 'individuelles.formations_id')
+            ->select('individuelles.*')
             ->where('individuelles.users_id', $user->id)
             ->where('formations.statut', 'Nouvelle')->count();
+
+        $individuelleformation = Auth::user()->individuelles()
+            ->join('formations', 'formations.id', '=', 'individuelles.formations_id')
+            ->where('formations.statut', 'Nouvelle')
+            ->select('individuelles.*')
+            ->get();
 
         $collectives = Collective::where('users_id', $user->id)
             ->get();
 
-        $count_courriers            = Auth::user()->employee->arrives->count();
-        $count_ingenieur_formations = Auth::user()->employee->arrives->count();
+        $count_courriers            = Auth::user()?->employee?->arrives?->count();
+        $count_ingenieur_formations = Auth::user()?->employee?->arrives?->count();
 
         foreach (Auth::user()->roles as $role) {
             if ($role->name == 'Operateur') {
@@ -98,6 +105,7 @@ class ProfileController extends Controller
                     'projets'                  => $projets,
                     'count_projets'            => $count_projets,
                     'nouvelle_formation_count' => $nouvelle_formation_count,
+                    'individuelleformation'    => $individuelleformation,
                     'files'                    => $files,
                     'user_files'               => $user_files,
                     'user_cin'                 => $user_cin,
@@ -110,6 +118,7 @@ class ProfileController extends Controller
                     'individuelles'              => $individuelles,
                     'formations'                 => $formations,
                     'nouvelle_formation_count'   => $nouvelle_formation_count,
+                    'individuelleformation'      => $individuelleformation,
                     'collectives'                => $collectives,
                     'files'                      => $files,
                     'user_files'                 => $user_files,
@@ -125,6 +134,7 @@ class ProfileController extends Controller
             'projets'                  => $projets,
             'count_projets'            => $count_projets,
             'nouvelle_formation_count' => $nouvelle_formation_count,
+            'individuelleformation'    => $individuelleformation,
             'files'                    => $files,
             'user_files'               => $user_files,
             'user_cin'                 => $user_cin,

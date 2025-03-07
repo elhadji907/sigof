@@ -470,8 +470,8 @@ Route::group(['middleware' => ['XSS']], function () {
 
         Route::post('/send-training-start-email/{trainingId}', [FormationController::class, 'sendTrainingStartEmail'])->name('send-training-start-email');
 
-        Route::put('/confirmer/{id}', [FormationController::class, 'confirmer'])->name('confirmer');
-        Route::put('/decliner/{id}', [FormationController::class, 'decliner'])->name('decliner');
+        Route::put('/confirmer/{id}', [IndividuelleController::class, 'confirmer'])->name('confirmer');
+        Route::put('/decliner/{id}', [IndividuelleController::class, 'decliner'])->name('decliner');
         Route::get('/jurycommissionagrements/{id}', [CommissionagrementController::class, 'jury'])->name('jurycommissionagrements.jury');
         Route::patch('/addMembreJury/{id}', [CommissionagrementController::class, 'addMembreJury'])->name('addMembreJury');
 

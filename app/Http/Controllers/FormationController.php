@@ -3429,38 +3429,4 @@ class FormationController extends Controller
 
         return redirect()->back();
     }
-
-    public function confirmer(Request $request, $id)
-    {
-        $individuelle = Individuelle::findOrFail($id);
-
-        $individuelle->update([
-            'confirmation'      => 'confirmer',
-            'motif_declinaison' => null,
-        ]);
-
-        Alert::success('Félicitations !', 'Merci pour votre confiance');
-
-        return redirect()->back();
-
-    }
-
-    public function decliner(Request $request, $id)
-    {
-        $this->validate($request, [
-            'motif' => "required|string",
-        ]);
-
-        $individuelle = Individuelle::findOrFail($id);
-
-        $individuelle->update([
-            'confirmation'      => 'décliner',
-            'motif_declinaison' => $request->motif,
-        ]);
-
-        Alert::success('Dommage !', 'Nous espérons vous retrouver bientôt');
-
-        return redirect()->back();
-
-    }
 }

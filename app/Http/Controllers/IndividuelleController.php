@@ -9,7 +9,6 @@ use App\Models\Individuelle;
 use App\Models\Module;
 use App\Models\Projet;
 use App\Models\Region;
-use App\Models\Formation;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -1355,10 +1354,16 @@ class IndividuelleController extends Controller
     {
         $user = Auth::user();
 
-        $nouvelle_formations = Formation::join('individuelles', 'formations.id', 'individuelles.formations_id')
+        /* $nouvelle_formations = Formation::join('individuelles', 'formations.id', 'individuelles.formations_id')
             ->select('formations.*')
             ->where('individuelles.users_id', $user->id)
-            ->where('formations.statut', 'Nouvelle')->get();
+            ->where('formations.statut', 'Nouvelle')->get(); */
+
+        $nouvelle_formations = Auth::user()->individuelles()
+            ->join('formations', 'formations.id', '=', 'individuelles.formations_id')
+            ->where('formations.statut', 'Nouvelle')
+            ->select('individuelles.*')
+            ->get();
 
         return view("individuelles.nouvelle_formations", compact("nouvelle_formations"));
     }
@@ -1642,5 +1647,37 @@ class IndividuelleController extends Controller
             "individuelles.index",
             compact('individuelles', 'departements', 'modules', 'title')
         );
+    }
+
+    public function confirmer(Request $request, $id)
+    {
+        $individuelle = Individuelle::findOrFail($id);
+
+        $individuelle->update([
+            'confirmation'      => 'confirmer',
+            'motif_declinaison' => null,
+        ]);
+
+        Alert::success('Félicitations !', 'Merci pour votre confiance');
+
+        return redirect()->back();
+    }
+    public function decliner(Request $request, $id)
+    {
+        $this->validate($request, [
+            'motif' => "required|string",
+        ]);
+
+        $individuelle = Individuelle::findOrFail($id);
+
+        $individuelle->update([
+            'confirmation'      => 'décliner',
+            'motif_declinaison' => $request->motif,
+        ]);
+
+        Alert::success('Dommage !', 'Nous espérons vous retrouver bientôt');
+
+        return redirect()->back();
+
     }
 }

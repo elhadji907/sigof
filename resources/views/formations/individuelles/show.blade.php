@@ -1175,12 +1175,6 @@
                                                                 </td>
                                                                 <td style="text-align: center; vertical-align: middle;">
                                                                     @if (!empty($individuelle?->retrait_diplome))
-                                                                        {{-- <button type="button"
-                                                                        class="btn btn-outline-success btn-sm"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#EditShowModal{{ $individuelle?->id }}">
-                                                                        <i class="bi bi-check-circle text-success" title="diplome retiré"></i>
-                                                                    </button> --}}
 
                                                                         <a href="#" data-bs-toggle="modal"
                                                                             data-bs-target="#EditShowModal{{ $individuelle?->id }}"><i
