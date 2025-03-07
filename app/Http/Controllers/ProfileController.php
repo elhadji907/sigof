@@ -70,11 +70,11 @@ class ProfileController extends Controller
             ->where('individuelles.users_id', $user->id)
             ->where('formations.statut', 'Nouvelle')->count();
 
-        $individuelleformation = Auth::user()->individuelles()
+        /* $individuelleformation = Auth::user()->individuelles()
             ->join('formations', 'formations.id', '=', 'individuelles.formations_id')
             ->where('formations.statut', 'Nouvelle')
             ->select('individuelles.*')
-            ->get();
+            ->get(); */
 
         $collectives = Collective::where('users_id', $user->id)
             ->get();
@@ -105,7 +105,6 @@ class ProfileController extends Controller
                     'projets'                  => $projets,
                     'count_projets'            => $count_projets,
                     'nouvelle_formation_count' => $nouvelle_formation_count,
-                    'individuelleformation'    => $individuelleformation,
                     'files'                    => $files,
                     'user_files'               => $user_files,
                     'user_cin'                 => $user_cin,
@@ -118,7 +117,6 @@ class ProfileController extends Controller
                     'individuelles'              => $individuelles,
                     'formations'                 => $formations,
                     'nouvelle_formation_count'   => $nouvelle_formation_count,
-                    'individuelleformation'      => $individuelleformation,
                     'collectives'                => $collectives,
                     'files'                      => $files,
                     'user_files'                 => $user_files,
@@ -134,7 +132,6 @@ class ProfileController extends Controller
             'projets'                  => $projets,
             'count_projets'            => $count_projets,
             'nouvelle_formation_count' => $nouvelle_formation_count,
-            'individuelleformation'    => $individuelleformation,
             'files'                    => $files,
             'user_files'               => $user_files,
             'user_cin'                 => $user_cin,
