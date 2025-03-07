@@ -28,8 +28,8 @@
     </header>
 
     <body>
-        <p>{!! $toUserName !!}</p>
-        <p> {!! $module !!}</p>
+        <p>{{ $toUserName }}</p>
+        <p> {!! ($mailMessage) !!}</p>
         {{-- <a href="#"
             style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; text-decoration: none;">Cliquez ici pour vérifiez
             votre adresse e-mail</a> --}}
