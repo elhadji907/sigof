@@ -200,7 +200,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::post('ficheSuiviCol', [FormationController::class, 'ficheSuiviCol'])->name('ficheSuiviCol');
 
         Route::get('notifications/', [CourrierController::class, 'notifications'])->name('notifications');
-        Route::get('validationsRejetMessage/{id}', [IndividuelleController::class, 'validationsRejetMessage'])->name('validationsRejetMessage');
+        Route::post('validationmessage', [IndividuelleController::class, 'validationsRejetMessage'])->name('validationmessage');
 
         Route::get('modulelocalite/{idmodule}/{idlocalite}', [ModuleController::class, 'modulelocalite'])->name('modulelocalite');
         Route::get('modulelocalitestatut/{idmodule}/{idlocalite}/{statut}', [ModuleController::class, 'modulelocalitestatut'])->name('modulelocalitestatut');

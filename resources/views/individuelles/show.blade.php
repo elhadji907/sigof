@@ -36,59 +36,70 @@
                                     </a>&nbsp;
                                     <p> | Retour</p>
                                 </span>
-                                <span class="d-flex mt-2 align-items-baseline">
-                                    <nav class="header-nav ms-auto">
-                                        <ul class="d-flex align-items-center">
-                                            <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-                                                <i class="bi bi-chat-left-text m-1"></i>
-                                                <span class="badge bg-success badge-number"
-                                                    title="{{ $individuelle?->statut }}">
-                                                    {{ $individuelle?->validationindividuelles->count() }}
-                                                </span>
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
-                                                <li class="dropdown-header">
-                                                    Vous avez {{ $individuelle?->validationindividuelles->count() }}
-                                                    validation(s)
-                                                    <a href="{{ url('validationsRejetMessage/' . $individuelle?->id) }}">
-                                                        <span class="badge rounded-pill bg-primary p-2 ms-2">Voir
-                                                            toutes</span>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <hr class="dropdown-divider">
-                                                </li>
-                                                @foreach ($individuelle?->validationindividuelles->take(2) as $validationindividuelle)
-                                                    <li class="message-item">
+
+                                @if ($individuelle?->validationindividuelles->isNotEmpty())
+                                    <span class="d-flex mt-2 align-items-baseline">
+                                        <nav class="header-nav ms-auto">
+                                            <ul class="d-flex align-items-center">
+                                                <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                                                    <i class="bi bi-chat-left-text m-1"></i>
+                                                    <span class="badge bg-success badge-number"
+                                                        title="{{ $individuelle?->statut }}">
+                                                        {{ $individuelle?->validationindividuelles->count() }}
+                                                    </span>
+                                                </a>
+                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+                                                    <li class="dropdown-header">
+                                                        Vous avez {{ $individuelle?->validationindividuelles->count() }}
+                                                        validation(s)
                                                         <a
                                                             href="{{ url('validationsRejetMessage/' . $individuelle?->id) }}">
-                                                            <img src="{{ asset($validationindividuelle->user->getImage()) }}"
-                                                                alt="" class="rounded-circle">
-                                                            <div>
-                                                                <h4>{{ $validationindividuelle->user->firstname }}
-                                                                    {{ $validationindividuelle->user->name }}</h4>
-                                                                <p><span
-                                                                        class="{{ $validationindividuelle->action }}">{{ $validationindividuelle->action }}</span>
-                                                                </p>
-                                                                <p>{!! $validationindividuelle->created_at->diffForHumans() !!}</p>
-                                                            </div>
+                                                            <span class="badge rounded-pill bg-primary p-2 ms-2">Voir
+                                                                toutes</span>
                                                         </a>
                                                     </li>
                                                     <li>
                                                         <hr class="dropdown-divider">
                                                     </li>
-                                                @endforeach
-                                                @if ($individuelle?->validationindividuelles->count())
+                                                    @foreach ($individuelle?->validationindividuelles->take(2) as $validationindividuelle)
+                                                        <li class="message-item">
+                                                            <a
+                                                                href="{{ url('validationsRejetMessage/' . $individuelle?->id) }}">
+                                                                <img src="{{ asset($validationindividuelle->user->getImage()) }}"
+                                                                    alt="" class="rounded-circle">
+                                                                <div>
+                                                                    <h4>{{ $validationindividuelle->user->firstname }}
+                                                                        {{ $validationindividuelle->user->name }}</h4>
+                                                                    <p><span
+                                                                            class="{{ $validationindividuelle->action }}">{{ $validationindividuelle->action }}</span>
+                                                                    </p>
+                                                                    <p>{!! $validationindividuelle->created_at->diffForHumans() !!}</p>
+                                                                </div>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <hr class="dropdown-divider">
+                                                        </li>
+                                                    @endforeach
                                                     <li class="dropdown-footer">
-                                                        <a
-                                                            href="{{ url('validationsRejetMessage/' . $individuelle?->id) }}">Voir
-                                                            toutes les validations</a>
+                                                        <form action="{{ route('validationmessage') }}" method="post"
+                                                            target="_blank">
+                                                            @csrf
+                                                            {{-- @method('PUT') --}}
+                                                            <input type="hidden" name="id"
+                                                                value="{{ $individuelle?->id }}">
+                                                            <button class="btn btn-sm mx-1">Voir
+                                                                toutes les validations</button>
+                                                        </form>
+                                                        {{-- <a
+                                                            href="{{ route('validationmessage/' . $individuelle?->id) }}">Voir
+                                                            toutes les validations</a> --}}
                                                     </li>
-                                                @endif
+                                                </ul>
                                             </ul>
-                                        </ul>
-                                    </nav>
-                                </span>
+                                        </nav>
+                                    </span>
+                                @endif
 
                                 @can('user-view')
                                     <span class="d-flex align-items-baseline">
@@ -176,7 +187,8 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                data-bs-dismiss="modal">Fermer</button>
                             <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
                         </div>
                     </form>

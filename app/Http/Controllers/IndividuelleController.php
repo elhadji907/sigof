@@ -963,9 +963,9 @@ class IndividuelleController extends Controller
             return redirect()->back();
         }
     }
-    public function validationsRejetMessage(Request $request, $id)
+    public function validationsRejetMessage(Request $request)
     {
-        $individuelle = Individuelle::findOrFail($id);
+        $individuelle = Individuelle::findOrFail($request?->input('id'));
         return view("individuelles.validationsrejetmessage", compact('individuelle'));
     }
 
