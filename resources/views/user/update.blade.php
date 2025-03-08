@@ -109,10 +109,10 @@
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="date naissance" class="form-label">Date naissance</label>
-                                    <input type="date" name="date_naissance"
-                                        value="{{ $user->date_naissance?->format('Y-m-d') ?? old('date_naissance') }}"
-                                        class="datepicker form-control form-control-sm @error('date_naissance') is-invalid @enderror"
-                                        id="date_naissance" placeholder="jj/mm/aaaa">
+                                    <input type="text" name="date_naissance"
+                                        value="{{ old('date_naissance', optional($user->date_naissance)->format('d/m/Y')) }}"
+                                        class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
+                                        id="datepicker" placeholder="JJ/MM/AAAA" autocomplete="bday">
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>

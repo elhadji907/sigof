@@ -562,11 +562,10 @@
                                                 class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Téléphone<span
                                                     class="text-danger mx-1">*</span></label>
                                             <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                                <input name="telephone" type="number" min="0" minlength="9"
-                                                    maxlength="9"
+                                                <input name="telephone" type="text" maxlength="12"
                                                     class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                                    id="telephone" value="{{ $user->telephone ?? old('telephone') }}"
-                                                    autocomplete="telephone" placeholder="7xxxxxxxx">
+                                                    id="telephone" value="{{ old('telephone', $user->telephone ?? '') }}"
+                                                    autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                                 @error('telephone')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
