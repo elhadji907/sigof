@@ -2551,6 +2551,31 @@
             });
         });
     </script>
+
+    <!-- Script pour ajouter un masque de saisie -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var dateInput = document.getElementById("datepicker");
+
+            dateInput.addEventListener("input", function(e) {
+                var v = e.target.value.replace(/\D/g, ""); // Supprime tout sauf les chiffres
+                if (v.length >= 2) v = v.slice(0, 2) + "/" + v.slice(2);
+                if (v.length >= 5) v = v.slice(0, 5) + "/" + v.slice(5, 9);
+                e.target.value = v.slice(0, 10); // Limite à 10 caractères
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $("#datepicker").datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "1900:2100"
+            });
+        });
+    </script>
     @stack('scripts')
 </body>
 

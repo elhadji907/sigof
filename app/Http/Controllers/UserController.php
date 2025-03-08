@@ -336,7 +336,7 @@ class UserController extends Controller
                 "cin"            => ["nullable", "string", "min:12", "max:14", Rule::unique(User::class)->ignore($id)],
                 'firstname'      => ['required', 'string', 'max:150'],
                 'name'           => ['required', 'string', 'max:50'],
-                'date_naissance' => ['date', 'nullable', 'max:10', 'min:10', 'date_format:Y-m-d'],
+                'date_naissance' => ['nullable', 'date_format:d/m/Y'],
                 'lieu_naissance' => ['string', 'nullable'],
                 'image'          => ['image', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
                 'telephone'      => ['required', 'string', 'max:25', 'min:9'],
@@ -785,7 +785,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-       /*  $nouvelle_formations = Formation::join('individuelles', 'formations.id', 'individuelles.formations_id')
+        /*  $nouvelle_formations = Formation::join('individuelles', 'formations.id', 'individuelles.formations_id')
             ->select('formations.*')
             ->where('individuelles.users_id', $user->id)
             ->where('formations.statut', 'Nouvelle')->get(); */
