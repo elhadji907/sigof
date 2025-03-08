@@ -28,7 +28,7 @@ class ProfileUpdateRequest extends FormRequest
                 'string',
                 'min:16',
                 'max:17',
-                Rule::unique(User::class)->ignore($this->user()->id),          // Validation de l'unicité, à ignorer pour l'utilisateur actuel
+                Rule::unique(User::class)->ignore($this->user()->id), // Validation de l'unicité, à ignorer pour l'utilisateur actuel
             ],
             /* 'cin'                       => ['required', 'string', 'min:16', 'max:17', Rule::unique(User::class)->ignore($this->user()->id)], */
             'username'                  => ['required', 'string'],

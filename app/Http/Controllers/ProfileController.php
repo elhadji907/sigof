@@ -7,6 +7,7 @@ use App\Models\File;
 use App\Models\Individuelle;
 use App\Models\Projet;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -172,13 +173,37 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request, $id): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        /* $request->user()->fill($request->validated()); */
+
+        $user       = User::findOrFail($id);
+        $dateString = $request->input('date_naissance');
+        $date       = Carbon::createFromFormat('d/m/Y', $dateString);
+
+        $user->update([
+            'cin'                       => $request->input('cin'),
+            'username'                  => $request->input('username'),
+            'civilite'                  => $request->input('civilite'),
+            'firstname'                 => $request->input('firstname'),
+            'name'                      => $request->input('name'),
+            'date_naissance'            => $date,
+            'lieu_naissance'            => $request->input('lieu_naissance'),
+            'image'                     => $request->input('image'),
+            'email'                     => $request->input('email'),
+            'telephone'                 => $request->input('telephone'),
+            'adresse'                   => $request->input('adresse'),
+            'situation_familiale'       => $request->input('situation_familiale'),
+            'situation_professionnelle' => $request->input('situation_professionnelle'),
+            'twitter'                   => $request->input('twitter'),
+            'facebook'                  => $request->input('facebook'),
+            'instagram'                 => $request->input('instagram'),
+            'linkedin'                  => $request->input('linkedin'),
+            'web'                       => $request->input('web'),
+            'fixe'                      => $request->input('fixe'),
+        ]);
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
-
-        $user = User::findOrFail($id);
 
         if (request('image')) {
             if (! empty($user->image)) {
