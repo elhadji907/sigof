@@ -73,6 +73,7 @@
                                         <th>Modules</th>
                                         <th>Domaines</th>
                                         <th>Secteurs</th>
+                                        <th>Niveau qualification</th>
                                         <th class="text-center" scope="col">Formations</th>
                                         <th class="text-center" scope="col">Effectif</th>
                                         <th class="text-center" scope="col">#</th>
@@ -85,6 +86,7 @@
                                             <td>{{ $module->name }}</td>
                                             <td>{{ $module?->domaine?->name }}</td>
                                             <td>{{ $module?->domaine?->secteur?->name }}</td>
+                                            <td>{{ $module?->niveau_qualification }}</td>
                                             <td style="text-align: center;">
                                                 @foreach ($module->formations as $formation)
                                                     @if ($loop->last)
@@ -259,7 +261,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                <button type="button" class="btn btn-secondary btn-sm"
+                                    data-bs-dismiss="modal">Fermer</button>
                                 <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-printer"></i>
                                     Enregistrer</button>
                             </div>
@@ -318,7 +321,8 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                    <button type="button" class="btn btn-secondary btn-sm"
+                                        data-bs-dismiss="modal">Fermer</button>
                                     <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-printer"></i>
                                         Modifier</button>
                                 </div>
