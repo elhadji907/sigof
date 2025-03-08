@@ -2584,34 +2584,39 @@
                 var value = e.target.value.replace(/\D/g, ""); // Supprime tout sauf les chiffres
 
                 // Appliquer le format XX:XXX:XX:XX
-                if (value.length > 2) value = value.slice(0, 2) + ":" + value.slice(2);
-                if (value.length > 6) value = value.slice(0, 6) + ":" + value.slice(6);
-                if (value.length > 9) value = value.slice(0, 9) + ":" + value.slice(9, 11);
+                if (value.length > 2) value = value.slice(0, 2) + " " + value.slice(2);
+                if (value.length > 6) value = value.slice(0, 6) + " " + value.slice(6);
+                if (value.length > 9) value = value.slice(0, 9) + " " + value.slice(9, 11);
 
                 e.target.value = value.slice(0, 12); // Limite à 12 caractères (avec les ":")
             });
         });
     </script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var cinInput = document.getElementById("cin");
 
             cinInput.addEventListener("input", function(e) {
                 var value = e.target.value.replace(/[^A-Za-z0-9]/g,
-                ""); // Supprime tout sauf les lettres et les chiffres
+                ""); // Supprimer tout sauf lettres et chiffres
 
-                // Appliquer le format L XXX XXXX XXXXX
-                if (value.length > 1) value = value.slice(0, 1).toUpperCase() + " " + value.slice(
-                1); // Majuscule pour la lettre
-                if (value.length > 5) value = value.slice(0, 5) + " " + value.slice(5);
-                if (value.length > 10) value = value.slice(0, 10) + " " + value.slice(10, 15);
+                // Convertir toutes les lettres en majuscule si elles existent
+                value = value.toUpperCase();
 
-                // Limiter à 13 ou 14 caractères sans compter les espaces
-                e.target.value = value.slice(0, 16); // 1 lettre + 12-13 chiffres + 3 espaces
+                // Appliquer le format: 1 chiffre - espace - 3 chiffres - espace - 4 chiffres - espace - 5 ou 6 chiffres
+                if (value.length > 1) value = value.slice(0, 1) + " " + value.slice(
+                1); // 1er chiffre + espace
+                if (value.length > 5) value = value.slice(0, 5) + " " + value.slice(
+                5); // 3 chiffres + espace
+                if (value.length > 10) value = value.slice(0, 10) + " " + value.slice(
+                10); // 4 chiffres + espace
+
+                // Limiter à 16 ou 17 caractères (espaces inclus)
+                e.target.value = value.slice(0, 17); // 16 ou 17 caractères au total
             });
         });
     </script>
-
 
     @stack('scripts')
 </body>
