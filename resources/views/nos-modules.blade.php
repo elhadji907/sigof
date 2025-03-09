@@ -124,37 +124,37 @@
     </div>
     <h4 style="text-align: center;">NOS MODULES DE FORMATION</h4>
     <div class="invoice-box">
-        <table class="table table-bordered table-striped table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th style="text-align: center;"><b>N°</b></th>
-                    <th><b>MODULES / SPÉCIALITE</b></th>
-                    <th><b>NIVEAU QUALIFICATION</b></th>
-                    {{-- <th><b>DOMAINES</b></th>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped table-hover ms-autor" style="text-align: left;">
+                <thead class="thead-dark">
+                    <tr>
+                        <th style="text-align: center;"><b>N°</b></th>
+                        <th style="text-align: left;"><b>MODULES / SPÉCIALITE</b></th>
+                        <th style="text-align: left;"><b>NIVEAU QUALIFICATION</b></th>
+                        {{-- <th><b>DOMAINES</b></th>
                     <th><b>SECTEURS</b></th>
                     <th><b>NIVEAU ENTRE</b></th>
                     <th><b>TITRE / ATTESTATION</b></th> --}}
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $i = 1;
-                ?>
-
-                @foreach ($modules as $module)
-                    <tr class="item">
-                        <td style="text-align: center;">{{ $i++ }}</td>
-                        <td>{{ remove_accents_uppercase($module?->name) }}</td>
-                        <td>{{ $module?->niveau_qualification }}</td>
-                        {{-- <td>{{ remove_accents_uppercase($module?->domaine?->name) }}</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $i = 1;
+                    ?>
+                    @foreach ($modules as $module)
+                        <tr class="item">
+                            <td style="text-align: center;">{{ $i++ }}</td>
+                            <td>{{ remove_accents_uppercase($module?->name) }}</td>
+                            <td>{{ $module?->niveau_qualification }}</td>
+                            {{-- <td>{{ remove_accents_uppercase($module?->domaine?->name) }}</td>
                         <td>{{ remove_accents_uppercase($module?->domaine?->secteur?->name) }}</td>
                         <td></td>
                         <td></td> --}}
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <footer class="footer">
