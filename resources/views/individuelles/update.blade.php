@@ -239,10 +239,11 @@
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="telephone_secondaire" class="form-label">Téléphone secondaire<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="number" min="0" name="telephone_secondaire"
-                                        value="{{ $individuelle?->telephone ?? old('telephone_secondaire') }}"
+                                    <input name="telephone_secondaire" type="text" maxlength="12"
                                         class="form-control form-control-sm @error('telephone_secondaire') is-invalid @enderror"
-                                        id="telephone_secondaire" placeholder="7xxxxxxxx">
+                                        id="telephone_secondaire"
+                                        value="{{ old('telephone_secondaire', $individuelle?->telephone ?? '') }}"
+                                        autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                     @error('telephone_secondaire')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -572,9 +573,10 @@
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="date_depot" class="form-label">Date dépot<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="date" name="date_depot" value="{{ $individuelle->date_depot->format('Y-m-d') ?? old('date_depot') }}"
-                                        class="datepicker form-control form-control-sm @error('date_depot') is-invalid @enderror"
-                                        id="date_depot" placeholder="jj/mm/aaaa">
+                                    <input type="text" name="date_depot"
+                                        value="{{ old('date_depot', optional($individuelle->date_depot)->format('d/m/Y')) }}"
+                                        class="form-control form-control-sm @error('date_depot') is-invalid @enderror"
+                                        id="datepicker" placeholder="JJ/MM/AAAA" autocomplete="bday">
                                     @error('date_depot')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>

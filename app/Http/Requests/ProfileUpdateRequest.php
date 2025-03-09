@@ -20,6 +20,7 @@ class ProfileUpdateRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\Rule|array|string>
      */
+
     public function rules(): array
     {
         return [
@@ -28,9 +29,8 @@ class ProfileUpdateRequest extends FormRequest
                 'string',
                 'min:16',
                 'max:17',
-                Rule::unique(User::class)->ignore($this->user()->id), // Validation de l'unicité, à ignorer pour l'utilisateur actuel
+                Rule::unique(User::class)->ignore($this->route('user')?->id ?? null)->whereNull('deleted_at'),
             ],
-            /* 'cin'                       => ['required', 'string', 'min:16', 'max:17', Rule::unique(User::class)->ignore($this->user()->id)], */
             'username'                  => ['required', 'string'],
             'civilite'                  => ['required', 'string', 'max:8'],
             'firstname'                 => ['required', 'string', 'max:150'],
@@ -38,17 +38,25 @@ class ProfileUpdateRequest extends FormRequest
             'date_naissance'            => ['nullable', 'date_format:d/m/Y'],
             'lieu_naissance'            => ['required', 'string'],
             'image'                     => ['sometimes', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-            'email'                     => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
-            'telephone'                 => ['required', 'string', 'max:25', 'min:9'],
+            /* 'email'                     => [
+                'nullable',
+                'string',
+                'lowercase',
+                'email',
+                'max:255',
+                Rule::unique(User::class)->ignore($this->route('user')?->id ?? null)->whereNull('deleted_at'),
+            ], */
+            'telephone'                 => ['nullable', 'string', 'min:9', 'max:12'],
             'adresse'                   => ['required', 'string', 'max:255'],
-            'situation_familiale'       => ['required', 'max:15', 'string'],
-            'situation_professionnelle' => ['required', 'max:25', 'string'],
+            'situation_familiale'       => ['required', 'string', 'max:15'],
+            'situation_professionnelle' => ['required', 'string', 'max:25'],
             'twitter'                   => ['nullable', 'string', 'max:255'],
             'facebook'                  => ['nullable', 'string', 'max:255'],
             'instagram'                 => ['nullable', 'string', 'max:255'],
             'linkedin'                  => ['nullable', 'string', 'max:255'],
             'web'                       => ['nullable', 'string', 'max:255'],
-            'fixe'                      => ['string', 'string', 'max:255'],
+            'fixe'                      => ['nullable', 'string', 'max:255'],
         ];
     }
+
 }

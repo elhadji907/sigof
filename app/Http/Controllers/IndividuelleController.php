@@ -11,12 +11,12 @@ use App\Models\Projet;
 use App\Models\Region;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
+use Carbon\Carbon;
 
 class IndividuelleController extends Controller
 {
@@ -701,10 +701,9 @@ class IndividuelleController extends Controller
                 $this->authorize('update', $individuelle);
             }
         }
-
         $this->validate($request, [
-            'date_depot'             => ['required', 'date', 'min:10', 'max:10', 'date_format:Y-m-d'],
-            'telephone_secondaire'   => ['required', 'string', 'min:9', 'max:9'],
+            'date_depot'             => ['required', 'date_format:d/m/Y'],
+            'telephone_secondaire'   => ['required', 'string', 'min:9', 'max:12'],
             'adresse'                => ['required', 'string', 'max:255'],
             'departement'            => ['required', 'string', 'max:255'],
             'module'                 => ['required', 'string', 'max:255'],
@@ -712,9 +711,20 @@ class IndividuelleController extends Controller
             'diplome_academique'     => ['required', 'string', 'max:255'],
             'diplome_professionnel'  => ['required', 'string', 'max:255'],
             'projet_poste_formation' => ['required', 'string', 'max:255'],
+        ], [
+            'date_depot.required'             => 'La date de dépôt est obligatoire.',
+            'telephone_secondaire.required'   => 'Le téléphone secondaire est obligatoire.',
+            'adresse.required'                => 'L\'adresse est obligatoire.',
+            'departement.required'            => 'Le département est obligatoire.',
+            'module.required'                 => 'Le module est obligatoire.',
+            'niveau_etude.required'           => 'Le niveau d\'étude est obligatoire.',
+            'diplome_academique.required'     => 'Le diplôme académique est obligatoire.',
+            'diplome_professionnel.required'  => 'Le diplôme professionnel est obligatoire.',
+            'projet_poste_formation.required' => 'Le projet poste de formation est obligatoire.',
         ]);
 
-        $date_depot = date('Y-m-d H:i:s', strtotime($request->input('date_depot')));
+        $dateString = $request->input('date_depot');
+        $date_depot       = Carbon::createFromFormat('d/m/Y', $dateString);
 
         $projet = Projet::where('sigle', $request->input("projet"))->first();
 

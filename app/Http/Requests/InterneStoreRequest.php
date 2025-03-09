@@ -1,8 +1,8 @@
 <?php
-
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class InterneStoreRequest extends FormRequest
 {
@@ -21,14 +21,26 @@ class InterneStoreRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [           
-            'date_arrivee'              =>  ["required", "date", "min:10", "max:10", "date_format:Y-m-d"],
-            'date_correspondance'       =>  ["required", "date", "min:10", "max:10", "date_format:Y-m-d"],
-            'numero_arrive'             =>  ["required", "string", "min:4", "max:6", "unique:internes,numero,Null,id,deleted_at,NULL"],
-            'numero_correspondance'     =>  ["required", "string", "min:4", "max:6", "unique:courriers,numero,Null,id,deleted_at,NULL"],
-            'annee'                     =>  ['required','numeric','min:2022'],
-            'expediteur'                =>  ['required','string','max:200'],
-            'objet'                     =>  ['required','string','max:200'],
+        return [
+            'date_arrivee'          => ["required", "date", "date_format:Y-m-d"],
+            'date_correspondance'   => ["required", "date", "date_format:Y-m-d"],
+            'numero_arrive'         => [
+                "required",
+                "string",
+                "min:4",
+                "max:6",
+                Rule::unique('internes', 'numero')->whereNull('deleted_at'),
+            ],
+            'numero_correspondance' => [
+                "required",
+                "string",
+                "min:4",
+                "max:6",
+                Rule::unique('courriers', 'numero')->whereNull('deleted_at'),
+            ],
+            'annee'                 => ['required', 'numeric', 'min:2022'],
+            'expediteur'            => ['required', 'string', 'max:200'],
+            'objet'                 => ['required', 'string', 'max:200'],
         ];
     }
 }

@@ -40,7 +40,7 @@
                             <button type="button" class="btn btn-info btn-sm">
                                 <span class="badge bg-white text-info">{{ $individuelle_total }}/3</span>
                             </button>
-                            @if(!empty(Auth::user()->cin))
+                            @if (!empty(Auth::user()->cin))
                                 <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded"
                                     data-bs-toggle="modal" data-bs-target="#AddIndividuelleModal">
                                     <i class="bi bi-plus" title="Ajouter"></i>
@@ -48,7 +48,8 @@
                             @endif
                         </div>
                         <h5 class="card-title">
-                            Bonjour {{ Auth::user()->civilite . ' ' . Auth::user()->firstname. ' ' . Auth::user()->name }}</h5>
+                            Bonjour {{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name }}
+                        </h5>
                         <table class="table table-bordered table-hover table-borderless">
                             <thead>
                                 <tr>
@@ -66,7 +67,7 @@
                             <tbody>
                                 <?php $i = 1; ?>
                                 @foreach ($individuelles as $individuelle)
-                                    @if(!empty($individuelle->numero))
+                                    @if (!empty($individuelle->numero))
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $individuelle?->numero }}</td>
@@ -99,7 +100,8 @@
                                                                     method="post">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <button type="submit" class="dropdown-item show_confirm"
+                                                                    <button type="submit"
+                                                                        class="dropdown-item show_confirm"
                                                                         title="Supprimer"><i
                                                                             class="bi bi-trash"></i>Supprimer</button>
                                                                 </form>
@@ -118,11 +120,12 @@
                 </div>
             </div>
         </div>
-        
+
         {{-- Ajouter un autre choix --}}
 
         @foreach (Auth::user()?->individuelles as $individuelle)
-            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
+            <div
+                class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
                 <div class="modal fade" id="AddIndividuelleModal" tabindex="-1">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
@@ -225,10 +228,11 @@
                                         <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="telephone_secondaire" class="form-label">Téléphone secondaire<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="number" name="telephone_secondaire" min="0"
-                                                value="{{ $individuelle?->telephone ?? old('telephone_secondaire') }}"
+                                            <input name="telephone_secondaire" type="text" maxlength="12"
                                                 class="form-control form-control-sm @error('telephone_secondaire') is-invalid @enderror"
-                                                id="telephone_secondaire" placeholder="7x xxx xx xx">
+                                                id="telephone_secondaire"
+                                                value="{{ old('telephone_secondaire', $individuelle->telephone ?? '') }}"
+                                                autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                             @error('telephone_secondaire')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>

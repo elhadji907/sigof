@@ -57,7 +57,7 @@ class ModuleController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            "name"    => ["required", "string", Rule::unique(Module::class)->ignore($id)],
+            "name"    => ["required", "string", Rule::unique(Module::class)->ignore($id)->whereNull('deleted_at')],
             "domaine" => ["required", "string"],
         ]);
 
@@ -121,7 +121,7 @@ class ModuleController extends Controller
     public function addModule(Request $request)
     {
         $this->validate($request, [
-            "name"    => ["required", "string", Rule::unique(Module::class)],
+            "name"    => ["required", "string", Rule::unique(Module::class)->whereNull('deleted_at')],
             "domaine" => ["nullable", "string"],
         ]);
 

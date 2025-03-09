@@ -35,7 +35,7 @@ class DomaineController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            "name"             => ["required", "string", Rule::unique(Domaine::class)->ignore($id)],
+            "name"             => ["required", "string", Rule::unique(Domaine::class)->ignore($id)->whereNull('deleted_at')],
             "secteur"          => ["required", "string"],
         ]);
 

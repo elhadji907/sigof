@@ -299,7 +299,7 @@
                                         <input type="number" min="0" name="numero_arrive"
                                             value="{{ $numCourrier ?? old('numero_arrive') }}"
                                             class="form-control form-control-sm @error('numero_arrive') is-invalid @enderror"
-                                            id="numero_arrive" placeholder="Numéro de correspondance">
+                                            id="numero_arrive" placeholder="Numéro courrier">
                                         @error('numero_arrive')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>

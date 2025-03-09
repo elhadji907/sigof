@@ -2,6 +2,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class DepartStoreRequest extends FormRequest
 {
@@ -18,18 +19,34 @@ class DepartStoreRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+
     public function rules(): array
     {
         return [
-            "date_depart"     => ["required", "date", "max:10", "min:10", "date_format:Y-m-d"],
-            "date_corres"     => ["required", "date", "max:10", "min:10", "date_format:Y-m-d"],
-            "numero_courrier" => ["required", "string", "min:4", "max:6", "unique:courriers,numero_courrier,Null,id,deleted_at,NULL"],
-            "numero_depart"   => ["required", "string", "min:4", "max:6", "unique:departs,numero_depart,Null,id,deleted_at,NULL"],
-            "annee"           => ["required", "string"],
-            "objet"           => ["required", "string"],
-            "destinataire"    => ["required", "string"],
-            "numero_reponse"  => ["string", "min:4", "max:6", "nullable", "unique:courriers,numero_reponse,Null,id,deleted_at,NULL"],
-            "date_reponse"    => ["nullable", "date", "max:10", "min:10", "date_format:Y-m-d"],
+            "date_depart"     => ["required", "date", "date_format:Y-m-d"],
+            "date_corres"     => ["required", "date", "date_format:Y-m-d"],
+
+            "numero_courrier" => [
+                "required", "string", "min:4", "max:6",
+                Rule::unique('courriers', 'numero_courrier')->whereNull('deleted_at'),
+            ],
+
+            "numero_depart"   => [
+                "required", "string", "min:4", "max:6",
+                Rule::unique('departs', 'numero_depart')->whereNull('deleted_at'),
+            ],
+
+            "annee"           => ["required", "integer", "min:1900", "max:" . date('Y')],
+            "objet"           => ["required", "string", "max:255"],
+            "destinataire"    => ["required", "string", "max:255"],
+
+            "numero_reponse"  => [
+                "nullable", "string", "min:4", "max:6",
+                Rule::unique('courriers', 'numero_reponse')->whereNull('deleted_at'),
+            ],
+
+            "date_reponse"    => ["nullable", "date", "date_format:Y-m-d"],
         ];
     }
+
 }

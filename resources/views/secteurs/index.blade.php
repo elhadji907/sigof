@@ -124,7 +124,7 @@
                             </div>
                             <div class="modal-body">
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="secteur" value="{{ old('secteur') }}"
+                                    <input type="text" name="name" value="{{ old('secteur') }}"
                                         class="form-control form-control-sm @error('secteur') is-invalid @enderror"
                                         id="secteur" placeholder="Nom secteur" autofocus>
                                     @error('secteur')

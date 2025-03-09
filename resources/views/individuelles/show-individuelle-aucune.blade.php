@@ -135,10 +135,11 @@
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="telephone_secondaire" class="form-label">Téléphone secondaire<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="number" name="telephone_secondaire" min="0"
-                                            value="{{ Auth::user()?->telephone_secondaire ?? old('telephone_secondaire') }}"
+                                        <input name="telephone_secondaire" type="text" maxlength="12"
                                             class="form-control form-control-sm @error('telephone_secondaire') is-invalid @enderror"
-                                            id="telephone_secondaire" placeholder="7x xxx xx xx">
+                                            id="telephone_secondaire"
+                                            value="{{ old('telephone_secondaire', $individuelle->telephone ?? '') }}"
+                                            autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                         @error('telephone_secondaire')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
