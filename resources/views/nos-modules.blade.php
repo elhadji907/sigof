@@ -145,7 +145,7 @@
                     <tr class="item">
                         <td style="text-align: center;">{{ $i++ }}</td>
                         <td>{{ remove_accents_uppercase($module?->name) }}</td>
-                        <td>{{ format_proper_name($module?->niveau_qualification) }}</td>
+                        <td>{{ $module?->niveau_qualification }}</td>
                         {{-- <td>{{ remove_accents_uppercase($module?->domaine?->name) }}</td>
                         <td>{{ remove_accents_uppercase($module?->domaine?->secteur?->name) }}</td>
                         <td></td>
