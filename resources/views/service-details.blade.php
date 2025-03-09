@@ -29,7 +29,7 @@
                             <h4><i class="bi bi-link-45deg text-2xl mr-2"></i> Ressources Utiles</h4>
                             <div class="services-list">
                                 <a href="#" class="video-link active"
-                                    data-video="https://www.youtube.com/embed/SJjW_yaZBP4"
+                                    data-video="https://www.youtube.com/embed/JW-hyOR8h_g"
                                     data-title="Création d’un compte personnel"
                                     data-description="Cette vidéo vous explique comment créer un compte pour soumettre une demande de formation, qu'elle soit individuelle ou collective, auprès de l'ONFP.">
                                     <i class="bi bi-arrow-right-circle"></i><span>Créer un compte personnel</span>
@@ -43,7 +43,7 @@
                                 </a>
 
                                 <a href="#" class="video-link"
-                                    data-video="https://www.youtube.com/embed/ANOTHER_VIDEO_ID"
+                                    data-video="https://www.youtube.com/embed/JW-hyOR8h_g"
                                     data-title="Processus de soummission de demande individuelle"
                                     data-description="Cette vidéo vous guide dans la soumission d'une demande de formation individuelle au sein de l'ONFP">
                                     <i class="bi bi-arrow-right-circle"></i><span>Soumettre demande individuelle</span>
