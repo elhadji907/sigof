@@ -129,10 +129,11 @@
                 <tr>
                     <th style="text-align: center;"><b>N°</b></th>
                     <th><b>MODULES / SPÉCIALITE</b></th>
-                    <th><b>DOMAINES</b></th>
+                    <th><b>NIVEAU QUALIFICATION</b></th>
+                    {{-- <th><b>DOMAINES</b></th>
                     <th><b>SECTEURS</b></th>
                     <th><b>NIVEAU ENTRE</b></th>
-                    <th><b>TITRE / ATTESTATION</b></th>
+                    <th><b>TITRE / ATTESTATION</b></th> --}}
                 </tr>
             </thead>
             <tbody>
@@ -144,11 +145,11 @@
                     <tr class="item">
                         <td style="text-align: center;">{{ $i++ }}</td>
                         <td>{{ remove_accents_uppercase($module?->name) }}</td>
-                        <td>{{ remove_accents_uppercase($module?->domaine?->name) }}</td>
-                        {{-- Afficher le secteur normalement --}}
+                        <td>{{ format_proper_name($module?->niveau_qualification) }}</td>
+                        {{-- <td>{{ remove_accents_uppercase($module?->domaine?->name) }}</td>
                         <td>{{ remove_accents_uppercase($module?->domaine?->secteur?->name) }}</td>
                         <td></td>
-                        <td></td>
+                        <td></td> --}}
                     </tr>
                 @endforeach
             </tbody>

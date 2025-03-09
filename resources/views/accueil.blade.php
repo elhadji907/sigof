@@ -31,24 +31,33 @@
                     @endif
                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                         <div class="hero-content" data-aos="fade-up" data-aos-delay="200">
-                            <div class="company-badge mb-4">
-                                <i class="bi bi-gear-fill me-2"></i>
-                                ONFP - La référence de la formation professionnelle
-                            </div>
 
-                            <h1 class="mb-4">
-                                @if (!empty($une?->titre1))
-                                    {{ $une?->titre1 }} <br>
-                                @else
-                                    M. Mouhamadou Lamine Bara LO <br>
-                                @endif
+                            @if (!empty($une?->titre1))
+                                <div class="company-badge mb-4">
+                                    <i class="bi bi-gear-fill me-2"></i>
+                                    ONFP - La référence de la formation professionnelle
+                                </div>
+                                <h1 class="mb-4">
+                                    @if (!empty($une?->titre1))
+                                        {{ $une?->titre1 }} <br>
+                                    @else
+                                        M. Mouhamadou Lamine Bara LO <br>
+                                    @endif
 
-                                @if (!empty($une?->titre2))
-                                    <span class="accent-text">{{ $une?->titre2 }}</span>
-                                @else
-                                    <span class="accent-text">Directeur Général</span>
-                                @endif
-                            </h1>
+                                    @if (!empty($une?->titre2))
+                                        <span class="accent-text">{{ $une?->titre2 }}</span>
+                                    @else
+                                        <span class="accent-text">Directeur Général</span>
+                                    @endif
+                                </h1>
+                            @else
+                                <h2 class="mb-4 text-center">
+                                    ONFP<br>
+                                    LA REFERENCE<br>
+                                    <span class="accent-text">DE LA FORMATION</span><br>
+                                    <span class="accent-text">PROFESSIONNELLE AU SENEGAL</span>
+                                </h2>
+                            @endif
 
                             <p class="mb-4 mb-md-5">
                                 @if (!empty($une?->message))
@@ -119,7 +128,8 @@
                                             <span>Comment devenir opérateur ?</span>
                                         </a>
                                         <a href="{{ route('nos-modules') }}"
-                                            class="flex items-center text-gray-700 hover:text-blue-500 transition duration-300" target="_blank">
+                                            class="flex items-center text-gray-700 hover:text-blue-500 transition duration-300"
+                                            target="_blank">
                                             <i class="bi bi-filetype-pdf"></i>
                                             <span>Quels sont nos modules de formation ?</span>
                                         </a>
