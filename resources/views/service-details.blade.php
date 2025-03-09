@@ -43,7 +43,7 @@
                                 </a>
 
                                 <a href="#" class="video-link"
-                                    data-video="https://www.youtube.com/embed/lceGzvSiL1Y"
+                                    data-video="https://www.youtube.com/embed/Vz9wj9snVAY"
                                     data-title="Processus de soummission de demande individuelle"
                                     data-description="Cette vidéo vous guide dans la soumission d'une demande de formation individuelle au sein de l'ONFP">
                                     <i class="bi bi-arrow-right-circle"></i><span>Soumettre demande individuelle</span>
