@@ -55,9 +55,9 @@
                             <table class="table datatables align-middle justify-content-center" id="table-secteurs">
                                 <thead>
                                     <tr>
-                                        <th class="text-center"  width="5%">N°</th>
+                                        <th class="text-center" width="5%">N°</th>
                                         <th width="80%">Secteurs</th>
-                                        <th class="text-center"  width="15%">#</th>
+                                        <th class="text-center" width="15%">#</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -118,8 +118,13 @@
                         @csrf --}}
                         <form method="post" action="{{ url('secteurs') }}" enctype="multipart/form-data" class="row g-3">
                             @csrf
-                            <div class="modal-header">
+                            {{-- <div class="modal-header">
                                 <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter un secteur</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div> --}}
+
+                            <div class="modal-header">
+                                <h5 class="modal-title">Ajouter un nouveau secteur d'activité</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -137,8 +142,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                    Enregistrer</button>
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
                             </div>
                         </form>
                     </div>
