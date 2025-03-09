@@ -95,7 +95,7 @@
                     <div class="col-lg-8 ps-lg-5" data-aos="fade-up" data-aos-delay="200">
                         <div class="video-container">
                             <iframe id="video-frame" width="100%" height="500"
-                                src="https://www.youtube.com/embed/SJjW_yaZBP4" frameborder="0"
+                                src="https://www.youtube.com/embed/JW-hyOR8h_g" frameborder="0"
                                 allowfullscreen></iframe>
                         </div>
 
