@@ -35,14 +35,14 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');
+        /* $this->middleware('auth');
         $this->middleware(['role:super-admin|admin|DIOF|DEC|DPP']);
         $this->middleware("permission:user-view", ["only" => ["index"]]);
         $this->middleware("permission:user-create", ["only" => ["create", "store"]]);
         $this->middleware("permission:user-update", ["only" => ["update", "edit"]]);
         $this->middleware("permission:user-show", ["only" => ["show"]]);
         $this->middleware("permission:user-delete", ["only" => ["destroy"]]);
-        $this->middleware("permission:give-role-permissions", ["only" => ["givePermissionsToRole"]]);
+        $this->middleware("permission:give-role-permissions", ["only" => ["givePermissionsToRole"]]); */
     }
 
     public function homePage()
@@ -333,13 +333,19 @@ class UserController extends Controller
             $this->validate($request, [
                 'civilite'       => ['nullable', 'string', 'max:10'],
                 'username'       => ["required", "string", "max:25", Rule::unique(User::class)->ignore($id)],
-                "cin"            => ["nullable", "string", "min:12", "max:14", Rule::unique(User::class)->ignore($id)],
+                'cin'            => [
+                    'required',
+                    'string',
+                    'min:16',
+                    'max:17',
+                    Rule::unique(User::class)->ignore($id ?? null)->whereNull('deleted_at'),
+                ],
                 'firstname'      => ['required', 'string', 'max:150'],
                 'name'           => ['required', 'string', 'max:50'],
                 'date_naissance' => ['nullable', 'date_format:d/m/Y'],
                 'lieu_naissance' => ['string', 'nullable'],
                 'image'          => ['image', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
-                'telephone'      => ['required', 'string', 'max:25', 'min:9'],
+                'telephone'      => ['required', 'string', 'max:12', 'min:9'],
                 'adresse'        => ['required', 'string', 'max:255'],
                 'roles.*'        => ['string', 'max:255', 'nullable', 'max:255'],
                 "email"          => ["lowercase", 'email', "max:255", Rule::unique(User::class)->ignore($id)],

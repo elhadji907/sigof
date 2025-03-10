@@ -24,7 +24,6 @@ class UpdateUserRequest extends FormRequest
 
     public function rules(): array
     {
-        dd("ok");
         return [
             'firstname' => ['required', 'string', 'max:150'],
             'name'      => ['required', 'string', 'max:25'],
@@ -36,10 +35,11 @@ class UpdateUserRequest extends FormRequest
                 Rule::unique(User::class)->ignore($this->user()->id)->whereNull('deleted_at'),
             ],
             'cin'       => [
-                'nullable',
+                'required',
                 'string',
-                'max:255',
-                Rule::unique(User::class)->ignore($this->user()->id)->whereNull('deleted_at'),
+                'min:16',
+                'max:17',
+                Rule::unique(User::class)->ignore($this->route('user')?->id ?? null)->whereNull('deleted_at'),
             ],
             'image'     => ['image', 'max:255', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
             'telephone' => ['required', 'string', 'max:9', 'min:9'],

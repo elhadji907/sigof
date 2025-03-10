@@ -1,10 +1,10 @@
 <?php
-
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -339,12 +339,13 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         foreach ($this->permissions as $permission) {
-            Permission::create(['name' => $permission]);
+            /* Permission::create(['name' => $permission]); */
+            if (! Permission::where('name', $permission)->where('guard_name', 'web')->exists()) {
+                Permission::create(['name' => $permission, 'guard_name' => 'web']);
+            }
         }
-
-
         // Create admin User and assign the role to him.
-       /*  $user = User::create([
+        /*  $user = User::create([
             'name' => 'Prevail Ejimadu',
             'email' => 'test@example.com',
             'password' => Hash::make('password')
@@ -357,7 +358,6 @@ class DatabaseSeeder extends Seeder
         $role->syncPermissions($permissions);
  */
         /* $user->assignRole([$role->id]); */
-
 
         $this->call([
             CategorieSeeder::class,

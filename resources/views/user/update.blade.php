@@ -138,7 +138,8 @@
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
                                         {{-- <span class="input-group-text" id="email">@</span> --}}
-                                        <input type="email" name="email" value="{{ $user->email ?? old('email') }}"
+                                        <input type="email" name="email"
+                                            value="{{ old('email', $user->email ?? '') }}"
                                             class="form-control form-control-sm @error('email') is-invalid @enderror"
                                             id="email" placeholder="email">
                                         @error('email')
@@ -152,10 +153,10 @@
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="telephone" class="form-label">Téléphone<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="number" min="0" minlength="9" maxlength="9" name="telephone"
-                                        value="{{ $user->telephone ?? old('telephone') }}"
+                                    <input name="telephone" type="text" maxlength="12"
                                         class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                        id="telephone" placeholder="7xxxxxxxx">
+                                        id="telephone" value="{{ old('telephone', $user->telephone ?? '') }}"
+                                        autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                     @error('telephone')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -242,7 +243,7 @@
                                     @enderror
                                 </div>
 
-                               {{--  <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                {{--  <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="password" class="form-label">Modifier mot de passe</label>
                                     <input type="password" name="password"
                                         class="form-control form-control-sm @error('password') is-invalid @enderror"
