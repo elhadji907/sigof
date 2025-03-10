@@ -40,7 +40,7 @@
                                 @enderror
                             </div>
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Modifier</button>
+                                <button type="submit" class="btn btn-primary btn-sm">Modifier</button>
                             </div>
                         </form><!-- End role -->
                     </div>

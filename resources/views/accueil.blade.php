@@ -51,7 +51,7 @@
                                     @endif
                                 </h1>
                             @else
-                                <h2 class="mb-4 text-center">
+                                <h2 class="mb-4">
                                     ONFP<br>
                                     LA REFERENCE<br>
                                     <span class="accent-text">DE LA FORMATION</span><br>

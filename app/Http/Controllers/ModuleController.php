@@ -48,6 +48,14 @@ class ModuleController extends Controller
             )
         );
     }
+
+    public function edit($id)
+    {
+        $module = Module::find($id);
+        $domaines = Domaine::orderBy("created_at", "desc")->get();
+        return view("modules.update", compact("module", "domaines"));
+    }
+
     public function show($id)
     {
         $module = Module::find($id);
