@@ -23,9 +23,9 @@
                         <li> <a href="#" data-bs-toggle="modal"
                                 data-bs-target="#registerDemandeurModal">Compte personnel</a>
                         </li>
-                        <li><a href="#" data-bs-toggle="modal" data-bs-target="#registerOperateurModal">Compte
+                        {{-- <li><a href="#" data-bs-toggle="modal" data-bs-target="#registerOperateurModal">Compte
                                 opérateur</a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </li>
 
