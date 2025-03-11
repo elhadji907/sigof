@@ -237,9 +237,9 @@ class ModuleSeeder extends Seeder
         ]);
 
         DB::table('modules')->insert([
-            "name"                 => "Conducteur d’engins (chargeuse, pelle hydraulique, camion, bulldozer, niveleuse, etc.)",
+            "name"                 => "Conducteur d'engins (chargeuse, pelle hydraulique, camion, bulldozer, niveleuse, etc.)",
             "domaines_id"          => "2",
-            "niveau_qualification" => "Conducteur d’engins",
+            "niveau_qualification" => "Conducteur d'engins",
             'created_at'           => now(),
             'updated_at'           => now(),
             "uuid"                 => Str::uuid(),
@@ -482,7 +482,7 @@ class ModuleSeeder extends Seeder
         DB::table('modules')->insert([
             "name"                 => "Élevage",
             "domaines_id"          => "1",
-            "niveau_qualification" => "Agent de production, agent, technicien d’embouche",
+            "niveau_qualification" => "Agent de production, technicien d'embouche",
             'created_at'           => now(),
             'updated_at'           => now(),
             "uuid"                 => Str::uuid(),
@@ -696,7 +696,7 @@ class ModuleSeeder extends Seeder
         ]);
 
         DB::table('modules')->insert([
-            "name"                 => "Installation de réseau d’irrigation",
+            "name"                 => "Installation de réseau d'irrigation",
             "domaines_id"          => "2",
             "niveau_qualification" => "Technicien",
             'created_at'           => now(),
@@ -1011,7 +1011,7 @@ class ModuleSeeder extends Seeder
         ]);
 
         DB::table('modules')->insert([
-            "name"                 => "Producteur d’élevage",
+            "name"                 => "Producteur d'élevage",
             "domaines_id"          => "1",
             "niveau_qualification" => "Technicien, agent",
             'created_at'           => now(),
@@ -1272,9 +1272,9 @@ class ModuleSeeder extends Seeder
         ]);
 
         DB::table('modules')->insert([
-            "name"                 => "Techniques d’élevage",
+            "name"                 => "Techniques d'élevage",
             "domaines_id"          => "1",
-            "niveau_qualification" => "Ouvrier, agent d’élevage",
+            "niveau_qualification" => "Ouvrier, agent d'élevage",
             'created_at'           => now(),
             'updated_at'           => now(),
             "uuid"                 => Str::uuid(),
@@ -1560,7 +1560,7 @@ class ModuleSeeder extends Seeder
         ]);
 
         DB::table('modules')->insert([
-            "name"                 => "Transformation et conservation des produits d’anacarde",
+            "name"                 => "Transformation et conservation des produits d'anacarde",
             "domaines_id"          => "2",
             "niveau_qualification" => "Agent de transformation",
             'created_at'           => now(),
