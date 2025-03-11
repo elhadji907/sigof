@@ -21,7 +21,8 @@
                 <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
                     <div class="card mb-0">
                         @can('collective-view')
-                            <span class="nav-link"><a href="{{ route('collectivemodules.show', $listecollective?->collectivemodule?->id) }}"
+                            <span class="nav-link"><a
+                                    href="{{ route('collectivemodules.show', $listecollective?->collectivemodule?->id) }}"
                                     class="btn btn-secondary btn-sm" title="retour"><i
                                         class="bi bi-arrow-counterclockwise"></i></a>
                             </span>
@@ -36,10 +37,11 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="cin" class="form-label">CIN<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="cin"
-                                            value="{{ old('cin') ?? $listecollective?->cin }}"
+                                        <input name="cin" type="text"
                                             class="form-control form-control-sm @error('cin') is-invalid @enderror"
-                                            id="cin" placeholder="CIN">
+                                            id="cin" value="{{ old('cin') ?? $listecollective?->cin }}"
+                                            autocomplete="off" placeholder="Ex: 1 099 2005 00012" minlength="16"
+                                            maxlength="17" required>
                                         @error('cin')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -101,10 +103,10 @@
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="date_naissance" class="form-label">Date naissance<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="date" name="date_naissance"
-                                            value="{{ $listecollective?->date_naissance->format('Y-m-d') ?? old('date_naissance') }}"
-                                            class="datepicker form-control form-control-sm @error('date_naissance') is-invalid @enderror"
-                                            id="date_naissance" placeholder="dd-mm-aaaa">
+                                        <input type="text" name="date_naissance"
+                                            value="{{ old('date_naissance', optional($listecollective?->date_naissance)->format('d/m/Y')) }}"
+                                            class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
+                                            id="datepicker" placeholder="JJ/MM/AAAA" autocomplete="bday">
                                         @error('date_naissance')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -132,10 +134,11 @@
 
                                     <div class="col-12 col-md-4 col-lg-4 mb-0">
                                         <label for="telephone" class="form-label">Téléphone</label>
-                                        <input type="number" min="0" name="telephone"
-                                            value="{{ $listecollective?->telephone ?? old('telephone') }}"
+                                        <input name="telephone" type="text" maxlength="12"
                                             class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                            id="telephone" placeholder="7xxxxxxxx">
+                                            id="telephone"
+                                            value="{{ old('telephone', $listecollective->telephone ?? '') }}"
+                                            autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                         @error('telephone')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -213,7 +216,8 @@
                                         @enderror
                                     </div>
                                     <div class="modal-footer text-center">
-                                        <button type="submit" class="btn btn-outline-primary btn-sm">Enregister les modifications</button>
+                                        <button type="submit" class="btn btn-outline-primary btn-sm">Enregister les
+                                            modifications</button>
                                     </div>
                                 </div>
                             </form>

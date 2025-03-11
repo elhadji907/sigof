@@ -226,35 +226,28 @@
                                                 </span>
                                             @endcan
                                             {{-- @endif --}}
-                                            @foreach ($collective->collectivemodules as $collectivemodule)
-                                            @endforeach
-                                            {{-- @if ($collectivemodule)
-                                                <button type="button"
-                                                    class="btn btn-outline-primary btn-sm float-end btn-rounded"
-                                                    data-bs-toggle="modal" data-bs-target="#AddIndividuelleModal">
-                                                    <i class="bi bi-person-plus" title="Ajouter module"></i>
-                                                </button>
-                                            @endif --}}
-                                            @if (!empty($ingenieur))
-                                                <div class="d-flex justify-content-between align-items-center">
-                                                    <h5 class="card-title">
-                                                        {{ $ingenieur?->name }}
-                                                        @can('ingenieur-check')
-                                                            <a class="btn btn-info btn-sm" title=""
-                                                                href="{{ route('ingenieurs.show', $collective?->id) }}"><i
-                                                                    class="bi bi-eye"></i></a>&nbsp;
-                                                            <a href="{{ route('addcollectiveingenieurs', $collective?->id) }}"
-                                                                class="btn btn-primary float-end btn-sm">Changer ingénieur</a>
-                                                        @endcan
-                                                    </h5>
-                                                </div>
-                                            @else
-                                                <div class="pb-2">
-                                                    <a href="{{ route('addcollectiveingenieurs', $collective?->id) }}"
-                                                        class="btn btn-primary float-end btn-sm">imputer
-                                                        ingénieur</a>
-                                                </div>
-                                            @endif
+                                            @can('diof')
+                                                @if ($ingenieur)
+                                                    <div class="d-flex justify-content-between align-items-center">
+                                                        <h5 class="card-title">
+                                                            {{ $ingenieur->name }}
+                                                            @can('ingenieur-check')
+                                                                <a class="btn btn-info btn-sm" title="Voir ingénieur"
+                                                                    href="{{ route('ingenieurs.show', $collective->id) }}">
+                                                                    <i class="bi bi-eye"></i>
+                                                                </a>&nbsp;
+                                                                <a href="{{ route('addcollectiveingenieurs', $collective->id) }}"
+                                                                    class="btn btn-primary float-end btn-sm">Changer ingénieur</a>
+                                                            @endcan
+                                                        </h5>
+                                                    </div>
+                                                @else
+                                                    <div class="pb-2">
+                                                        <a href="{{ route('addcollectiveingenieurs', $collective->id) }}"
+                                                            class="btn btn-primary float-end btn-sm">Imputer ingénieur</a>
+                                                    </div>
+                                                @endif
+                                            @endcan
                                         </div>
                                         <p>Liste des membres</p>
                                         @if (!empty($listecollective))

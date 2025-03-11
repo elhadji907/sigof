@@ -53,7 +53,7 @@ class CollectiveController extends Controller
             "email"                 => ["required", "string", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "fixe"                  => ["nullable", "string", "min:9", "max:9", Rule::unique('collectives')->where(function ($query) {
+            "fixe"                  => ["nullable", "string", "min:9", "max:12", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
             "telephone"             => ["required", "string", Rule::unique('collectives')->where(function ($query) {
@@ -211,7 +211,7 @@ class CollectiveController extends Controller
             "email"                 => ["required", "string", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "fixe"                  => ["nullable", "string", "min:9", "max:9", Rule::unique('collectives')->where(function ($query) {
+            "fixe"                  => ["nullable", "string", "min:9", "max:12", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
             "telephone"             => ["required", "string", "min:9", "max:12", Rule::unique('collectives')->where(function ($query) {

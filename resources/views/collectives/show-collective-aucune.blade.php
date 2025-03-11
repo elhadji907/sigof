@@ -362,8 +362,7 @@
                                 <div class="modal-footer mt-5">
                                     <button type="button" class="btn btn-secondary btn-sm"
                                         data-bs-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-printer"></i>
-                                        Enregistrer</button>
+                                    <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
                                 </div>
                             </div>
                         </form>

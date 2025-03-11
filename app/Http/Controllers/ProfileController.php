@@ -7,7 +7,6 @@ use App\Models\File;
 use App\Models\Individuelle;
 use App\Models\Projet;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,6 +16,7 @@ use Illuminate\View\View;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 
 class ProfileController extends Controller
 {
