@@ -35,12 +35,12 @@
                                     <i class="bi bi-arrow-right-circle"></i><span>Créer un compte personnel</span>
                                 </a>
 
-                                <a href="#" class="video-link"
+                                {{-- <a href="#" class="video-link"
                                     data-video="https://www.youtube.com/embed/ANOTHER_VIDEO_ID"
                                     data-title="Création d’un compte opérateur"
                                     data-description="Cette vidéo vous guide dans la création d'un compte afin de déposer une demande d'agrément en tant qu'opérateur de formation potentiel auprès de l'ONFP.">
                                     <i class="bi bi-arrow-right-circle"></i><span>Créer un compte opérateur</span>
-                                </a>
+                                </a> --}}
 
                                 <a href="#" class="video-link"
                                     data-video="https://www.youtube.com/embed/Vz9wj9snVAY"
@@ -50,19 +50,19 @@
                                 </a>
 
                                 <a href="#" class="video-link"
-                                    data-video="https://www.youtube.com/embed/ANOTHER_VIDEO_ID"
+                                    data-video="https://www.youtube.com/embed/TmhDWG35-Cw"
                                     data-title="Processus de soummission de demande collective"
                                     data-description="Cette vidéo vous guide dans la soumission d'une demande de formation collective au sein de l'ONFP">
                                     <i class="bi bi-arrow-right-circle"></i><span>Soumettre demande collective</span>
                                 </a>
 
-                                <a href="#" class="video-link"
+                                {{-- <a href="#" class="video-link"
                                     data-video="https://www.youtube.com/embed/ANOTHER_VIDEO_ID"
                                     data-title="Processus de soummission de demande agrément opérateur"
                                     data-description="Cette vidéo vous guide dans la soumission d'une demande d'agrément opérateur au sein de l'ONFP">
                                     <i class="bi bi-arrow-right-circle"></i><span>Soumettre demande agrément
                                         opérateur</span>
-                                </a>
+                                </a> --}}
                                 <a href="{{ route('nos-modules') }}" target="_blank"><i
                                         class="bi bi-filetype-pdf"></i><span>Nos modules
                                         (PDF)</span></a>

@@ -120,13 +120,18 @@
                                         <a href="{{ route('services.details') }}"
                                             class="flex items-center text-gray-700 hover:text-blue-500 transition duration-300">
                                             <i class="bi bi-arrow-right-circle mr-2 text-blue-500"></i>
-                                            <span>Comment déposer une demande de formation ?</span>
+                                            <span>Comment déposer une demande de formation individuelle ?</span>
                                         </a>
                                         <a href="{{ route('services.details') }}"
                                             class="flex items-center text-gray-700 hover:text-blue-500 transition duration-300">
                                             <i class="bi bi-arrow-right-circle mr-2 text-blue-500"></i>
-                                            <span>Comment devenir opérateur ?</span>
+                                            <span>Comment déposer une demande de formation collective ?</span>
                                         </a>
+                                        {{-- <a href="{{ route('services.details') }}"
+                                            class="flex items-center text-gray-700 hover:text-blue-500 transition duration-300">
+                                            <i class="bi bi-arrow-right-circle mr-2 text-blue-500"></i>
+                                            <span>Comment devenir opérateur ?</span>
+                                        </a> --}}
                                         <a href="{{ route('nos-modules') }}"
                                             class="flex items-center text-gray-700 hover:text-blue-500 transition duration-300"
                                             target="_blank">
