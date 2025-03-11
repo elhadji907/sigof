@@ -16,9 +16,9 @@ use App\Models\Module;
 use App\Models\Operateur;
 use App\Models\Region;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -352,7 +352,9 @@ class UserController extends Controller
             ]);
 
             if (! empty($request->date_naissance)) {
-                $date_naissance = $request->date_naissance;
+                $dateString     = $request->input('date_naissance');
+                $date_naissance = Carbon::createFromFormat('d/m/Y', $dateString);
+
             } else {
                 $date_naissance = null;
             }
