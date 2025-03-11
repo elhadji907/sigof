@@ -72,6 +72,21 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="col-12">
+                            <label for="niveau_qualification" class="form-label">Niveau de qualification<span
+                                    class="text-danger mx-1">*</span></label>
+                            <div class="input-group has-validation">
+                                <input type="text" name="niveau_qualification"
+                                    value="{{ old('niveau_qualification', $module->niveau_qualification ?? '') }}"
+                                    class="form-control form-control-sm @error('niveau_qualification') is-invalid @enderror"
+                                    placeholder="Exemple : Ouvrier, Technicien, Agent, Etc." autocomplete="off">
+                                @error('niveau_qualification')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-success btn-sm">Enregistrer les modifications</button>
                         </div>

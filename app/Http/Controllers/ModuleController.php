@@ -51,7 +51,7 @@ class ModuleController extends Controller
 
     public function edit($id)
     {
-        $module = Module::find($id);
+        $module   = Module::find($id);
         $domaines = Domaine::orderBy("created_at", "desc")->get();
         return view("modules.update", compact("module", "domaines"));
     }
@@ -65,20 +65,22 @@ class ModuleController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            "name"    => ["required", "string", Rule::unique(Module::class)->ignore($id)->whereNull('deleted_at')],
-            "domaine" => ["required", "string"],
+            "name"                 => ["required", "string", Rule::unique(Module::class)->ignore($id)->whereNull('deleted_at')],
+            "domaine"              => ["required", "string"],
+            "niveau_qualification" => ["required", "string"],
         ]);
 
         $module = Module::findOrFail($id);
 
         $module->update([
-            'name'        => $request->input('name'),
-            'domaines_id' => $request->input('domaine'),
+            'name'                 => $request->input('name'),
+            'domaines_id'          => $request->input('domaine'),
+            'niveau_qualification' => $request->input('niveau_qualification'),
         ]);
 
         $module->save();
 
-        Alert::success('Fait ! ', 'module modifié avec succès');
+        Alert::success('Succès !', 'Les modifications ont été enregistrées avec succès.');
 
         return redirect()->back();
     }
