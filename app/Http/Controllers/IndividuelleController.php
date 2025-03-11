@@ -10,13 +10,13 @@ use App\Models\Module;
 use App\Models\Projet;
 use App\Models\Region;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use RealRashid\SweetAlert\Facades\Alert;
-use Carbon\Carbon;
 
 class IndividuelleController extends Controller
 {
@@ -724,7 +724,7 @@ class IndividuelleController extends Controller
         ]);
 
         $dateString = $request->input('date_depot');
-        $date_depot       = Carbon::createFromFormat('d/m/Y', $dateString);
+        $date_depot = Carbon::createFromFormat('d/m/Y', $dateString);
 
         $projet = Projet::where('sigle', $request->input("projet"))->first();
 
@@ -1111,14 +1111,14 @@ class IndividuelleController extends Controller
     {
         $projet = Projet::findOrFail($request->idprojet);
         $this->validate($request, [
-            'telephone_secondaire'   => ['required', 'string', 'max:9', 'min:9'],
+            'telephone_secondaire'   => ['required', 'string', 'min:9', 'max:12'],
             'adresse'                => ['required', 'string', 'max:255'],
             'departement'            => ['required', 'string', 'max:255'],
             'module'                 => ['required', 'string', 'max:255'],
             'niveau_etude'           => ['required', 'string', 'max:255'],
             'diplome_academique'     => ['required', 'string', 'max:255'],
             'diplome_professionnel'  => ['required', 'string', 'max:255'],
-            'projet_poste_formation' => ['required', 'string', 'max:255'],
+            'projet_poste_formation' => ['required', 'string'],
         ]);
 
         $user = Auth::user();
