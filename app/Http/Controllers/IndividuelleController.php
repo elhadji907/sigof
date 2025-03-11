@@ -124,7 +124,7 @@ class IndividuelleController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'telephone_secondaire'   => ['required', 'string', 'max:9', 'min:9'],
+            'telephone_secondaire'   => ['required', 'string', 'min:9', 'max:12'],
             'adresse'                => ['required', 'string', 'max:255'],
             'departement'            => ['required', 'string', 'max:255'],
             'module'                 => ['required', 'string', 'max:255'],
@@ -267,7 +267,7 @@ class IndividuelleController extends Controller
     public function individuellesStore(Request $request)
     {
         $this->validate($request, [
-            'telephone_secondaire'   => ['required', 'string', 'max:9', 'min:9'],
+            'telephone_secondaire'   => ['required', 'string', 'min:9', 'max:12'],
             'adresse'                => ['required', 'string', 'max:255'],
             'departement'            => ['required', 'string', 'max:255'],
             'module'                 => ['required', 'string', 'max:255'],
@@ -455,8 +455,8 @@ class IndividuelleController extends Controller
             'email'                     => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'firstname'                 => ['required', 'string', 'max:50'],
             'lastname'                  => ['required', 'string', 'max:25'],
-            'telephone'                 => ['required', 'string', 'min:9', 'max:9'],
-            'telephone_secondaire'      => ['required', 'string', 'min:9', 'max:9'],
+            'telephone'                 => ['required', 'string', 'min:9', 'max:12'],
+            'telephone_secondaire'   => ['required', 'string', 'min:9', 'max:12'],
             'date_naissance'            => ['required', 'date', 'min:10', 'max:10', 'date_format:Y-m-d'],
             'lieu_naissance'            => ['required', 'string'],
             'adresse'                   => ['required', 'string', 'max:255'],

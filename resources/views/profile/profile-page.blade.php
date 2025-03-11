@@ -558,6 +558,7 @@
                                                 @enderror
                                             </div>
                                         </div>
+
                                         {{-- Telephone --}}
                                         <div class="row mb-3">
                                             <label for="telephone"
@@ -575,6 +576,7 @@
                                                 @enderror
                                             </div>
                                         </div>
+
                                         {{-- Adresse --}}
                                         <div class="row mb-3">
                                             <label for="adresse"
@@ -592,6 +594,7 @@
                                                 @enderror
                                             </div>
                                         </div>
+
                                         {{-- Situation familiale --}}
                                         <div class="row mb-3">
                                             <label for="adresse"
@@ -626,6 +629,7 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        
                                         {{-- Situation professionnelle --}}
                                         <div class="row mb-3">
                                             <label for="adresse"
