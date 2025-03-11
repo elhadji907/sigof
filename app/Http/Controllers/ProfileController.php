@@ -272,7 +272,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        Alert::success('Effectuée ! ', 'Votre profil a été modifié avec succès');
+        Alert::success('Mise à jour réussie', 'Votre profil a bien été modifié.');
 
         /* return Redirect::route('profile.edit')->with('status', 'profile-updated'); */
         /* return Redirect::route('profil')->with('status', 'Votre profil a été modifié avec succès'); */

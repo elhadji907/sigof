@@ -405,8 +405,8 @@ class UserController extends Controller
             ]);
 
             $user->syncRoles($request->roles);
-
-            Alert::success('Effectuée ! ', 'Mise à jour effectuée');
+            
+            Alert::success('Succès !', 'Les modifications ont été enregistrées avec succès.');
 
             return Redirect::route('user.index');
         }
@@ -726,7 +726,7 @@ class UserController extends Controller
         ]);
 
         if ($request?->cin == null && $request->firstname == null && $request->telephone == null && $request->name == null && $request->email == null) {
-            Alert::warning('Attention ', 'Renseigner au moins un champ pour rechercher');
+            Alert::warning('Recherche impossible', 'Veuillez remplir au moins un champ avant de continuer.');
             return redirect()->back();
         }
 
