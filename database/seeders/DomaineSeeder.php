@@ -13,13 +13,6 @@ class DomaineSeeder extends Seeder
     public function run(): void
     {
         DB::table('domaines')->insert([
-            "name"        => "Aucun",
-            "secteurs_id" => "5",
-            "created_at"  => now(),
-            "updated_at"  => now(),
-            "uuid"        => Str::uuid(),
-        ]);
-        DB::table('domaines')->insert([
             "name"        => "Agriculture",
             "secteurs_id" => "1",
             "created_at"  => now(),
@@ -206,6 +199,14 @@ class DomaineSeeder extends Seeder
         DB::table('domaines')->insert([
             "name"        => "Services divers",
             "secteurs_id" => "3",
+            "created_at"  => now(),
+            "updated_at"  => now(),
+            "uuid"        => Str::uuid(),
+        ]);
+
+        DB::table('domaines')->insert([
+            "name"        => "Aucun",
+            "secteurs_id" => "5",
             "created_at"  => now(),
             "updated_at"  => now(),
             "uuid"        => Str::uuid(),

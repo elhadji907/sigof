@@ -91,6 +91,7 @@
         .footer {
             position: fixed;
             bottom: 0;
+            left: 0;
             width: 100%;
             background-color: #ffffff;
             color: black;
@@ -161,7 +162,7 @@
         <hr class="footer-separator">
         <div class="container text-center">
             <p>
-                Cité SIPRES 1, lot 2, 2 voies Liberté 6 extension VDN |
+                Sipres 1, lot 2, 2 voies Liberté 6 extension VDN |
                 Tél : (+221) 33 827 92 51 | Fax : 33 827 92 55 |
                 BP: 21013 Dakar-Ponty | Site web: <a href="https://onfp.sn">onfp.sn</a> |
                 Email: <a href="mailto:onfp@onfp.sn">onfp@onfp.sn</a>

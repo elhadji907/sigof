@@ -157,8 +157,8 @@ class ContactController extends Controller
             $x = ($canvasWidth - $textWidth) / 2;  // Centrer le texte horizontalement */
 
                                                                          // Positionnement horizontal : complètement à droite
-            $textWidth = $fontMetrics->getTextWidth($text, "Arial", 10); // Calculer la largeur du texte
-            $x         = $canvasWidth - $textWidth - 10;                 // Positionner à 10 pixels du bord droit
+            $textWidth = $fontMetrics->getTextWidth($text, "Arial", 20); // Calculer la largeur du texte
+            $x         = $canvasWidth - $textWidth - 20;                 // Positionner à 10 pixels du bord droit
 
                                                                 // Positionnement vertical : juste en dessous du footer
             $footerHeight = 30;                                 // Hauteur estimée du footer (ajuster si nécessaire)
