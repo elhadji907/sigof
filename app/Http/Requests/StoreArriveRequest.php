@@ -23,25 +23,26 @@ class StoreArriveRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'date_arrivee'          => ["required", "date", "size:10", "date_format:Y-m-d"],
-            'date_correspondance'   => ["required", "date", "size:10", "date_format:Y-m-d"],
-            'numero_arrive'         => [
+            'date_arrivee'        => ["required", "date", "size:10", "date_format:Y-m-d"],
+            'date_correspondance' => ["required", "date", "size:10", "date_format:Y-m-d"],
+            'numero_arrive'       => [
                 "required",
                 "string",
                 "min:4",
                 "max:6",
                 Rule::unique('arrives', 'numero_arrive')->whereNull('deleted_at'),
             ],
-            'numero_courrier' => [
+            'numero_courrier'     => [
                 "required",
                 "string",
                 "min:4",
                 "max:6",
                 Rule::unique('courriers', 'numero_courrier')->whereNull('deleted_at'),
             ],
-            'annee'                 => ['required', 'numeric', 'min:2022'],
-            'expediteur'            => ['required', 'string', 'max:200'],
-            'objet'                 => ['required', 'string', 'max:200'],
+            "numero_reponse"      => ["string", "min:6", "max:9", "nullable"],
+            'annee'               => ['required', 'numeric', 'min:2022'],
+            'expediteur'          => ['required', 'string', 'max:200'],
+            'objet'               => ['required', 'string', 'max:200'],
         ];
     }
 

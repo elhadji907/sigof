@@ -477,7 +477,8 @@
 
                                         <div class="col-12 col-md-12 col-lg-5 col-sm-12 col-xs-12 col-xxl-5">
                                             <label for="reference" class="form-label">Joindre courrier</label>
-                                            <input type="file" name="file" id="file" accept=".jpg, .jpeg, .png, .svg, .gif"
+                                            <input type="file" name="file" id="file"
+                                                accept=".jpg, .jpeg, .png, .svg, .gif"
                                                 class="form-control @error('file') is-invalid @enderror btn btn-secondary btn-sm">
                                             @error('file')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -584,7 +585,7 @@
                                         </div>
                                         <hr>
                                         <div class="col-lg-12">
-                                            <form method="post" action="{{ url('arrives/' . $arrive?->id) }}"
+                                            <form method="post" action="{{ route('arrives.update', $arrive?->id) }}"
                                                 enctype="multipart/form-data" class="row g-3">
                                                 @csrf
                                                 @method('PUT')
@@ -721,7 +722,7 @@
 
                                                                     <div class="text-center">
                                                                         <button type="submit"
-                                                                            class="btn btn-outline-primary pull-right">Imputer</button>
+                                                                            class="btn btn-outline-primary btn-sm pull-right">Imputer</button>
                                                                     </div>
                                                                 </td>
                                                             </tr>

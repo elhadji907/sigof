@@ -2605,6 +2605,29 @@
             });
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            $("#datepicker1").datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "1900:2100"
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $("#datepicker2").datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "1900:2100"
+            });
+        });
+    </script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var telephoneInput = document.getElementById("telephone");

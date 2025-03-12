@@ -58,7 +58,7 @@ class RegisteredUserController extends Controller
             $user->password = Hash::make($request->password);
             $user->save();
 
-            Alert::success('Bonjour ' . $user->username . ' !', 'votre compte restauré avec succès');
+            Alert::success('Bonjour ' . $user->username . ', Heureux de vous retrouver !', 'Votre compte restauré avec succès');
 
             return redirect(RouteServiceProvider::LOGIN);
 
@@ -86,7 +86,7 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         // Afficher une alerte de succès pour la création de compte
-       /*  Alert::success(
+        /*  Alert::success(
             'Bienvenue ' . $user->username . ' !',
             "Votre inscription a été réussie.
             Pour activer votre compte, veuillez vérifier votre boîte e-mail et suivre les instructions.

@@ -16,7 +16,6 @@ use App\Models\Module;
 use App\Models\Operateur;
 use App\Models\Region;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -30,6 +29,7 @@ use Illuminate\Validation\Rules;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\Permission\Models\Role;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -405,7 +405,7 @@ class UserController extends Controller
             ]);
 
             $user->syncRoles($request->roles);
-            
+
             Alert::success('Succès !', 'Les modifications ont été enregistrées avec succès.');
 
             return Redirect::route('user.index');
@@ -458,6 +458,9 @@ class UserController extends Controller
 
         if (! empty($user->image)) {
             Storage::disk('public')->delete($user->image);
+            $user->update([
+                'image' => null,
+            ]);
         }
 
         $user->roles()->detach();

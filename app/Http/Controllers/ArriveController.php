@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ArriveOperateurStoreRequest;
 use App\Http\Requests\StoreArriveRequest;
+use App\Mail\ImputationcourrierMail;
 use App\Models\Arrive;
 use App\Models\Courrier;
 use App\Models\Direction;
@@ -16,6 +17,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -248,11 +250,11 @@ class ArriveController extends Controller
 
     public function update(Request $request, $id): RedirectResponse
     {
-
         $arrive = Arrive::findOrFail($id);
 
         foreach (Auth::user()->roles as $role) {
-            if (! empty($role?->name) && ($role?->name != 'super-admin') && ($role?->name != 'Employe') && ($role?->name != 'admin') && ($role?->name != 'DIOF') && ($role?->name != 'DEC')) {
+            if (! empty($role?->name) && ($role?->name != 'super-admin') && ($role?->name != 'Employe')
+                && ($role?->name != 'admin') && ($role?->name != 'DIOF') && ($role?->name != 'DEC')) {
                 $this->authorize('update', $arrive);
             }
         }
@@ -278,6 +280,25 @@ class ArriveController extends Controller
             $courrier->date_imp    = $request->input('date_imp');
             $courrier->observation = $request->input('observation');
             $courrier->save();
+
+            $objetCourrier = $arrive->courrier->objet ?? 'objet';
+            $lienApp       = url('https://sigof.onfp.sn/');                                // Remplace ceci par l'URL de ton application
+            $lienCourrier  = url("https://sigof.onfp.sn/arrives/{$arrive->courrier->id}"); // Assure-toi que l'ID est bien accessible
+
+            collect($arrive->users)
+                ->filter(fn($user) => ! empty($user?->email)) // Filtrer les utilisateurs sans email
+                ->each(function ($user) use ($objetCourrier, $lienApp, $lienCourrier) {
+                    $toEmail     = $user->email;
+                    $toUserName  = "Bonjour ! {$user->civilite} {$user->firstname} {$user->name}";
+                    $safeMessage = "Le <b>Directeur Générale</b> de l'ONFP vous a imputé un nouveau courrier. <br>
+                        Merci de vous connecter à votre compte (<a href='{$lienApp}'>ici</a>) pour voir les détails
+                        ou accéder directement au courrier via <a href='{$lienCourrier}'>ce lien</a>.";
+
+                    $subject = "COURRIER ONFP | $objetCourrier";
+                    $message = strip_tags($safeMessage, '<b><i><p><a><br>'); // Autorise <b>, <i>, <p>, et <a>
+
+                    Mail::to($toEmail)->send(new ImputationcourrierMail($message, $subject, $toEmail, $toUserName));
+                });
 
             Alert::success('Bravo !', 'Le courrier a été imputé avec succès.');
 

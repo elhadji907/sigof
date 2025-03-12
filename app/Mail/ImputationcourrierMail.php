@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class ValidationDemandeIndividuelleNotification extends Mailable
+class ImputationcourrierMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -32,19 +32,12 @@ class ValidationDemandeIndividuelleNotification extends Mailable
     /**
      * Get the message envelope.
      */
-/*     public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Validation Demande Individuelle Notification',
-        );
-    } */
-
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('lamine.badji@onfp.sn', 'ONFP | Validation demande de formation'),
+            from: new Address('mouhamadoulaminebara@onfp.sn', 'ONFP | Imputation courrier'),
             replyTo: [
-                new Address('lamine.badji@onfp.sn', 'ONFP | Réponse concernant votre nouvelle demande de formation'),
+                new Address('mouhamadoulaminebara@onfp.sn', 'ONFP | Réponse concernant le courrier'),
             ],
             subject: $this->subject,
         );
@@ -53,19 +46,11 @@ class ValidationDemandeIndividuelleNotification extends Mailable
     /**
      * Get the message content definition.
      */
-/*     public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    } */
-
     public function content(): Content
     {
-        /* Alert::success("E-mail envoyés !", "La notification de validation été envoyée avec succès."); */
         Alert::success('Félicitations !', 'demande acceptée');
         return new Content(
-            view: 'individuelles.mailinfo',
+            view: 'courriers.arrives.mailimputation',
         );
     }
 
