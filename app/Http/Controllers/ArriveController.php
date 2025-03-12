@@ -310,7 +310,7 @@ class ArriveController extends Controller
             "date_arrivee"        => ["required", "date", "min:10", "max:10", "date_format:Y-m-d"],
             "date_correspondance" => ["required", "date", "min:10", "max:10", "date_format:Y-m-d"],
             "numero_courrier"     => ["nullable", "string", "min:4", "max:6", "unique:courriers,numero_courrier,{$arrive->courrier->id}"],
-            "numero_arrive"       => ["required", "string", "min:4", "max:6", "unique:arrives,numero_arrive,{$arrive->id}"],
+            "numero_arrive"       => ["required", "string", "min:4", "max:25", "unique:arrives,numero_arrive,{$arrive->id}"],
             "numero_reponse"      => ["string", "min:6", "max:9", "nullable", "unique:courriers,numero_reponse,{$courrier->id}"],
             "file"                => ['sometimes', 'file', 'mimes:jpeg,png,jpg,gif,svg,pdf', 'max:2048'],
             "annee"               => ["required", "string"],
