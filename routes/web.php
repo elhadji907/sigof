@@ -475,6 +475,11 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/jurycommissionagrements/{id}', [CommissionagrementController::class, 'jury'])->name('jurycommissionagrements.jury');
         Route::patch('/addMembreJury/{id}', [CommissionagrementController::class, 'addMembreJury'])->name('addMembreJury');
 
+        Route::get('/users/actifs', [UserController::class, 'actifs'])->name('users.actifs');
+        Route::get('/users/inactifs', [UserController::class, 'inactifs'])->name('users.inactifs');
+        Route::get('/users/corbeille', [UserController::class, 'corbeille'])->name('users.corbeille');
+        Route::get('/users/restored', [UserController::class, 'restored'])->name('users.restored');
+
         /* Vues ressouces */
         Route::resource('/users', UserController::class);
         Route::resource('/permissions', PermissionController::class);

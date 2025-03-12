@@ -16,6 +16,7 @@ use App\Models\Module;
 use App\Models\Operateur;
 use App\Models\Region;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -29,7 +30,6 @@ use Illuminate\Validation\Rules;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
 use Spatie\Permission\Models\Role;
-use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -814,5 +814,107 @@ class UserController extends Controller
             ->where('formations.statut', 'Nouvelle')->get(); */
 
         return view("profile.formations", compact("user"));
+    }
+
+    public function actifs()
+    {
+        $total_count = User::whereNotNull('email_verified_at')->count();
+        $total_count = number_format($total_count, 0, ',', ' ');
+
+        $roles = Role::pluck('name', 'name')->all();
+
+        $user_liste = User::whereNotNull('email_verified_at')
+            ->latest()
+            ->take(100)
+            ->get();
+
+        $count_demandeur = number_format($user_liste->count(), 0, ',', ' ');
+
+        if ($count_demandeur < 1) {
+            $title = 'Aucun utilisateur vérifié';
+        } elseif ($count_demandeur == 1) {
+            $title = "$count_demandeur utilisateur vérifié sur un total de $total_count";
+        } else {
+            $title = "Liste des $count_demandeur derniers utilisateurs vérifiés sur un total de $total_count";
+        }
+
+        return view("user.actifs", compact("user_liste", "title", "roles"));
+    }
+
+    public function inactifs()
+    {
+        $total_count = User::whereNull('email_verified_at')->count();
+        $total_count = number_format($total_count, 0, ',', ' ');
+
+        $roles = Role::pluck('name', 'name')->all();
+
+        $user_liste = User::whereNull('email_verified_at')
+            ->latest()
+            ->take(100)
+            ->get();
+
+        $count_demandeur = number_format($user_liste->count(), 0, ',', ' ');
+
+        if ($count_demandeur < 1) {
+            $title = 'Aucun utilisateur non vérifié';
+        } elseif ($count_demandeur == 1) {
+            $title = "$count_demandeur utilisateur non vérifié sur un total de $total_count";
+        } else {
+            $title = "Liste des $count_demandeur derniers utilisateurs non vérifiés sur un total de $total_count";
+        }
+
+        return view("user.inactifs", compact("user_liste", "title", "roles"));
+    }
+
+    public function corbeille()
+    {
+        $total_count = User::onlyTrashed()->count();
+        $total_count = number_format($total_count, 0, ',', ' ');
+
+        $roles = Role::pluck('name', 'name')->all();
+
+        $user_liste = User::onlyTrashed()
+            ->latest()
+            ->take(100)
+            ->get();
+
+        $count_demandeur = number_format($user_liste->count(), 0, ',', ' ');
+
+        if ($count_demandeur < 1) {
+            $title = 'Aucun utilisateur supprimé';
+        } elseif ($count_demandeur == 1) {
+            $title = "$count_demandeur utilisateur supprimé sur un total de $total_count";
+        } else {
+            $title = "Liste des $count_demandeur derniers utilisateurs supprimés sur un total de $total_count";
+        }
+
+        return view("user.corbeille", compact("user_liste", "title", "roles"));
+
+    }
+
+    public function restored()
+    {
+        $total_count = User::whereNotNull('restored_at')->count();
+        $total_count = number_format($total_count, 0, ',', ' ');
+
+        $roles = Role::pluck('name', 'name')->all();
+
+        $user_liste = User::whereNotNull('restored_at')
+            ->latest()
+            ->take(100)
+            ->get();
+
+        $count_demandeur = number_format($user_liste->count(), 0, ',', ' ');
+
+        if ($count_demandeur < 1) {
+            $title = 'Aucun utilisateur restauré';
+        } elseif ($count_demandeur == 1) {
+            $title = "$count_demandeur utilisateur restauré sur un total de $total_count";
+        } else {
+            $title = "Liste des $count_demandeur derniers utilisateurs restaurés sur un total de $total_count";
+        }
+
+        return view("user.restored", compact("user_liste", "title", "roles"));
+
     }
 }
