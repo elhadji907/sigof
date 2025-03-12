@@ -39,7 +39,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-12 pt-1">
-                                <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('user.index') }}"
+                                <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('users.corbeille') }}"
                                         class="btn btn-success btn-sm" title="retour"><i
                                             class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
                                     <p> | Liste des utilisateurs</p>

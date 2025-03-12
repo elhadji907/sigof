@@ -408,7 +408,8 @@ class UserController extends Controller
 
             Alert::success('Succès !', 'Les modifications ont été enregistrées avec succès.');
 
-            return Redirect::route('user.index');
+            /* return Redirect::route('user.index'); */
+            return Redirect::back();
         }
     }
 
