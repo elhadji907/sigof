@@ -586,8 +586,6 @@ class ArriveController extends Controller
             'Attribution',
             'Classement',
         ];
-        
-        dd($arrive);
 
         $dompdf->loadHtml(view('courriers.arrives.arrive-coupon', compact(
             'arrive',
@@ -598,6 +596,7 @@ class ArriveController extends Controller
             'actions'
         )));
 
+        dd($arrive);
         // (Optional) Setup the paper size and orientation
         $dompdf->setPaper('A4', 'portrait');
 
