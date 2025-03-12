@@ -626,15 +626,14 @@
             </li>
         @endcan
 
+        @can('user-view')
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#users-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-person"></i><span>{{ __('Gestion utilisateurs') }}</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="users-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#users-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-person"></i><span>{{ __('Gestion utilisateurs') }}</span><i
-                    class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="users-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-
-                @can('user-view')
                     {{-- <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ url('user') }}">
                             <span>Tous</span>
@@ -660,9 +659,9 @@
                             <span>Restaurés</span>
                         </a>
                     </li>
-                @endcan
-            </ul>
-        </li>
+                </ul>
+            </li>
+        @endcan
 
         @can('role-view')
             <li class="nav-item">
