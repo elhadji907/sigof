@@ -916,6 +916,10 @@ class UserController extends Controller
         }
 
         return view("user.restored", compact("user_liste", "title", "roles"));
+    }
 
+    public function errors()
+    {
+        return view('errors.500');
     }
 }

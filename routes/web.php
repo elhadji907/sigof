@@ -479,6 +479,9 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/users/inactifs', [UserController::class, 'inactifs'])->name('users.inactifs');
         Route::get('/users/corbeille', [UserController::class, 'corbeille'])->name('users.corbeille');
         Route::get('/users/restored', [UserController::class, 'restored'])->name('users.restored');
+        
+        /* Pour visualiser la page d'erreur */
+        /* Route::get('/errors/restored', [UserController::class, 'errors'])->name('users.errors'); */
 
         /* Vues ressouces */
         Route::resource('/users', UserController::class);
