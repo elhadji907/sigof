@@ -556,7 +556,7 @@ class ArriveController extends Controller
 
     public function couponArrive(Request $request)
     {
-        $arrive   = Arrive::find($request->input('id'));
+        $arrive = Arrive::find($request->input('id'));
 
         $courrier = $arrive->courrier;
 
@@ -609,9 +609,7 @@ class ArriveController extends Controller
         $anne = $anne . ' ' . date('i') . 'min';
         $anne = $anne . ' ' . date('s') . 's';
 
-        $name = $courrier->expediteur . ', courrier arrivé n° ' . $numero . ' du ' . $anne . '.pdf';
-
-        dd($name);
+        $name = 'Courrier arrivé n° ' . $numero . ' du ' . $anne . '.pdf';
 
         // Output the generated PDF to Browser
         $dompdf->stream($name, ['Attachment' => false]);
