@@ -1159,7 +1159,7 @@
 
                                                 @if (!empty($antenne?->date_ouverture))
                                                     <div class="popular-badge">
-                                                        {{ 'DEPUIS LE ' . mb_strtoupper($antenne?->date_ouverture?->translatedFormat('d F Y'), 'UTF-8') }}
+                                                        {{ 'SINCE ' . mb_strtoupper($antenne?->date_ouverture?->translatedFormat('Y'), 'UTF-8') }}
                                                     </div>
                                                 @else
                                                     <div class="popular-badge">{{ $antenne?->code }}</div>
