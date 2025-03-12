@@ -94,33 +94,30 @@
                             </a>
                         </div>
                     </div>
-
-                    <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
-                        <div class="card info-card sales-card">
-                            {{--  <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                        class="bi bi-three-dots"></i></a>
-                            </div> --}}
-                            <a href="{{ route('arrivesop') }}">
-                                <div class="card-body">
-                                    <h5 class="card-title">Courriers <span>| Agréments</span></h5>
-                                    <div class="d-flex align-items-center">
-                                        <div
-                                            class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                            <i class="bi bi-file-earmark-text"></i>
-                                        </div>
-                                        <div class="ps-3">
-                                            <h6>
-                                                <span class="text-primary">{{ $count_arrives }}</span>
-                                            </h6>
-                                            <span class="text-success small pt-1 fw-bold">Tous</span>
-                                            {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
+                    @can('agrement-ouvert')
+                        <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                            <div class="card info-card sales-card">
+                                <a href="{{ route('arrivesop') }}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Courriers <span>| Agréments</span></h5>
+                                        <div class="d-flex align-items-center">
+                                            <div
+                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-file-earmark-text"></i>
+                                            </div>
+                                            <div class="ps-3">
+                                                <h6>
+                                                    <span class="text-primary">{{ $count_arrives }}</span>
+                                                </h6>
+                                                <span class="text-success small pt-1 fw-bold">Tous</span>
+                                                {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </a>
+                                </a>
+                            </div>
                         </div>
-                    </div>
+                    @endcan
                 </div>
             </div>
         </div>
@@ -136,11 +133,6 @@
                                     class="btn btn-success btn-sm" title="retour"><i
                                         class="bi bi-arrow-counterclockwise"></i></a>&nbsp;Liste des courriers
                             </span>
-                            {{-- @can('courrier-operateur-view')
-                                <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('arrivesop') }}"
-                                        class="btn btn-primary btn-sm" title="ajouter opérateur">ajouter courrier opérateur</a>
-                                </span>
-                            @endcan --}}
                             <span class="d-flex align-items-baseline">
                                 <a href="#" class="btn btn-success btn-sm float-end" data-bs-toggle="modal"
                                     data-bs-target="#addCourrierArrive" title="Ajouter">Ajouter</a>
@@ -157,9 +149,7 @@
                                 </div>
                             </span>
                         </div>
-                        @foreach ($arrives as $arrive)
-                        @endforeach
-                        @if (!empty($arrive))
+                        @if ($arrives->isNotEmpty())
                             <h5 class="card-title">{{ $title }}</h5>
                             <table class="table datatables align-middle" id="table-arrives">
                                 <thead>
@@ -174,65 +164,50 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php $i = 1; ?>
                                     @foreach ($arrives as $arrive)
                                         <tr>
-                                            <td style="text-align: center;">{{ $arrive?->numero_arrive }}</td>
-                                            {{-- Date reception = date arrivée --}}
-                                            <td style="text-align: center;">
-                                                {{ $arrive?->courrier?->date_recep?->format('d/m/Y') }} </td>
-                                            <td style="text-align: center;">{{ $arrive?->courrier?->numero_courrier }}</td>
-                                            <td style="text-align: center;">
-                                                {{ $arrive?->courrier?->date_cores?->format('d/m/Y') }} </td>
-                                            {{-- <td class="text-center">{{ $arrive->numero }}</td> --}}
+                                            <td class="text-center">{{ $arrive?->numero_arrive }}</td>
+                                            <td class="text-center">{{ $arrive?->courrier?->date_recep?->format('d/m/Y') }}
+                                            </td>
+                                            <td class="text-center">{{ $arrive?->courrier?->numero_courrier }}</td>
+                                            <td class="text-center">{{ $arrive?->courrier?->date_cores?->format('d/m/Y') }}
+                                            </td>
                                             <td>{{ $arrive?->courrier?->expediteur }}</td>
                                             <td>{{ $arrive?->courrier?->objet }}</td>
                                             <td>
-                                                {{-- @can('view', $arrive) --}}
-                                                <span class="d-flex align-items-baseline"><a
-                                                        href="{{ route('arrives.show', $arrive?->id) }}"
-                                                        class="btn btn-success btn-sm" title="voir détails"><i
-                                                            class="bi bi-eye"></i></a>
-                                                    <div class="filter">
-                                                        @can('update', $arrive)
-                                                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                    class="bi bi-three-dots"></i></a>
-                                                        @endcan
-                                                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                            @can('update', $arrive)
+                                                <div class="d-flex align-items-baseline">
+                                                    <a href="{{ route('arrives.show', $arrive?->id) }}"
+                                                        class="btn btn-success btn-sm" title="voir détails">
+                                                        <i class="bi bi-eye"></i>
+                                                    </a>
+                                                    @can('update', $arrive)
+                                                        <div class="filter">
+                                                            <a class="icon" href="#" data-bs-toggle="dropdown">
+                                                                <i class="bi bi-three-dots"></i>
+                                                            </a>
+                                                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                                 <li><a class="dropdown-item btn btn-sm"
-                                                                        href="{{ route('arrives.edit', $arrive?->id) }}"
-                                                                        class="mx-1"><i class="bi bi-pencil"></i>
-                                                                        Modifier</a>
-                                                                </li>
-                                                            @endcan
-                                                            {{-- <li><a class="dropdown-item btn btn-sm"
-                                                                href="{{ url('arrive-imputations', ['id' => $arrive->id]) }}"
-                                                                class="mx-1">Imputer</a>
-                                                        </li> --}}
-                                                            {{--  <li><a class="dropdown-item btn btn-sm"
-                                                                href="{!! url('coupon-arrive', ['$id' => $arrive->id]) !!}" class="mx-1"
-                                                                target="_blank">Imprimer</a>
-                                                        </li> --}}
-                                                            @can('delete', $arrive)
-                                                                @can('arrive-delete')
-                                                                    <li>
-                                                                        <form
-                                                                            action="{{ route('arrives.destroy', $arrive?->id) }}"
-                                                                            method="post">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                            <button type="submit"
-                                                                                class="dropdown-item show_confirm"><i
-                                                                                    class="bi bi-trash"></i>Supprimer</button>
-                                                                        </form>
-                                                                    </li>
+                                                                        href="{{ route('arrives.edit', $arrive?->id) }}">
+                                                                        <i class="bi bi-pencil"></i> Modifier</a></li>
+                                                                @can('delete', $arrive)
+                                                                    @can('arrive-delete')
+                                                                        <li>
+                                                                            <form action="{{ route('arrives.destroy', $arrive?->id) }}"
+                                                                                method="post">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit"
+                                                                                    class="dropdown-item show_confirm">
+                                                                                    <i class="bi bi-trash"></i> Supprimer
+                                                                                </button>
+                                                                            </form>
+                                                                        </li>
+                                                                    @endcan
                                                                 @endcan
-                                                            @endcan
-                                                        </ul>
-                                                    </div>
-                                                </span>
-                                                {{-- @endcan --}}
+                                                            </ul>
+                                                        </div>
+                                                    @endcan
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -241,10 +216,6 @@
                         @else
                             <div class="alert alert-info mt-3">Aucun courrier arrivé enregistré pour le moment !!!</div>
                         @endif
-                        {{-- <p>Le tableau des courriers arrivés</p> --}}
-                        <!-- Table with stripped rows -->
-
-                        <!-- End Table with stripped rows -->
                     </div>
                 </div>
             </div>
