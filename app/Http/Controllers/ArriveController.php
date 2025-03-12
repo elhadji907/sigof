@@ -569,7 +569,6 @@ class ArriveController extends Controller
         $numero = $courrier->numero_courrier;
 
         $title = ' Coupon d\'envoi ourrier arrivé n° ' . $numero;
-        dd($arrive);
 
         $dompdf  = new Dompdf();
         $options = $dompdf->getOptions();
@@ -587,6 +586,8 @@ class ArriveController extends Controller
             'Attribution',
             'Classement',
         ];
+        
+        dd($arrive);
 
         $dompdf->loadHtml(view('courriers.arrives.arrive-coupon', compact(
             'arrive',
