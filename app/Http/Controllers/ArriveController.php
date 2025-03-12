@@ -558,8 +558,6 @@ class ArriveController extends Controller
     {
         $arrive   = Arrive::find($request->input('id'));
 
-        dd($arrive);
-        
         $courrier = $arrive->courrier;
 
         /*  $directions     = Direction::pluck('sigle', 'id'); */
@@ -571,6 +569,7 @@ class ArriveController extends Controller
         $numero = $courrier->numero_courrier;
 
         $title = ' Coupon d\'envoi ourrier arrivé n° ' . $numero;
+        dd($arrive);
 
         $dompdf  = new Dompdf();
         $options = $dompdf->getOptions();
