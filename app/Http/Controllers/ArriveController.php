@@ -557,6 +557,9 @@ class ArriveController extends Controller
     public function couponArrive(Request $request)
     {
         $arrive   = Arrive::find($request->input('id'));
+
+        dd($arrive);
+        
         $courrier = $arrive->courrier;
 
         /*  $directions     = Direction::pluck('sigle', 'id'); */
