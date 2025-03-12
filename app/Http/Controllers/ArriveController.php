@@ -596,7 +596,6 @@ class ArriveController extends Controller
             'actions'
         )));
 
-        dd($arrive);
         // (Optional) Setup the paper size and orientation
         $dompdf->setPaper('A4', 'portrait');
 
@@ -611,6 +610,8 @@ class ArriveController extends Controller
         $anne = $anne . ' ' . date('s') . 's';
 
         $name = $courrier->expediteur . ', courrier arrivé n° ' . $numero . ' du ' . $anne . '.pdf';
+        
+        dd($arrive);
 
         // Output the generated PDF to Browser
         $dompdf->stream($name, ['Attachment' => false]);
