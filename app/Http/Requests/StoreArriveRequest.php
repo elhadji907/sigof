@@ -33,7 +33,7 @@ class StoreArriveRequest extends FormRequest
                 Rule::unique('arrives', 'numero_arrive')->whereNull('deleted_at'),
             ],
             'numero_courrier'     => [
-                "required",
+                "nullable",
                 "string",
                 "min:4",
                 "max:25",
