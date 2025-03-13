@@ -41,9 +41,9 @@
                                 <span class="badge bg-white text-info">{{ $individuelle_total }}/3</span>
                             </button>
                             @if (!empty(Auth::user()->cin))
-                                <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded"
-                                    data-bs-toggle="modal" data-bs-target="#AddIndividuelleModal">
-                                    <i class="bi bi-plus" title="Ajouter"></i>
+                                <button type="button" class="btn btn-primary btn-sm float-end btn-rounded"
+                                    data-bs-toggle="modal" data-bs-target="#AddIndividuelleModal">                                    
+                                    {{-- <i class="bi bi-plus" title="Ajouter"></i> --}} Ajouter
                                 </button>
                             @endif
                         </div>
