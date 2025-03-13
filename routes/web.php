@@ -69,7 +69,8 @@ use App\Http\Controllers\ValidationformationController;
 use App\Http\Controllers\ValidationIndividuelleController;
 use App\Http\Controllers\ValidationmoduleController;
 use App\Http\Controllers\ValidationoperateurController;
-use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Route;    
+use Illuminate\Support\Facades\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -479,7 +480,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/users/inactifs', [UserController::class, 'inactifs'])->name('users.inactifs');
         Route::get('/users/corbeille', [UserController::class, 'corbeille'])->name('users.corbeille');
         Route::get('/users/restored', [UserController::class, 'restored'])->name('users.restored');
-        
+
         /* Pour visualiser la page d'erreur */
         /* Route::get('/errors/restored', [UserController::class, 'errors'])->name('users.errors'); */
 
@@ -551,6 +552,19 @@ Route::group(['middleware' => ['XSS']], function () {
     Route::resource('/contacts', ContactController::class);
     Route::get('/services-details', [ContactController::class, 'servicesDetails'])->name('services.details');
     Route::get('nos-modules', [ContactController::class, 'nosModules'])->name('nos-modules');
+
+    Route::get('/guide', function () {
+        $path = resource_path('views/guide.pdf');
+
+        if (! file_exists($path)) {
+            abort(404);
+        }
+
+        return Response::file($path, [
+            'Content-Type' => 'application/pdf',
+        ]);
+    });
+
 });
 
 require __DIR__ . '/auth.php';

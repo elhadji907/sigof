@@ -138,6 +138,13 @@
                                             <i class="bi bi-filetype-pdf"></i>
                                             <span>Quels sont nos modules de formation ?</span>
                                         </a>
+
+                                        <a href="{{ url('/guide') }}"
+                                            class="flex items-center text-gray-700 hover:text-blue-500 transition duration-300"
+                                            target="_blank">
+                                            <i class="bi bi-filetype-pdf"></i>
+                                            <span>Guide d'utilisation (PDF) ?</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>

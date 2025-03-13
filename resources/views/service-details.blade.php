@@ -73,7 +73,7 @@
                         <div class="service-box">
                             <h4>Téléchargements</h4>
                             <div class="download-catalog">
-                                <a href="#"><i class="bi bi-filetype-pdf"></i><span>Guide utilisateur
+                                <a href="{{ url('/guide') }}" target="_blank"><i class="bi bi-filetype-pdf"></i><span>Guide utilisateur
                                         (PDF)</span></a>
                             </div>
                         </div>
