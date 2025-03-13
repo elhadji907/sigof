@@ -456,7 +456,7 @@ class IndividuelleController extends Controller
             'firstname'                 => ['required', 'string', 'max:50'],
             'lastname'                  => ['required', 'string', 'max:25'],
             'telephone'                 => ['required', 'string', 'min:9', 'max:12'],
-            'telephone_secondaire'   => ['required', 'string', 'min:9', 'max:12'],
+            'telephone_secondaire'      => ['required', 'string', 'min:9', 'max:12'],
             'date_naissance'            => ['required', 'date', 'min:10', 'max:10', 'date_format:Y-m-d'],
             'lieu_naissance'            => ['required', 'string'],
             'adresse'                   => ['required', 'string', 'max:255'],
@@ -925,7 +925,13 @@ class IndividuelleController extends Controller
                 $this->authorize('view', $individuelle);
             }
         }
-        return view("individuelles.show", compact("individuelle"));
+
+        $files = File::where('users_id', $user->id)
+            ->whereNotNull('file') // Utilisation de whereNotNull pour plus de clarté
+            ->distinct()
+            ->get();
+
+        return view("individuelles.show", compact("individuelle", "files"));
     }
 
     public function rejeterIndividuelle(Request $request)

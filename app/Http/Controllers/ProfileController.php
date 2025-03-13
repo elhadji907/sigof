@@ -39,11 +39,11 @@ class ProfileController extends Controller
         } else {
             $user_cin = null;
         }
-
+        
         $files = File::where('users_id', $user->id)
-            ->where('file', '!=', null)
-            ->distinct()
-            ->get();
+        ->whereNotNull('file') // Utilisation de whereNotNull pour plus de clarté
+        ->distinct()
+        ->get();    
 
         $user_files = File::where('users_id', $user->id)
             ->where('file', null)

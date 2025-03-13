@@ -156,7 +156,8 @@
                                 <div>
                                     <div class="col-md-4">
                                         <div class="label">FICHIERS JOINTS</div>
-                                        @foreach (Auth::user()->files->whereNotNull('file') as $file)
+                                        {{-- @foreach (Auth::user()->files->whereNotNull('file') as $file) --}}
+                                        @foreach ($files as $file)
                                             <div class="d-flex align-items-center justify-content-between mb-2">
                                                 <!-- Affichage de la légende -->
                                                 <p class="mb-0 me-3">{{ $file->legende }}</p>
