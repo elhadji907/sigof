@@ -153,47 +153,60 @@
                                             class="btn btn-primary btn-sm text-white" title="Modifier">Modifier</a>
                                     </div>
                                 </form>
+                                <div>
+                                    <div class="label">FICHIERS JOINTS</div>
+                                    @foreach (Auth::user()->files->whereNotNull('file') as $file)
+                                        <div>
+                                            <!-- Affiche la légende du fichier -->
+                                            <p>{{ $file->legende }}</p>
+
+                                            <!-- Lien pour télécharger le fichier -->
+                                            <a href="{{ asset($file->getFichier()) }}" class="btn btn-sm btn-primary">
+                                                Télécharger
+                                            </a>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="modal fade" id="RejetDemandeModal" tabindex="-1" aria-labelledby="RejetDemandeLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form method="POST" action="{{ route('validation-individuelles.destroy', $individuelle?->id) }}"
-                        enctype="multipart/form-data" class="row">
-                        @csrf
-                        @method('DELETE')
+            <div class="modal fade" id="RejetDemandeModal" tabindex="-1" aria-labelledby="RejetDemandeLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form method="POST" action="{{ route('validation-individuelles.destroy', $individuelle?->id) }}"
+                            enctype="multipart/form-data" class="row">
+                            @csrf
+                            @method('DELETE')
 
-                        <div class="card-header text-center bg-gradient-default">
-                            <h1 class="h4 text-black mb-0">REJET</h1>
-                        </div>
+                            <div class="card-header text-center bg-gradient-default">
+                                <h1 class="h4 text-black mb-0">REJET</h1>
+                            </div>
 
-                        <div class="modal-body">
-                            <label for="motif" class="form-label">Motifs du rejet</label>
-                            <textarea name="motif" id="motif" rows="5"
-                                class="form-control form-control-sm @error('motif') is-invalid @enderror" placeholder="Enumérez les motifs du rejet"
-                                aria-describedby="motifHelp">{{ old('motif', $individuelle?->motif_retrait) }}</textarea>
+                            <div class="modal-body">
+                                <label for="motif" class="form-label">Motifs du rejet</label>
+                                <textarea name="motif" id="motif" rows="5"
+                                    class="form-control form-control-sm @error('motif') is-invalid @enderror"
+                                    placeholder="Enumérez les motifs du rejet" aria-describedby="motifHelp">{{ old('motif', $individuelle?->motif_retrait) }}</textarea>
 
-                            @error('motif')
-                                <span class="invalid-feedback" role="alert">
-                                    <div>{{ $message }}</div>
-                                </span>
-                            @enderror
-                        </div>
+                                @error('motif')
+                                    <span class="invalid-feedback" role="alert">
+                                        <div>{{ $message }}</div>
+                                    </span>
+                                @enderror
+                            </div>
 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary btn-sm"
-                                data-bs-dismiss="modal">Fermer</button>
-                            <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
-                        </div>
-                    </form>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary btn-sm"
+                                    data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-danger btn-sm">Rejeter</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
     </section>
 @endsection
