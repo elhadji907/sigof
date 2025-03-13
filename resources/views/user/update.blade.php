@@ -24,10 +24,9 @@
                                     </span>
                                 </div>
                             </div>
-
-                            <div class="pt-4 pb-2">
-                                <h5 class="card-title text-center pb-0 fs-4">Modification</h5>
-                                <p class="text-center small">Introduire les nouvelles données pour modifier</p>
+                            <div class="text-center">
+                                <h5 class="card-title pb-0 fs-4">Modification</h5>
+                                <p class="small">Saisissez les nouvelles informations pour effectuer la modification.</p>
                             </div>
                             <form method="post" action="{{ route('users.update', $user->id) }}"
                                 enctype="multipart/form-data" class="row g-3">

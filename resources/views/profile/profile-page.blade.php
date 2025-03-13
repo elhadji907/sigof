@@ -679,7 +679,7 @@
                                                 <input name="facebook" type="facebook"
                                                     class="form-control form-control-sm @error('facebook') is-invalid @enderror"
                                                     id="facebook" value="{!! $user->facebook ?? old('facebook') !!}"
-                                                    autocomplete="facebook" placeholder="lien de votre compte facebook">
+                                                    autocomplete="facebook" placeholder="Entrez l'URL de votre compte facebook">
                                                 @error('facebook')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -698,7 +698,7 @@
                                                     class="form-control form-control-sm @error('twitter') is-invalid @enderror"
                                                     id="twitter" value="{{ $user->twitter ?? old('twitter') }}"
                                                     autocomplete="twitter"
-                                                    placeholder="lien de votre compte x (ex twitter)">
+                                                    placeholder="Entrez l'URL de votre compte x (ex twitter)">
                                                 @error('twitter')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -715,7 +715,7 @@
                                                 <input name="instagram" type="instagram"
                                                     class="form-control form-control-sm @error('instagram') is-invalid @enderror"
                                                     id="instagram" value="{{ $user->instagram ?? old('instagram') }}"
-                                                    autocomplete="instagram" placeholder="lien de votre compte instagram">
+                                                    autocomplete="instagram" placeholder="Entrez l'URL de votre compte instagram">
                                                 @error('instagram')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -732,7 +732,7 @@
                                                 <input name="linkedin" type="linkedin"
                                                     class="form-control form-control-sm @error('linkedin') is-invalid @enderror"
                                                     id="linkedin" value="{{ $user->linkedin ?? old('linkedin') }}"
-                                                    autocomplete="linkedin" placeholder="lien de votre ompte linkedin">
+                                                    autocomplete="linkedin" placeholder="Entrez l'URL de votre ompte linkedin">
                                                 @error('linkedin')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
