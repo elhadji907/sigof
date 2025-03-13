@@ -155,12 +155,12 @@ class ArriveController extends Controller
             'date_cores'      => $request->input('date_correspondance'),
             'numero_courrier' => $request->input('numero_courrier'),
             'annee'           => $request->input('annee'),
-            'objet'           => $request->input('objet'),
-            'expediteur'      => $request->input('expediteur'),
-            'reference'       => $request->input('reference'),
+            'objet'           => strtoupper($request->input('objet')),
+            'expediteur'      => strtoupper($request->input('expediteur')),
+            'reference'       => strtoupper($request->input('reference')),
             'numero_reponse'  => $request->input('numero_reponse'),
             'date_reponse'    => $date_reponse,
-            'observation'     => $request->input('observation'),
+            'observation'     => strtoupper($request->input('observation')),
             'type'            => 'arrive',
             "user_create_id"  => Auth::user()->id,
             "user_update_id"  => Auth::user()->id,
@@ -188,7 +188,7 @@ class ArriveController extends Controller
         }
 
         $user = User::create([
-            'username'   => $request->input("sigle"),
+            'username'   => strtoupper($request->input("sigle")),
             'email'      => $request->input('email'),
             "operateur"  => $request->input("expediteur"),
             "fixe"       => $request->input("fixe"),
@@ -207,11 +207,11 @@ class ArriveController extends Controller
             'date_cores'      => $request->input('date_correspondance'),
             'numero_courrier' => $numero_coreespondance,
             'annee'           => $request->input('annee'),
-            'objet'           => $request->input('objet'),
-            'expediteur'      => $request->input('expediteur'),
+            'objet'           => strtoupper($request->input('objet')),
+            'expediteur'      => strtoupper($request->input('expediteur')),
             'numero_reponse'  => $request->input('numero_reponse'),
             'date_reponse'    => $date_reponse,
-            'observation'     => $request->input('observation'),
+            'observation'     => strtoupper($request->input('observation')),
             'type'            => 'arrive',
             "user_create_id"  => Auth::user()->id,
             "user_update_id"  => Auth::user()->id,
@@ -276,9 +276,9 @@ class ArriveController extends Controller
             $arrive->employees()->sync($request->id_emp);
             $arrive->users()->sync($request->id_emp);
             $courrier->directions()->sync($request->id_direction);
-            $courrier->description = $request->input('description');
+            $courrier->description = strtoupper($request->input('description'));
             $courrier->date_imp    = $request->input('date_imp');
-            $courrier->observation = $request->input('observation');
+            $courrier->observation = strtoupper($request->input('observation'));
             $courrier->save();
 
             $objetCourrier = $arrive->courrier->objet ?? 'objet';
@@ -359,12 +359,12 @@ class ArriveController extends Controller
                     'date_cores'      => $request->input('date_correspondance'),
                     'numero_courrier' => $request->input('numero_courrier'),
                     'annee'           => $request->input('annee'),
-                    'objet'           => $request->input('objet'),
-                    'expediteur'      => $request->input('expediteur'),
-                    'reference'       => $request->input('reference'),
+                    'objet'           => strtoupper($request->input('objet')),
+                    'expediteur'      => strtoupper($request->input('expediteur')),
+                    'reference'       => strtoupper($request->input('reference')),
                     'numero_reponse'  => $request->input('numero_reponse'),
                     'date_reponse'    => $date_reponse,
-                    'observation'     => $request->input('observation'),
+                    'observation'     => strtoupper($request->input('observation')),
                     'file'            => $filePath,
                     'legende'         => $request->input('legende'),
                     'type'            => 'arrive',
@@ -399,12 +399,12 @@ class ArriveController extends Controller
                     'date_cores'      => $request->input('date_correspondance'),
                     'numero_courrier' => $request->input('numero_courrier'),
                     'annee'           => $request->input('annee'),
-                    'objet'           => $request->input('objet'),
-                    'expediteur'      => $request->input('expediteur'),
-                    'reference'       => $request->input('reference'),
+                    'objet'           => strtoupper($request->input('objet')),
+                    'expediteur'      => strtoupper($request->input('expediteur')),
+                    'reference'       => strtoupper($request->input('reference')),
                     'numero_reponse'  => $request->input('numero_reponse'),
                     'date_reponse'    => $date_reponse,
-                    'observation'     => $request->input('observation'),
+                    'observation'     => strtoupper($request->input('observation')),
                     'file'            => $filePath,
                     'legende'         => $request->input('legende'),
                     'type'            => 'arrive',
@@ -420,12 +420,12 @@ class ArriveController extends Controller
                     'date_cores'      => $request->input('date_correspondance'),
                     'numero_courrier' => $request->input('numero_courrier'),
                     'annee'           => $request->input('annee'),
-                    'objet'           => $request->input('objet'),
-                    'expediteur'      => $request->input('expediteur'),
-                    'reference'       => $request->input('reference'),
+                    'objet'           => strtoupper($request->input('objet')),
+                    'expediteur'      => strtoupper($request->input('expediteur')),
+                    'reference'       => strtoupper($request->input('reference')),
                     'numero_reponse'  => $request->input('numero_reponse'),
                     'date_reponse'    => $date_reponse,
-                    'observation'     => $request->input('observation'),
+                    'observation'     => strtoupper($request->input('observation')),
                     'legende'         => $request->input('legende'),
                     'type'            => 'arrive',
                     "user_create_id"  => Auth::user()->id,
