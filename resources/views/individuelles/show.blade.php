@@ -154,18 +154,20 @@
                                     </div>
                                 </form>
                                 <div>
-                                    <div class="label">FICHIERS JOINTS</div>
-                                    @foreach (Auth::user()->files->whereNotNull('file') as $file)
-                                        <div class="d-flex align-items-center justify-content-between mb-2">
-                                            <!-- Affichage de la légende -->
-                                            <p class="mb-0 me-3">{{ $file->legende }}</p>
+                                    <div class="col-md-4">
+                                        <div class="label">FICHIERS JOINTS</div>
+                                        @foreach (Auth::user()->files->whereNotNull('file') as $file)
+                                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                                <!-- Affichage de la légende -->
+                                                <p class="mb-0 me-3">{{ $file->legende }}</p>
 
-                                            <!-- Bouton de téléchargement -->
-                                            <a href="{{ asset($file->getFichier()) }}" class="btn btn-sm btn-primary">
-                                                Télécharger
-                                            </a>
-                                        </div>
-                                    @endforeach
+                                                <!-- Bouton de téléchargement -->
+                                                <a href="{{ asset($file->getFichier()) }}" class="btn btn-sm btn-primary">
+                                                    Télécharger
+                                                </a>
+                                            </div>
+                                        @endforeach
+                                    </div>
                                 </div>
                             </div>
                         </div>
