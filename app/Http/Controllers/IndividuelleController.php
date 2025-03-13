@@ -926,7 +926,7 @@ class IndividuelleController extends Controller
             }
         }
 
-        $files = File::where('users_id', $user->id)
+        $files = File::where('users_id', $individuelle->user->id)
             ->whereNotNull('file') // Utilisation de whereNotNull pour plus de clarté
             ->distinct()
             ->get();
