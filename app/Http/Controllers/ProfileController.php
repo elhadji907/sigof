@@ -1,22 +1,21 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Collective;
 use App\Models\File;
 use App\Models\Individuelle;
 use App\Models\Projet;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Validation\Rule;
-use Carbon\Carbon;
 
 class ProfileController extends Controller
 {
@@ -185,7 +184,14 @@ class ProfileController extends Controller
                 'max:17',
                 Rule::unique(User::class)->ignore($id ?? null)->whereNull('deleted_at'),
             ],
-            'username'                  => ['required', 'string'],
+            /* 'username'                  => ['required', 'string'], */
+            'username'                  => [
+                'required',
+                'string',
+                'min:3',
+                'max:25',
+                Rule::unique('users')->ignore($id ?? null)->whereNull('deleted_at'),
+            ],
             'civilite'                  => ['required', 'string', 'max:8'],
             'firstname'                 => ['required', 'string', 'max:150'],
             'name'                      => ['required', 'string', 'max:25'],

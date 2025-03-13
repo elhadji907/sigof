@@ -33,8 +33,13 @@ class RegisteredUserController extends Controller
     {
         // Vérification incluant les utilisateurs soft deleted
         $request->validate([
-            'username' => ['required', 'string', 'min:3', 'max:25', 'unique:' . User::class],
-            /* 'email'    => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class], */
+            'username' => [
+                'required',
+                'string',
+                'min:3',
+                'max:7',
+                Rule::unique('users')->whereNull('deleted_at'), // Ignore les utilisateurs supprimés
+            ],
             'email'    => [
                 'required',
                 'string',

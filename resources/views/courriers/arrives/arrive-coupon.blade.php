@@ -6,7 +6,7 @@
 
     <meta charset="utf-8" />
     <style>
-         @page {
+        @page {
             size: 21cm 29.7cm;
             margin-top: 0cm;
             margin-bottom: 0cm;
@@ -108,7 +108,7 @@
                         </div>
                     </td>
                     <td colspan="3" align="right" valign="top">
-                        <p>
+                        <h3>
                             <b> {{ __("Date d'imputation : ") }} </b>
                             @if (isset($courrier->date_imp))
                                 {{ $courrier->date_imp?->format('d/m/Y') }} <br />
@@ -118,10 +118,11 @@
                             <b> {{ __("Date d'arrivée : ") }} </b>
                             {{ $courrier->date_recep?->format('d/m/Y') }} <br />
                             <b> {{ __('N° du courrier : ') }} </b> <span
-                                style="color:red">{{ 'CA-' . $arrive->numero_arrive }}</span> <br />
+                                style="color:rgb(255, 0, 0)"><b><strong>{{ 'CA-' . $arrive->numero_arrive }}</strong></b></span>
+                            <br />
                         <h2><br><u>{{ __("FICHE D'IMPUTATION") }}</u></h2>
 
-                        </p>
+                        </h3>
                     </td>
                 </tr>
             </tbody>

@@ -31,7 +31,14 @@ class ProfileUpdateRequest extends FormRequest
                 'max:17',
                 Rule::unique(User::class)->ignore($this->route('user')?->id ?? null)->whereNull('deleted_at'),
             ],
-            'username'                  => ['required', 'string'],
+            /* 'username'                  => ['required', 'string'], */
+            'username'                  => [
+                'required',
+                'string',
+                'min:3',
+                'max:25',
+                Rule::unique('users')->ignore($this->route('user')?->id ?? null)->whereNull('deleted_at'),
+            ],
             'civilite'                  => ['required', 'string', 'max:8'],
             'firstname'                 => ['required', 'string', 'max:150'],
             'name'                      => ['required', 'string', 'max:25'],
