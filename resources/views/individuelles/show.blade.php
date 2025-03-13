@@ -163,7 +163,7 @@
                                                 <p class="mb-0 me-3">{{ $file->legende }}</p>
 
                                                 <!-- Bouton de téléchargement -->
-                                                <a href="{{ asset($file->getFichier()) }}" class="btn btn-sm btn-secondary">
+                                                <a href="{{ asset($file->getFichier()) }}" class="btn btn-sm btn-secondary" target="_blank">
                                                     Télécharger
                                                 </a>
                                             </div>
