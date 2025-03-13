@@ -156,11 +156,11 @@
                                 <div>
                                     <div class="label">FICHIERS JOINTS</div>
                                     @foreach (Auth::user()->files->whereNotNull('file') as $file)
-                                        <div>
-                                            <!-- Affiche la légende du fichier -->
-                                            <p>{{ $file->legende }}</p>
+                                        <div class="d-flex align-items-center justify-content-between mb-2">
+                                            <!-- Affichage de la légende -->
+                                            <p class="mb-0 me-3">{{ $file->legende }}</p>
 
-                                            <!-- Lien pour télécharger le fichier -->
+                                            <!-- Bouton de téléchargement -->
                                             <a href="{{ asset($file->getFichier()) }}" class="btn btn-sm btn-primary">
                                                 Télécharger
                                             </a>
