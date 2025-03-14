@@ -48,7 +48,12 @@ class UserController extends Controller
     public function homePage()
     {
         $total_user        = User::count();
-        $email_verified_at = DB::table(table: 'users')->where('email_verified_at', '!=', null)->count();
+        /* $email_verified_at = DB::table(table: 'users')->where('email_verified_at', '!=', null)->count(); */
+        
+        $email_verified_at = User::whereNotNull('email_verified_at')->count();
+        $email_verified_at = ($email_verified_at / $total_user) * 100;
+        $email_verified_at = number_format($email_verified_at, 2, ',', ' ');
+
         $total_arrive      = Arrive::where('type', null)->count();
         $total_depart      = Depart::count();
         $total_interne     = Interne::count();
@@ -130,8 +135,6 @@ class UserController extends Controller
             $pourcentage_hommes = 0;
             $pourcentage_femmes = 0;
         }
-
-        $email_verified_at = ($email_verified_at / $total_user) * 100;
 
         return view(
             "home-page",

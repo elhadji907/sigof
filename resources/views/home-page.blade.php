@@ -108,9 +108,9 @@
                                                 <div class="progress-bar progress-bar-striped progress-bar-animated {{ $color }}"
                                                     role="progressbar" style="width: {{ $progress }}%"
                                                     aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
-                                                    @if ($progress == 100) 
+                                                    @if ($progress == 100)
                                                         terminée
-                                                    @else 
+                                                    @else
                                                         {{ $progress }}%
                                                     @endif
                                                 </div>
@@ -120,7 +120,9 @@
                                         {{-- Pour les demandes collectives --}}
                                         @php
                                             $progress = round(
-                                                (count($formation->emargementcollectives) / $formation->duree_formation) * 100,
+                                                (count($formation->emargementcollectives) /
+                                                    $formation->duree_formation) *
+                                                    100,
                                             );
                                             // Déterminer la couleur en fonction du pourcentage
                                             if ($progress <= 20) {
@@ -141,9 +143,9 @@
                                             <div class="progress-bar progress-bar-striped progress-bar-animated {{ $color }}"
                                                 role="progressbar" style="width: {{ $progress }}%"
                                                 aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
-                                                @if ($progress == 100) 
+                                                @if ($progress == 100)
                                                     terminée
-                                                @else 
+                                                @else
                                                     {{ $progress }}%
                                                 @endif
                                             </div>
@@ -441,7 +443,7 @@
                                                 <div class="ps-3">
                                                     <h6>{{ number_format($total_user, 0, '', ' ') }}</h6>
                                                     <span
-                                                        class="text-success small pt-1 fw-bold">{{ number_format($email_verified_at, 2, ',', ' ') . '%' }}</span>
+                                                        class="text-success small pt-1 fw-bold">{{ $email_verified_at . '%' }}</span>
                                                     <span class="text-muted small pt-2 ps-1">comptes vérifiés</span>
 
                                                 </div>
