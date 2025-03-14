@@ -139,7 +139,7 @@
                                             <span>Quels sont nos modules de formation ?</span>
                                         </a>
 
-                                        <a href="{{ url('/guide') }}"
+                                        <a href="{{ url('/guide.pdf') }}"
                                             class="flex items-center text-gray-700 hover:text-blue-500 transition duration-300"
                                             target="_blank">
                                             <i class="bi bi-filetype-pdf"></i>
