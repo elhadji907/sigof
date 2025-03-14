@@ -69,8 +69,8 @@ use App\Http\Controllers\ValidationformationController;
 use App\Http\Controllers\ValidationIndividuelleController;
 use App\Http\Controllers\ValidationmoduleController;
 use App\Http\Controllers\ValidationoperateurController;
-use Illuminate\Support\Facades\Route;    
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -554,13 +554,13 @@ Route::group(['middleware' => ['XSS']], function () {
     Route::get('nos-modules', [ContactController::class, 'nosModules'])->name('nos-modules');
 
     Route::get('/guide', function () {
-        $path = resource_path('views/guide.pdf');
+        $path = public_path('guide.pdf');
 
         if (! file_exists($path)) {
             abort(404);
         }
 
-        return Response::file($path, [
+        return response()->file($path, [
             'Content-Type' => 'application/pdf',
         ]);
     });
