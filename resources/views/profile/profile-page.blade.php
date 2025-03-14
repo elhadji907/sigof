@@ -406,7 +406,7 @@
                                         {{-- CIN --}}
                                         <div class="row mb-3">
                                             <label for="cin"
-                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">CIN<span
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">N° CIN (NIN)<span
                                                     class="text-danger mx-1">*</span>
                                             </label>
                                             <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
