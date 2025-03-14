@@ -864,7 +864,7 @@
                                                 class="text-danger mx-1">*</span></label>
                                         <div class="input-group has-validation">
                                             <span class="input-group-text" id="inputGroupPrepend"><i
-                                                class="bi bi-telephone-plus"></i></span>
+                                                    class="bi bi-telephone-plus"></i></span>
                                             <input name="votre_telephone" type="text" maxlength="12"
                                                 class="form-control form-control-sm @error('votre_telephone') is-invalid @enderror"
                                                 id="votre_telephone" value="{{ old('votre_telephone') }}"
@@ -1135,7 +1135,29 @@
         </div>
 
         {{-- En savoir plus --}}
-        <div
+
+        <div class="modal fade" id="enSavoirPlusModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ $une?->titre1 . ' | ' . $une?->titre2 }}</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                            <img src="{{ asset($une?->getUne()) }}" class="d-block w-100 main-image rounded-4"
+                                alt="{{ $une->titre1 }}">
+                        </div>
+                        <p>{{ $une?->message }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm"
+                            data-bs-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- <div
             class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
             <div class="modal fade" id="enSavoirPlusModal" tabindex="-1">
                 <div class="modal-dialog modal-xl">
@@ -1160,7 +1182,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         {{-- Antennes modal --}}
         @foreach ($antennes as $antenne)

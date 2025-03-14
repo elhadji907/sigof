@@ -170,8 +170,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                    <label for="image" class="form-label">Image<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="image" class="form-label">Image</label>
                                     <input type="file" name="image" value="{{ old('image') }}"
                                         class="form-control form-control-sm @error('image') is-invalid @enderror"
                                         id="image" placeholder="Image">
@@ -246,8 +245,7 @@
                                     </div>
 
                                     <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="image" class="form-label">Image<span
-                                                class="text-danger mx-1">*</span></label>
+                                        <label for="image" class="form-label">Image</label>
                                         <input type="file" name="image" value="{{ old('image') }}"
                                             class="form-control form-control-sm @error('image') is-invalid @enderror"
                                             id="image" placeholder="Image">
