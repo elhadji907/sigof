@@ -444,7 +444,7 @@
                                                     <h6>{{ number_format($total_user, 0, '', ' ') }}</h6>
                                                     <span
                                                         class="text-success small pt-1 fw-bold">{{ $email_verified_at . '%' }}</span>
-                                                    <span class="text-muted small pt-2 ps-1">comptes vérifiés</span>
+                                                    <span class="text-muted small pt-2 ps-1">comptes valides</span>
 
                                                 </div>
                                             </div>
