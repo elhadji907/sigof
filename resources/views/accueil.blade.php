@@ -77,7 +77,7 @@
                                     <a href="{{ $une?->video }}" class="btn btn-sm btn-link mt-2 mt-sm-0 glightbox">
                                         <i class="bi bi-play-circle me-1"></i>Lire la vidéo</a>
                                 @else
-                                    <a href="https://www.youtube.com/watch?v=UVn3WAv8XbM&t=49s"
+                                    <a href="https://www.youtube.com/watch?v=lceGzvSiL1Y&t=5s"
                                         class="btn btn-sm btn-link mt-2 mt-sm-0 glightbox">
                                         <i class="bi bi-play-circle me-1"></i>Vidéo présentation</a>
                                 @endif
