@@ -858,6 +858,25 @@
                                         </div>
                                     </div>
 
+                                    <!-- Telephone -->
+                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
+                                        <label for="votre_telephone" class="form-label">Téléphone<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <div class="input-group has-validation">
+                                            <span class="input-group-text" id="inputGroupPrepend"><i
+                                                class="bi bi-telephone-plus"></i></span>
+                                            <input name="votre_telephone" type="text" maxlength="12"
+                                                class="form-control form-control-sm @error('votre_telephone') is-invalid @enderror"
+                                                id="votre_telephone" value="{{ old('votre_telephone') }}"
+                                                autocomplete="tel" placeholder="XX:XXX:XX:XX">
+                                            <div class="invalid-feedback">
+                                                @error('votre_telephone')
+                                                    {{ $message }}
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <!-- Mot de passe -->
                                     <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
                                         <label for="password" class="form-label">Mot de passe<span

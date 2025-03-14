@@ -39,11 +39,11 @@ class ProfileController extends Controller
         } else {
             $user_cin = null;
         }
-        
+
         $files = File::where('users_id', $user->id)
-        ->whereNotNull('file') // Utilisation de whereNotNull pour plus de clarté
-        ->distinct()
-        ->get();    
+            ->whereNotNull('file') // Utilisation de whereNotNull pour plus de clarté
+            ->distinct()
+            ->get();
 
         $user_files = File::where('users_id', $user->id)
             ->where('file', null)
@@ -224,7 +224,7 @@ class ProfileController extends Controller
 
         $user->update([
             'cin'                       => $request->input('cin'),
-            'username'                  => $request->input('username'),
+            'username'                  => substr(str_replace(' ', '', $request->username), 0, 10),
             'civilite'                  => $request->input('civilite'),
             'firstname'                 => $request->input('firstname'),
             'name'                      => $request->input('name'),
@@ -233,7 +233,7 @@ class ProfileController extends Controller
             'image'                     => $request->input('image'),
             'email'                     => $request->input('email'),
             'telephone'                 => $request->input('telephone'),
-            'adresse'                   => $request->input('adresse'),
+            'adresse'                   => strtoupper($request->input('adresse')),
             'situation_familiale'       => $request->input('situation_familiale'),
             'situation_professionnelle' => $request->input('situation_professionnelle'),
             'twitter'                   => $request->input('twitter'),

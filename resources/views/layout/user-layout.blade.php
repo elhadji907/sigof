@@ -2541,7 +2541,9 @@
     </script>
 
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
     <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+
     <script>
         $(function() {
             $("#datepicker").kendoDatePicker().datepicker({
@@ -2686,6 +2688,7 @@
             });
         });
     </script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var telephoneInput = document.getElementById("telephone_responsable");
@@ -2702,6 +2705,7 @@
             });
         });
     </script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var telephoneInput = document.getElementById("fixe");
@@ -2718,9 +2722,11 @@
             });
         });
     </script>
+
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NGJKZ3DD" height="0" width="0"
-            style="display:none;visibility:hidden"></iframe></noscript>
+            style="display:none;visibility:hidden"></iframe>
+    </noscript>
     <!-- End Google Tag Manager (noscript) -->
     @stack('scripts')
 </body>

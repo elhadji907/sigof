@@ -33,23 +33,24 @@ class RegisteredUserController extends Controller
     {
         // Vérification incluant les utilisateurs soft deleted
         $request->validate([
-            'username' => [
+            'username'        => [
                 'required',
                 'string',
                 'min:3',
-                'max:7',
+                'max:10',
                 Rule::unique('users')->whereNull('deleted_at'), // Ignore les utilisateurs supprimés
             ],
-            'email'    => [
+            'email'           => [
                 'required',
                 'string',
                 'email',
                 'max:255',
                 Rule::unique('users')->whereNull('deleted_at'), // Ignore les utilisateurs supprimés
             ],
-            'termes'   => ['required', 'accepted'], // 'accepted' est plus approprié pour un champ de type checkbox
+            'votre_telephone' => ['required', 'string', 'min:12', 'max:12'],
+            'termes'          => ['required', 'accepted'], // 'accepted' est plus approprié pour un champ de type checkbox
             /* 'password' => ['required', 'confirmed', Rules\Password::defaults()], */
-            'password' => 'required|string|min:8|confirmed',
+            'password'        => 'required|string|min:8|confirmed',
         ]);
 
         // Vérifier si l'utilisateur existe mais est supprimé
@@ -71,9 +72,10 @@ class RegisteredUserController extends Controller
         }
 
         $user = User::create([
-            'username' => $request->username,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
+            'username'  => substr(str_replace(' ', '', $request->username), 0, 10),
+            'email'     => $request->email,
+            'telephone' => $request->votre_telephone,
+            'password'  => Hash::make($request->password),
         ]);
 
         $files = File::where('users_id', null)->distinct()->get();

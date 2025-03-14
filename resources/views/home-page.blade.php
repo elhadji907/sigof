@@ -332,7 +332,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        {{-- <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                             <div class="card info-card sales-card">
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -352,14 +352,76 @@
                                                         class="text-primary">{{ number_format(count($individuelles), 0, '', ' ') }}</span>
                                                 </h6>
                                                 <span class="text-success small pt-1 fw-bold">Toutes</span>
-                                                {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div> --}}
+
+                        {{-- Demandes individuelles --}}
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="card info-card sales-card">
+                                <div class="filter">
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                            class="bi bi-three-dots"></i></a>
+                                </div>
+                                <a href="{{ route('individuelles.index') }}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Demandes <span>| individuelles</span></h5>
+                                        <div class="d-flex align-items-center">
+                                            <div
+                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-file-earmark-text"></i>
+                                            </div>
+                                            <div class="ps-3">
+                                                <h6>
+                                                    <span
+                                                        class="text-primary">{{ number_format(count($individuelles), 0, '', ' ') }}</span>
+                                                </h6>
+                                                <span class="text-muted small pt-2 ps-1">dont</span>
+                                                <span
+                                                    class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_femmes, 2, ',', ' ') . '%' }}</span>
+                                                <span class="text-muted small pt-2 ps-1">de femmes</span>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                             </div>
                         </div>
+
+                        {{-- Demandes collectives --}}
                         <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="card info-card sales-card">
+                                <div class="filter">
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                            class="bi bi-three-dots"></i></a>
+                                </div>
+                                <a href="{{ route('collectives.index') }}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Demandes <span>| collectives</span></h5>
+                                        <div class="d-flex align-items-center">
+                                            <div
+                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-file-earmark-text"></i>
+                                            </div>
+                                            <div class="ps-3">
+                                                <h6>
+                                                    <span
+                                                        class="text-primary">{{ number_format(count($collectives), 0, '', ' ') }}</span>
+                                                </h6>
+                                                <span class="text-muted small pt-2 ps-1">dont</span>
+                                                <span
+                                                    class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_femmes_collective, 2, ',', ' ') . '%' }}</span>
+                                                <span class="text-muted small pt-2 ps-1">de femmes</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        {{-- <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                             <div class="card info-card sales-card">
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -386,8 +448,9 @@
                                     </div>
                                 </a>
                             </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        </div> --}}
+
+                        {{-- <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                             <div class="card info-card sales-card">
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -414,8 +477,33 @@
                                     </div>
                                 </a>
                             </div>
+                        </div> --}}
+                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="card info-card sales-card">
+                                <div class="filter">
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                            class="bi bi-three-dots"></i></a>
+                                </div>
+                                <a href="#">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Demandes <span>| toutes</span></h5>
+                                        <div class="d-flex align-items-center">
+                                            <div
+                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-file-earmark-text"></i>
+                                            </div>
+                                            <div class="ps-3">
+                                                <h6>
+                                                    <span
+                                                        class="text-primary">{{ number_format(count($individuelles)) }}</span>
+                                                </h6>
+                                                <span class="text-success small pt-1 fw-bold">Toutes</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>

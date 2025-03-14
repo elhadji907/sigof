@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Models\Arrive;
+use App\Models\Collective;
 use App\Models\Depart;
 use App\Models\Departement;
 use App\Models\Direction;
@@ -12,6 +13,7 @@ use App\Models\Formation;
 use App\Models\Individuelle;
 use App\Models\Ingenieur;
 use App\Models\Interne;
+use App\Models\Listecollective;
 use App\Models\Module;
 use App\Models\Operateur;
 use App\Models\Region;
@@ -47,16 +49,16 @@ class UserController extends Controller
 
     public function homePage()
     {
-        $total_user        = User::count();
+        $total_user = User::count();
         /* $email_verified_at = DB::table(table: 'users')->where('email_verified_at', '!=', null)->count(); */
-        
+
         $email_verified_at = User::whereNotNull('email_verified_at')->count();
         $email_verified_at = ($email_verified_at / $total_user) * 100;
         $email_verified_at = number_format($email_verified_at, 2, ',', ' ');
 
-        $total_arrive      = Arrive::where('type', null)->count();
-        $total_depart      = Depart::count();
-        $total_interne     = Interne::count();
+        $total_arrive  = Arrive::where('type', null)->count();
+        $total_depart  = Depart::count();
+        $total_interne = Interne::count();
 
         $formations = Formation::where('statut', "Démarrée")
             ->orderBy('created_at', 'desc')
@@ -66,7 +68,7 @@ class UserController extends Controller
 
         $total_courrier = $total_arrive + $total_depart + $total_interne;
 
-        if ($total_courrier != 0) {
+        /*     if ($total_courrier != 0) {
             $pourcentage_arrive  = ($total_arrive / $total_courrier) * 100;
             $pourcentage_depart  = ($total_depart / $total_courrier) * 100;
             $pourcentage_interne = ($total_interne / $total_courrier) * 100;
@@ -74,34 +76,46 @@ class UserController extends Controller
             $pourcentage_arrive  = 0;
             $pourcentage_depart  = 0;
             $pourcentage_interne = 0;
-        }
+        } */
+        $pourcentage_arrive  = $total_courrier != 0 ? ($total_arrive / $total_courrier) * 100 : 0;
+        $pourcentage_depart  = $total_courrier != 0 ? ($total_depart / $total_courrier) * 100 : 0;
+        $pourcentage_interne = $total_courrier != 0 ? ($total_interne / $total_courrier) * 100 : 0;
 
         $total_individuelle = Individuelle::count();
         $roles              = Role::orderBy('created_at', 'desc')->get();
         /* return view("home-page", compact("total_user", 'roles', 'total_arrive', 'total_depart', 'total_individuelle')); */
 
         /* $individuelles = Individuelle::skip(0)->take(1000)->get(); */
-        $individuelles = Individuelle::get();
-        $departements  = Departement::orderBy("created_at", "desc")->get();
-        $modules       = Module::orderBy("created_at", "desc")->get();
+        $individuelles    = Individuelle::get();
+        $collectives      = Collective::get();
+        $listecollectives = Listecollective::get();
+        $departements     = Departement::orderBy("created_at", "desc")->get();
+        $modules          = Module::orderBy("created_at", "desc")->get();
 
         $today        = date('Y-m-d');
         $annee        = date('Y');
         $annee_lettre = 'Diagramme à barres, année: ' . date('Y');
         $count_today  = Individuelle::where("created_at", "LIKE", "{$today}%")->count();
+        $counts       = DB::table('individuelles')
+            ->selectRaw('MONTH(created_at) as month, count(*) as count')
+            ->whereYear('created_at', $annee)
+            ->whereNull('deleted_at')
+            ->groupBy(DB::raw('MONTH(created_at)'))
+            ->pluck('count', 'month');
 
-        $janvier   = DB::table('individuelles')->whereMonth("created_at", "01")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $fevrier   = DB::table('individuelles')->whereMonth("created_at", "02")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $mars      = DB::table('individuelles')->whereMonth("created_at", "03")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $avril     = DB::table('individuelles')->whereMonth("created_at", "04")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $mai       = DB::table('individuelles')->whereMonth("created_at", "05")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $juin      = DB::table('individuelles')->whereMonth("created_at", "06")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $juillet   = DB::table('individuelles')->whereMonth("created_at", "07")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $aout      = DB::table('individuelles')->whereMonth("created_at", "08")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $septembre = DB::table('individuelles')->whereMonth("created_at", "09")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $octobre   = DB::table('individuelles')->whereMonth("created_at", "10")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $novembre  = DB::table('individuelles')->whereMonth("created_at", "11")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
-        $decembre  = DB::table('individuelles')->whereMonth("created_at", "12")->where("created_at", "LIKE", "{$annee}%")->where('deleted_at', null)->count();
+        // Initialiser les variables avec 0 au cas où il manque un mois
+        $janvier   = $counts->get(1, 0);
+        $fevrier   = $counts->get(2, 0);
+        $mars      = $counts->get(3, 0);
+        $avril     = $counts->get(4, 0);
+        $mai       = $counts->get(5, 0);
+        $juin      = $counts->get(6, 0);
+        $juillet   = $counts->get(7, 0);
+        $aout      = $counts->get(8, 0);
+        $septembre = $counts->get(9, 0);
+        $octobre   = $counts->get(10, 0);
+        $novembre  = $counts->get(11, 0);
+        $decembre  = $counts->get(12, 0);
 
         $masculin = Individuelle::join('users', 'users.id', 'individuelles.users_id')
             ->select('individuelles.*')
@@ -113,28 +127,34 @@ class UserController extends Controller
             ->where('users.civilite', "Mme")
             ->count();
 
-        $attente = Individuelle::where('statut', 'Attente')
+        $statuts = Individuelle::selectRaw('statut, count(*) as count')
+            ->whereIn('statut', ['Attente', 'Nouvelle', 'Retenue', 'Terminée', 'Rejetée'])
+            ->groupBy('statut')
+            ->pluck('count', 'statut');
+
+        $attente  = $statuts['Attente'] ?? 0;
+        $nouvelle = $statuts['Nouvelle'] ?? 0;
+        $retenue  = $statuts['Retenue'] ?? 0;
+        $terminer = $statuts['Terminée'] ?? 0;
+        $rejeter  = $statuts['Rejetée'] ?? 0;
+
+        $pourcentage_hommes = $individuelles->count() > 0
+        ? ($masculin / $individuelles->count()) * 100
+        : 0;
+
+        $pourcentage_femmes = $individuelles->count() > 0
+        ? ($feminin / $individuelles->count()) * 100
+        : 0;
+
+        $feminin_collective = Listecollective::where('civilite', "Madame")
             ->count();
 
-        $nouvelle = Individuelle::where('statut', 'Nouvelle')
-            ->count();
+        $pourcentage_femmes_collective = $listecollectives->count() > 0
+        ? ($feminin_collective / $listecollectives->count()) * 100
+        : 0;
 
-        $retenue = Individuelle::where('statut', 'Retenue')
-            ->count();
-
-        $terminer = Individuelle::where('statut', "Terminée")
-            ->count();
-
-        $rejeter = Individuelle::where('statut', 'Rejetée')
-            ->count();
-
-        if ($individuelles->count() > 0) {
-            $pourcentage_hommes = ($masculin / $individuelles->count()) * 100;
-            $pourcentage_femmes = ($feminin / $individuelles->count()) * 100;
-        } else {
-            $pourcentage_hommes = 0;
-            $pourcentage_femmes = 0;
-        }
+        $count_demandes = ($individuelles ? $individuelles->count() : 0) +
+            ($listecollectives ? $listecollectives->count() : 0);
 
         return view(
             "home-page",
@@ -145,13 +165,16 @@ class UserController extends Controller
                 'total_depart',
                 'total_individuelle',
                 "pourcentage_femmes",
+                "pourcentage_femmes_collective",
                 "pourcentage_hommes",
+                "count_demandes",
                 'rejeter',
                 "terminer",
                 "retenue",
                 "nouvelle",
                 'attente',
                 "individuelles",
+                "collectives",
                 "modules",
                 "departements",
                 "count_today",
@@ -221,7 +244,7 @@ class UserController extends Controller
             $password = Hash::make($request->email);
         }
         $user = User::create([
-            'username'  => $request->username,
+            'username'  => substr(str_replace(' ', '', $request->username), 0, 10),
             'firstname' => $request->firstname,
             'name'      => $request->name,
             'email'     => $request->email,
@@ -389,7 +412,7 @@ class UserController extends Controller
 
             $user->update([
                 'civilite'                  => $request->civilite,
-                'username'                  => $request->username,
+                'username'                  => substr(str_replace(' ', '', $request->username), 0, 10),
                 'cin'                       => $request->cin,
                 'firstname'                 => $request->firstname,
                 'name'                      => $request->name,
