@@ -1143,10 +1143,12 @@
                         <h5 class="modal-title">{{ $une?->titre1 . ' | ' . $une?->titre2 }}</h5>
                     </div>
                     <div class="modal-body">
-                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                            <img src="{{ asset($une?->getUne()) }}" class="d-block w-100 main-image rounded-4"
-                                alt="{{ $une->titre1 }}">
-                        </div>
+                        {{-- @if (!empty($une->image))
+                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                <img src="{{ asset($une?->getUne()) }}" class="d-block w-100 main-image rounded-4"
+                                    alt="{{ $une->titre1 }}">
+                            </div>
+                        @endif --}}
                         <p>{{ $une?->message }}</p>
                     </div>
                     <div class="modal-footer">
