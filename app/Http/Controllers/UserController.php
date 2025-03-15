@@ -479,7 +479,7 @@ class UserController extends Controller
         $userRoles  = $user->roles->pluck('name', 'name')->all();
         $directions = Direction::orderBy('created_at', 'desc')->get();
         $fonctions  = Fonction::orderBy('created_at', 'desc')->get(); */
-        
+
         $roles      = Role::pluck('name')->toArray();
         $userRoles  = $user->roles->pluck('name')->toArray();
         $directions = Direction::latest()->get();
@@ -488,7 +488,7 @@ class UserController extends Controller
         return view("user.show", compact("user", "user_create_name", "user_update_name", "roles", "userRoles", "directions", "fonctions"));
     }
 
-    public function destroy($userId)
+    /* public function destroy($userId)
     {
         $user = User::findOrFail($userId);
 
@@ -511,6 +511,34 @@ class UserController extends Controller
         $user->delete();
 
         Alert::success('Succès !', $user->firstname . ' ' . $user->name . ' a été supprimé(e).');
+
+        return redirect()->back();
+    } */
+
+    public function destroy($userId)
+    {
+        $user = User::findOrFail($userId);
+
+        // Vérifier si l'utilisateur connecté est un admin ou super-admin
+        $userRoles = collect(Auth::user()->roles)->pluck('name');
+        if (! $userRoles->contains(fn($role) => str_contains($role, 'super-admin') || str_contains($role, 'admin'))) {
+            $this->authorize('delete', $user);
+        }
+
+        DB::transaction(function () use ($user) {
+            // Suppression de l'image si elle existe
+            if (! empty($user->image)) {
+                Storage::disk('public')->delete($user->image);
+                $user->update(['image' => null]);
+            }
+
+            // Détacher les rôles et supprimer l'utilisateur
+            $user->roles()->detach();
+            $user->delete();
+        });
+
+        // Message de succès
+        Alert::success('Succès !', "{$user->firstname} {$user->name} a été supprimé(e).");
 
         return redirect()->back();
     }
