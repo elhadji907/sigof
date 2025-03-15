@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'Détails utilisateur')
+@section('title', 'DETAILS UTILISATEURS')
 @section('space-work')
     <section class="section profile">
         <div class="row">
