@@ -157,9 +157,9 @@
 
                                     </tbody>
                                 </table>
-                                @else
-                                    <div class="alert alert-info">Aucune demande individuelle reçue pour l'instant !</div>
-                                @endif
+                            @else
+                                <div class="alert alert-info">Aucune demande individuelle reçue pour l'instant !</div>
+                            @endif
                             <!-- End Table with stripped rows -->
 
                         </div>
@@ -734,8 +734,8 @@
                                             <label for="projetprofessionnel" class="form-label">Informations complémentaires
                                                 sur
                                                 le projet
-                                                professionnel</label>
-                                            <textarea name="projetprofessionnel" id="projetprofessionnel" rows="2"
+                                                professionnel<span class="text-danger mx-1">*</span></label>
+                                            <textarea name="projetprofessionnel" id="projetprofessionnel" rows="5"
                                                 class="form-control form-control-sm @error('projetprofessionnel') is-invalid @enderror"
                                                 placeholder="Si vous disposez déjà d'un projet professionnel, merci d'écrire son résumé en quelques lignes">{{ old('projetprofessionnel') }}</textarea>
                                             @error('projetprofessionnel')

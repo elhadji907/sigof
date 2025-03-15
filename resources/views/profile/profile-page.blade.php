@@ -1100,7 +1100,7 @@
                         </div>
 
                         <!-- Sales Card -->
-                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        {{-- <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
                             <div class="card info-card sales-card">
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -1109,7 +1109,6 @@
                                 <a href="{{ route('showprojetProgramme') }}">
                                     <div class="card-body">
                                         <h5 class="card-title">Autres <span>| Demandes</span></h5>
-                                        {{-- <h5 class="card-title">Partenaires <span></span></h5> --}}
                                         <div class="d-flex align-items-center">
                                             <div
                                                 class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -1118,22 +1117,14 @@
                                             </div>
                                             <div class="ps-3">
                                                 <h6>
-                                                    {{-- @foreach (Auth::user()->individuelles as $individuelle)
-                                                @if (isset($individuelle->numero) && isset($individuelle->modules_id))
-                                                    @if ($loop->last)
-                                                        {!! $loop->count ?? '0' !!}
-                                                    @endif
-                                                @else
-                                                    <span class="text-primary">0</span>
-                                                @endif
-                                            @endforeach --}}
                                                 </h6>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                             </div>
-                        </div>
+                        </div> --}}
+
                         @foreach ($projets as $projet)
                             <?php
                             $projet_count = $projet?->individuelles?->where('projets_id', $projet?->id)?->where('users_id', $user?->id)?->count() ?? 0;

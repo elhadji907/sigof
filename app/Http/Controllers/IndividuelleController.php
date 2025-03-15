@@ -132,6 +132,7 @@ class IndividuelleController extends Controller
             'diplome_academique'     => ['required', 'string', 'max:255'],
             'diplome_professionnel'  => ['required', 'string', 'max:255'],
             'projet_poste_formation' => ['required', 'string', 'max:255'],
+            'projetprofessionnel'    => ['required', 'string', 'max:2000'],
         ]);
 
         $user = Auth::user();
@@ -150,7 +151,7 @@ class IndividuelleController extends Controller
             $anneeEnCours = date('Y');
             $an           = date('y');
 
-            $numero_individuelle = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+            /* $numero_individuelle = Individuelle::join('users', 'users.id', 'individuelles.users_id')
                 ->select('individuelles.*')
                 ->where('date_depot', "LIKE", "{$anneeEnCours}%")
                 ->get()->last();
@@ -181,6 +182,27 @@ class IndividuelleController extends Controller
                 $numero_individuelle = strtolower($numero_individuelle);
             }
 
+            $numero_individuelle = strtoupper($numero_individuelle); */
+
+            // Récupérer le dernier numéro existant
+            $numero_individuelle = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+                ->where('date_depot', 'LIKE', "{$anneeEnCours}%")
+                ->orderBy('individuelles.id', 'desc')
+                ->value('numero');
+
+            if ($numero_individuelle) {
+                $numero_individuelle = ++$numero_individuelle; // Incrémenter le dernier numéro
+            } else {
+                $numero_individuelle = 'I' . $anneeEnCours . "0001"; // Nouveau numéro
+            }
+
+// Vérifier l'unicité du numéro
+            while (Individuelle::where('numero', $numero_individuelle)->exists()) {
+// Si le numéro existe déjà, incrémenter encore plus (ajouter 1 à la partie numérique)
+                $numero_individuelle = 'I' . str_pad((int) substr($numero_individuelle, 1) + 1, 6, '0', STR_PAD_LEFT);
+            }
+
+// Normalisation avec des zéros à gauche (6 chiffres minimum après le préfixe)
             $numero_individuelle = strtoupper($numero_individuelle);
 
             $departement = Departement::where('nom', $request->input("departement"))->first();
@@ -297,7 +319,7 @@ class IndividuelleController extends Controller
             $anneeEnCours = date('Y');
             $an           = date('y');
 
-            $numero_individuelle = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+            /* $numero_individuelle = Individuelle::join('users', 'users.id', 'individuelles.users_id')
                 ->select('individuelles.*')
                 ->where('date_depot', "LIKE", "{$anneeEnCours}%")
                 ->get()->last();
@@ -328,6 +350,27 @@ class IndividuelleController extends Controller
                 $numero_individuelle = strtolower($numero_individuelle);
             }
 
+            $numero_individuelle = strtoupper($numero_individuelle); */
+
+            // Récupérer le dernier numéro existant
+            $numero_individuelle = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+                ->where('date_depot', 'LIKE', "{$anneeEnCours}%")
+                ->orderBy('individuelles.id', 'desc')
+                ->value('numero');
+
+            if ($numero_individuelle) {
+                $numero_individuelle = ++$numero_individuelle; // Incrémenter le dernier numéro
+            } else {
+                $numero_individuelle = 'I' . $anneeEnCours . "0001"; // Nouveau numéro
+            }
+
+// Vérifier l'unicité du numéro
+            while (Individuelle::where('numero', $numero_individuelle)->exists()) {
+// Si le numéro existe déjà, incrémenter encore plus (ajouter 1 à la partie numérique)
+                $numero_individuelle = 'I' . str_pad((int) substr($numero_individuelle, 1) + 1, 6, '0', STR_PAD_LEFT);
+            }
+
+// Normalisation avec des zéros à gauche (6 chiffres minimum après le préfixe)
             $numero_individuelle = strtoupper($numero_individuelle);
 
             if (! empty($request->input("departement")) && $projet?->type_localite == 'Commune') {
@@ -518,7 +561,7 @@ class IndividuelleController extends Controller
         $anneeEnCours = date('Y');
         $an           = date('y');
 
-        $numero_individuelle = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+        /* $numero_individuelle = Individuelle::join('users', 'users.id', 'individuelles.users_id')
             ->select('individuelles.*')
             ->where('date_depot', "LIKE", "{$anneeEnCours}%")
             ->get()->last();
@@ -549,6 +592,26 @@ class IndividuelleController extends Controller
             $numero_individuelle = strtolower($numero_individuelle);
         }
 
+        $numero_individuelle = strtoupper($numero_individuelle); */
+        // Récupérer le dernier numéro existant
+        $numero_individuelle = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+            ->where('date_depot', 'LIKE', "{$anneeEnCours}%")
+            ->orderBy('individuelles.id', 'desc')
+            ->value('numero');
+
+        if ($numero_individuelle) {
+            $numero_individuelle = ++$numero_individuelle; // Incrémenter le dernier numéro
+        } else {
+            $numero_individuelle = 'I' . $anneeEnCours . "0001"; // Nouveau numéro
+        }
+
+// Vérifier l'unicité du numéro
+        while (Individuelle::where('numero', $numero_individuelle)->exists()) {
+// Si le numéro existe déjà, incrémenter encore plus (ajouter 1 à la partie numérique)
+            $numero_individuelle = 'I' . str_pad((int) substr($numero_individuelle, 1) + 1, 6, '0', STR_PAD_LEFT);
+        }
+
+// Normalisation avec des zéros à gauche (6 chiffres minimum après le préfixe)
         $numero_individuelle = strtoupper($numero_individuelle);
 
         $departement = Departement::where('nom', $request->input("departement"))->first();
@@ -702,7 +765,7 @@ class IndividuelleController extends Controller
             }
         }
         $this->validate($request, [
-            'date_depot'             => ['required', 'date_format:d/m/Y'],
+            'date_depot'             => ['nullable', 'date_format:d/m/Y'],
             'telephone_secondaire'   => ['required', 'string', 'min:9', 'max:12'],
             'adresse'                => ['required', 'string', 'max:255'],
             'departement'            => ['required', 'string', 'max:255'],
@@ -711,6 +774,7 @@ class IndividuelleController extends Controller
             'diplome_academique'     => ['required', 'string', 'max:255'],
             'diplome_professionnel'  => ['required', 'string', 'max:255'],
             'projet_poste_formation' => ['required', 'string', 'max:255'],
+            'projetprofessionnel'    => ['required', 'string', 'max:2000'],
         ], [
             'date_depot.required'             => 'La date de dépôt est obligatoire.',
             'telephone_secondaire.required'   => 'Le téléphone secondaire est obligatoire.',
@@ -721,10 +785,15 @@ class IndividuelleController extends Controller
             'diplome_academique.required'     => 'Le diplôme académique est obligatoire.',
             'diplome_professionnel.required'  => 'Le diplôme professionnel est obligatoire.',
             'projet_poste_formation.required' => 'Le projet poste de formation est obligatoire.',
+            'projetprofessionnel.required'    => 'Le projet professionnel est obligatoire.',
         ]);
 
-        $dateString = $request->input('date_depot');
-        $date_depot = Carbon::createFromFormat('d/m/Y', $dateString);
+        if (! empty($request->input('date_depot'))) {
+            $dateString = $request->input('date_depot');
+            $date_depot = Carbon::createFromFormat('d/m/Y', $dateString);
+        } else {
+            $date_depot = null;
+        }
 
         $projet = Projet::where('sigle', $request->input("projet"))->first();
 
@@ -1116,6 +1185,7 @@ class IndividuelleController extends Controller
     public function showIndividuelleProjet(Request $request)
     {
         $projet = Projet::findOrFail($request->idprojet);
+
         $this->validate($request, [
             'telephone_secondaire'   => ['required', 'string', 'min:9', 'max:12'],
             'adresse'                => ['required', 'string', 'max:255'],
@@ -1125,6 +1195,7 @@ class IndividuelleController extends Controller
             'diplome_academique'     => ['required', 'string', 'max:255'],
             'diplome_professionnel'  => ['required', 'string', 'max:255'],
             'projet_poste_formation' => ['required', 'string'],
+            'projetprofessionnel'    => ['required', 'string', 'max:2000'],
         ]);
 
         $user = Auth::user();
@@ -1142,7 +1213,7 @@ class IndividuelleController extends Controller
             $anneeEnCours = date('Y');
             $an           = date('y');
 
-            $numero_individuelle = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+            /* $numero_individuelle = Individuelle::join('users', 'users.id', 'individuelles.users_id')
                 ->select('individuelles.*')
                 ->where('date_depot', "LIKE", "{$anneeEnCours}%")
                 ->get()->last();
@@ -1173,6 +1244,26 @@ class IndividuelleController extends Controller
                 $numero_individuelle = strtolower($numero_individuelle);
             }
 
+            $numero_individuelle = strtoupper($numero_individuelle); */
+            // Récupérer le dernier numéro existant
+            $numero_individuelle = Individuelle::join('users', 'users.id', 'individuelles.users_id')
+                ->where('date_depot', 'LIKE', "{$anneeEnCours}%")
+                ->orderBy('individuelles.id', 'desc')
+                ->value('numero');
+
+            if ($numero_individuelle) {
+                $numero_individuelle = ++$numero_individuelle; // Incrémenter le dernier numéro
+            } else {
+                $numero_individuelle = 'I' . $anneeEnCours . "0001"; // Nouveau numéro
+            }
+
+// Vérifier l'unicité du numéro
+            while (Individuelle::where('numero', $numero_individuelle)->exists()) {
+// Si le numéro existe déjà, incrémenter encore plus (ajouter 1 à la partie numérique)
+                $numero_individuelle = 'I' . str_pad((int) substr($numero_individuelle, 1) + 1, 6, '0', STR_PAD_LEFT);
+            }
+
+// Normalisation avec des zéros à gauche (6 chiffres minimum après le préfixe)
             $numero_individuelle = strtoupper($numero_individuelle);
 
             if (! empty($request->input("departement")) && $projet?->type_localite == 'Commune') {
