@@ -26,17 +26,20 @@ class FileController extends Controller
     {
         $this->validate($request, [
             'legende' => 'required |string',
-            'file'    => 'required|file|mimes:jpeg,png,jpg,gif,svg,pdf|max:2048',
+            'file'    => 'required|file|mimes:jpeg,png,jpg,gif,svg,pdf|max:1024',
         ]);
 
         $file = File::where('id', $request->legende)
             ->where('users_id', $id)
             ->firstOrFail();
-            
+
         // Check if the file is valid
         if ($request->file('file')->isValid()) {
             // Store the file in the 'uploads' directory on the 'public' disk
             $filePath = $request->file('file')->store('uploads', 'public');
+            if (! empty($file->file)) {
+                Storage::disk('public')->delete($file->file);
+            }
             // Return success response
             $file->update([
                 'file' => $filePath,

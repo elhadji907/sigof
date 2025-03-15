@@ -481,6 +481,8 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/users/corbeille', [UserController::class, 'corbeille'])->name('users.corbeille');
         Route::get('/users/restored', [UserController::class, 'restored'])->name('users.restored');
 
+        Route::delete('/profile/image', [ProfileController::class, 'destroyImage'])->name('profile.image.destroy');
+
         /* Pour visualiser la page d'erreur */
         /* Route::get('/errors/restored', [UserController::class, 'errors'])->name('users.errors'); */
 

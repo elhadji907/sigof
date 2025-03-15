@@ -1,11 +1,11 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Une;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Storage;
 
 class UneController extends Controller
 {
@@ -28,10 +28,10 @@ class UneController extends Controller
     public function store(Request $request)
     {
         $data = request()->validate([
-            'titre1' => ['required', 'string', 'max:40'],
-            'titre2' => ['required', 'string', 'max:35'],
+            'titre1'  => ['required', 'string', 'max:40'],
+            'titre2'  => ['required', 'string', 'max:35'],
             'message' => ['required', 'string'],
-            'image' => ['image', 'nullable', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:2048'],
+            'image'   => ['image', 'nullable', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:1024'],
 
         ]);
 
@@ -46,11 +46,11 @@ class UneController extends Controller
         }
 
         $une = new Une([
-            'titre1' => $data['titre1'],
-            'titre2' => $data['titre2'],
-            'message' => $data['message'],
+            'titre1'   => $data['titre1'],
+            'titre2'   => $data['titre2'],
+            'message'  => $data['message'],
             'users_id' => auth()->user()->id,
-            'image' => $imagePath,
+            'image'    => $imagePath,
         ]);
 
         $une->save();
@@ -63,18 +63,18 @@ class UneController extends Controller
     public function update(Request $request, $id)
     {
         $data = request()->validate([
-            'titre1' => ['required', 'string', 'max:40'],
-            'titre2' => ['required', 'string', 'max:35'],
+            'titre1'  => ['required', 'string', 'max:40'],
+            'titre2'  => ['required', 'string', 'max:35'],
             'message' => ['required', 'string'],
-            'image' => ['image', 'nullable', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:2048'],
-            'video' => ['nullable', 'string'],
+            'image'   => ['image', 'nullable', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:1024'],
+            'video'   => ['nullable', 'string'],
 
         ]);
 
         $une = Une::findOrFail($id);
 
         if (request('image')) {
-
+            Storage::disk('public')->delete($une->image);
             $imagePath = request('image')->store('unes', 'public');
 
             $image = Image::make(public_path("/storage/{$imagePath}"))->fit(2400, 2400);
@@ -85,12 +85,12 @@ class UneController extends Controller
         }
 
         $une->update([
-            'titre1' => $data['titre1'],
-            'titre2' => $data['titre2'],
-            'message' => $data['message'],
-            'video' => $data['video'],
+            'titre1'   => $data['titre1'],
+            'titre2'   => $data['titre2'],
+            'message'  => $data['message'],
+            'video'    => $data['video'],
             'users_id' => auth()->user()->id,
-            'image' => $imagePath,
+            'image'    => $imagePath,
         ]);
 
         $une->save();
@@ -103,11 +103,13 @@ class UneController extends Controller
     public function destroy($id)
     {
 
-        $Une = Une::find($id);
+        $une = Une::find($id);
 
-        $Une->delete();
+        Storage::disk('public')->delete($une->image);
 
-        Alert::success('Suppression effectuée !');
+        $une->delete();
+
+        Alert::success('Succès !', 'Information supprimée avec succès.');
 
         return redirect()->back();
     }
@@ -119,7 +121,7 @@ class UneController extends Controller
 
         $alunes = Une::all();
 
-        if (!empty($une->status)) {
+        if (! empty($une->status)) {
             Alert::warning('Enregistrement déjà à la une !');
 
             return redirect()->back();

@@ -375,9 +375,9 @@
 
                                         <div class="row mb-3">
                                             <label for="profileImage"
-                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Image
-                                                de
-                                                profil</label>
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">
+                                                Image de profil
+                                            </label>
                                             {{-- <div class="col-md-8 col-lg-9"> --}}
                                             <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <img class="rounded-circle w-25" alt="Profil"
@@ -392,13 +392,36 @@
                                                                 title="Remove my profile image"><i
                                                                     class="bi bi-trash"></i></a>
                                                         </div> --}}
-                                                <div class="pt-2">
-                                                    <input type="file" name="image" id="image"
-                                                        accept=".jpg, .jpeg, .png, .svg, .gif"
-                                                        class="form-control @error('image') is-invalid @enderror btn btn-primary btn-sm">
-                                                    @error('image')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
+                                                <div class="pt-2 d-flex align-items-center gap-2">
+                                                    <div class="form-group mb-0">
+                                                        <label for="image" class="btn btn-primary btn-sm text-white"
+                                                            title="Télécharger une nouvelle image de profil">
+                                                            <i class="bi bi-upload"></i>
+                                                            <input type="file" name="image" id="image"
+                                                                accept=".jpg, .jpeg, .png, .svg, .gif"
+                                                                class="form-control d-none @error('image') is-invalid @enderror">
+                                                        </label>
+                                                        @error('image')
+                                                            <span class="text-danger d-block">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                    {{-- <form action="{{ route('profile.image.destroy') }}" method="POST"
+                                                        style="display: inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" class="btn btn-danger btn-sm show_confirmDeleteImage"
+                                                            title="Supprimer mon image de profil">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                    </form> --}}
+                                                    <div class="d-inline">
+                                                        <button type="button"
+                                                            class="btn btn-danger btn-sm show_confirmDeleteImage"
+                                                            data-url="{{ route('profile.image.destroy') }}"
+                                                            title="Supprimer mon image de profil">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -406,8 +429,8 @@
                                         {{-- CIN --}}
                                         <div class="row mb-3">
                                             <label for="cin"
-                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">N° CIN (NIN)<span
-                                                    class="text-danger mx-1">*</span>
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">N°
+                                                CIN (NIN)<span class="text-danger mx-1">*</span>
                                             </label>
                                             <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <div class="pt-2">
@@ -415,8 +438,7 @@
                                                         class="form-control form-control-sm @error('cin') is-invalid @enderror"
                                                         id="cin" value="{{ $user->cin ?? old('cin') }}"
                                                         autocomplete="off" placeholder="Ex: 1 099 2005 00012"
-                                                        minlength="16" maxlength="17"
-                                                        required>
+                                                        minlength="16" maxlength="17" required>
                                                 </div>
                                                 @error('cin')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -629,7 +651,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        
+
                                         {{-- Situation professionnelle --}}
                                         <div class="row mb-3">
                                             <label for="adresse"
@@ -679,7 +701,8 @@
                                                 <input name="facebook" type="facebook"
                                                     class="form-control form-control-sm @error('facebook') is-invalid @enderror"
                                                     id="facebook" value="{!! $user->facebook ?? old('facebook') !!}"
-                                                    autocomplete="facebook" placeholder="Entrez l'URL de votre compte facebook">
+                                                    autocomplete="facebook"
+                                                    placeholder="Entrez l'URL de votre compte facebook">
                                                 @error('facebook')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -715,7 +738,8 @@
                                                 <input name="instagram" type="instagram"
                                                     class="form-control form-control-sm @error('instagram') is-invalid @enderror"
                                                     id="instagram" value="{{ $user->instagram ?? old('instagram') }}"
-                                                    autocomplete="instagram" placeholder="Entrez l'URL de votre compte instagram">
+                                                    autocomplete="instagram"
+                                                    placeholder="Entrez l'URL de votre compte instagram">
                                                 @error('instagram')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -732,7 +756,8 @@
                                                 <input name="linkedin" type="linkedin"
                                                     class="form-control form-control-sm @error('linkedin') is-invalid @enderror"
                                                     id="linkedin" value="{{ $user->linkedin ?? old('linkedin') }}"
-                                                    autocomplete="linkedin" placeholder="Entrez l'URL de votre ompte linkedin">
+                                                    autocomplete="linkedin"
+                                                    placeholder="Entrez l'URL de votre ompte linkedin">
                                                 @error('linkedin')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>

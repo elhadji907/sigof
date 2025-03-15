@@ -10,7 +10,6 @@ use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
@@ -197,7 +196,7 @@ class ProfileController extends Controller
             'name'                      => ['required', 'string', 'max:25'],
             'date_naissance'            => ['nullable', 'date_format:d/m/Y'],
             'lieu_naissance'            => ['required', 'string'],
-            'image'                     => ['sometimes', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'image'                     => ['sometimes', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:1024'],
             'email'                     => [
                 'nullable',
                 'string',
@@ -282,7 +281,8 @@ class ProfileController extends Controller
 
         /* return Redirect::route('profile.edit')->with('status', 'profile-updated'); */
         /* return Redirect::route('profil')->with('status', 'Votre profil a été modifié avec succès'); */
-        return Redirect::route('profil');
+        /* return Redirect::route('profil'); */
+        return back(); // Redirige vers la page précédente
     }
 
     /**
@@ -299,11 +299,33 @@ class ProfileController extends Controller
         Auth::logout();
 
         Storage::disk('public')->delete($user->image);
+
         $user->delete();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/');
+        /* return Redirect::to('/'); */
+        return back(); // Redirige vers la page précédente
     }
+
+    public function destroyImage()
+    {
+        $user = Auth::user();
+
+        if ($user->image) {
+            // Supprimer l'image du stockage
+            Storage::disk('public')->delete($user->image);
+
+            // Mettre à jour l'utilisateur (remettre l'image par défaut ou null)
+            $user->update(['image' => null]);
+
+            Alert::success('Succès', 'Votre image de profil a été supprimée avec succès.');
+        } else {
+            Alert::warning('Attention', 'Aucune image de profil à supprimer.');
+        }
+
+        return back(); // Redirige vers la page précédente
+    }
+
 }

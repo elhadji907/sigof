@@ -745,6 +745,44 @@
                 });
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.show_confirmDeleteImage').click(function(event) {
+                event.preventDefault();
+                var url = $(this).data('url'); // Récupère l'URL de suppression
+
+                swal({
+                    title: "Êtes-vous sûr de vouloir supprimer ?",
+                    text: "Si vous supprimez, l'image disparaîtra pour toujours.",
+                    icon: "warning",
+                    buttons: ["Annuler", "Oui, supprimer !"],
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: url,
+                            type: "POST",
+                            data: {
+                                _token: "{{ csrf_token() }}",
+                                _method: "DELETE"
+                            },
+                            success: function(response) {
+                                swal("Succès", "Votre image a été supprimée.",
+                                        "success")
+                                    .then(() => location.reload());
+                            },
+                            error: function(response) {
+                                swal("Erreur", "Une erreur s'est produite.", "error");
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+
     <script type="text/javascript">
         $('.show_confirm_disconnect').click(function(event) {
             var form = $(this).closest("form");
@@ -754,7 +792,7 @@
                     title: `Êtes-vous sûr de vouloir vous déconnecter ?`,
                     text: "Vous pouvez cliquer sur ok pour confirmer ou cliquer sur cancel pour annuler.",
                     icon: "warning",
-                    buttons: true,
+                    buttons: ["Annuler", "Oui, déconnecter !"],
                     dangerMode: true,
                 })
                 .then((willDelete) => {
@@ -778,7 +816,7 @@
                     title: `Êtes-vous sûr ?`,
                     text: "Si oui, cliquer sur ok.",
                     icon: "success",
-                    buttons: true,
+                    buttons: ["Annuler", "Oui, valider !"],
                 })
                 .then((willValide) => {
                     if (willValide) {
@@ -796,7 +834,7 @@
                     title: `Êtes-vous sûr de bien vouloir suivre ce bénéficiaire ?`,
                     text: "Si oui, cliquer sur ok.",
                     icon: "success",
-                    buttons: true,
+                    buttons: ["Annuler", "Oui, suivre !"],
                 })
                 .then((willValide) => {
                     if (willValide) {
@@ -814,7 +852,7 @@
                     title: `Êtes-vous sûr de vouloir ajouter à la base de données des employés ?`,
                     text: "Si oui, cliquer sur ok.",
                     icon: "success",
-                    buttons: true,
+                    buttons: ["Annuler", "Oui, ajouter !"],
                 })
                 .then((willValide) => {
                     if (willValide) {
@@ -832,7 +870,7 @@
                     title: `Êtes-vous sûr de vouloir retirer ?`,
                     text: "Si oui, cliquer sur ok.",
                     icon: "success",
-                    buttons: true,
+                    buttons: ["Annuler", "Oui, retirer !"],
                 })
                 .then((willValide) => {
                     if (willValide) {
@@ -850,7 +888,7 @@
                     title: `Êtes-vous sûr de vouloir rejeter ?`,
                     text: "Si oui, cliquer sur ok.",
                     icon: "error",
-                    buttons: true,
+                    buttons: ["Annuler", "Oui, rejeter !"],
                     dangerMode: true,
                 })
                 .then((willValide) => {
@@ -869,7 +907,7 @@
                     title: `Êtes-vous sûr de vouloir mettre à la une?`,
                     text: "Si oui, cliquez sur ok.",
                     icon: "success",
-                    buttons: true,
+                    buttons: ["Annuler", "Oui, mettre !"],
                     dangerMode: true,
                 })
                 .then((willDelete) => {
