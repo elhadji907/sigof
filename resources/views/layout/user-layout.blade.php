@@ -904,10 +904,29 @@
             var name = $(this).data("name");
             event.preventDefault();
             swal({
-                    title: `Êtes-vous sûr de vouloir mettre à la une?`,
+                    title: `Êtes-vous sûr ?`,
                     text: "Si oui, cliquez sur ok.",
                     icon: "success",
                     buttons: ["Annuler", "Oui, mettre !"],
+                    dangerMode: false,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        form.submit();
+                    }
+                });
+        });
+    </script>
+    <script type="text/javascript">
+        $('.une_confirmer').click(function(event) {
+            var form = $(this).closest("form");
+            var name = $(this).data("name");
+            event.preventDefault();
+            swal({
+                    title: `Êtes-vous sûr ?`,
+                    text: "Si oui, cliquez sur ok.",
+                    icon: "success",
+                    buttons: ["Annuler", "Oui, enlever !"],
                     dangerMode: true,
                 })
                 .then((willDelete) => {

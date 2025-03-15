@@ -100,7 +100,7 @@
                                                             @method('PUT')
                                                             <input type="hidden" name="suprimerdelaune" id="suprimerdelaune"
                                                                 value="{{ $une->id }}">
-                                                            <button type="submit" class="dropdown-item une_confirm">Enlever
+                                                            <button type="submit" class="dropdown-item une_confirmer">Enlever
                                                                 de la une</button>
                                                         </form>
                                                     </ul>

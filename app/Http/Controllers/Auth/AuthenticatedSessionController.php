@@ -131,8 +131,7 @@ class AuthenticatedSessionController extends Controller
         /* Alert::success('Déconnexion réussie', 'Merci d’avoir utilisé notre application! Nous espérons vous revoir bientôt. À très bientôt !'); */
 
         alert()->html('<i>Déconnexion réussie !</i>', "Merci d'avoir utilisé notre application ! <br>
-        Nous espérons vous revoir bientôt. <br>
-        À très bientôt !", 'success');
+        Nous espérons vous revoir bientôt !", 'success');
 
         return redirect('/');
     }
