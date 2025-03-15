@@ -417,7 +417,7 @@ class UserController extends Controller
                 'firstname'                 => $request->firstname,
                 'name'                      => $request->name,
                 'date_naissance'            => $date_naissance,
-                'lieu_naissance'            => $request->lieu_naissance,
+                'lieu_naissance'            => strtoupper($request->lieu_naissance),
                 'situation_familiale'       => $request->situation_familiale,
                 'situation_professionnelle' => $request->situation_professionnelle,
                 'email'                     => $request->email,

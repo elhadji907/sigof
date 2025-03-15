@@ -228,7 +228,7 @@ class ProfileController extends Controller
             'firstname'                 => $request->input('firstname'),
             'name'                      => $request->input('name'),
             'date_naissance'            => $date,
-            'lieu_naissance'            => $request->input('lieu_naissance'),
+            'lieu_naissance'            => strtoupper($request->input('lieu_naissance')),
             'image'                     => $request->input('image'),
             'email'                     => $request->input('email'),
             'telephone'                 => $request->input('telephone'),
