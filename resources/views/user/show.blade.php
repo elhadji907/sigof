@@ -154,18 +154,18 @@
                                         <h5 class="card-title">Informations complémentaires</h5>
                                         <div class="row">
                                             <div class="col-lg-3 col-md-4 label pb-2">Création </div>
-                                            <div class="col-lg-9 col-md-8 pb-2">{{ 'créé par : ' . $user_create_name }}
+                                            <div class="col-lg-9 col-md-8 pb-2">{{ 'CREATION : ' . $user_create_name }}
                                                 {{ $user->created_at->diffForHumans() }}</div>
 
                                             <div class="col-lg-3 col-md-4 label pt-2">Modification</div>
 
                                             @if ($user->created_at != $user->updated_at)
                                                 <div class="col-lg-9 col-md-8 pt-2">
-                                                    {{ 'modifié par : ' . $user_update_name }}
+                                                    {{ 'MODIFICATION : ' . $user_update_name }}
                                                     {{ $user->updated_at->diffForHumans() }}</div>
                                             @else
                                                 <div class="col-lg-9 col-md-8 pt-2">
-                                                    jamais modifié</div>
+                                                    JAMAIS MODIFIE</div>
                                             @endif
 
                                             <div class="col-lg-3 col-md-4 label pt-3">Roles</div>

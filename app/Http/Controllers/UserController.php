@@ -450,9 +450,9 @@ class UserController extends Controller
             }
         }
 
-        if ($user->created_by == null || $user->updated_by == null) {
-            $user_create_name = "moi même";
-            $user_update_name = "moi même";
+        /* if ($user->created_by == null || $user->updated_by == null) {
+            $user_create_name = $user?->civilite . ' ' . $user?->firstname . ' ' . $user?->name;
+            $user_update_name = $user?->civilite . ' ' . $user?->firstname . ' ' . $user?->name;
         } else {
             $user_created_id = $user->created_by;
             $user_updated_id = $user->updated_by;
@@ -460,14 +460,30 @@ class UserController extends Controller
             $user_create = User::findOrFail($user_created_id);
             $user_update = User::findOrFail($user_updated_id);
 
-            $user_create_name = $user_create->firstname . " " . $user_create->firstname;
-            $user_update_name = $user_update->firstname . " " . $user_update->firstname;
+            $user_create_name = $user_create->firstname . ' ' . $user_create->firstname;
+            $user_update_name = $user_update->firstname . ' ' . $user_update->firstname;
+        } */
+
+        function getUserName(?User $user): string
+        {
+            return $user ? trim("{$user->civilite} {$user->firstname} {$user->name}") : 'Utilisateur inconnu';
         }
 
-        $roles      = Role::pluck('name', 'name')->all();
+        $user_create = User::find($user->created_by);
+        $user_update = User::find($user->updated_by);
+
+        $user_create_name = getUserName($user_create ?? $user);
+        $user_update_name = getUserName($user_update ?? $user);
+
+        /*   $roles      = Role::pluck('name', 'name')->all();
         $userRoles  = $user->roles->pluck('name', 'name')->all();
         $directions = Direction::orderBy('created_at', 'desc')->get();
-        $fonctions  = Fonction::orderBy('created_at', 'desc')->get();
+        $fonctions  = Fonction::orderBy('created_at', 'desc')->get(); */
+        
+        $roles      = Role::pluck('name')->toArray();
+        $userRoles  = $user->roles->pluck('name')->toArray();
+        $directions = Direction::latest()->get();
+        $fonctions  = Fonction::latest()->get();
 
         return view("user.show", compact("user", "user_create_name", "user_update_name", "roles", "userRoles", "directions", "fonctions"));
     }
