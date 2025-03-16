@@ -1000,7 +1000,12 @@ class IndividuelleController extends Controller
             ->distinct()
             ->get();
 
-        return view("individuelles.show", compact("individuelle", "files"));
+        $user_files = File::where('users_id', $individuelle->user->id)
+            ->where('file', null)
+            ->distinct()
+            ->get();
+
+        return view("individuelles.show", compact("individuelle", "files", "user_files"));
     }
 
     public function rejeterIndividuelle(Request $request)
@@ -1065,6 +1070,17 @@ class IndividuelleController extends Controller
             ->orderBy("created_at", "desc")
             ->get();
         $individuelle_total = $individuelles->count();
+
+        $files = File::where('users_id', $user->id)
+            ->whereNotNull('file') // Utilisation de whereNotNull pour plus de clarté
+            ->distinct()
+            ->get();
+
+        $user_files = File::where('users_id', $user->id)
+        ->where('file', null)
+        ->distinct()
+        ->get();
+
         if ($individuelle_total == 0) {
             return view(
                 "individuelles.show-individuelle-aucune",
@@ -1072,6 +1088,9 @@ class IndividuelleController extends Controller
                     "individuelle_total",
                     "departements",
                     "individuelles",
+                    "files",
+                    "user_files",
+                    "user",
                     "modules"
                 )
             );
@@ -1082,6 +1101,9 @@ class IndividuelleController extends Controller
                     "individuelle_total",
                     "departements",
                     "individuelles",
+                    "files",
+                    "user_files",
+                    "user",
                     "modules"
                 )
             );

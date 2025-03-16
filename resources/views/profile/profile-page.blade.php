@@ -903,7 +903,7 @@
                                 <div class="tab-pane fade files" id="files">
                                     <div class="row mb-3">
                                         <h5 class="card-title col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                            {{ __('Fichiers téléchargés') }}</h5>
+                                            FICHIERS JOINTS</h5>
                                         <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                             <table class="table table-bordered table-hover datatables" id="table-iles">
                                                 <thead>
