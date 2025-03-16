@@ -334,6 +334,7 @@ class DatabaseSeeder extends Seeder
         'antDL',
         'antMT',
         'antZG',
+        'upload-file-view',
     ];
 
     public function run(): void

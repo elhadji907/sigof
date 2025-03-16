@@ -116,113 +116,115 @@
                             </tbody>
                         </table>
                         {{-- </form> --}}
-                        <hr>
-                        <div class="row mb-3 pt-5">
-                            <h5 class="card-title col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                FICHIERS JOINTS</h5>
-                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                <table class="table table-bordered table-hover datatables" id="table-iles">
-                                    <thead>
-                                        <tr>
-                                            <th width="5%" class="text-center">N°</th>
-                                            <th>Légende</th>
-                                            <th width="10%" class="text-center">File</th>
-                                            <th width="5%" class="text-center"><i class="bi bi-gear"></i>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php $i = 1; ?>
-                                        @foreach ($files as $file)
-                                            <tr>
-                                                <td class="text-center">{{ $i++ }}</td>
-                                                <td>{{ $file?->legende }}</td>
-                                                <td class="text-center">
-                                                    <a class="btn btn-default btn-sm" title="télécharger le fichier joint"
-                                                        target="_blank" href="{{ asset($file->getFichier()) }}">
-                                                        <i class="bi bi-download"></i>
-                                                    </a>
-                                                </td>
-                                                <td class="text-center">
-                                                    <form action="{{ route('fileDestroy') }}" method="post">
-                                                        @csrf
-                                                        @method('put')
-                                                        <input type="hidden" name="idFile"
-                                                            value="{{ $file->id }}">
-                                                        <button type="submit" style="background:none;border:0px;"
-                                                            class="show_confirm" title="retirer"><i
-                                                                class="bi bi-trash"></i></button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <form method="post" action="{{ route('files.update', $user?->id) }}"
-                            enctype="multipart/form-data">
-                            @csrf
-                            @method('patch')
-                            <h5 class="card-title">JOINDRE VOS SCANS DE DOSSIERS</h5>
-                            <span style="color:red;">NB:</span>
-                            <span>Seule la Carte Nationale d'Identité (recto/verso) </span><span style="color:red;"> est
-                                requise</span>.
-                            <!-- Profile Edit Form -->
-                            <div class="row mb-3 mt-3">
-                                <label for="legende"
-                                    class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">LEGENDE<span
-                                        class="text-danger mx-1">*</span></label>
+                        @can('upload-file-view')
+                            <hr>
+                            <div class="row mb-3 pt-5">
+                                <h5 class="card-title col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                    FICHIERS JOINTS</h5>
                                 <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                    {{-- <input name="legende" type="text"
+                                    <table class="table table-bordered table-hover datatables" id="table-iles">
+                                        <thead>
+                                            <tr>
+                                                <th width="5%" class="text-center">N°</th>
+                                                <th>Légende</th>
+                                                <th width="10%" class="text-center">File</th>
+                                                <th width="5%" class="text-center"><i class="bi bi-gear"></i>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php $i = 1; ?>
+                                            @foreach ($files as $file)
+                                                <tr>
+                                                    <td class="text-center">{{ $i++ }}</td>
+                                                    <td>{{ $file?->legende }}</td>
+                                                    <td class="text-center">
+                                                        <a class="btn btn-default btn-sm" title="télécharger le fichier joint"
+                                                            target="_blank" href="{{ asset($file->getFichier()) }}">
+                                                            <i class="bi bi-download"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <form action="{{ route('fileDestroy') }}" method="post">
+                                                            @csrf
+                                                            @method('put')
+                                                            <input type="hidden" name="idFile"
+                                                                value="{{ $file->id }}">
+                                                            <button type="submit" style="background:none;border:0px;"
+                                                                class="show_confirm" title="retirer"><i
+                                                                    class="bi bi-trash"></i></button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <form method="post" action="{{ route('files.update', $user?->id) }}"
+                                enctype="multipart/form-data">
+                                @csrf
+                                @method('patch')
+                                <h5 class="card-title">JOINDRE VOS SCANS DE DOSSIERS</h5>
+                                <span style="color:red;">NB:</span>
+                                <span>Seule la Carte Nationale d'Identité (recto/verso) </span><span style="color:red;"> est
+                                    requise</span>.
+                                <!-- Profile Edit Form -->
+                                <div class="row mb-3 mt-3">
+                                    <label for="legende"
+                                        class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">LEGENDE<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                        {{-- <input name="legende" type="text"
                                         class="form-control form-control-sm @error('legende') is-invalid @enderror"
                                         id="legende" value="{{ old('legende') }}" autocomplete="legende"
                                         placeholder="Légende"> --}}
-                                    <select name="legende" class="form-select  @error('legende') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-file" data-placeholder="Choisir">
-                                        <option value="{{ old('legende') }}">
+                                        <select name="legende" class="form-select  @error('legende') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-file" data-placeholder="Choisir">
+                                            <option value="{{ old('legende') }}">
 
-                                        </option>
-                                        @foreach ($user_files as $file)
-                                            <option value="{{ $file?->id }}">
-                                                {{ $file?->legende }}
                                             </option>
-                                        @endforeach
-                                    </select>
-                                    @error('legende')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="file"
-                                    class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">FICHIER<span
-                                        class="text-danger mx-1">*</span></label>
-                                <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                    <div class="pt-2">
-                                        <input type="file" name="file" id="file"
-                                            class="form-control @error('file') is-invalid @enderror btn btn-primary btn-sm">
-                                        @error('file')
-                                            <span class="text-danger">{{ $message }}</span>
+                                            @foreach ($user_files as $file)
+                                                <option value="{{ $file?->id }}">
+                                                    {{ $file?->legende }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('legende')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row mb-3">
-                                <label for="file"
-                                    class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label"><span
-                                        class="text-danger mx-1"></span></label>
-                                <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                    <div class="pt-2">
-                                        <button type="submit" class="btn btn-info btn-sm text-white">ENREGISTRER</button>
+                                <div class="row mb-3">
+                                    <label for="file"
+                                        class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">FICHIER<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                        <div class="pt-2">
+                                            <input type="file" name="file" id="file"
+                                                class="form-control @error('file') is-invalid @enderror btn btn-primary btn-sm">
+                                            @error('file')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+
+                                <div class="row mb-3">
+                                    <label for="file"
+                                        class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label"><span
+                                            class="text-danger mx-1"></span></label>
+                                    <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                        <div class="pt-2">
+                                            <button type="submit" class="btn btn-info btn-sm text-white">ENREGISTRER</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        @endcan
                     </div>
                 </div>
             </div>

@@ -245,7 +245,8 @@
                                                                     class="bi bi-trash"></i></a>
                                                         </div> --}}
                                                 <div class="pt-2">
-                                                    <input type="file" name="image" id="image" accept=".jpg, .jpeg, .png, .svg, .gif"
+                                                    <input type="file" name="image" id="image"
+                                                        accept=".jpg, .jpeg, .png, .svg, .gif"
                                                         class="form-control @error('image') is-invalid @enderror btn btn-primary btn-sm">
                                                     @error('image')
                                                         <span class="text-danger">{{ $message }}</span>
@@ -352,10 +353,10 @@
                                             <label for="date_naissance" class="col-md-4 col-lg-3 col-form-label">Date
                                                 naissance<span class="text-danger mx-1">*</span></label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input type="date" name="date_naissance"
-                                                    value="{{ $user->date_naissance?->format('Y-m-d') ?? old('date_naissance') }}"
-                                                    class="datepicker form-control form-control-sm @error('date_naissance') is-invalid @enderror"
-                                                    id="date_naissance" placeholder="jj/mm/aaaa">
+                                                <input type="text" name="date_naissance"
+                                                    value="{{ old('date_naissance', optional($user->date_naissance)->format('d/m/Y')) }}"
+                                                    class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
+                                                    id="datepicker" placeholder="JJ/MM/AAAA" autocomplete="bday">
                                                 @error('date_naissance')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
