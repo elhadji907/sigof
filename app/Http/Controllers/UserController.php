@@ -158,11 +158,18 @@ class UserController extends Controller
         ? ($feminin / $individuelles->count()) * 100
         : 0;
 
-        $feminin_collective = Listecollective::where('civilite', "Madame")
+        $feminin_collective = Listecollective::where('civilite', "Mme")
+            ->count();
+
+        $masculin_collective = Listecollective::where('civilite', "M.")
             ->count();
 
         $pourcentage_femmes_collective = $listecollectives->count() > 0
         ? ($feminin_collective / $listecollectives->count()) * 100
+        : 0;
+
+        $pourcentage_hommes_collective = $listecollectives->count() > 0
+        ? ($masculin_collective / $listecollectives->count()) * 100
         : 0;
 
         $count_demandes = ($individuelles ? $individuelles->count() : 0) +
@@ -178,6 +185,7 @@ class UserController extends Controller
                 'total_individuelle',
                 "pourcentage_femmes",
                 "pourcentage_femmes_collective",
+                "pourcentage_hommes_collective",
                 "pourcentage_hommes",
                 "count_demandes",
                 'rejeter',
