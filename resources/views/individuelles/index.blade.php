@@ -92,10 +92,11 @@
                                             <th width="15%" class="text-center">N° CIN (NIN)</th>
                                             {{-- <th>Prénom</th>
                                             <th>NOM</th> --}}
-                                            <th>Prénom & NOM</th>
-                                            <th width="15%">Date naissance</th>
-                                            <th>Lieu naissance</th>
+                                            <th width="20%">Prénom & NOM</th>
+                                            <th width="15%">Date nais.</th>
+                                            <th>Lieu nais.</th>
                                             <th width="20%">Module</th>
+                                            <th width="15%" class="text-center">Date dépôt</th>
                                             <th class="text-center">Statut</th>
                                             <th class="text-center">#</th>
                                         </tr>
@@ -114,6 +115,8 @@
                                                     <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>
                                                     <td>{{ $individuelle?->user?->lieu_naissance }}</td>
                                                     <td>{{ $individuelle?->module?->name }}</td>
+                                                    <td class="text-center">{{ $individuelle?->date_depot?->format('d/m/Y') }}
+                                                    </td>
                                                     {{-- <td>{{ $individuelle?->departement?->nom }}</td> --}}
                                                     <td>
                                                         <span class="{{ $individuelle?->statut }}">

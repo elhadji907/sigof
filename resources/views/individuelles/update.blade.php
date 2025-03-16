@@ -74,7 +74,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <label for="adresse" class="form-label">Adresse<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="adresse"
@@ -347,7 +347,6 @@
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="date_depot"
                                             value="{{ old('date_depot', optional($individuelle->date_depot)->format('d/m/Y')) }}"
-                                            readonly
                                             class="form-control form-control-sm @error('date_depot') is-invalid @enderror"
                                             id="datepicker" placeholder="JJ/MM/AAAA" autocomplete="bday">
                                         @error('date_depot')
@@ -374,7 +373,7 @@
                                 @endif
 
                                 @can('projet-view')
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-8">
+                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                         <label for="projet" class="form-label">Partenaire</label>
                                         <select name="projet" class="form-select  @error('projet') is-invalid @enderror"
                                             aria-label="Select" id="select-field-projet" data-placeholder="Choisir">
