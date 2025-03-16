@@ -337,7 +337,7 @@
                                 <input type="hidden" name="newPassword" value="{{ Auth::user()?->password }}">
 
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary btn-sm">Sauvegarder les
+                                    <button type="submit" class="btn btn-primary btn-sm text-white">Sauvegarder les
                                         modifications</button>
                                 </div>
                             </form>
