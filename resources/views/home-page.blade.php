@@ -269,7 +269,7 @@
                                             },
                                             data: [{
                                                     value: {{ $nouvelle }},
-                                                    name: 'nouvelles'
+                                                    name: 'Nouvelles'
                                                 },
                                                 {
                                                     value: {{ $attente }},
@@ -277,15 +277,15 @@
                                                 },
                                                 {
                                                     value: {{ $retenue }},
-                                                    name: 'sélectionnés'
+                                                    name: 'Sélectionnés'
                                                 },
                                                 {
                                                     value: {{ $terminer }},
-                                                    name: 'formés'
+                                                    name: 'Formés'
                                                 },
                                                 {
                                                     value: {{ $rejeter }},
-                                                    name: 'Rejetée'
+                                                    name: 'Rejetés'
                                                 }
                                             ]
                                         }]
