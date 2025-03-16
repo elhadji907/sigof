@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - demandes individuelles')
+@section('title', 'ONFP | DEMANDES INDIVIDUELLES')
 @section('space-work')
     @can('individuelle-view')
         <div class="pagetitle">
@@ -89,10 +89,11 @@
                                     <thead>
                                         <tr>
                                             <th class="text-center">N°</th>
-                                            <th class="text-center">CIN</th>
-                                            <th>Prénom</th>
-                                            <th>NOM</th>
-                                            <th>Date naissance</th>
+                                            <th width="15%" class="text-center">N° CIN (NIN)</th>
+                                            {{-- <th>Prénom</th>
+                                            <th>NOM</th> --}}
+                                            <th>Prénom & NOM</th>
+                                            <th width="15%">Date naissance</th>
                                             <th>Lieu naissance</th>
                                             <th width="20%">Module</th>
                                             <th class="text-center">Statut</th>
@@ -106,8 +107,10 @@
                                                 <tr>
                                                     <td style="text-align: center">{{ $individuelle?->numero }}</td>
                                                     <td style="text-align: center">{{ $individuelle?->user?->cin }}</td>
-                                                    <td>{{ $individuelle?->user?->firstname }}</td>
-                                                    <td>{{ $individuelle?->user?->name }}</td>
+                                                    {{-- <td>{{ $individuelle?->user?->firstname }}</td>
+                                                    <td>{{ $individuelle?->user?->name }}</td> --}}
+                                                    <td>{{ $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}
+                                                    </td>
                                                     <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>
                                                     <td>{{ $individuelle?->user?->lieu_naissance }}</td>
                                                     <td>{{ $individuelle?->module?->name }}</td>

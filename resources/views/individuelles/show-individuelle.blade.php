@@ -58,9 +58,10 @@
                                     <th width="10%" class="text-center">Numéro</th>
                                     <th>Module</th>
                                     <th width="12%" class="text-center">Département</th>
-                                    <th width="15%" class="text-center">Niveau étude</th>
-                                    <th width="15%" class="text-center">Diplome académique</th>
-                                    <th width="15%" class="text-center">Diplome professionnel</th>
+                                    {{-- <th width="15%" class="text-center">Niveau étude</th>
+                                    <th width="15%" class="text-center">Diplome académique</th> --}}
+                                    {{-- <th width="15%" class="text-center">Diplome professionnel</th> --}}
+                                    <th width="15%" class="text-center">Date dépôt</th>
                                     <th width="5%" class="text-center">Statut</th>
                                     <th style="width:5%;"><i class="bi bi-gear"></i></th>
                                 </tr>
@@ -74,9 +75,10 @@
                                             <td class="text-center">{{ $individuelle?->numero }}</td>
                                             <td>{{ $individuelle?->module?->name }}</td>
                                             <td class="text-center">{{ $individuelle?->departement?->nom }}</td>
-                                            <td class="text-center">{{ $individuelle?->niveau_etude }}</td>
-                                            <td class="text-center">{{ $individuelle?->diplome_academique }}</td>
-                                            <td class="text-center">{{ $individuelle?->diplome_professionnel }}</td>
+                                            {{-- <td class="text-center">{{ $individuelle?->niveau_etude }}</td>
+                                            <td class="text-center">{{ $individuelle?->diplome_academique }}</td> --}}
+                                            {{-- <td class="text-center">{{ $individuelle?->diplome_professionnel }}</td> --}}
+                                            <td class="text-center">{{ $individuelle?->date_depot?->format('d/m/Y') }}</td>
                                             <td class="text-center">
                                                 <span class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}
                                                 </span>
