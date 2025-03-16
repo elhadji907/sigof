@@ -94,7 +94,7 @@
                                             <th>NOM</th> --}}
                                             <th width="20%">Prénom & NOM</th>
                                             <th width="15%">Date nais.</th>
-                                            <th>Lieu nais.</th>
+                                            <th width="15%">Lieu nais.</th>
                                             <th width="20%">Module</th>
                                             <th width="15%" class="text-center">Date dépôt</th>
                                             <th class="text-center">Statut</th>
