@@ -87,16 +87,28 @@ class UserController extends Controller
 
         /* $individuelles = Individuelle::skip(0)->take(1000)->get(); */
         $individuelles    = Individuelle::get();
+
         $collectives      = Collective::get();
+
         $listecollectives = Listecollective::get();
+
         $departements     = Departement::orderBy("created_at", "desc")->get();
+
         $modules          = Module::orderBy("created_at", "desc")->get();
 
-        $today        = date('Y-m-d');
-        $annee        = date('Y');
-        $annee_lettre = 'Diagramme à barres, année: ' . date('Y');
-        $count_today  = Individuelle::where("created_at", "LIKE", "{$today}%")->count();
-        $counts       = DB::table('individuelles')
+        $today                    = date('Y-m-d');
+
+        $annee                    = date('Y');
+
+        $annee_lettre             = 'Diagramme à barres, année: ' . date('Y');
+
+        $count_today_individuelle = Individuelle::where("created_at", "LIKE", "{$today}%")->count();
+
+        $count_today_collective   = Collective::where("created_at", "LIKE", "{$today}%")->count();
+
+        $count_today              = $count_today_individuelle + $count_today_collective;
+
+        $counts                   = DB::table('individuelles')
             ->selectRaw('MONTH(created_at) as month, count(*) as count')
             ->whereYear('created_at', $annee)
             ->whereNull('deleted_at')
@@ -245,8 +257,8 @@ class UserController extends Controller
         }
         $user = User::create([
             'username'  => substr(str_replace(' ', '', $request->username), 0, 10),
-            'firstname' => $request->firstname,
-            'name'      => $request->name,
+            'firstname' => format_proper_name($request->firstname),
+            'name'      => remove_accents_uppercase($request->name),
             'email'     => $request->email,
             'telephone' => $request->telephone,
             'adresse'   => $request->adresse,
@@ -414,10 +426,10 @@ class UserController extends Controller
                 'civilite'                  => $request->civilite,
                 'username'                  => substr(str_replace(' ', '', $request->username), 0, 10),
                 'cin'                       => $request->cin,
-                'firstname'                 => $request->firstname,
-                'name'                      => $request->name,
+                'firstname'                 => format_proper_name($request->firstname),
+                'name'                      => remove_accents_uppercase($request->name),
                 'date_naissance'            => $date_naissance,
-                'lieu_naissance'            => strtoupper($request->lieu_naissance),
+                'lieu_naissance'            => remove_accents_uppercase($request->lieu_naissance),
                 'situation_familiale'       => $request->situation_familiale,
                 'situation_professionnelle' => $request->situation_professionnelle,
                 'email'                     => $request->email,

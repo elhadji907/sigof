@@ -622,10 +622,10 @@ class IndividuelleController extends Controller
         $user = User::create([
             'civilite'                  => $request->input('civilite'),
             'cin'                       => $cin,
-            'firstname'                 => $request->input('firstname'),
-            'name'                      => $request->input('lastname'),
+            'firstname'                 => format_proper_name($request->input('firstname')),
+            'name'                      => remove_accents_uppercase($request->input('lastname')),
             'date_naissance'            => $request->input('date_naissance'),
-            'lieu_naissance'            => $request->input('lieu_naissance'),
+            'lieu_naissance'            => remove_accents_uppercase($request->input('lieu_naissance')),
             'email'                     => $request->input('email'),
             'telephone'                 => $request->input('telephone'),
             'telephone_secondaire'      => $request->input('telephone_secondaire'),

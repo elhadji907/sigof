@@ -313,7 +313,7 @@
                                 </div>
                                 <a href="#">
                                     <div class="card-body">
-                                        <h5 class="card-title">Individuelles<span> | aujourd'hui</span></h5>
+                                        <h5 class="card-title">Deamandes<span> | Aujourd'hui</span></h5>
                                         <div class="d-flex align-items-center">
                                             <div
                                                 class="card-icon rounded-circle d-flex align-items-center justify-content-center">
