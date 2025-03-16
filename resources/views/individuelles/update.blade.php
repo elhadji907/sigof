@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'Modification demande individuelle')
+@section('title', 'ONFP | MODIFICATION DEMANDE EN ' . strtoupper($individuelle?->module?->name))
 @section('space-work')
     <section class="section min-vh-0 d-flex flex-column align-items-center justify-content-center py-0">
         <div class="container">
@@ -34,111 +34,11 @@
                                     @endif
                                 </div>
                             </div>
-                            {{-- <p>NB: Si la formation souhaiter n'est pas disponible, merci de choisir <b>Autre</b> et renseigner votre formation souhaitée sur la case: {{ ("<<Si autre formation ? précisez>>") }}</p> --}}
-                            {{-- <div class="pt-0 pb-0">
-                                <h5 class="card-title text-center pb-0 fs-4">modification</h5>
-                                <p class="text-center small">enregister un nouveau demande individuelle</p>
-                            </div> --}}
-                            <form method="post" action="{{ url('individuelles/' . $individuelle->id) }}"
+                            <form method="post" action="{{ route('individuelles.update', $individuelle->id) }}"
                                 enctype="multipart/form-data" class="row g-3">
                                 @csrf
                                 @method('PUT')
-                                {{-- <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="civilite" class="form-label">Civilité<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <select name="civilite"
-                                        class="form-select form-select-sm @error('civilite') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-civilite" data-placeholder="Choisir civilité">
-                                        <option value="{{ $individuelle?->user->civilite }}">
-                                            {{ $individuelle?->user->civilite ?? old('civilite') }}
-                                        </option>
-                                        <option value="M.">
-                                            Monsieur
-                                        </option>
-                                        <option value="Mme">
-                                            Madame
-                                        </option>
-                                    </select>
-                                    @error('civilite')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="cin" class="form-label">N° CIN<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="cin"
-                                        value="{{ $individuelle?->user->cin ?? old('cin') }}"
-                                        class="form-control form-control-sm @error('cin') is-invalid @enderror"
-                                        id="cin" placeholder="Numéro carte d'identité nationale">
-                                    @error('cin')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="firstname" class="form-label">Prénom<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="firstname"
-                                        value="{{ $individuelle?->user->firstname ?? old('firstname') }}"
-                                        class="form-control form-control-sm @error('firstname') is-invalid @enderror"
-                                        id="firstname" placeholder="prénom">
-                                    @error('firstname')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="name" class="form-label">Nom<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="name"
-                                        value="{{ $individuelle?->user->name ?? old('name') }}"
-                                        class="form-control form-control-sm @error('name') is-invalid @enderror"
-                                        id="name" placeholder="nom">
-                                    @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="date_naissance" class="form-label">Date naissance<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <input type="date" name="date_naissance"
-                                        value="{{ $individuelle?->user->date_naissance?->format('Y-m-d') ?? old('date_naissance') }}"
-                                        class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
-                                        id="date_naissance" placeholder="Date naissance">
-                                    @error('date_naissance')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="name" class="form-label">Lieu naissance<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <input name="lieu_naissance" type="text"
-                                        class="form-control form-control-sm @error('lieu_naissance') is-invalid @enderror"
-                                        id="lieu_naissance"
-                                        value="{{ $individuelle?->user->lieu_naissance ?? old('lieu_naissance') }}"
-                                        autocomplete="lieu_naissance" placeholder="Lieu naissance">
-                                    @error('lieu_naissance')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div> --}}
-
-
-                                <div class="col-12 col-md-12 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="module" class="form-label">Formation sollicitée<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="module"
@@ -152,26 +52,8 @@
                                             <div>{{ $message }}</div>
                                         </span>
                                     @enderror
-                                    {{-- <label for="module" class="form-label">Formation sollicitée<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <select name="module" class="form-select  @error('module') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-module" data-placeholder="Choisir formation">
-                                        <option value="{{ $individuelle?->module?->id }}">
-                                            {{ $individuelle?->module?->name }}</option>
-                                        @foreach ($modules as $module)
-                                            <option value="{{ $module->id }}">
-                                                {{ $module->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('module')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror --}}
                                 </div>
-
-                                <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <label for="departement" class="form-label">Département<span
                                             class="text-danger mx-1">*</span></label>
                                     <select name="departement"
@@ -205,37 +87,6 @@
                                         </span>
                                     @enderror
                                 </div>
-
-                                {{--  <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="email" class="form-label">Email<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <div class="input-group has-validation">
-                                        <input type="email" name="email"
-                                            value="{{ $individuelle?->user->email ?? old('email') }}"
-                                            class="form-control form-control-sm @error('email') is-invalid @enderror"
-                                            id="email" placeholder="email" @readonly(true)>
-                                        @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
-                                    </div>
-                                </div> --}}
-
-                                {{-- <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="telephone" class="form-label">Téléphone personnel<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="telephone"
-                                        value="{{ $individuelle?->user->telephone ?? old('telephone') }}"
-                                        class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                        id="telephone" placeholder="téléphone">
-                                    @error('telephone')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div> --}}
-
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="telephone_secondaire" class="form-label">Téléphone secondaire<span
                                             class="text-danger mx-1">*</span></label>
@@ -250,86 +101,6 @@
                                         </span>
                                     @enderror
                                 </div>
-
-                                {{-- <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="autre_module" class="form-label">Si autre formation ? précisez</label>
-                                    <input type="text" name="autre_module"
-                                        value="{{ $individuelle->autre_module ?? old('autre_module') }}"
-                                        class="form-control form-control-sm @error('autre_module') is-invalid @enderror"
-                                        id="autre_module" placeholder="autre formation">
-                                    @error('autre_module')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div> --}}
-
-                                {{-- <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="matricule" class="form-label">Situation familiale<span
-                                            class="text-danger mx-1">*</span></label>
-                                    <select name="situation_familiale"
-                                        class="form-select  @error('situation_familiale') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-familiale"
-                                        data-placeholder="Choisir situation familiale">
-                                        <option value="{{ $individuelle?->user->situation_familiale }}">
-                                            {{ $individuelle?->user->situation_familiale ?? old('situation_familiale') }}
-                                        </option>
-                                        <option value="Marié(e)">
-                                            Marié(e)
-                                        </option>
-                                        <option value="Célibataire">
-                                            Célibataire
-                                        </option>
-                                        <option value="Veuf(ve)">
-                                            Veuf(ve)
-                                        </option>
-                                        <option value="Divorsé(e)">
-                                            Divorsé(e)
-                                        </option>
-                                    </select>
-                                    @error('situation_familiale')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-12 col-md-3 col-lg-3 mb-0">
-                                    <label for="situation professionnelle" class="form-label">Situation
-                                        professionnelle<span class="text-danger mx-1">*</span></label>
-                                    <select name="situation_professionnelle"
-                                        class="form-select  @error('situation_professionnelle') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-professionnelle"
-                                        data-placeholder="Choisir situation professionnelle">
-                                        <option value="{{ $individuelle?->user->situation_professionnelle }}">
-                                            {{ $individuelle?->user->situation_professionnelle ?? old('situation_professionnelle') }}
-                                        </option>
-                                        <option value="Employé(e)">
-                                            Employé(e)
-                                        </option>
-                                        <option value="Informel">
-                                            Informel
-                                        </option>
-                                        <option value="Elève ou étudiant">
-                                            Elève ou étudiant
-                                        </option>
-                                        <option value="chercheur emploi">
-                                            chercheur emploi
-                                        </option>
-                                        <option value="Stage ou période essai">
-                                            Stage ou période essai
-                                        </option>
-                                        <option value="Entrepreneur ou freelance">
-                                            Entrepreneur ou freelance
-                                        </option>
-                                    </select>
-                                    @error('situation_professionnelle')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                </div> --}}
-
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="Niveau étude" class="form-label">Niveau étude<span
                                             class="text-danger mx-1">*</span></label>
@@ -570,12 +341,13 @@
                                     @enderror
                                 </div>
 
-                                @can('user-view')
+                                @if (auth()->user()->hasRole('super-admin|admin'))
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="date_depot" class="form-label">Date dépot<span
                                                 class="text-danger mx-1">*</span></label>
                                         <input type="text" name="date_depot"
                                             value="{{ old('date_depot', optional($individuelle->date_depot)->format('d/m/Y')) }}"
+                                            readonly
                                             class="form-control form-control-sm @error('date_depot') is-invalid @enderror"
                                             id="datepicker" placeholder="JJ/MM/AAAA" autocomplete="bday">
                                         @error('date_depot')
@@ -584,7 +356,22 @@
                                             </span>
                                         @enderror
                                     </div>
-                                @endcan
+                                @else
+                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
+                                        <label for="date_depot" class="form-label">Date dépot<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <input type="text" name="date_depot"
+                                            value="{{ old('date_depot', optional($individuelle->date_depot)->format('d/m/Y')) }}"
+                                            readonly
+                                            class="form-control form-control-sm @error('date_depot') is-invalid @enderror"
+                                            id="datepickers" placeholder="JJ/MM/AAAA" autocomplete="bday">
+                                        @error('date_depot')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                @endif
 
                                 @can('projet-view')
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-8">
@@ -611,7 +398,7 @@
                                     </div>
                                 @endcan
 
-                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="qualification" class="form-label">Qualification et autres diplômes</label>
                                     <textarea name="qualification" id="qualification" rows="2"
                                         class="form-control form-control-sm @error('qualification') is-invalid @enderror"
@@ -623,7 +410,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="experience" class="form-label">Expériences et stages</label>
                                     <textarea name="experience" id="experience" rows="2"
                                         class="form-control form-control-sm @error('experience') is-invalid @enderror"

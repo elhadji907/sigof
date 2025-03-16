@@ -1,6 +1,6 @@
 @extends('layout.user-layout')
-@section('title', 'Demande individuelle de ' . Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' .
-    Auth::user()->name)
+@section('title', 'DEMANDE INDIVIDUELLE DE ' . strtoupper(Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' .
+    Auth::user()->name))
 @section('space-work')
     <section class="section">
         <div class="row justify-content-center">
@@ -40,21 +40,22 @@
                             <button type="button" class="btn btn-info btn-sm">
                                 <span class="badge bg-white text-info">{{ $individuelle_total }}/3</span>
                             </button>
-                            @if (!empty(Auth::user()->cin))
+                            @if ($individuelle_total < 3 && !empty(Auth::user()?->cin))
                                 <button type="button" class="btn btn-primary btn-sm float-end btn-rounded"
                                     data-bs-toggle="modal" data-bs-target="#AddIndividuelleModal">
-                                    {{-- <i class="bi bi-plus" title="Ajouter"></i> --}} Ajouter
+                                    Ajouter
                                 </button>
                             @endif
                         </div>
                         <h5 class="card-title">
-                            Bonjour {{ Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' . Auth::user()->name }}
+                            Bonjour
+                            {{ Auth::user()?->civilite . ' ' . Auth::user()?->firstname . ' ' . Auth::user()?->name }}
                         </h5>
                         <table class="table table-bordered table-hover table-borderless">
                             <thead>
                                 <tr>
                                     <th width="2%" class="text-center">N°</th>
-                                    <th width="8%" class="text-center">Numéro</th>
+                                    <th width="10%" class="text-center">Numéro</th>
                                     <th>Module</th>
                                     <th width="12%" class="text-center">Département</th>
                                     <th width="15%" class="text-center">Niveau étude</th>
@@ -126,8 +127,8 @@
                                         <thead>
                                             <tr>
                                                 <th width="5%" class="text-center">N°</th>
-                                                <th>Légende</th>
-                                                <th width="10%" class="text-center">File</th>
+                                                <th>LENGENDE</th>
+                                                <th width="10%" class="text-center">FILE</th>
                                                 <th width="5%" class="text-center"><i class="bi bi-gear"></i>
                                                 </th>
                                             </tr>

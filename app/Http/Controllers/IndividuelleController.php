@@ -146,10 +146,11 @@ class IndividuelleController extends Controller
             return redirect()->back();
         } else {
 
-            $date_depot = date('Y-m-d');
-
             $anneeEnCours = date('Y');
             $an           = date('y');
+
+            $dateString = Carbon::now()->format('d/m/Y');                 // Convertir en chaîne formatée
+            $date_depot = Carbon::createFromFormat('d/m/Y', $dateString); // Parser la chaîne correctement
 
             /* $numero_individuelle = Individuelle::join('users', 'users.id', 'individuelles.users_id')
                 ->select('individuelles.*')
@@ -1077,9 +1078,9 @@ class IndividuelleController extends Controller
             ->get();
 
         $user_files = File::where('users_id', $user->id)
-        ->where('file', null)
-        ->distinct()
-        ->get();
+            ->where('file', null)
+            ->distinct()
+            ->get();
 
         if ($individuelle_total == 0) {
             return view(
