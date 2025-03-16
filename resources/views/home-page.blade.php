@@ -493,9 +493,12 @@
                                                 <i class="bi bi-file-earmark-text"></i>
                                             </div>
                                             <div class="ps-3">
+                                                @php
+                                                    $total = count($individuelles) + count($collectives);
+                                                @endphp
+
                                                 <h6>
-                                                    <span
-                                                        class="text-primary">{{ number_format(count($individuelles)) }}</span>
+                                                    <span class="text-primary">{{ number_format($total) }}</span>
                                                 </h6>
                                                 <span class="text-success small pt-1 fw-bold">Toutes</span>
                                             </div>
