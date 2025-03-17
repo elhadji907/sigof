@@ -939,7 +939,6 @@ class OperateurController extends Controller
             echo $output;
         }
     } */
-
     public function fetch(Request $request)
     {
         if ($request->get('query')) {
@@ -953,33 +952,53 @@ class OperateurController extends Controller
             $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
             foreach ($data as $row) {
                 $output .= '
-                <li><a class="dropdown-item" href="#">' . $row->name . '</a></li>
-                ';
+            <li><a class="dropdown-item" href="#">' . $row->name . '</a></li>
+            ';
             }
             $output .= '</ul>';
             echo $output;
         }
     }
 
+    /* public function fetchModuleOperateur(Request $request)
+    {
+        if ($request->get('query')) {
+            $query = $request->get('query');
+            $data  = DB::table('operateurmodules')
+                ->where('module', 'LIKE', "%{$query}%")
+                ->get()
+                ->unique('module');
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
+            foreach ($data as $row) {
+                $output .= '
+                <li><a class="dropdown-item" href="#">' . $row->module . '</a></li>
+                ';
+            }
+            $output .= '</ul>';
+            echo $output;
+        }
+    } */
+
     public function fetchModuleOperateur(Request $request)
     {
         if ($request->get('query')) {
             $query = $request->get('query');
             $data  = DB::table('operateurmodules')
+                ->whereNull('deleted_at') // Exclure les enregistrements supprimés
                 ->where('module', 'LIKE', "%{$query}%")
-                ->get()
-                ->unique('module');
+                ->distinct() // Applique l'unicité au niveau SQL
+                ->get();
+
             $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
             foreach ($data as $row) {
-                $output .= '
-                <li><a class="dropdown-item" href="#">' . $row->module . '</a></li>
-                ';
+                $output .= '<li><a class="dropdown-item" href="#">' . $row->module . '</a></li>';
             }
             $output .= '</ul>';
             echo $output;
         }
     }
-    public function fetchOperateurModule(Request $request)
+
+/*     public function fetchOperateurModule(Request $request)
     {
         if ($request->get('query')) {
             $query = $request->get('query');
@@ -996,7 +1015,27 @@ class OperateurController extends Controller
             $output .= '</ul>';
             echo $output;
         }
+    } */
+
+    public function fetchOperateurModule(Request $request)
+    {
+        if ($request->get('query')) {
+            $query = $request->get('query');
+            $data  = DB::table('operateurmodules')
+                ->whereNull('deleted_at') // Exclure les enregistrements supprimés
+                ->where('module', 'LIKE', "%{$query}%")
+                ->distinct() // Optimisation : Filtrage de l'unicité au niveau SQL
+                ->get();
+
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
+            foreach ($data as $row) {
+                $output .= '<li><a class="dropdown-item" href="#">' . $row->module . '</a></li>';
+            }
+            $output .= '</ul>';
+            echo $output;
+        }
     }
+
     public function showReference($id)
     {
         $operateur          = Operateur::findOrFail($id);
