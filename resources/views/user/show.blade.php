@@ -90,6 +90,12 @@
                                 </button>
                             </li>
 
+                            @can('user-delete')
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#files">Fichiers</button>
+                                </li>
+                            @endcan
+
                         </ul>
                         <div class="tab-content pt-0">
 
@@ -186,6 +192,127 @@
                                         <div class="col-lg-2 col-md-3 label">Modification</div>
                                         <div class="col-lg-10 col-md-9">Modifié le
                                             {{ Auth::user()->updated_at->format('d/m/Y à H:i:s') }}</div> --}}
+                                </div>
+                            </div>
+
+                            <div class="tab-content pt-2">
+                                {{-- Début Edition --}}
+                                <div class="tab-pane fade files" id="files">
+                                    <div class="row mb-3">
+                                        <h5 class="card-title col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                            FICHIERS JOINTS</h5>
+                                        <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                            <table class="table table-bordered table-hover datatables" id="table-iles">
+                                                <thead>
+                                                    <tr>
+                                                        <th width="5%" class="text-center">N°</th>
+                                                        <th>Légende</th>
+                                                        <th width="10%" class="text-center">File</th>
+                                                        @can('user-show-file')
+                                                            <th width="5%" class="text-center"><i class="bi bi-gear"></i>
+                                                            </th>
+                                                        @endcan
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php $i = 1; ?>
+                                                    @foreach ($user?->files as $file)
+                                                        @if (!empty($file->file))
+                                                            <tr>
+                                                                <td class="text-center">{{ $i++ }}</td>
+                                                                <td>{{ $file?->legende }}</td>
+                                                                <td class="text-center">
+                                                                    <a class="btn btn-default btn-sm"
+                                                                        title="télécharger le fichier joint"
+                                                                        target="_blank"
+                                                                        href="{{ asset($file->getFichier()) }}">
+                                                                        <i class="bi bi-download"></i>
+                                                                    </a>
+                                                                </td>
+                                                                @can('user-show-file')
+                                                                    <td class="text-center">
+                                                                        <form action="{{ route('fileDestroy') }}"
+                                                                            method="post">
+                                                                            @csrf
+                                                                            @method('put')
+                                                                            <input type="hidden" name="idFile"
+                                                                                value="{{ $file->id }}">
+                                                                            <button type="submit"
+                                                                                style="background:none;border:0px;"
+                                                                                class="show_confirm" title="retirer"><i
+                                                                                    class="bi bi-trash"></i></button>
+                                                                        </form>
+                                                                    </td>
+                                                                @endcan
+                                                            </tr>
+                                                        @endif
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    {{-- <form method="post" action="{{ route('files.update', $user?->id) }}"
+                                        enctype="multipart/form-data">
+                                        @csrf
+                                        @method('patch')
+                                        <h5 class="card-title">{{ __("Ajouter d'autres fichiers") }}</h5>
+                                        <span style="color:red;">NB:</span>
+                                        <span>Seule la Carte Nationale d'Identité (recto/verso) </span><span
+                                            style="color:red;"> est requise</span>.
+                                        <!-- Profile Edit Form -->
+                                        <div class="row mb-3 mt-3">
+                                            <label for="legende"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Légende<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                <select name="legende"
+                                                    class="form-select  @error('legende') is-invalid @enderror"
+                                                    aria-label="Select" id="select-field-file"
+                                                    data-placeholder="Choisir">
+                                                    <option value="{{ old('legende') }}">
+
+                                                    </option>
+                                                    @foreach ($user_files as $file)
+                                                        <option value="{{ $file?->id }}">
+                                                            {{ $file?->legende }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('legende')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <div>{{ $message }}</div>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="file"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Fichier<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                <div class="pt-2">
+                                                    <input type="file" name="file" id="file"
+                                                        class="form-control @error('file') is-invalid @enderror btn btn-primary btn-sm">
+                                                    @error('file')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <label for="file"
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label"><span
+                                                    class="text-danger mx-1"></span></label>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                <div class="pt-2">
+                                                    <button type="submit" class="btn btn-info btn-sm">Ajouter</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </form> --}}
                                 </div>
                             </div>
 
