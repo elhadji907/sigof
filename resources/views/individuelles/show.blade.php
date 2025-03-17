@@ -140,14 +140,99 @@
             'Adresse' => $individuelle?->user?->adresse,
             'Email' => '<a href="mailto:' . $individuelle?->user?->email . '">' . $individuelle?->user?->email . '</a>',
             'Téléphone personnel' => '<a href="tel:+' . $individuelle?->user?->telephone . '">' . $individuelle?->user?->telephone . '</a>',
-            'Téléphone secondaire' => '<a href="tel:+' . $individuelle?->user?->telephone_secondaire . '">' . $individuelle?->user?->telephone_secondaire . '</a>',
+            'Téléphone secondaire' => '<a href="tel:+' . $individuelle?->telephone . '">' . $individuelle?->telephone . '</a>',
             'Lieu de formation' => $individuelle?->departement?->nom,
         ] as $label => $value)
-                                        <div class="col-md-4">
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <div class="label">{{ $label }}</div>
                                             <div>{!! $value !!}</div>
                                         </div>
                                     @endforeach
+
+                                    @if (!empty($individuelle?->diplome_academique))
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                            <div class="label">Diplôme académique</div>
+                                            <div>{{ $individuelle?->diplome_academique }}</div>
+                                        </div>
+                                    @endif
+
+                                    @if (!empty($individuelle?->autre_diplome_academique))
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                            <div class="label">Autre diplôme académique</div>
+                                            <div>{{ $individuelle?->autre_diplome_academique }}</div>
+                                        </div>
+                                    @endif
+
+                                    @if (!empty($individuelle?->option_diplome_academique))
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                            <div class="label">Option diplôme académique</div>
+                                            <div>{{ $individuelle?->option_diplome_academique }}</div>
+                                        </div>
+                                    @endif
+
+                                    @if (!empty($individuelle?->etablissement_academique))
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                            <div class="label">Etablissement d'obtention</div>
+                                            <div>{{ $individuelle?->etablissement_academique }}</div>
+                                        </div>
+                                    @endif
+
+                                    @if (!empty($individuelle?->diplome_professionnel))
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                            <div class="label">Diplôme professionnel</div>
+                                            <div>{{ $individuelle?->diplome_professionnel }}</div>
+                                        </div>
+                                    @endif
+
+                                    @if (!empty($individuelle?->autre_diplome_professionnel))
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                            <div class="label">Autre diplôme professionnel</div>
+                                            <div>{{ $individuelle?->autre_diplome_professionnel }}</div>
+                                        </div>
+                                    @endif
+
+                                    @if (!empty($individuelle?->specialite_diplome_professionnel))
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                            <div class="label">Spécialité</div>
+                                            <div>{{ $individuelle?->specialite_diplome_professionnel }}</div>
+                                        </div>
+                                    @endif
+
+                                    @if (!empty($individuelle?->etablissement_professionnel))
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                            <div class="label">Etablissement</div>
+                                            <div>{{ $individuelle?->etablissement_professionnel }}</div>
+                                        </div>
+                                    @endif
+
+                                    @if (!empty($individuelle?->projet_poste_formation))
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                            <div class="label">Projet poste formation</div>
+                                            <div>{{ $individuelle?->projet_poste_formation }}</div>
+                                        </div>
+                                    @endif
+
+                                    @if (!empty($individuelle?->qualification))
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                            <div class="label">Qualification</div>
+                                            <div>{{ $individuelle?->qualification }}</div>
+                                        </div>
+                                    @endif
+
+                                    @if (!empty($individuelle?->experience))
+                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                            <div class="label">Expérience</div>
+                                            <div>{{ $individuelle?->experience }}</div>
+                                        </div>
+                                    @endif
+
+                                    @if (!empty($individuelle?->projetprofessionnel))
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                            <div class="label">Projet professionnel</div>
+                                            <div>{{ $individuelle?->projetprofessionnel }}</div>
+                                        </div>
+                                    @endif
+
                                     <div class="text-center">
                                         <a href="{{ route('individuelles.edit', $individuelle?->id) }}"
                                             class="btn btn-primary btn-sm text-white" title="Modifier">Modifier</a>
@@ -163,7 +248,8 @@
                                                 <p class="mb-0 me-3">{{ $file->legende }}</p>
 
                                                 <!-- Bouton de téléchargement -->
-                                                <a href="{{ asset($file->getFichier()) }}" class="btn btn-sm btn-secondary" target="_blank">
+                                                <a href="{{ asset($file->getFichier()) }}" class="btn btn-sm btn-secondary"
+                                                    target="_blank">
                                                     Télécharger
                                                 </a>
                                             </div>
