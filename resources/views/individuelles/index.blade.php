@@ -96,7 +96,7 @@
                                             <th width="15%">Date nais.</th>
                                             <th width="15%">Lieu nais.</th>
                                             <th width="20%">Module</th>
-                                            <th width="15%" class="text-center">Date dépôt</th>
+                                            <th width="15%" class="text-center">Dépôt</th>
                                             <th class="text-center">Statut</th>
                                             <th class="text-center">#</th>
                                         </tr>
@@ -115,7 +115,12 @@
                                                     <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>
                                                     <td>{{ $individuelle?->user?->lieu_naissance }}</td>
                                                     <td>{{ $individuelle?->module?->name }}</td>
-                                                    <td class="text-center">{{ $individuelle?->date_depot?->format('d/m/Y') }}
+                                                    <td class="text-center">
+                                                        @if ($individuelle?->date_depot)
+                                                            {{ $individuelle?->date_depot?->diffForHumans(null, false) }}
+                                                        @else
+                                                            Aucun
+                                                        @endif
                                                     </td>
                                                     {{-- <td>{{ $individuelle?->departement?->nom }}</td> --}}
                                                     <td>

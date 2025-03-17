@@ -86,7 +86,7 @@
                             </li>
 
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-autre">Info.
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-autre">Détails
                                 </button>
                             </li>
 
@@ -160,19 +160,18 @@
                                         <h5 class="card-title">Informations complémentaires</h5>
                                         <div class="row">
                                             <div class="col-lg-3 col-md-4 label pb-2">Création </div>
-                                            <div class="col-lg-9 col-md-8 pb-2">{{ 'CREATION : ' . $user_create_name }}
+                                            <div class="col-lg-9 col-md-8 pb-2">{{ $user_create_name }}
                                                 {{ $user->created_at->diffForHumans() }}</div>
 
                                             <div class="col-lg-3 col-md-4 label pt-2">Modification</div>
 
-                                            @if ($user->created_at != $user->updated_at)
-                                                <div class="col-lg-9 col-md-8 pt-2">
-                                                    {{ 'MODIFICATION : ' . $user_update_name }}
-                                                    {{ $user->updated_at->diffForHumans() }}</div>
-                                            @else
-                                                <div class="col-lg-9 col-md-8 pt-2">
-                                                    JAMAIS MODIFIE</div>
-                                            @endif
+                                            <div class="col-lg-9 col-md-8 pt-2">
+                                                @unless ($user->created_at->eq($user->updated_at))
+                                                    {{ $user_update_name }} {{ $user->updated_at->diffForHumans() }}
+                                                @else
+                                                    JAMAIS MODIFIÉ
+                                                @endunless
+                                            </div>
 
                                             <div class="col-lg-3 col-md-4 label pt-3">Roles</div>
                                             <div class="col-lg-9 col-md-8 pt-3">
@@ -201,29 +200,35 @@
                                     <div class="row mb-3">
                                         <h5 class="card-title col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             FICHIERS JOINTS</h5>
-                                        <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                            <table class="table table-bordered table-hover datatables" id="table-iles">
-                                                <thead>
-                                                    <tr>
-                                                        <th width="5%" class="text-center">N°</th>
-                                                        <th>Légende</th>
-                                                        <th width="10%" class="text-center">File</th>
-                                                        @can('user-show-file')
-                                                            <th width="5%" class="text-center"><i class="bi bi-gear"></i>
-                                                            </th>
-                                                        @endcan
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php $i = 1; ?>
-                                                    @foreach ($user?->files as $file)
-                                                        @if (!empty($file->file))
+                                        @php
+                                            // Filtrer uniquement les fichiers qui ont une valeur non vide
+                                            $validFiles = $user?->files->filter(fn($file) => !empty($file->file));
+                                        @endphp
+
+                                        @if ($validFiles->isNotEmpty())
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                <table class="table table-bordered table-hover datatables"
+                                                    id="table-iles">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="5%" class="text-center">N°</th>
+                                                            <th>Légende</th>
+                                                            <th width="10%" class="text-center">File</th>
+                                                            @can('user-show-file')
+                                                                <th width="5%" class="text-center"><i
+                                                                        class="bi bi-gear"></i></th>
+                                                            @endcan
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php $i = 1; @endphp
+                                                        @foreach ($validFiles as $file)
                                                             <tr>
                                                                 <td class="text-center">{{ $i++ }}</td>
-                                                                <td>{{ $file?->legende }}</td>
+                                                                <td>{{ $file->legende }}</td>
                                                                 <td class="text-center">
                                                                     <a class="btn btn-default btn-sm"
-                                                                        title="télécharger le fichier joint"
+                                                                        title="Télécharger le fichier joint"
                                                                         target="_blank"
                                                                         href="{{ asset($file->getFichier()) }}">
                                                                         <i class="bi bi-download"></i>
@@ -239,17 +244,22 @@
                                                                                 value="{{ $file->id }}">
                                                                             <button type="submit"
                                                                                 style="background:none;border:0px;"
-                                                                                class="show_confirm" title="retirer"><i
-                                                                                    class="bi bi-trash"></i></button>
+                                                                                class="show_confirm" title="Retirer">
+                                                                                <i class="bi bi-trash"></i>
+                                                                            </button>
                                                                         </form>
                                                                     </td>
                                                                 @endcan
                                                             </tr>
-                                                        @endif
-                                                    @endforeach
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        @else
+                                            <div class="alert alert-info">
+                                                <p class="text-muted">Aucun fichier joint.</p>
+                                            </div>
+                                        @endif
                                     </div>
                                     {{-- <form method="post" action="{{ route('files.update', $user?->id) }}"
                                         enctype="multipart/form-data">
