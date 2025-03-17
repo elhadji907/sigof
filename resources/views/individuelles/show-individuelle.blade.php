@@ -262,7 +262,7 @@
 
                                             <input type="text" name="module" value="{{ old('module_name') }}"
                                                 class="form-control form-control-sm @error('module_name') is-invalid @enderror"
-                                                id="module_name" placeholder="Nom du module" autofocus>
+                                                id="module_name" placeholder="Formation choisie" autofocus>
                                             <div id="countryList"></div>
                                             {{ csrf_field() }}
                                             @error('module')
