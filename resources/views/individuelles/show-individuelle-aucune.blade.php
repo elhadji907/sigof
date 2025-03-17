@@ -354,7 +354,7 @@
                         <form method="post" action="{{ route('individuelles.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="card-header text-center bg-gradient-default">
-                                <h1 class="h4 text-black mb-0">ajouter une nouvelle demande individuelle</h1>
+                                <h1 class="h4 text-black mb-0">Ajouter une nouvelle demande individuelle</h1>
                             </div>
                             {{-- <div class="modal-header">
                                 <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une nouvelle
@@ -371,7 +371,7 @@
 
                                         <input type="text" name="module" value="{{ old('module_name') }}"
                                             class="form-control form-control-sm @error('module_name') is-invalid @enderror"
-                                            id="module_name" placeholder="Nom du module" autofocus>
+                                            id="module_name" placeholder="Formation choisie" autofocus>
                                         <div id="countryList"></div>
                                         {{ csrf_field() }}
                                         @error('module')

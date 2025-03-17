@@ -124,6 +124,7 @@ class IndividuelleController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'module'                 => ['required', 'string', 'max:255'],
             'telephone_secondaire'   => ['required', 'string', 'min:9', 'max:12'],
             'adresse'                => ['required', 'string', 'max:255'],
             'departement'            => ['required', 'string', 'max:255'],
