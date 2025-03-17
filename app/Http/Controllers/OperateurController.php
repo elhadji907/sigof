@@ -51,7 +51,7 @@ class OperateurController extends Controller
             $pourcentage_agreer  = "0";
             $pourcentage_rejeter = "0";
             $pourcentage_nouveau = "0";
-            $pourcentage_expirer= "0";
+            $pourcentage_expirer = "0";
         }
 
         $total_count = Operateur::get();
@@ -237,7 +237,7 @@ class OperateurController extends Controller
                     'quitus' => $quitusPath,
                 ]);
             }
-            
+
             Alert::success("Félicitations ! ", "demande ajoutée avec succès");
 
             return redirect()->back();
@@ -920,7 +920,8 @@ class OperateurController extends Controller
         Alert::success("Fait " . $operateur?->user?->username, 'a été supprimé');
         return redirect()->back();
     }
-    public function fetch(Request $request)
+
+    /* public function fetch(Request $request)
     {
         if ($request->get('query')) {
             $query = $request->get('query');
@@ -937,7 +938,29 @@ class OperateurController extends Controller
             $output .= '</ul>';
             echo $output;
         }
+    } */
+
+    public function fetch(Request $request)
+    {
+        if ($request->get('query')) {
+            $query = $request->get('query');
+            $data  = DB::table('modules')
+                ->whereNull('deleted_at') // Exclure les enregistrements supprimés
+                ->where('name', 'LIKE', "%{$query}%")
+                ->distinct()
+                ->get();
+
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative;width:100%;">';
+            foreach ($data as $row) {
+                $output .= '
+                <li><a class="dropdown-item" href="#">' . $row->name . '</a></li>
+                ';
+            }
+            $output .= '</ul>';
+            echo $output;
+        }
     }
+
     public function fetchModuleOperateur(Request $request)
     {
         if ($request->get('query')) {
@@ -1658,7 +1681,7 @@ class OperateurController extends Controller
 
     public function expirer(Request $request)
     {
-        $title = "Liste des opérateurs dont l'agrément est arrivé à expiration";
+        $title      = "Liste des opérateurs dont l'agrément est arrivé à expiration";
         $operateurs = Operateur::where('statut_agrement', 'expirer')->get();
         return view(
             'operateurs.expirer',

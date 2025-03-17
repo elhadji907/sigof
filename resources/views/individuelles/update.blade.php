@@ -39,12 +39,12 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                    <label for="module" class="form-label">Formation sollicitée<span
+                                    <label for="module" class="form-label">Formation sollicitée (module)<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="module"
                                         value="{{ $individuelle?->module?->name ?? old('module_name') }}"
                                         class="form-control form-control-sm @error('module_name') is-invalid @enderror"
-                                        id="module_name" placeholder="Nom du module" autofocus>
+                                        id="module_name" placeholder="Formation choisie" autofocus>
                                     <div id="countryList"></div>
                                     {{ csrf_field() }}
                                     @error('module')
