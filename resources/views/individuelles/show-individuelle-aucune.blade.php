@@ -366,7 +366,7 @@
                             <div class="modal-body">
                                 <div class="row g-3">
                                     <div class="col-12 col-md-12 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                        <label for="module" class="form-label">Formation sollicitée<span
+                                        <label for="module" class="form-label">Formation sollicitée (module)<span
                                                 class="text-danger mx-1">*</span></label>
 
                                         <input type="text" name="module" value="{{ old('module_name') }}"
