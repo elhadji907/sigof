@@ -43,10 +43,8 @@
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a> --}}
                                 @can('secteur-create')
-                                    <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                        data-bs-target="#AddSecteurModal">
-                                        <i class="bi bi-person-plus" title="Ajouter"></i>
-                                    </button>
+                                    <button type="button" class="btn btn-primary float-end btn-rounded btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#AddSecteurModal">Ajouter</button>
                                 @endcan
                             </div>
                             {{-- @endcan --}}
@@ -141,8 +139,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
                             </div>
                         </form>
                     </div>
@@ -183,9 +181,8 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                        Modifier</button>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                    <button type="submit" class="btn btn-primary btn-sm">Modifier</button>
                                 </div>
                             </form>
                         </div>

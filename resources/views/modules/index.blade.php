@@ -75,7 +75,7 @@
                                         <th>Secteurs</th>
                                         <th>Niveau qualification</th>
                                         <th class="text-center" scope="col">Formations</th>
-                                        <th class="text-center" scope="col">Effectif</th>
+                                        <th class="text-center" scope="col">Demandes</th>
                                         <th class="text-center" scope="col">#</th>
                                     </tr>
                                 </thead>
