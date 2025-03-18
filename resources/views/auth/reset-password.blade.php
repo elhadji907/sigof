@@ -162,6 +162,10 @@
                                                 class="form-control form-control-sm @error('password') is-invalid @enderror"
                                                 id="password" placeholder="Nouveau mot de passe"
                                                 value="{{ old('password') }}" autofocus autocomplete="new-password">
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                id="togglePassword">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
                                             <div class="invalid-feedback">
                                                 @error('password')
                                                     {{ $message }}
@@ -226,6 +230,22 @@
     <!-- Template Main JS File -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
 
+    <script>
+        document.getElementById("togglePassword").addEventListener("click", function() {
+            let passwordField = document.getElementById("password");
+            let icon = this.querySelector("i");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                icon.classList.remove("bi-eye");
+                icon.classList.add("bi-eye-slash");
+            } else {
+                passwordField.type = "password";
+                icon.classList.remove("bi-eye-slash");
+                icon.classList.add("bi-eye");
+            }
+        });
+    </script>
 </body>
 
 </html>
