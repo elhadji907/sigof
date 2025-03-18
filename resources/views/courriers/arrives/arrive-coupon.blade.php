@@ -157,7 +157,7 @@
                             <b>{{ __('du') }}</b> : {{ $courrier->date_recep?->format('d/m/Y') }}<br>
                             <b>{{ __('Objet') }}</b> :
                             <span class="d-inline-block text-truncate" style="max-width: 300px;">
-                                {{ ucfirst($courrier?->objet) }}
+                                {!! wordwrap(ucfirst($courrier?->objet), 40, '<br>', true) !!}
                             </span>
                         </p>
                         <table class="table table-striped">

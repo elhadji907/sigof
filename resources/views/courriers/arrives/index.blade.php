@@ -337,7 +337,7 @@
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="objet" class="form-label">Objet<span
                                             class="text-danger mx-1">*</span></label>
-                                    <textarea name="objet" id="objet" rows="1"
+                                    <textarea name="objet" id="objet" rows="2"
                                         class="form-control form-control-sm @error('objet') is-invalid @enderror" placeholder="Objet">{{ old('objet') }}</textarea>
                                     @error('objet')
                                         <span class="invalid-feedback" role="alert">
@@ -386,8 +386,8 @@
 
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="observation" class="form-label">Observations</label>
-                                    <textarea name="observation" id="observation" rows="1"
-                                        class="form-control form-control-sm @error('date_reponse') is-invalid @enderror" placeholder="Observations">{{ old('observation') }}</textarea>
+                                    <textarea name="observation" id="observation" rows="2"
+                                        class="form-control form-control-sm @error('observation') is-invalid @enderror" placeholder="Observations">{{ old('observation') }}</textarea>
                                     @error('observation')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
