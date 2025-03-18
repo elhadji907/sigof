@@ -172,7 +172,7 @@
                         </p>
                         <table class="table table-striped">
                             <tbody>
-                                @foreach (collect($directions)->chunk(4) as $chunk)
+                                @foreach (collect($directions)->chunk(6) as $chunk)
                                     <tr class="item">
                                         @foreach ($chunk as $direction)
                                             <td style="padding-left:5px; width: 25%;">
