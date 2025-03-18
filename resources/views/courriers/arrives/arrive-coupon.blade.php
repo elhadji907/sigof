@@ -162,10 +162,10 @@
                                 {{-- {!! '- ' . implode('<br>- ', array_map('e', explode("\n", old('objet', $courrier?->objet )))) !!} --}}
                                 {!! '- ' .
                                     implode(
-                                        '<br>- ',
+                                        '- ',
                                         array_map(
-                                            fn($line) => e($line),
-                                            explode("\n", old('objet', wordwrap(ucfirst($courrier?->objet), 40, "\n", true))),
+                                            fn($line) => nl2br(e(wordwrap($line, 40, "\n", true))),
+                                            explode("\n", old('objet', ucfirst($courrier?->objet))),
                                         ),
                                     ) !!}
                             </span>
