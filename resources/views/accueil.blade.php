@@ -728,7 +728,7 @@
             class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
             <div class="modal fade" id="loginModal" tabindex="-1">
                 <div class="modal-dialog">
-                    <div class="modal-content">
+                    {{-- <div class="modal-content">
                         <form class="row g-3 needs-validation" novalidate method="POST"
                             action="{{ route('login') }}">
                             @csrf
@@ -798,6 +798,81 @@
 
                                 </div>
                         </form>
+                    </div> --}}
+                    <div class="modal-content">
+                        <form class="row g-3 needs-validation" novalidate method="POST"
+                            action="{{ route('login') }}">
+                            @csrf
+                            <div class="modal-header">
+                                <h5 class="w-100 text-center">CONNEXION</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Fermer"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <label for="email" class="form-label">Email<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <div class="input-group has-validation">
+                                            <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                            <input type="email" name="email"
+                                                class="form-control form-control-sm @error('email') is-invalid @enderror"
+                                                id="email" required placeholder="Votre adresse e-mail"
+                                                value="{{ old('email') }}" autofocus>
+                                            <div class="invalid-feedback">
+                                                @error('email')
+                                                    {{ $message }}
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="password" class="form-label">Mot de passe<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <div class="input-group has-validation">
+                                            <span class="input-group-text"><i class="bi bi-key"></i></span>
+                                            <input type="password" name="password"
+                                                class="form-control form-control-sm @error('password') is-invalid @enderror"
+                                                id="password" required placeholder="Votre mot de passe">
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                id="togglePassword">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <div class="invalid-feedback">
+                                                @error('password')
+                                                    {{ $message }}
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" name="remember"
+                                                value="true" id="rememberMe">
+                                            <label class="form-check-label" for="rememberMe">Souviens-toi de
+                                                moi</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-sm w-100" type="submit"
+                                            style="background-color: #F28500; color: #FFFFFF">
+                                            Se connecter
+                                        </button>
+                                    </div>
+
+                                    <div class="col-12">
+                                        @if (Route::has('password.request'))
+                                            <p class="small mb-0">Mot de passe oublié ?
+                                                <a href="#" data-bs-toggle="modal"
+                                                    data-bs-target="#forgotModal">Réinitialiser</a>
+                                            </p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -808,7 +883,7 @@
             class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
             <div class="modal fade" id="registerDemandeurModal" tabindex="-1">
                 <div class="modal-dialog">
-                    <div class="modal-content">
+                    {{-- <div class="modal-content">
                         <form class="row g-3 needs-validation contact-form" novalidate method="POST"
                             action="{{ route('register') }}">
                             @csrf
@@ -945,6 +1020,157 @@
 
                                     <div
                                         class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12 justify-content-center">
+                                        <p class="small">Vous avez déjà un compte ? <a href="#"
+                                                data-bs-toggle="modal" data-bs-target="#loginModal">Se connecter</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div> --}}
+                    <div class="modal-content">
+                        <form class="row g-3 needs-validation contact-form" novalidate method="POST"
+                            action="{{ route('register') }}">
+                            @csrf
+                            <div class="modal-header">
+                                <h5 class="w-100 text-center">Création compte personnel</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Fermer"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <div class="row g-3">
+                                    <input type="hidden" name="role" value="Demandeur">
+
+                                    <!-- Username -->
+                                    <div class="col-12">
+                                        <label for="username" class="form-label">Username<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <div class="input-group has-validation">
+                                            <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                            <input type="text" name="username"
+                                                class="form-control form-control-sm @error('username') is-invalid @enderror"
+                                                id="username" required placeholder="ex : jean221"
+                                                value="{{ old('username') }}" autocomplete="username">
+                                            <div class="invalid-feedback">
+                                                @error('username')
+                                                    {{ $message }}
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Email -->
+                                    <div class="col-12">
+                                        <label for="email" class="form-label">Email<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <div class="input-group has-validation">
+                                            <span class="input-group-text">@</span>
+                                            <input type="email" name="email"
+                                                class="form-control form-control-sm @error('email') is-invalid @enderror"
+                                                id="email" required placeholder="Votre e-mail"
+                                                value="{{ old('email') }}" autocomplete="email">
+                                            <div class="invalid-feedback">
+                                                @error('email')
+                                                    {{ $message }}
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Téléphone -->
+                                    <div class="col-12">
+                                        <label for="votre_telephone" class="form-label">Téléphone<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <div class="input-group has-validation">
+                                            <span class="input-group-text"><i class="bi bi-telephone-plus"></i></span>
+                                            <input name="votre_telephone" type="text" maxlength="12"
+                                                class="form-control form-control-sm @error('votre_telephone') is-invalid @enderror"
+                                                id="votre_telephone" value="{{ old('votre_telephone') }}"
+                                                autocomplete="tel" placeholder="XX:XXX:XX:XX">
+                                            <div class="invalid-feedback">
+                                                @error('votre_telephone')
+                                                    {{ $message }}
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Mot de passe -->
+                                    <div class="col-12">
+                                        <label for="password" class="form-label">Mot de passe<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <div class="input-group has-validation">
+                                            <span class="input-group-text"><i class="bi bi-key"></i></span>
+                                            <input type="password" name="password"
+                                                class="form-control form-control-sm @error('password') is-invalid @enderror"
+                                                id="passwordR" required placeholder="Votre mot de passe"
+                                                autocomplete="new-password">
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                id="togglePasswordR">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <div class="invalid-feedback">
+                                                @error('password')
+                                                    {{ $message }}
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Confirmation mot de passe -->
+                                    <div class="col-12">
+                                        <label for="password_confirmation" class="form-label">Confirmez le mot de
+                                            passe<span class="text-danger mx-1">*</span></label>
+                                        <div class="input-group has-validation">
+                                            <span class="input-group-text"><i class="bi bi-key"></i></span>
+                                            <input type="password" name="password_confirmation"
+                                                class="form-control form-control-sm @error('password_confirmation') is-invalid @enderror"
+                                                id="password_confirmation" required
+                                                placeholder="Confirmez votre mot de passe"
+                                                autocomplete="new-password">
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                id="toggleConfirmPassword">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            <div class="invalid-feedback">
+                                                @error('password_confirmation')
+                                                    {{ $message }}
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input @error('termes') is-invalid @enderror"
+                                                name="termes" type="checkbox" value="1" id="acceptTerms"
+                                                required>
+                                            <label class="form-check-label" for="acceptTerms">
+                                                J'accepte les
+                                                <button style="color: blue" type="button"
+                                                    class="btn btn-default btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#largeModal">
+                                                    termes et conditions
+                                                </button>
+                                                <span class="text-danger mx-1">*</span>
+                                            </label>
+                                            <div class="invalid-feedback">
+                                                @error('termes')
+                                                    {{ $message }}
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-sm w-100"
+                                            style="background-color: #F28500; color: #FFFFFF">
+                                            Créer un compte personnel
+                                        </button>
+                                    </div>
+
+                                    <div class="col-12 text-center">
                                         <p class="small">Vous avez déjà un compte ? <a href="#"
                                                 data-bs-toggle="modal" data-bs-target="#loginModal">Se connecter</a>
                                         </p>

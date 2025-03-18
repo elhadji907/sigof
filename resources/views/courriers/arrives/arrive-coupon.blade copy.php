@@ -13,7 +13,7 @@
         }
 
         .invoice-box {
-            max-width: 100%;
+            max-width: 800px;
             margin: auto;
             padding: 30px;
             font-size: 14px;
@@ -70,11 +70,6 @@
             text-align: center;
             border-radius: 25% 10%;
             /* border-radius: 5px; */
-        }
-
-        td {
-            word-wrap: break-word;
-            white-space: normal;
         }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -149,48 +144,50 @@
         <table class="table table-responsive" style="margin-top: -20px;">
             <tbody>
                 <tr>
-                    <!-- Colonne Expéditeur (8 colonnes) -->
-                    <td class="col-md-8" style="word-wrap: break-word;">
+                    <td colspan="4" align="left" valign="top" width="80%">
                         <p>
                             <b>{{ __('Expéditeur') }}</b> : {{ mb_strtoupper($courrier->expediteur) }}<br>
                             <b>{{ __('Réf') }}</b> : {{ $courrier->reference }}&nbsp;&nbsp;&nbsp;&nbsp;
                             <b>{{ __('du') }}</b> : {{ $courrier->date_recep?->format('d/m/Y') }}<br>
-                            <b>{{ __('Objet') }}</b> :
-                            <span class="d-inline-block text-truncate" style="max-width: 300px;">
-                                {{ ucfirst($courrier?->objet) }}
-                            </span>
+                            <b>{{ __('Objet') }}</b> : {{ ucfirst($courrier->objet) }}<br>
                         </p>
-                        <table class="table table-striped">
+                        <table class="table table-responsive table-striped">
                             <tbody>
-                                @foreach (collect($directions)->chunk(4) as $chunk)
-                                    <tr class="item">
-                                        @foreach ($chunk as $direction)
-                                            <td style="padding-left:5px; width: 25%;">
-                                                {!! $direction ?? 'Aucune' !!}
-                                                <span style="float:right; color: red; padding-right:5px;">
-                                                    {!! in_array($direction, $arriveDirections) ? 'X' : '' !!}
-                                                </span>
-                                            </td>
-                                        @endforeach
-                                    </tr>
-                                @endforeach
+                                <tr class="item">
+                                    <?php $i = 1; ?>
+                                    @foreach ($directions as $direction)
+                                        <td style="padding-left:5px; width: 25%;">
+                                            {!! $direction ?? 'Aucune' !!}
+                                            <span style="float:right;">
+                                                <span
+                                                    style="color: red; padding-right:5px;">{!! in_array($direction, $arriveDirections) ? 'X' : '' !!}</span>
+                                            </span>
+                                        </td>
+                                        @if ($i % 4 == 0)
+                                </tr>
+                                <tr class="item">
+                                    @endif
+                                    <?php $i++; ?>
+                                    @endforeach
+                                </tr>
                             </tbody>
                         </table>
                     </td>
-
-                    <!-- Colonne Actions Attendues (4 colonnes) -->
-                    <td class="col-md-4" valign="top" style="padding-left:10px; padding-top:20px;">
-                        <table class="table table-striped">
+                    <td style="padding-left:10px; padding-top:20px; float:right;" colspan="4" valign="top"
+                        width="20%">
+                        <table class="table table-responsive table-striped">
                             <tbody>
                                 <tr class="heading">
                                     <td colspan="4" align="center"><b>{{ __('ACTIONS ATTENDUES') }}</b></td>
                                 </tr>
                                 @foreach ($actions as $action)
                                     <tr class="item">
-                                        <td colspan="2" style="padding-left:5px;">{{ $action }}</td>
+                                        <td colspan="2" style="padding-left:5px;">
+                                            {{ $action }}
+                                        </td>
                                         <td colspan="2" align="center">
                                             @if ($action == $courrier->description)
-                                                <span style="color: red;">X</span>
+                                                <span style="color: red;">{{ __('X') }}</span>
                                             @endif
                                         </td>
                                     </tr>
@@ -201,7 +198,6 @@
                 </tr>
             </tbody>
         </table>
-
         {{--         <br>
         <table class="table table-responsive">
             <tbody>
