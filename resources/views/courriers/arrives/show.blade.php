@@ -71,10 +71,23 @@
 
                             <div class="tab-content pt-0">
                                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                                    <h5 class="card-title">Objet</h5>
-                                    <p class="small fst-italic">{{ $arrive?->courrier?->objet }}</p>
+                                    <div class="d-flex justify-content-between align-items-center mt-3">
+                                        <h5 class="card-title"></h5>
+                                        <form action="{{ route('couponArrive') }}" method="post" target="_blank">
+                                            @csrf
+                                            <input type="hidden" name="id" value="{{ $arrive?->id }}">
+                                            <button class="btn btn-outline-primary btn-sm"><i class="fa fa-print"
+                                                    aria-hidden="true"></i>Télécharger
+                                                coupon</button>
+                                        </form>
+                                    </div>
 
                                     <h5 class="card-title">Détails</h5>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label ">Objet</div>
+                                        <div class="col-lg-9 col-md-8">{{ $arrive?->courrier?->objet }}</div>
+                                    </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label ">N° courrier arrivé</div>
@@ -159,8 +172,8 @@
                                                 class="col-md-4 col-lg-3 col-form-label">Commentaires</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <div class="form-floating mb-3">
-                                                    <textarea class="form-control @error('commentaire') is-invalid @enderror" placeholder="Ecrire votre commentaire ici..."
-                                                        name="commentaire" id="commentaire" style="height: 100px;"></textarea>
+                                                    <textarea class="form-control @error('commentaire') is-invalid @enderror"
+                                                        placeholder="Ecrire votre commentaire ici..." name="commentaire" id="commentaire" style="height: 100px;"></textarea>
                                                     <label for="floatingTextarea">Ecrire votre commentaire ici</label>
                                                 </div>
                                                 <small id="emailHelp" class="form-text text-muted">
