@@ -337,7 +337,7 @@
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="objet" class="form-label">Objet<span
                                             class="text-danger mx-1">*</span></label>
-                                    <textarea name="objet" id="objet" rows="2"
+                                    <textarea name="objet" id="objet" rows="3"
                                         class="form-control form-control-sm @error('objet') is-invalid @enderror" placeholder="Objet">{{ old('objet') }}</textarea>
                                     @error('objet')
                                         <span class="invalid-feedback" role="alert">

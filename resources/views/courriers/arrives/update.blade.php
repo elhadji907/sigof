@@ -135,7 +135,7 @@
                                         value="{{ $arrive?->courrier?->objet ?? old('objet') }}"
                                         class="form-control form-control-sm @error('objet') is-invalid @enderror"
                                         id="objet" placeholder="Objet"> --}}
-                                    <textarea name="objet" id="objet" rows="2"
+                                    <textarea name="objet" id="objet" rows="4"
                                         class="form-control form-control-sm @error('objet') is-invalid @enderror" placeholder="Objet">{{ old('objet', $arrive?->courrier?->objet) }}</textarea>
                                     @error('objet')
                                         <span class="invalid-feedback" role="alert">

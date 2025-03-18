@@ -157,7 +157,10 @@
                             <b>{{ __('du') }}</b> : {{ $courrier->date_recep?->format('d/m/Y') }}<br>
                             <b>{{ __('Objet') }}</b> :
                             <span class="d-inline-block text-truncate" style="max-width: 300px;">
-                                {!! wordwrap(ucfirst($courrier?->objet), 40, '<br>', true) !!}
+                                {{-- {!! wordwrap(ucfirst($courrier?->objet), 40, '<br>', true) !!}   --}}                              
+                                {{-- {!! nl2br(e(old('objet', $courrier?->objet))) !!} --}}
+                                {{-- {!! '- ' . implode('<br>- ', array_map('e', explode("\n", old('objet', $courrier?->objet )))) !!} --}}
+                                {!! '' . implode('<br>', array_map('e', explode("\n", old('objet', $courrier?->objet )))) !!}
                             </span>
                         </p>
                         <table class="table table-striped">
