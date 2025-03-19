@@ -140,7 +140,7 @@
                                             <label for="email" class="form-label">E-mail<span
                                                     class="text-danger mx-1">*</span></label>
                                             <div class="input-group has-validation">
-                                                {{-- <span class="input-group-text" id="inputGroupPrepend">@</span> --}}
+                                                <span class="input-group-text" id="inputGroupPrepend">@</span>
                                                 <input type="email" name="email"
                                                     class="form-control form-control-sm @error('email') is-invalid @enderror"
                                                     id="email" placeholder="Votre e-mail"
@@ -155,7 +155,7 @@
                                         </div>
 
                                         <!-- Mot de passe -->
-                                        <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        {{-- <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <label for="password" class="form-label">Mot de passe<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="password" name="password"
@@ -171,10 +171,31 @@
                                                     {{ $message }}
                                                 @enderror
                                             </div>
+                                        </div> --}}
+
+                                        <div class="col-12">
+                                            <label for="password" class="form-label">Mot de passe<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <div class="input-group has-validation">
+                                                <span class="input-group-text"><i class="bi bi-key"></i></span>
+                                                <input type="password" name="password"
+                                                    class="form-control form-control-sm @error('password') is-invalid @enderror"
+                                                    id="password" required placeholder="Votre mot de passe"
+                                                    value="{{ old('password') }}">
+                                                <button class="btn btn-outline-secondary" type="button"
+                                                    id="togglePassword">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                                <div class="invalid-feedback">
+                                                    @error('password')
+                                                        {{ $message }}
+                                                    @enderror
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <!-- Mot de passe de confirmation -->
-                                        <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        {{-- <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                             <label for="password_confirmation" class="form-label">Confirmez mot de
                                                 passe<span class="text-danger mx-1">*</span></label>
                                             <input type="password" name="password_confirmation"
@@ -187,9 +208,34 @@
                                                     {{ $message }}
                                                 @enderror
                                             </div>
+                                        </div> --}}
+
+                                        <div class="col-12">
+                                            <label for="password_confirmation" class="form-label">Confirmez le mot de
+                                                passe<span class="text-danger mx-1">*</span></label>
+                                            <div class="input-group has-validation">
+                                                <span class="input-group-text"><i class="bi bi-key"></i></span>
+                                                <input type="password" name="password_confirmation"
+                                                    class="form-control form-control-sm @error('password_confirmation') is-invalid @enderror"
+                                                    id="password_confirmation" required
+                                                    placeholder="Confirmez votre mot de passe"
+                                                    value="{{ old('password_confirmation') }}"
+                                                    autocomplete="new-password">
+                                                <button class="btn btn-outline-secondary" type="button"
+                                                    id="toggleConfirmPassword">
+                                                    <i class="bi bi-eye"></i>
+                                                </button>
+                                                <div class="invalid-feedback">
+                                                    @error('password_confirmation')
+                                                        {{ $message }}
+                                                    @enderror
+                                                </div>
+                                            </div>
                                         </div>
+
                                         <div class="pt-5">
-                                            <button class="btn btn-primary btn-sm w-100" type="submit">Réinitialiser le
+                                            <button class="btn btn-primary btn-sm w-100" type="submit">Réinitialiser
+                                                le
                                                 mot de
                                                 passe</button>
                                         </div>
