@@ -38,7 +38,7 @@
                                 <p> | retour</p>
                             </span>
                             <button type="button" class="btn btn-info btn-sm">
-                                <span class="badge bg-white text-info">{{ $individuelle_total }}/3</span>
+                                <span class="badge bg-white text-info">{{ $individuelle_total }} sur 3</span>
                             </button>
                             @if ($individuelle_total < 3 && !empty(Auth::user()?->cin))
                                 <button type="button" class="btn btn-primary btn-sm float-end btn-rounded"

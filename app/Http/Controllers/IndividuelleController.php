@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class IndividuelleController extends Controller
@@ -496,13 +497,25 @@ class IndividuelleController extends Controller
         $this->validate($request, [
             'civilite'                  => ['required', 'string'],
             'date_depot'                => ['required', 'date', 'min:10', 'max:10', 'date_format:Y-m-d'],
-            'cin'                       => ['required', 'string', 'min:13', 'max:15', 'unique:' . User::class],
-            'email'                     => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'cin'                       => [
+                'required',
+                'string',
+                'min:16',
+                'max:17',
+                Rule::unique('users')->whereNull('deleted_at'), // Ignore les utilisateurs supprimés
+            ],
+            'email'                     => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('users')->whereNull('deleted_at'), // Ignore les utilisateurs supprimés
+            ],
             'firstname'                 => ['required', 'string', 'max:50'],
             'lastname'                  => ['required', 'string', 'max:25'],
             'telephone'                 => ['required', 'string', 'min:9', 'max:12'],
             'telephone_secondaire'      => ['required', 'string', 'min:9', 'max:12'],
-            'date_naissance'            => ['required', 'date', 'min:10', 'max:10', 'date_format:Y-m-d'],
+            'date_naissance'            => ['nullable', 'date_format:d/m/Y'],
             'lieu_naissance'            => ['required', 'string'],
             'adresse'                   => ['required', 'string', 'max:255'],
             'departement'               => ['required', 'string', 'max:255'],
@@ -621,12 +634,15 @@ class IndividuelleController extends Controller
 
         $module_find = DB::table('modules')->where('name', $request->input("module"))->first();
 
+        $dateString     = Carbon::now()->format('d/m/Y');                                      // Convertir en chaîne formatée
+        $date_naissance = Carbon::createFromFormat('d/m/Y', $request->input('date_naissance')); // Parser la chaîne correctement
+
         $user = User::create([
             'civilite'                  => $request->input('civilite'),
             'cin'                       => $cin,
             'firstname'                 => format_proper_name($request->input('firstname')),
             'name'                      => remove_accents_uppercase($request->input('lastname')),
-            'date_naissance'            => $request->input('date_naissance'),
+            'date_naissance'            => $date_naissance,
             'lieu_naissance'            => remove_accents_uppercase($request->input('lieu_naissance')),
             'email'                     => $request->input('email'),
             'telephone'                 => $request->input('telephone'),

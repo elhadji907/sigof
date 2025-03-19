@@ -38,24 +38,6 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="pt-1">
-                                {{-- @if (isset($demandeur->numero_dossier))
-                                <a href="{{ route('individuelles.create') }}"
-                                    class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
-                                    <i class="bi bi-person-plus" title="Ajouter"></i> </a>
-                            @else
-                                <a class="btn btn-primary float-end btn-rounded"
-                                    href="{{ route('demandeurs.show', Auth::user()->id) }}"><i
-                                        class="bi bi-person-plus" title="Ajouter"></i> </a></a>
-                            @endif --}}
-                                {{--  <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                data-bs-target="#AddIndividuelModal">
-                                <i class="bi bi-person-plus" title="Ajouter"></i>
-                            </button> --}}
-
-                                {{-- <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
-                                data-bs-target="#AddIndividuelModal">
-                                <i class="bi bi-plus" title="Ajouter une nouvelle demande"></i>
-                            </button> --}}
                                 <div class="d-flex justify-content-between align-items-center">
                                     @can('individuelle-create')
                                         <h5 class="card-title">{{ $title }}</h5>
@@ -188,21 +170,14 @@
                                 <div class="card-header text-center bg-gradient-default">
                                     <h1 class="h4 text-black mb-0">Ajouter une nouvelle demande individuelle</h1>
                                 </div>
-                                {{-- <div class="modal-header">
-                                    <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une nouvelle
-                                        demande
-                                        individuelle</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div> --}}
                                 <div class="modal-body">
                                     <div class="row g-3">
                                         <div class="col-12 col-md-12 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                            <label for="module" class="form-label">Formation sollicitée<span
+                                            <label for="module" class="form-label">Formation sollicitée (module)<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="text" name="module" value="{{ old('module_name') }}"
                                                 class="form-control form-control-sm @error('module_name') is-invalid @enderror"
-                                                id="module_name" placeholder="Nom du module" autofocus>
+                                                id="module_name" placeholder="Formation sollicitée" autofocus>
                                             <div id="countryList"></div>
                                             {{ csrf_field() }}
                                             @error('module')
@@ -260,10 +235,10 @@
                                         <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="cin" class="form-label">N° CIN<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input minlength="13" maxlength="14" type="text" name="cin"
-                                                value="{{ old('cin') }}"
+                                            <input name="cin" type="text"
                                                 class="form-control form-control-sm @error('cin') is-invalid @enderror"
-                                                id="cin" placeholder="Numéro carte d'identité nationale">
+                                                id="cin" value="{{ old('cin') }}" autocomplete="off"
+                                                placeholder="Ex: 1 099 2005 00012" minlength="16" maxlength="17" required>
                                             @error('cin')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -300,9 +275,9 @@
                                         <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="date_naissance" class="form-label">Date naissance<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="date" name="date_naissance" value="{{ old('date_naissance') }}"
-                                                class="datepicker form-control form-control-sm @error('date_naissance') is-invalid @enderror"
-                                                id="date_naissance" placeholder="jj/mm/aaaa">
+                                            <input type="text" name="date_naissance" value="{{ old('date_naissance') }}"
+                                                class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
+                                                id="datepicker" placeholder="JJ/MM/AAAA" autocomplete="bday">
                                             @error('date_naissance')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -356,10 +331,10 @@
                                         <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="telephone" class="form-label">Téléphone personnel<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="number" min="0" name="telephone"
-                                                value="{{ old('telephone') }}"
+                                            <input name="telephone" type="text" maxlength="12"
                                                 class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                                id="telephone" placeholder="7xxxxxxxx">
+                                                id="telephone" value="{{ old('telephone') }}" autocomplete="tel"
+                                                placeholder="XX:XXX:XX:XX">
                                             @error('telephone')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -370,10 +345,10 @@
                                         <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="telephone_secondaire" class="form-label">Téléphone secondaire<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="number" min="0" name="telephone_secondaire"
-                                                value="{{ old('telephone_secondaire') }}"
+                                            <input name="telephone_secondaire" type="text" maxlength="12"
                                                 class="form-control form-control-sm @error('telephone_secondaire') is-invalid @enderror"
-                                                id="telephone_secondaire" placeholder="7xxxxxxxx">
+                                                id="telephone_secondaire" value="{{ old('telephone_secondaire') }}"
+                                                autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                             @error('telephone_secondaire')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -759,8 +734,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary btn-sm"
                                             data-bs-dismiss="modal">Fermer</button>
-                                        <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-printer"></i>
-                                            Enregistrer</button>
+                                        <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
                                     </div>
                                 </div>
                             </form>
@@ -897,7 +871,7 @@
                 }
             },
             "order": [
-                [0, 'desc']
+                [0, 'DESC']
             ],
             language: {
                 "sProcessing": "Traitement en cours...",
