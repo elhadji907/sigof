@@ -123,7 +123,7 @@ class CollectiveController extends Controller
                 $numero_collective = "00001";
                 $numero_collective = 'C' . $annee . $numero_collective;
             } */
-            $anneeEnCours = date('Y');
+            /*  $anneeEnCours = date('Y');
             $an           = date('y');
 
             $numero_collective = Collective::join('users', 'users.id', 'collectives.users_id')
@@ -160,6 +160,36 @@ class CollectiveController extends Controller
             $numero_collective = strtoupper($numero_collective);
 
             $departement = Departement::where('nom', $request->input("departement"))->get()->first();
+            $regionid    = $departement->region->id; */
+            $anneeEnCours = date('Y');
+            $an           = date('y');
+
+            $prefix = 'C' . $an;
+
+            // Récupérer le dernier numéro pour l'année en cours
+            $lastCollective = Collective::where('numero', 'LIKE', "{$prefix}%")
+                ->orderBy('id', 'desc')
+                ->first();
+
+            if ($lastCollective) {
+                // Extraire la partie numérique après "C" + $an
+                $lastNumero = intval(substr($lastCollective->numero, 3));
+                $newNumero  = $lastNumero + 1;
+            } else {
+                $newNumero = 1;
+            }
+
+            // Générer le numéro formaté
+            do {
+                $numero_collective = $prefix . str_pad($newNumero, 4, '0', STR_PAD_LEFT);
+                $exists            = Collective::where('numero', $numero_collective)->exists();
+                if ($exists) {
+                    $newNumero++; // Incrémenter et tester à nouveau
+                }
+            } while ($exists);
+
+            // Récupération de l'ID de la région
+            $departement = Departement::where("nom", $request->input("departement"))->first();
             $regionid    = $departement->region->id;
 
             /* $module_find    = DB::table('modules')->where('name', $request->input("module"))->first(); */
@@ -235,7 +265,7 @@ class CollectiveController extends Controller
             })],
         ]);
 
-        $anneeEnCours = date('Y');
+        /* $anneeEnCours = date('Y');
         $an           = date('y');
 
         $numero_collective = Collective::join('users', 'users.id', 'collectives.users_id')
@@ -271,6 +301,37 @@ class CollectiveController extends Controller
 
         $numero_collective = strtoupper($numero_collective);
 
+        $departement = Departement::where("nom", $request->input("departement"))->first();
+        $regionid    = $departement->region->id; */
+
+        $anneeEnCours = date('Y');
+        $an           = date('y');
+
+        $prefix = 'C' . $an;
+
+// Récupérer le dernier numéro pour l'année en cours
+        $lastCollective = Collective::where('numero', 'LIKE', "{$prefix}%")
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if ($lastCollective) {
+            // Extraire la partie numérique après "C" + $an
+            $lastNumero = intval(substr($lastCollective->numero, 3));
+            $newNumero  = $lastNumero + 1;
+        } else {
+            $newNumero = 1;
+        }
+
+// Générer le numéro formaté
+        do {
+            $numero_collective = $prefix . str_pad($newNumero, 4, '0', STR_PAD_LEFT);
+            $exists            = Collective::where('numero', $numero_collective)->exists();
+            if ($exists) {
+                $newNumero++; // Incrémenter et tester à nouveau
+            }
+        } while ($exists);
+
+// Récupération de l'ID de la région
         $departement = Departement::where("nom", $request->input("departement"))->first();
         $regionid    = $departement->region->id;
 

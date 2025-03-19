@@ -135,15 +135,19 @@
                                         </div>
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Téléphone</div>
-                                            <div>{{ $collective?->telephone }}</div>
+                                            <div><a
+                                                    href="tel:+221{{ $collective?->telephone }}">{{ $collective?->telephone }}</a>
+                                            </div>
                                         </div>
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Fixe</div>
-                                            <div>{{ $collective?->fixe }}</div>
+                                            <div><a href="tel:+221{{ $collective?->fixe }}">{{ $collective?->fixe }}</a>
+                                            </div>
                                         </div>
                                         <div class="col-12 col-md-3 col-lg-3 mb-0">
                                             <div class="label">Email</div>
-                                            <div>{{ $collective?->email }}</div>
+                                            <div><a href="mailto:{{ $collective?->email }}">{{ $collective?->email }}</a>
+                                            </div>
                                         </div>
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
                                             <div class="label">Projet professionnel</div>
@@ -334,10 +338,8 @@
                             {{-- Détail modules --}}
                             <div class="tab-content">
                                 <div class="tab-pane fade modules-overview pt-1" id="modules-overview">
-                                    <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded"
-                                        data-bs-toggle="modal" data-bs-target="#AddcollectiveModuleModal">
-                                        <i class="bi bi-plus" title="Ajouter module"></i>
-                                    </button>
+                                    <button type="button" class="btn btn-primary btn-sm float-end btn-rounded"
+                                        data-bs-toggle="modal" data-bs-target="#AddcollectiveModuleModal">Ajouter</button>
                                     <h5 class="card-title">Liste des modules</h5>
                                     @if (!empty($listemodulescollective))
                                         <table class="table datatables" id="table-modules">
@@ -602,7 +604,7 @@
                                 <input type="hidden" name="collectiveid" value="{{ $collective->id }}">
                                 <input type="text" name="module_name" value="{{ old('module_name') }}"
                                     class="form-control form-control-sm @error('module_name') is-invalid @enderror"
-                                    id="module_name" placeholder="Nom du module" autofocus>
+                                    id="module_name" placeholder="Formation sollicitée" autofocus>
                                 <div id="countryList"></div>
                                 {{ csrf_field() }}
                                 @error('module_name')

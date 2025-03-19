@@ -359,7 +359,7 @@
                                     aria-label="Close"></button>
                             </div> --}}
                             <div class="card-header text-center bg-gradient-default">
-                                <h1 class="h4 text-black mb-0"> ajouter une demande collective</h1>
+                                <h1 class="h4 text-black mb-0">Ajouter une demande collective</h1>
                             </div>
                             <div class="modal-body">
                                 <div class="row g-3">

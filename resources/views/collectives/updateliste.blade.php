@@ -59,11 +59,11 @@
                                             <option value="{{ $listecollective?->civilite ?? old('civilite') }}">
                                                 {{ $listecollective?->civilite ?? old('civilite') }}
                                             </option>
-                                            <option value="Monsieur">
-                                                Monsieur
+                                            <option value="M.">
+                                                M.
                                             </option>
-                                            <option value="Madame">
-                                                Madame
+                                            <option value="Mme">
+                                                Mme
                                             </option>
                                         </select>
                                         @error('civilite')

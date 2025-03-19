@@ -88,10 +88,10 @@
 
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="fixe" class="form-label">Téléphone fixe</label>
-                                    <input type="number" min="0" name="fixe"
-                                        value="{{ $collective?->fixe ?? old('fixe') }}"
+                                    <input name="fixe" type="text" maxlength="12"
                                         class="form-control form-control-sm @error('fixe') is-invalid @enderror"
-                                        id="fixe" placeholder="3xxxxxxxx">
+                                        id="fixe" value="{{ $collective?->fixe ?? old('fixe') }}" autocomplete="tel"
+                                        placeholder="XX:XXX:XX:XX">
                                     @error('fixe')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -102,10 +102,10 @@
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="telephone" class="form-label">Téléphone portable<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="number" min="0" name="telephone"
-                                        value="{{ $collective?->telephone ?? old('telephone') }}"
+                                    <input name="telephone" type="text" maxlength="12"
                                         class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                        id="telephone" placeholder="7xxxxxxxx">
+                                        id="telephone" value="{{ $collective?->telephone ?? old('telephone') }}"
+                                        autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                     @error('telephone')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -343,10 +343,11 @@
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="telephone_responsable" class="form-label">Téléphone responsable<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="number" min="0" name="telephone_responsable"
-                                        value="{{ $collective->telephone_responsable ?? old('telephone_responsable') }}"
+                                    <input name="telephone_responsable" type="text" maxlength="12"
                                         class="form-control form-control-sm @error('telephone_responsable') is-invalid @enderror"
-                                        id="telephone_responsable" placeholder="Telephone responsable">
+                                        id="telephone_responsable"
+                                        value="{{ $collective->telephone_responsable ?? old('telephone_responsable') }}"
+                                        autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                     @error('telephone_responsable')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
