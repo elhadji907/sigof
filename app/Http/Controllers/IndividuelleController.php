@@ -34,13 +34,10 @@ class IndividuelleController extends Controller
     }
     public function index()
     {
-        /* $individuelles = Individuelle::skip(0)->take(1000)->get(); */
-        //skip permet de sauter des lignes, par exemple skip(2) permet de parcourrir la BD en sautant ligne par 2
-        //take joue le même role que limit
-        $total_count = Individuelle::get();
+        /*  $total_count = Individuelle::get();
         $total_count = number_format($total_count->count(), 0, ',', ' ');
 
-        $individuelles = Individuelle::limit(500)
+        $individuelles = Individuelle::limit(200)
             ->latest()
             ->get();
 
@@ -55,7 +52,28 @@ class IndividuelleController extends Controller
         }
 
         $departements = Departement::orderBy("created_at", "DESC")->get();
-        $modules      = Module::orderBy("created_at", "desc")->get();
+        $modules      = Module::orderBy("created_at", "desc")->get(); */
+        // Comptage total des individus (sans charger toutes les entrées en mémoire)
+        $count_raw   = Individuelle::count();
+        $total_count = number_format($count_raw, 0, ',', ' ');
+
+// Récupération des 200 dernières demandes
+        $individuelles       = Individuelle::latest()->limit(200)->get();
+        $count_demandeur_raw = $individuelles->count();
+        $count_demandeur     = number_format($count_demandeur_raw, 0, ',', ' ');
+
+// Définition du titre avec des comparaisons correctes
+        if ($count_demandeur_raw < 1) {
+            $title = 'Aucune demande individuelle';
+        } elseif ($count_demandeur_raw == 1) {
+            $title = '1 demande individuelle sur un total de ' . $total_count;
+        } else {
+            $title = 'Liste des ' . $count_demandeur . ' dernières demandes individuelles sur un total de ' . $total_count;
+        }
+
+// Optimisation des requêtes pour les départements et modules
+        $departements = Departement::select('id', 'nom')->orderBy('created_at', 'DESC')->limit(50)->get();
+        $modules      = Module::select('id', 'name')->orderBy('created_at', 'DESC')->limit(50)->get();
 
         /* $today = date('Y-m-d');
         $annee = date('Y');
@@ -634,7 +652,7 @@ class IndividuelleController extends Controller
 
         $module_find = DB::table('modules')->where('name', $request->input("module"))->first();
 
-        $dateString     = Carbon::now()->format('d/m/Y');                                      // Convertir en chaîne formatée
+        $dateString     = Carbon::now()->format('d/m/Y');                                       // Convertir en chaîne formatée
         $date_naissance = Carbon::createFromFormat('d/m/Y', $request->input('date_naissance')); // Parser la chaîne correctement
 
         $user = User::create([
