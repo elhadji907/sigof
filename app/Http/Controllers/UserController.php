@@ -86,29 +86,29 @@ class UserController extends Controller
         /* return view("home-page", compact("total_user", 'roles', 'total_arrive', 'total_depart', 'total_individuelle')); */
 
         /* $individuelles = Individuelle::skip(0)->take(1000)->get(); */
-        $individuelles    = Individuelle::get();
+        $individuelles = Individuelle::get();
 
-        $collectives      = Collective::get();
+        $collectives = Collective::get();
 
         $listecollectives = Listecollective::get();
 
-        $departements     = Departement::orderBy("created_at", "desc")->get();
+        $departements = Departement::orderBy("created_at", "desc")->get();
 
-        $modules          = Module::orderBy("created_at", "desc")->get();
+        $modules = Module::orderBy("created_at", "desc")->get();
 
-        $today                    = date('Y-m-d');
+        $today = date('Y-m-d');
 
-        $annee                    = date('Y');
+        $annee = date('Y');
 
-        $annee_lettre             = 'Diagramme à barres, année: ' . date('Y');
+        $annee_lettre = 'Diagramme à barres, année: ' . date('Y');
 
         $count_today_individuelle = Individuelle::where("created_at", "LIKE", "{$today}%")->count();
 
-        $count_today_collective   = Collective::where("created_at", "LIKE", "{$today}%")->count();
+        $count_today_collective = Collective::where("created_at", "LIKE", "{$today}%")->count();
 
-        $count_today              = $count_today_individuelle + $count_today_collective;
+        $count_today = $count_today_individuelle + $count_today_collective;
 
-        $counts                   = DB::table('individuelles')
+        $counts = DB::table('individuelles')
             ->selectRaw('MONTH(created_at) as month, count(*) as count')
             ->whereYear('created_at', $annee)
             ->whereNull('deleted_at')
@@ -234,7 +234,7 @@ class UserController extends Controller
 
     public function index()
     {
-        $total_count = User::get();
+        /* $total_count = User::get();
         $total_count = number_format($total_count->count(), 0, ',', ' ');
 
         $roles = Role::pluck('name', 'name')->all();
@@ -253,7 +253,31 @@ class UserController extends Controller
             $title = 'Liste des ' . $count_demandeur . ' derniers utilisateurs sur un total de ' . $total_count;
         }
 
+        return view("user.index", compact("user_liste", "title", "roles")); */
+        // Nombre total d'utilisateurs (sans charger toute la table)
+        $count_raw   = User::count();
+        $total_count = number_format($count_raw, 0, ',', ' ');
+
+// Récupération de la liste des rôles sous forme de tableau clé-valeur
+        $roles = Role::pluck('name', 'name')->all();
+
+// Récupération des 100 derniers utilisateurs
+        $user_liste          = User::latest()->limit(100)->get();
+        $count_demandeur_raw = $user_liste->count();
+        $count_demandeur     = number_format($count_demandeur_raw, 0, ',', ' ');
+
+// Définition du titre avec des comparaisons correctes
+        if ($count_demandeur_raw < 1) {
+            $title = 'Aucun utilisateur';
+        } elseif ($count_demandeur_raw == 1) {
+            $title = '1 utilisateur sur un total de ' . $total_count;
+        } else {
+            $title = 'Liste des ' . $count_demandeur . ' derniers utilisateurs sur un total de ' . $total_count;
+        }
+
+// Retour de la vue avec les données optimisées
         return view("user.index", compact("user_liste", "title", "roles"));
+
     }
 
     public function store(StoreUserRequest $request): RedirectResponse
