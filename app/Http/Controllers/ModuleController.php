@@ -22,20 +22,22 @@ class ModuleController extends Controller
     }
     public function index()
     {
-        $modules  = Module::orderBy("created_at", "desc")->get();
-        $domaines = Domaine::orderBy("created_at", "desc")->get();
-        $regions  = Region::orderBy("created_at", "desc")->get();
+        // Récupérer toutes les données en une seule requête par type
+        $modules  = Module::latest('created_at')->get();
+        $domaines = Domaine::latest('created_at')->get();
+        $regions  = Region::latest('created_at')->get();
 
-        $total_count = Module::count();
+// Compter directement les modules sans récupérer toute la collection
+        $total_count  = Module::count();
+        $count_module = $modules->count();
 
-        $count_module = number_format($modules?->count(), 0, ',', ' ');
-
-        if ($count_module < "1") {
+// Gestion du titre
+        if ($count_module === 0) {
             $title = 'Aucun module';
-        } elseif ($count_module == "1") {
-            $title = $count_module . ' module sur un total de ' . $total_count;
+        } elseif ($count_module === 1) {
+            $title = "$count_module module sur un total de $total_count";
         } else {
-            $title = 'Liste des ' . $count_module . ' modules sur un total de ' . $total_count;
+            $title = "Liste des $count_module modules sur un total de $total_count";
         }
 
         return view(
