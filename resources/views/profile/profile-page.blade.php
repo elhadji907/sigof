@@ -282,7 +282,7 @@
                                             @endif
                                         </h5>
                                     </div> --}}
-                                    @if (!empty(Auth::user()->cin))
+                                    @if (Auth::user()?->cin)
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">CIN
                                             </div>
@@ -291,7 +291,7 @@
                                         </div>
                                     @endif
 
-                                    @if (!empty(Auth::user()->username))
+                                    @if (Auth::user()?->username)
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
                                                 Username
@@ -301,7 +301,7 @@
                                         </div>
                                     @endif
 
-                                    @if (!empty(Auth::user()->firstname))
+                                    @if (Auth::user()?->firstname)
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
                                                 Prénom
@@ -311,7 +311,7 @@
                                         </div>
                                     @endif
 
-                                    @if (!empty(Auth::user()->name))
+                                    @if (Auth::user()?->name)
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Nom
                                             </div>
@@ -320,7 +320,7 @@
                                         </div>
                                     @endif
 
-                                    @if (!empty(Auth::user()->date_naissance))
+                                    @if (Auth::user()?->date_naissance)
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Date
                                                 naissance
@@ -330,7 +330,17 @@
                                         </div>
                                     @endif
 
-                                    @if (!empty(Auth::user()->email))
+                                    @if (Auth::user()?->lieu_naissance)
+                                        <div class="row">
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Lieu
+                                                naissance
+                                            </div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                {{ Auth::user()->lieu_naissance }}</div>
+                                        </div>
+                                    @endif
+
+                                    @if (Auth::user()?->email)
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Email
                                             </div>
@@ -340,7 +350,7 @@
                                         </div>
                                     @endif
 
-                                    @if (!empty(Auth::user()->telephone))
+                                    @if (Auth::user()?->telephone)
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
                                                 Téléphone
@@ -351,7 +361,7 @@
                                         </div>
                                     @endif
 
-                                    @if (!empty(Auth::user()->adresse))
+                                    @if (Auth::user()?->adresse)
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
                                                 Adresse

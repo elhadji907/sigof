@@ -29,7 +29,8 @@ class AuthenticatedSessionController extends Controller
     public function accueil(): View
     {
         /* return view('auth.login'); */
-        $une      = Une::where("status", "!=", null)->first();
+
+        /* $une      = Une::where("status", "!=", null)->first();
         $projets  = Projet::where("image", "!=", null)->get();
         $contacts = Contact::limit(5)->orderBy("created_at", "desc")->where("statut", "!=", null)->get();
         $today    = date('Y-m-d');
@@ -49,8 +50,6 @@ class AuthenticatedSessionController extends Controller
             $postNotEmpty = null;
         }
 
-        /* $count_today = Individuelle::where("created_at", "LIKE",  "{$today}%")->count(); */
-        /* $count_today = Module::where("domaines_id", "!=",  null)->count(); */
         $count_today         = Module::distinct()->count();
         $count_individuelles = Individuelle::count();
         $count_collectives   = Collective::count();
@@ -65,7 +64,31 @@ class AuthenticatedSessionController extends Controller
             $title = "module de formation";
         } else {
             $title = "modules de formation";
-        }
+        } */
+
+        $une      = Une::whereNotNull("status")->first();
+        $projets  = Projet::whereNotNull("image")->get();
+        $contacts = Contact::whereNotNull("statut")->latest()->limit(5)->get();
+        $today    = now()->toDateString();
+
+        $annee      = date('Y');
+        $anciennete = $annee - 1987;
+
+        $services    = Service::all();
+        $posts       = Poste::latest()->limit(4)->get();
+        $posts_count = $posts->count();
+
+        $count_today         = Module::distinct()->count();
+        $count_individuelles = Individuelle::count();
+        $count_collectives   = Collective::count();
+        $referentiels        = Referentiel::count();
+        $count_demandeurs    = $count_individuelles + $count_collectives;
+        $count_projets       = Projet::count();
+        $antennes            = Antenne::all();
+
+        $count_operateurs = Operateur::where('statut_agrement', 'agréer')->count();
+
+        $title = $count_today <= 0 ? "module de formation" : "modules de formation";
 
         return view(
             'accueil',
@@ -84,7 +107,7 @@ class AuthenticatedSessionController extends Controller
                 'anciennete',
                 'antennes',
                 'services',
-                'postNotEmpty',
+                'posts_count',
                 'posts',
             )
         );

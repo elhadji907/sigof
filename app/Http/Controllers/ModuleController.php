@@ -191,11 +191,11 @@ class ModuleController extends Controller
         if (isset($count) && $count <= "1") {
             $individuelle = 'demandeur';
             if (isset($request->statut) && $request->statut == "Nouvelle") {
-                $statut = 'nouveau';
-            } elseif (isset($request->statut) && $request->statut == "former") {
+                $statut = 'Nouvelle';
+            } elseif (isset($request->statut) && $request->statut == "Former") {
                 $statut = 'a terminé la formation';
             } elseif (isset($request->statut) && $request->statut == 'Rejetée') {
-                $statut = 'rejeté';
+                $statut = 'Rejeté';
             } elseif (isset($request->statut) && $request->statut == 'Attente') {
                 $statut = 'en attente de formation';
             } elseif (isset($request->statut) && $request->statut == "Retenue") {
@@ -206,15 +206,15 @@ class ModuleController extends Controller
         } else {
             $individuelle = 'demandeurs';
             if (isset($request->statut) && $request->statut == "Nouvelle") {
-                $statut = 'nouveaux';
-            } elseif (isset($request->statut) && $request->statut == "former") {
+                $statut = 'Nouvelle';
+            } elseif (isset($request->statut) && $request->statut == "Former") {
                 $statut = 'ont terminé leur formation';
             } elseif (isset($request->statut) && $request->statut == 'Rejetée') {
-                $statut = 'rejetés';
+                $statut = 'Rejetés';
             } elseif (isset($request->statut) && $request->statut == 'Attente') {
                 $statut = 'en attente de formation';
             } elseif (isset($request->statut) && $request->statut == "Fetenu") {
-                $statut = 'retenus';
+                $statut = 'Retenus';
             } else {
                 $statut = $request->statut;
             }

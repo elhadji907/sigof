@@ -103,51 +103,70 @@
 
                                 <h5 class="card-title">Détails</h5>
 
-                                @isset($user?->username)
+                                @if ($user?->username)
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Username</div>
-                                        <div class="col-lg-9 col-md-8">{{ $user?->username }}
-                                        </div>
+                                        <div class="col-lg-9 col-md-8">{{ $user->username }}</div>
                                     </div>
-                                @endisset
+                                @endif
 
-                                @isset($user?->firstname)
+                                @if ($user?->firstname)
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Prénom</div>
-                                        <div class="col-lg-9 col-md-8">{{ $user?->firstname }}</div>
+                                        <div class="col-lg-9 col-md-8">{{ $user->firstname }}</div>
                                     </div>
-                                @endisset
+                                @endif
 
-                                @isset($user?->name)
+                                @if ($user?->name)
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Nom</div>
-                                        <div class="col-lg-9 col-md-8">{{ $user?->name }}
+                                        <div class="col-lg-9 col-md-8">{{ $user->name }}
                                         </div>
                                     </div>
-                                @endisset
+                                @endif
 
-                                @isset($user?->email)
+                                @if ($user?->date_naissance)
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Date
+                                            naissance
+                                        </div>
+                                        <div class="col-lg-9 col-md-8">
+                                            {{ $user->date_naissance->translatedFormat('l jS F Y') }}</div>
+                                    </div>
+                                @endif
+
+                                @if ($user?->lieu_naissance)
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label">Lieu
+                                            naissance
+                                        </div>
+                                        <div class="col-lg-9 col-md-8">
+                                            {{ $user->lieu_naissance }}</div>
+                                    </div>
+                                @endif
+
+                                @if ($user?->email)
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label ">Email</div>
                                         <div class="col-lg-9 col-md-8"><a
-                                                href="mailto:{{ $user?->email }}">{{ $user?->email }}</a></div>
+                                                href="mailto:{{ $user->email }}">{{ $user->email }}</a></div>
                                     </div>
-                                @endisset
+                                @endif
 
-                                @isset($user?->telephone)
+                                @if ($user->telephone)
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label">Téléphone</div>
                                         <div class="col-lg-9 col-md-8"><a
-                                                href="tel:+221{{ $user?->telephone }}">{{ $user?->telephone }}</a></div>
+                                                href="tel:+221{{ $user->telephone }}">{{ $user->telephone }}</a></div>
                                     </div>
-                                @endisset
+                                @endif
 
-                                @isset($user?->adresse)
+                                @if ($user?->adresse)
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label ">Adresse</div>
-                                        <div class="col-lg-9 col-md-8">{{ $user?->adresse }}</div>
+                                        <div class="col-lg-9 col-md-8">{{ $user->adresse }}</div>
                                     </div>
-                                @endisset
+                                @endif
 
                             </div>
 

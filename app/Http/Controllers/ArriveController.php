@@ -229,7 +229,7 @@ class ArriveController extends Controller
             "type_demande"    => $request->input("type_demande"),
             "numero_dossier"  => $request->input("numero_dossier"),
             "annee_agrement"  => date('Y-m-d'),
-            "statut_agrement" => 'nouveau',
+            "statut_agrement" => 'Nouveau',
             "users_id"        => $user->id,
             'courriers_id'    => $courrier->id,
         ]);

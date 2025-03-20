@@ -151,7 +151,7 @@
                         </section>
                     </div>
 
-                    @if (!empty($postNotEmpty))
+                    @if ($posts_count)
                         <div class="row stats-row gy-4 mt-5" data-aos="fade-up" data-aos-delay="500">
                             @foreach ($posts as $post)
                                 @if (!empty($post->image))

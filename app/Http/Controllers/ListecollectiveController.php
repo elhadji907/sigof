@@ -52,7 +52,7 @@ class ListecollectiveController extends Controller
             'experience'           => $request->input('experience'),
             'autre_experience'     => $request->input('autre_experience'),
             'details'              => $request->input('details'),
-            'statut'               => 'nouveau',
+            'statut'               => 'Nouvelle',
             'collectivemodules_id' => $request->input('module'),
             'collectives_id'       => $request->input('collective'),
         ]);
@@ -69,7 +69,7 @@ class ListecollectiveController extends Controller
         foreach (Auth::user()->roles as $key => $role) {
         }
         $listecollective = Listecollective::find($id);
-        if ($listecollective->statut != 'nouveau' && ! empty($role?->name) && ($role?->name != 'super-admin')) {
+        if ($listecollective->statut != 'Nouvelle' && ! empty($role?->name) && ($role?->name != 'super-admin')) {
             Alert::warning('Désolé !', 'Impossible de modifier ce demandeur.');
             return redirect()->back();
         } else {
