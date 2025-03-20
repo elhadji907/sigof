@@ -80,7 +80,7 @@ class ListecollectiveController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'cin'                       => [
+            'cin'            => [
                 'required',
                 'string',
                 'min:16',
@@ -98,8 +98,8 @@ class ListecollectiveController extends Controller
         ]);
 
         $listecollective = Listecollective::find($id);
-        $dateString     = $request->input('date_naissance');
-        $date_naissance = Carbon::createFromFormat('d/m/Y', $dateString);
+        $dateString      = $request->input('date_naissance');
+        $date_naissance  = Carbon::createFromFormat('d/m/Y', $dateString);
 
         $listecollective->update([
             'cin'                  => $request->input('cin'),
@@ -113,15 +113,16 @@ class ListecollectiveController extends Controller
             'experience'           => $request->input('experience'),
             'autre_experience'     => $request->input('autre_experience'),
             'details'              => $request->input('details'),
+            'statut'               => $request->input('statut'),
             'collectivemodules_id' => $request->input('module'),
             'collectives_id'       => $request->input('collective'),
         ]);
 
         $listecollective->save();
 
-        Alert::success("Modification réussie !", "Merci.");
+        Alert::success("Succès !", "Modification effectuée avec succès");
 
-        return Redirect::route('collectivemodules.show', $request->input('module'));
+        return Redirect::back();
     }
 
     public function show($id)

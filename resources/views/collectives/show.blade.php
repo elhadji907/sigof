@@ -273,6 +273,7 @@
                                                                 <tr>
                                                                     <th scope="col">Formation</th>
                                                                     <th scope="col" class="text-center">Effectifs</th>
+                                                                    <th scope="col" class="text-center">Statut</th>
                                                                     <th scope="col" class="float-end">Membres
                                                                     </th>
                                                                 </tr>
@@ -287,12 +288,15 @@
                                                                                 {{ is_countable($module_collective->listecollectives) && count($module_collective->listecollectives) > 0 ? count($module_collective->listecollectives) : '' }}
                                                                             </span>
                                                                         </td>
+                                                                        <td class="text-center">
+                                                                            <span
+                                                                                class="{{ $module_collective?->statut }}">{{ $module_collective?->statut }}</span>
+                                                                        </td>
                                                                         <td class="float-end">
                                                                             <span class="d-flex align-items-baseline"><a
                                                                                     href="{{ route('collectivemodules.show', $module_collective->id) }}"
-                                                                                    class="btn btn-primary btn-sm"
-                                                                                    title="voir détails">ajouter
-                                                                                    membres</a>
+                                                                                    class="btn btn-info btn-sm text-white"
+                                                                                    title="voir détails">ajouter</a>
                                                                                 <div class="filter">
                                                                                     <a class="icon" href="#"
                                                                                         data-bs-toggle="dropdown"><i

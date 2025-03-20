@@ -181,6 +181,26 @@
                                         @enderror
                                     </div>
 
+                                    <div class="col-12 col-md-4 col-lg-4 mb-0">
+                                        <label for="Statut" class="form-label">Statut</label>
+                                        <select name="statut"
+                                            class="form-select  @error('statut') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-statut"
+                                            data-placeholder="Choisir Statut">
+                                            <option value="{{ $listecollective?->statut ?? old('statut') }}">
+                                                {{ $listecollective?->statut ?? old('statut') }}
+                                            </option>
+                                            <option value="Nouvelle">
+                                                Nouvelle
+                                            </option>
+                                        </select>
+                                        @error('statut')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+
                                     <div class="col-12 col-md-12 col-lg-12 mb-0">
                                         <label for="experience" class="form-label">Expériences</label>
                                         <textarea name="experience" id="experience" rows="1"
