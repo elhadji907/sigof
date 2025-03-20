@@ -113,7 +113,7 @@ class ListecollectiveController extends Controller
             'experience'           => $request->input('experience'),
             'autre_experience'     => $request->input('autre_experience'),
             'details'              => $request->input('details'),
-            'statut'               => $request->input('statut'),
+            /* 'statut'               => $request->input('statut'), */
             'collectivemodules_id' => $request->input('module'),
             'collectives_id'       => $request->input('collective'),
         ]);
