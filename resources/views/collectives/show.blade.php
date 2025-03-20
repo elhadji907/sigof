@@ -362,13 +362,13 @@
                                                             id="table-collectiveMembres">
                                                             <thead>
                                                                 <tr>
-                                                                    <th scope="col" width="15%"class="text-center">
+                                                                    <th scope="col" width="12%"class="text-center">
                                                                         CIN</th>
                                                                     <th scope="col">Civilité</th>
                                                                     <th scope="col">Prénom</th>
                                                                     <th scope="col">Nom</th>
-                                                                    <th scope="col">Date naissance</th>
-                                                                    <th scope="col">Lieu naissance</th>
+                                                                    <th scope="col" width="10%">Date naissance</th>
+                                                                    <th scope="col" width="10%">Lieu naissance</th>
                                                                     <th scope="col">Niveau étude</th>
                                                                     <th scope="col">Module</th>
                                                                     <th scope="col">Statut</th>
