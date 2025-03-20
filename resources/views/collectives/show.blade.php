@@ -369,7 +369,7 @@
                                                                     {{-- <th scope="col">Nom</th> --}}
                                                                     <th scope="col" width="10%">Date naissance</th>
                                                                     <th scope="col" width="10%">Lieu naissance</th>
-                                                                    <th scope="col">Niveau étude</th>
+                                                                    <th scope="col" width="10%">Niveau étude</th>
                                                                     <th scope="col">Module</th>
                                                                     <th scope="col">Statut</th>
                                                                     <th class="col"><i class="bi bi-gear"></i></th>
