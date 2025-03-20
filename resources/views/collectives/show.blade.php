@@ -362,7 +362,8 @@
                                                             id="table-collectiveMembres">
                                                             <thead>
                                                                 <tr>
-                                                                    <th scope="col" class="text-center">CIN</th>
+                                                                    <th scope="col" width="15%"class="text-center">
+                                                                        CIN</th>
                                                                     <th scope="col">Civilité</th>
                                                                     <th scope="col">Prénom</th>
                                                                     <th scope="col">Nom</th>
