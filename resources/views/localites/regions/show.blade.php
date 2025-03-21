@@ -30,7 +30,7 @@
                                     <th class="text-center" scope="col">N°</th>
                                     <th>Départements</th>
                                     <th class="text-center" scope="col">Arrondissements</th>
-                                    <th class="text-center" scope="col">#</th>
+                                    <th class="text-center" width="5%">#</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -97,7 +97,7 @@
                 }
             },
             "order": [
-                [0, 'ASC']
+                [0, 'DESC']
             ],
             language: {
                 "sProcessing": "Traitement en cours...",
