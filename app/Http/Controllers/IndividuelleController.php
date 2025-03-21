@@ -1356,7 +1356,7 @@ class IndividuelleController extends Controller
                 $regionid    = $departement?->region?->id;
             }
 
-            $module_find = DB::table('modules')->where('name', $request->input("module"))->first();
+            /* $module_find = DB::table('modules')->where('name', $request->input("module"))->first();
 
             $demandeur_ind = Individuelle::where('users_id', $user->id)->where('projets_id', $projet->id)->get();
 
@@ -1391,7 +1391,6 @@ class IndividuelleController extends Controller
                     "departements_id"                  => $departementid,
                     "regions_id"                       => $regionid,
                     "modules_id"                       => $module_find->id,
-                    /* 'autre_module'                      =>  $request->input('autre_module'), */
                     'statut'                           => 'Nouvelle',
                     'users_id'                         => $user->id,
                     'projets_id'                       => $projet->id,
@@ -1427,12 +1426,68 @@ class IndividuelleController extends Controller
                     "departements_id"                  => $departementid,
                     "regions_id"                       => $regionid,
                     "modules_id"                       => $module->id,
-                    /* 'autre_module'                      =>  $request->input('autre_module'), */
                     'statut'                           => 'Nouvelle',
                     'users_id'                         => $user->id,
                     'projets_id'                       => $projet->id,
                 ]);
+            } */
+
+            // Chercher si le module existe déjà dans la base de données
+            $module_find = DB::table('modules')->where('name', $request->input('module'))->first();
+
+// Créer un tableau des données communes pour l'Individuelle
+            $individuelleData = [
+                'date_depot'                       => $date_depot,
+                'numero'                           => $numero_individuelle,
+                'adresse'                          => $request->input('adresse'),
+                'telephone'                        => $request->input('telephone_secondaire'),
+                'niveau_etude'                     => $request->input('niveau_etude'),
+                'diplome_academique'               => $request->input('diplome_academique'),
+                'autre_diplome_academique'         => $request->input('autre_diplome_academique'),
+                'option_diplome_academique'        => $request->input('option_diplome_academique'),
+                'etablissement_academique'         => $request->input('etablissement_academique'),
+                'diplome_professionnel'            => $request->input('diplome_professionnel'),
+                'autre_diplome_professionnel'      => $request->input('autre_diplome_professionnel'),
+                'specialite_diplome_professionnel' => $request->input('specialite_diplome_professionnel'),
+                'etablissement_professionnel'      => $request->input('etablissement_professionnel'),
+                'projet_poste_formation'           => $request->input('projet_poste_formation'),
+                'projetprofessionnel'              => $request->input('projetprofessionnel'),
+                'qualification'                    => $request->input('qualification'),
+                'experience'                       => $request->input('experience'),
+                'autre_module'                     => $request->input('module'),
+                'communes_id'                      => $communeid,
+                'arrondissements_id'               => $arrondissementid,
+                'departements_id'                  => $departementid,
+                'regions_id'                       => $regionid,
+                'statut'                           => 'Nouvelle',
+                'users_id'                         => $user->id,
+                'projets_id'                       => $projet->id,
+            ];
+
+// Vérifier si le module existe et l'utiliser
+            if (isset($module_find)) {
+                // Vérifier si le module a déjà été sélectionné
+                $moduleSelected = $demandeur_ind->where('module.name', $module_find->name)->first();
+
+                if ($moduleSelected) {
+                    Alert::warning('Attention ! Le module ' . $moduleSelected->module->name, 'a déjà été sélectionné');
+                    return redirect()->back();
+                }
+
+                // Créer l'Individuelle avec le module trouvé
+                $individuelleData['modules_id'] = $module_find->id;
+                $individuelle                   = new Individuelle($individuelleData);
+            } else {
+                // Si le module n'existe pas, le créer
+                $module = Module::create([
+                    'name' => $request->input('module'),
+                ]);
+
+                // Ajouter l'ID du module créé
+                $individuelleData['modules_id'] = $module->id;
+                $individuelle                   = new Individuelle($individuelleData);
             }
+
         }
 
         $individuelle->save();

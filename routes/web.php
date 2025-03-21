@@ -483,6 +483,9 @@ Route::group(['middleware' => ['XSS']], function () {
 
         Route::delete('/profile/image', [ProfileController::class, 'destroyImage'])->name('profile.image.destroy');
 
+        Route::post('/collectives/fetch', [CollectiveController::class, 'fetch'])->name('collectives.fetch');
+        Route::get('/get-objet-by-numero', [CollectiveController::class, 'getObjetByNumero'])->name('getObjetByNumero');
+
         /* Pour visualiser la page d'erreur */
         /* Route::get('/errors/restored', [UserController::class, 'errors'])->name('users.errors'); */
 

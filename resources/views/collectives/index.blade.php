@@ -211,13 +211,27 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row g-3">
-                                        <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                            <label for="name" class="form-label">Nom de la structure<span
+
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                            <label for="numero" class="form-label">N° courrier<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <textarea name="name" id="name" rows="1"
-                                                class="form-control form-control-sm @error('name') is-invalid @enderror"
-                                                placeholder="La raison sociale de l'opérateur">{{ old('name') }}</textarea>
-                                            @error('name')
+                                            <input type="text" placeholder="Rechercher numéro courrier..."
+                                                class="form-control form-control-sm @error('product') is-invalid @enderror"
+                                                name="numero_courrier" id="numero" required>
+                                            <div id="productList"></div>
+                                            @error('numero')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                            <label for="objet" class="form-label">Nom de la structure<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <input type="text" placeholder="La raison sociale de l'opérateur"
+                                                class="form-control form-control-sm @error('objet') is-invalid @enderror"
+                                                name="name" id="objet" value="" required>
+                                            @error('objet')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
                                                 </span>
@@ -335,6 +349,7 @@
                                                 </span>
                                             @enderror
                                         </div>
+
                                         <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="date_depot" class="form-label">Date dépot<span
                                                     class="text-danger mx-1">*</span></label>
@@ -347,6 +362,7 @@
                                                 </span>
                                             @enderror
                                         </div>
+
                                         <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="departement" class="form-label">Département<span
                                                     class="text-danger mx-1">*</span></label>
@@ -368,12 +384,11 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="adresse" class="form-label">Adresse<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="text" name="adresse" value="{{ old('adresse') }}"
-                                                class="form-control form-control-sm @error('adresse') is-invalid @enderror"
-                                                id="adresse" placeholder="Adresse exacte">
+                                            <textarea name="adresse" id="adresse" rows="1"
+                                                class="form-control form-control-sm @error('adresse') is-invalid @enderror" placeholder="Adresse exacte">{{ old('description') }}</textarea>
                                             @error('adresse')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -502,8 +517,8 @@
                                                     class="text-danger mx-1">*</span></label>
                                             <input name="telephone_responsable" type="text" maxlength="12"
                                                 class="form-control form-control-sm @error('telephone_responsable') is-invalid @enderror"
-                                                id="telephone_responsable" value="{{ old('telephone_responsable') }}" autocomplete="tel"
-                                                placeholder="XX:XXX:XX:XX">
+                                                id="telephone_responsable" value="{{ old('telephone_responsable') }}"
+                                                autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                             @error('telephone_responsable')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -579,6 +594,61 @@
                     }
                 }
             }
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#numero').keyup(function() {
+                var query = $(this).val().trim();
+                if (query !== '') {
+                    $.ajax({
+                        url: "{{ route('collectives.fetch') }}", // Changez cette URL si nécessaire
+                        method: "POST",
+                        data: {
+                            query: query,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            if (response.html) {
+                                $('#productList').fadeIn().html(response.html);
+                            } else {
+                                $('#productList').fadeOut();
+                            }
+                        }
+                    });
+                } else {
+                    $('#productList').fadeOut();
+                }
+            });
+
+            $(document).on('click', 'li', function() {
+                var selectedNumero = $(this).text();
+                var selectedId = $(this).data("id");
+
+                $('#numero').val(selectedNumero); // Remplir le champ numéro
+                $('#id').val(selectedId);
+
+                // Appeler l'API pour récupérer l'objet associé au numéro sélectionné
+                $.ajax({
+                    url: "{{ route('getObjetByNumero') }}", // Définir une route pour récupérer l'objet
+                    method: "GET",
+                    data: {
+                        numero: selectedNumero
+                    },
+                    success: function(response) {
+                        $('#objet').val(response
+                            .objet); // Remplir automatiquement le champ 'objet'
+                        $('#date_depot').val(response
+                            .date_depot); // Remplir automatiquement le champ 'objet'
+                    },
+                    error: function() {
+                        alert('Erreur lors de la récupération de l\'objet.');
+                    }
+                });
+
+                $('#productList').fadeOut();
+            });
         });
     </script>
 @endpush

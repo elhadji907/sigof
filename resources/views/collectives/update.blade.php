@@ -48,13 +48,41 @@
                                 @csrf
                                 @method('PUT')
 
-                                <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                {{-- <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                     <label for="name" class="form-label">Nom de la structure<span
                                             class="text-danger mx-1">*</span></label>
                                     <textarea name="name" id="name" rows="1"
                                         class="form-control form-control-sm @error('name') is-invalid @enderror"
                                         placeholder="La raison sociale de l'opérateur">{{ $collective?->name ?? old('name') }}</textarea>
                                     @error('name')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div> --}}
+
+                                <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                    <label for="numero" class="form-label">N° courrier<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" placeholder="Rechercher numéro courrier..."
+                                        class="form-control form-control-sm @error('product') is-invalid @enderror"
+                                        name="numero_courrier" id="numero"
+                                        value="{{ $collective?->numero_courrier ?? old('numero_courrier') }}" required>
+                                    <div id="productList"></div>
+                                    @error('numero')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                    <label for="objet" class="form-label">Nom de la structure<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <input type="text" placeholder="La raison sociale de l'opérateur"
+                                        class="form-control form-control-sm @error('objet') is-invalid @enderror"
+                                        name="name" id="objet" value="{{ $collective?->name ?? old('name') }}"
+                                        required>
+                                    @error('objet')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
                                         </span>
@@ -209,7 +237,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="adresse" class="form-label">Adresse<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="adresse"
@@ -248,9 +276,15 @@
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="description" class="form-label">Description de l'organisation<span
                                             class="text-danger mx-1">*</span></label>
+                                    {{-- <textarea name="description" rows="2"
+                                        class="form-control form-control-sm @error('description') is-invalid @enderror"
+                                        placeholder="Description de l'organisation, de ses activités et de ses réalisations">
+                                        {{ $collective?->description ?? old('description') }}
+                                    </textarea> --}}
                                     <textarea name="description" id="description" rows="2"
                                         class="form-control form-control-sm @error('description') is-invalid @enderror"
-                                        placeholder="Description de l'organisation, de ses activités et de ses réalisations">{{ $collective?->description ?? old('description') }}</textarea>
+                                        placeholder="Description de l'organisation, de ses activités et de ses réalisations">{{ $collective?->description ?? old('description') }}
+                                    </textarea>
 
                                     @error('description')
                                         <span class="invalid-feedback" role="alert">
@@ -264,7 +298,8 @@
                                             class="text-danger mx-1">*</span></label>
                                     <textarea name="projetprofessionnel" id="projetprofessionnel" rows="2"
                                         class="form-control form-control-sm @error('projetprofessionnel') is-invalid @enderror"
-                                        placeholder="Description détaillée du projet professionnel et de l'effet attendu après la formation">{{ $collective?->projetprofessionnel ?? old('projetprofessionnel') }}</textarea>
+                                        placeholder="Description détaillée du projet professionnel et de l'effet attendu après la formation">{{ $collective?->projetprofessionnel ?? old('projetprofessionnel') }}
+                                    </textarea>
 
                                     @error('projetprofessionnel')
                                         <span class="invalid-feedback" role="alert">
@@ -383,3 +418,60 @@
 
     </section>
 @endsection
+@push('scripts')
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#numero').keyup(function() {
+                var query = $(this).val().trim();
+                if (query !== '') {
+                    $.ajax({
+                        url: "{{ route('collectives.fetch') }}", // Changez cette URL si nécessaire
+                        method: "POST",
+                        data: {
+                            query: query,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            if (response.html) {
+                                $('#productList').fadeIn().html(response.html);
+                            } else {
+                                $('#productList').fadeOut();
+                            }
+                        }
+                    });
+                } else {
+                    $('#productList').fadeOut();
+                }
+            });
+
+            $(document).on('click', 'li', function() {
+                var selectedNumero = $(this).text();
+                var selectedId = $(this).data("id");
+
+                $('#numero').val(selectedNumero); // Remplir le champ numéro
+                $('#id').val(selectedId);
+
+                // Appeler l'API pour récupérer l'objet associé au numéro sélectionné
+                $.ajax({
+                    url: "{{ route('getObjetByNumero') }}", // Définir une route pour récupérer l'objet
+                    method: "GET",
+                    data: {
+                        numero: selectedNumero
+                    },
+                    success: function(response) {
+                        $('#objet').val(response
+                            .objet); // Remplir automatiquement le champ 'objet'
+                        $('#date_depot').val(response
+                            .date_depot); // Remplir automatiquement le champ 'objet'
+                    },
+                    error: function() {
+                        alert('Erreur lors de la récupération de l\'objet.');
+                    }
+                });
+
+                $('#productList').fadeOut();
+            });
+        });
+    </script>
+@endpush

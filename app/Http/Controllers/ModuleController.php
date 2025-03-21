@@ -144,7 +144,7 @@ class ModuleController extends Controller
 
         $module->save();
 
-        Alert::success('Fait ! ', 'module ajouté avec succès');
+        Alert::success('Succès !', 'Le module ' . $module->name . ' a été ajouté avec succès');
 
         return redirect()->back();
     }
@@ -152,10 +152,17 @@ class ModuleController extends Controller
     public function destroy($id)
     {
         $module = Module::find($id);
+// Vérifiez si le module est lié à des demandes individuelles
+        if ($module->individuelles()->count() > 0) {
+            // Si des demandes individuelles sont liées, empêchez la suppression
+            Alert::warning('Attention !', 'Ce module est lié à une ou plusieurs demandes individuelles et ne peut pas être supprimé.');
+            return redirect()->back();
+        }
 
+// Si aucune demande individuelle n'est liée, procédez à la suppression
         $module->delete();
 
-        Alert::success('Fait !', 'module supprimé');
+        Alert::success('Succès !', 'Le module ' . $module->name . ' a été supprimé avec succès');
 
         return redirect()->back();
     }
@@ -188,7 +195,7 @@ class ModuleController extends Controller
 
         $count = $individuelles->count();
 
-        if (isset($count) && $count <= "1") {
+        /* if (isset($count) && $count <= "1") {
             $individuelle = 'demandeur';
             if (isset($request->statut) && $request->statut == "Nouvelle") {
                 $statut = 'Nouvelle';
@@ -218,7 +225,23 @@ class ModuleController extends Controller
             } else {
                 $statut = $request->statut;
             }
-        }
+        } */
+
+        // Définir l'assignation de $individuelle en fonction de $count
+        $individuelle = ($count <= 1) ? 'demandeur' : 'demandeurs';
+
+// Définir le statut en fonction de la valeur de $request->statut
+        $statutMapping = [
+            "Nouvelle" => ($count <= 1) ? 'Nouvelle' : 'Nouvelle',
+            "Former"   => ($count <= 1) ? 'a terminé la formation' : 'ont terminé leur formation',
+            "Rejetée"  => ($count <= 1) ? 'Rejeté' : 'Rejetés',
+            "Attente"  => 'en attente de formation',
+            "Retenue"  => ($count <= 1) ? 'Retenue' : 'Retenus',
+        ];
+
+// Utiliser la valeur par défaut du statut si elle n'est pas dans le tableau de mapping
+        $statut = $statutMapping[$request->statut] ?? $request->statut;
+
         $title = $count . ' ' . $individuelle . ' ' . $statut . ' en ' . $request->module . ' dans la région de  ' . $region->nom;
 
         $regions = Region::orderBy("created_at", "desc")->get();

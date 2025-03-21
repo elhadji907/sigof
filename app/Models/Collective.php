@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $nom_responsable
  * @property string|null $fonction_responsable
  * @property string|null $name
+ * @property string|null $numero_courrier
  * @property string|null $sigle
  * @property Carbon|null $date_depot
  * @property string|null $items1
@@ -164,6 +165,7 @@ class Collective extends Model
 		'conventions_id',
 		'fcollectives_id',
 		'users_id',
+		'numero_courrier',
 		'modules_id'
 	];
 

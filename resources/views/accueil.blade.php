@@ -1166,7 +1166,7 @@
                                     <div class="col-12">
                                         <button type="submit" class="btn btn-sm w-100"
                                             style="background-color: #F28500; color: #FFFFFF">
-                                            Créer un compte personnel
+                                            <b>S'inscrire</b>
                                         </button>
                                     </div>
 

@@ -553,6 +553,33 @@
         a {
             text-decoration: none;
         }
+
+        #productList {
+            position: absolute;
+            z-index: 1000;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #ddd;
+            display: none;
+        }
+
+        #productList ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #productList li {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #productList li:hover {
+            background: #f8f9fa;
+        }
     </style>
 
 </head>

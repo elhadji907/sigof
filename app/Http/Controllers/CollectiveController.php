@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Arrive;
 use App\Models\Collective;
 use App\Models\Collectivemodule;
 use App\Models\Commune;
@@ -250,6 +251,7 @@ class CollectiveController extends Controller
             'date_depot'            => ['required', 'date', 'min:10', 'max:10', 'date_format:Y-m-d'],
             "adresse"               => ["required", "string"],
             "statut"                => ["required", "string"],
+            "numero_courrier"       => ["required", "string"],
             "description"           => ["required", "string"],
             "projetprofessionnel"   => ["required", "string"],
             "departement"           => ["required", "string"],
@@ -357,6 +359,7 @@ class CollectiveController extends Controller
 
         $collective = Collective::create([
             "name"                   => $request->input("name"),
+            "numero_courrier"        => $request->input("numero_courrier"),
             "sigle"                  => $request->input("sigle"),
             "numero"                 => $numero_collective,
             "description"            => $request->input("description"),
@@ -440,8 +443,9 @@ class CollectiveController extends Controller
             return redirect()->back();
         }
 
-        if ($request->input(key: "date_depot") == null) {
+        /* if ($request->input(key: "date_depot") == null) {
             $collective->update([
+                "numero_courrier"        => $request->input("numero_courrier"),
                 "name"                   => $request->input("name"),
                 "sigle"                  => $request->input("sigle"),
                 "description"            => $request->input("description"),
@@ -460,13 +464,12 @@ class CollectiveController extends Controller
                 "telephone_responsable"  => $request->input("telephone_responsable"),
                 "fonction_responsable"   => $request->input("fonction_responsable"),
                 "departements_id"        => $departement->id,
-                /* "modules_id"                =>       $request->input("module"), */
                 "regions_id"             => $regionid,
-                /* "demandeurs_id"             =>       $demandeur->id, */
                 "users_id"               => $user_id,
             ]);
         } else {
             $collective->update([
+                "numero_courrier"        => $request->input("numero_courrier"),
                 "name"                   => $request->input("name"),
                 "sigle"                  => $request->input("sigle"),
                 "description"            => $request->input("description"),
@@ -486,12 +489,42 @@ class CollectiveController extends Controller
                 "telephone_responsable"  => $request->input("telephone_responsable"),
                 "fonction_responsable"   => $request->input("fonction_responsable"),
                 "departements_id"        => $departement->id,
-                /* "modules_id"                =>       $request->input("module"), */
                 "regions_id"             => $regionid,
-                /* "demandeurs_id"             =>       $demandeur->id, */
                 "users_id"               => $user_id,
             ]);
+        } */
+
+        $data = [
+            "numero_courrier"        => $request->input("numero_courrier"),
+            "name"                   => $request->input("name"),
+            "sigle"                  => $request->input("sigle"),
+            "description"            => $request->input("description"),
+            "projetprofessionnel"    => $request->input("projetprofessionnel"),
+            "telephone"              => $request->input("telephone"),
+            "email"                  => $request->input("email"),
+            "email_responsable"      => $request->input("email_responsable"),
+            "fixe"                   => $request->input("fixe"),
+            "adresse"                => $request->input("adresse"),
+            "bp"                     => $request->input("bp"),
+            "statut_juridique"       => $request->input("statut"),
+            "autre_statut_juridique" => $request->input("autre_statut"),
+            "civilite_responsable"   => $request->input("civilite"),
+            "prenom_responsable"     => $request->input("prenom"),
+            "nom_responsable"        => $request->input("nom"),
+            "telephone_responsable"  => $request->input("telephone_responsable"),
+            "fonction_responsable"   => $request->input("fonction_responsable"),
+            "departements_id"        => $departement->id,
+            "regions_id"             => $regionid,
+            "users_id"               => $user_id,
+        ];
+
+        // Ajouter `date_depot` seulement si elle est présente
+        if ($request->input("date_depot") !== null) {
+            $data["date_depot"] = $request->input("date_depot");
         }
+
+        // Effectuer la mise à jour avec les données
+        $collective->update($data);
 
         $collective->save();
 
@@ -662,4 +695,49 @@ class CollectiveController extends Controller
 
         return redirect()->back();
     }
+
+    public function fetch(Request $request)
+    {
+        if ($request->has('query')) {
+            $query = $request->input('query');
+
+            $data = Arrive::where('numero_arrive', 'LIKE', "%{$query}%")->get();
+
+            if ($data->isEmpty()) {
+                return response()->json(['html' => '']);
+            }
+
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+
+            foreach ($data as $arrive) {
+                $output .= '<li data-id="' . $arrive->id . '" data-objet="' . e($arrive->objet) . '">
+                            <a href="#">' . e($arrive->numero_arrive) . '</a>
+                        </li>';
+            }
+
+            $output .= '</ul>';
+
+            return response()->json(['html' => $output]);
+        }
+
+        return response()->json(['html' => ''], 400);
+    }
+
+    public function getObjetByNumero(Request $request)
+    {
+        $numero = $request->input('numero');
+
+        // Rechercher l'objet en fonction du numéro
+        $arrive = Arrive::where('numero_arrive', $numero)->first();
+
+        if ($arrive) {
+            return response()->json([
+                'objet'      => $arrive->courrier->objet,
+                'date_depot' => $arrive->courrier->date_recep->format('Y-m-d'), // Formater la date
+            ]);
+        } else {
+            return response()->json(['objet' => '']); // Retourner une chaîne vide si aucun résultat
+        }
+    }
+
 }
