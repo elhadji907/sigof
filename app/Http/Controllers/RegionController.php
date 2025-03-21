@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Individuelle;
@@ -52,11 +51,11 @@ class RegionController extends Controller
     {
         $this->validate($request, [
             "region" => "required|string|unique:regions,nom,except,id",
-            "sigle" => "required|string|unique:regions,sigle,except,id",
+            "sigle"  => "required|string|unique:regions,sigle,except,id",
         ]);
 
         $region = Region::create([
-            "nom" => $request->input("region"),
+            "nom"   => $request->input("region"),
             "sigle" => $request->input("sigle"),
         ]);
 
@@ -64,34 +63,40 @@ class RegionController extends Controller
 
         /* $status = "Région " . $region->nom . " ajoutée avec succès";
         return  redirect()->route("regions.index")->with("status", $status); */
-        Alert::success('La région de ' . $region->nom, ' a été ajoutée avec succès');
+        Alert::success('Succès ', 'La région ' . $region->nom . ' a été ajoutée avec succès');
 
         return redirect()->back();
     }
 
     public function show($id)
     {
-        $region = Region::find($id);
+        $region = Region::findOrFail($id);
+        $this->authorize('view', $region); // Vérification des permissions
+
         return view("localites.regions.show", compact("region"));
     }
 
     public function edit($id)
     {
-        $region = Region::find($id);
+        $region = Region::findOrFail($id);
+        $this->authorize('show', $region); // Vérification des permissions
         return view("localites.regions.update", compact("region"));
     }
 
     public function update(Request $request, $id)
     {
-        $region = Region::find($id);
+
+        $region = Region::findOrFail($id);
+        $this->authorize('update', $region); // Vérification des permissions
+
         $this->validate($request, [
-            'nom'    => ['required', 'string', 'max:25', Rule::unique(Region::class)->ignore($id)],
-            "sigle"     => ['required', 'string', 'max:25', Rule::unique(Region::class)->ignore($id)->whereNull('deleted_at')],
+            'nom'   => ['required', 'string', 'max:25', Rule::unique(Region::class)->ignore($id)],
+            "sigle" => ['required', 'string', 'max:25', Rule::unique(Region::class)->ignore($id)->whereNull('deleted_at')],
         ]);
 
         $region->update([
-            'nom'       => $request->nom,
-            'sigle'     => $request->sigle,
+            'nom'   => $request->nom,
+            'sigle' => $request->sigle,
         ]);
 
         $region->save();
@@ -99,20 +104,23 @@ class RegionController extends Controller
         /* $mesage = 'La région ' . $region->nom . '  a été modifiée';
         return redirect()->route("regions.index")->with("status", $mesage); */
 
-        Alert::success('La région de ' . $region->nom, ' a été modifié avec succès');
+        Alert::success('Succès ', 'La région ' . $region->nom . ' a été modifiée avec succès');
 
         return redirect()->back();
     }
 
     public function destroy($id)
     {
-        $region = Region::find($id);
+
+        $region = Region::findOrFail($id);
+        $this->authorize('delete', $region); // Vérification des permissions
+
         $region->delete();
 
         /* $status = "Région " . $region->nom . " vient d'être supprimée";
         return redirect()->route("regions.index")->with('status', $status); */
 
-        Alert::success('La région de ' . $region->nom, 'a été supprimée avec succès');
+        Alert::success('Succès ', 'La région ' . $region->nom . ' a été supprimée avec succès');
         return redirect()->back();
     }
 
@@ -126,9 +134,9 @@ class RegionController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'string'
+            'string',
         ]);
-        $region = Region::findOrFail($request->input('id'));
+        $region      = Region::findOrFail($request->input('id'));
         $region->nom = $request->input('name');
         $region->save();
 
@@ -139,11 +147,11 @@ class RegionController extends Controller
     {
         $this->validate($request, [
             "region" => "required|string|unique:regions,nom,except,id",
-            "sigle" => "required|string|unique:regions,sigle,except,id",
+            "sigle"  => "required|string|unique:regions,sigle,except,id",
         ]);
 
         $region = Region::create([
-            "nom" => $request->input("region"),
+            "nom"   => $request->input("region"),
             "sigle" => $request->input("sigle"),
         ]);
 
@@ -151,7 +159,7 @@ class RegionController extends Controller
 
         $status = "Région " . $region->nom . " ajoutée avec succès";
 
-        return  redirect()->route("regions.index")->with("status", $status);
+        return redirect()->route("regions.index")->with("status", $status);
     }
 
     public function regionsmodule($idlocalite)
@@ -203,14 +211,14 @@ class RegionController extends Controller
 
         if (isset($request?->region) && isset($request?->statut)) {
             $individuelles = Individuelle::where('statut', 'LIKE', "%{$request->statut}%")
-                ->where('regions_id',  "{$region?->id}")
+                ->where('regions_id', "{$region?->id}")
                 ->distinct()
                 ->get();
 
             $individuellesmodules = Module::join('individuelles', 'individuelles.modules_id', 'modules.id')
                 ->select('modules.*')
                 ->where('individuelles.statut', 'LIKE', "%{$request->statut}%")
-                ->where('individuelles.regions_id',  "{$region?->id}")
+                ->where('individuelles.regions_id', "{$region?->id}")
                 ->distinct()
                 ->get();
 
