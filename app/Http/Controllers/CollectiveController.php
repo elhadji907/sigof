@@ -710,7 +710,7 @@ class CollectiveController extends Controller
             $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
 
             foreach ($data as $arrive) {
-                $output .= '<li data-id="' . $arrive->id . '" data-objet="' . e($arrive->objet) . '">
+                $output .= '<li data-id="' . $arrive->id . '" data-objet="' . e($arrive->courrier->expediteur) . '">
                             <a href="#">' . e($arrive->numero_arrive) . '</a>
                         </li>';
             }
@@ -732,7 +732,7 @@ class CollectiveController extends Controller
 
         if ($arrive) {
             return response()->json([
-                'objet'      => $arrive->courrier->objet,
+                'objet'      => $arrive->courrier->expediteur,
                 'date_depot' => $arrive->courrier->date_recep->format('Y-m-d'), // Formater la date
             ]);
         } else {
