@@ -60,6 +60,8 @@ class RegisteredUserController extends Controller
             // Restaurer l'utilisateur supprimé
             $user->restore();
 
+            // Mettre à jour le role
+            $user->assignRole($request->input('role'));
             // Mettre à jour le mot de passe (optionnel)
             $user->password = Hash::make($request->password);
             $user->save();

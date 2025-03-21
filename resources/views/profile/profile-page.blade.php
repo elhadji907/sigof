@@ -59,7 +59,7 @@
                         </div>
                     </div>
                 </div>
-                @can('demande-view')
+                @can('demandeur-view')
                     <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                         <div class="card">
                             <div class="card-body pb-0">
@@ -394,18 +394,10 @@
                                                     src="{{ asset(Auth::user()->getImage()) }}" width="50"
                                                     height="auto">
 
-                                                {{-- <div class="pt-2">
-                                                            <a href="#" class="btn btn-primary btn-sm"
-                                                                title="Upload new profile image"><i
-                                                                    class="bi bi-upload"></i></a>
-                                                            <a href="#" class="btn btn-danger btn-sm"
-                                                                title="Remove my profile image"><i
-                                                                    class="bi bi-trash"></i></a>
-                                                        </div> --}}
                                                 <div class="pt-2 d-flex align-items-center gap-2">
                                                     <div class="form-group mb-0">
                                                         <label for="image" class="btn btn-primary btn-sm text-white"
-                                                            title="Télécharger une nouvelle image de profil">
+                                                            title="Image de profil">
                                                             <i class="bi bi-upload"></i>
                                                             <input type="file" name="image" id="image"
                                                                 accept=".jpg, .jpeg, .png, .svg, .gif"
@@ -415,23 +407,18 @@
                                                             <span class="text-danger d-block">{{ $message }}</span>
                                                         @enderror
                                                     </div>
-                                                    {{-- <form action="{{ route('profile.image.destroy') }}" method="POST"
-                                                        style="display: inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-danger btn-sm show_confirmDeleteImage"
-                                                            title="Supprimer mon image de profil">
-                                                            <i class="bi bi-trash"></i>
-                                                        </button>
-                                                    </form> --}}
-                                                    <div class="d-inline">
-                                                        <button type="button"
-                                                            class="btn btn-danger btn-sm show_confirmDeleteImage"
-                                                            data-url="{{ route('profile.image.destroy') }}"
-                                                            title="Supprimer mon image de profil">
-                                                            <i class="bi bi-trash"></i>
-                                                        </button>
-                                                    </div>
+                                                    @auth
+                                                        @if (optional(Auth::user())?->image)
+                                                            <div class="d-inline">
+                                                                <button type="button"
+                                                                    class="btn btn-danger btn-sm show_confirmDeleteImage"
+                                                                    data-url="{{ route('profile.image.destroy') }}"
+                                                                    title="Supprimer l'image de profil">
+                                                                    <i class="bi bi-trash"></i>
+                                                                </button>
+                                                            </div>
+                                                        @endif
+                                                    @endauth
                                                 </div>
                                             </div>
                                         </div>
@@ -446,7 +433,7 @@
                                                 <div class="pt-2">
                                                     <input name="cin" type="text"
                                                         class="form-control form-control-sm @error('cin') is-invalid @enderror"
-                                                        id="cin" value="{{ $user->cin ?? old('cin') }}"
+                                                        id="cin" value="{{ $user?->cin ?? old('cin') }}"
                                                         autocomplete="off" placeholder="Ex: 1 099 2005 00012"
                                                         minlength="16" maxlength="17" required>
                                                 </div>
