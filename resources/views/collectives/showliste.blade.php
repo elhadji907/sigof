@@ -246,8 +246,7 @@
                                     <input type="hidden" name="module" value="{{ $collectivemodule->id }}">
 
                                     <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                                        <label for="telephone" class="form-label">Téléphone<span
-                                                class="text-danger mx-1">*</span></label>
+                                        <label for="telephone" class="form-label">Téléphone</label>
                                         <input name="telephone" type="text" maxlength="12"
                                             class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                             id="telephone" value="{{ old('telephone', $user->telephone ?? '') }}"
