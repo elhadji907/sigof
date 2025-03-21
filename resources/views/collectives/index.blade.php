@@ -144,15 +144,14 @@
                                                     <td><a
                                                             href="tel:+221{{ $collective?->telephone }}">{{ $collective?->telephone }}</a>
                                                     </td>
+                                                    <td>{{ $collective->departement?->region?->nom }}</td>
                                                     <td class="text-center">
                                                         @if ($collective?->date_depot)
-                                                            {{ $collective?->date_depot?->diffForHumans(null, false) }}
+                                                            {{ \Carbon\Carbon::parse($collective->date_depot)->diffForHumans() }}
                                                         @else
                                                             Aucun
                                                         @endif
                                                     </td>
-                                                    
-                                                    <td>{{ $collective->departement?->region?->nom }}</td>
                                                     <td class="text-center">{{ count($collective->collectivemodules) }}</td>
                                                     <td class="text-center">{{ count($collective->listecollectives) }}</td>
                                                     <td>
