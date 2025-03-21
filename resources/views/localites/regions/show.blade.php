@@ -28,8 +28,8 @@
                             <thead>
                                 <tr>
                                     <th class="text-center" scope="col">N°</th>
-                                    <th>Département</th>
-                                    <th class="text-center" scope="col">Demandes individuelles</th>
+                                    <th>Départements</th>
+                                    <th class="text-center" scope="col">Arrondissements</th>
                                     <th class="text-center" scope="col">#</th>
                                 </tr>
                             </thead>
@@ -97,7 +97,7 @@
                 }
             },
             "order": [
-                [2, 'desc']
+                [0, 'desc']
             ],
             language: {
                 "sProcessing": "Traitement en cours...",
