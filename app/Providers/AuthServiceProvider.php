@@ -10,6 +10,7 @@ use App\Models\Operateur;
 use App\Models\User;
 use App\Policies\CollectivePolicy;
 use App\Policies\DepartPolicy;
+use App\Policies\RegionPolicy;
 use App\Policies\IndividuellePolicy;
 use App\Policies\InternePolicy;
 use App\Policies\OperateurPolicy;
@@ -32,6 +33,7 @@ class AuthServiceProvider extends ServiceProvider
         Operateur::class    => OperateurPolicy::class,
         Interne::class      => InternePolicy::class,
         Depart::class       => DepartPolicy::class,
+        Region::class       => RegionPolicy::class,
     ];
 
     /**
