@@ -157,7 +157,8 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
-                                    <label for="lieu_naissance" class="form-label">Lieu naissance</label>
+                                    <label for="lieu_naissance" class="form-label">Lieu naissance<span
+                                            class="text-danger mx-1">*</span></label>
                                     <input type="text" name="lieu_naissance"
                                         value="{{ Auth::user()?->lieu_naissance ?? old('lieu_naissance') }}"
                                         class="form-control form-control-sm @error('lieu_naissance') is-invalid @enderror"
