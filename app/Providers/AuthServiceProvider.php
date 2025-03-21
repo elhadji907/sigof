@@ -36,6 +36,7 @@ class AuthServiceProvider extends ServiceProvider
         Region::class       => RegionPolicy::class,
     ];
 
+    
     /**
      * Register any authentication / authorization services.
      */
