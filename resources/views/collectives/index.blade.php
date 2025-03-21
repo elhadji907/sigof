@@ -119,6 +119,7 @@
                                             <th>E-mail</th>
                                             <th>Téléphone</th>
                                             <th>Région</th>
+                                            <th width="15%" class="text-center">Dépôt</th>
                                             <th class="text-center">Modules</th>
                                             <th class="text-center">Effectif</th>
                                             <th class="text-center">Statut</th>
@@ -143,6 +144,14 @@
                                                     <td><a
                                                             href="tel:+221{{ $collective?->telephone }}">{{ $collective?->telephone }}</a>
                                                     </td>
+                                                    <td class="text-center">
+                                                        @if ($collective?->date_depot)
+                                                            {{ $collective?->date_depot?->diffForHumans(null, false) }}
+                                                        @else
+                                                            Aucun
+                                                        @endif
+                                                    </td>
+                                                    
                                                     <td>{{ $collective->departement?->region?->nom }}</td>
                                                     <td class="text-center">{{ count($collective->collectivemodules) }}</td>
                                                     <td class="text-center">{{ count($collective->listecollectives) }}</td>
