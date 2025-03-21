@@ -80,7 +80,7 @@
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" placeholder="La raison sociale de l'opérateur"
                                         class="form-control form-control-sm @error('objet') is-invalid @enderror"
-                                        name="name" id="objet" value="{{ $collective?->expediteur ?? old('name') }}"
+                                        name="name" id="objet" value="{{ $collective?->name ?? old('name') }}"
                                         required>
                                     @error('objet')
                                         <span class="invalid-feedback" role="alert">
