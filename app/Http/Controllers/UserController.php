@@ -348,11 +348,9 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        foreach (Auth::user()->roles as $key => $role) {
-            if (strpos($role?->name, 'super-admin') !== false || strpos($role?->name, 'admin') !== false) {
-            } else {
-                $this->authorize('update', $user);
-            }
+        // Vérifie si l'utilisateur connecté a le rôle 'super-admin' ou 'admin'
+        if (! Auth::user()->hasRole(['super-admin', 'admin'])) {
+            $this->authorize('update', $user);
         }
 
         if ($request->input('employe') == "1") {
@@ -485,13 +483,11 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::find($id);
+        $user = User::findOrFail($id);
 
-        foreach (Auth::user()->roles as $key => $role) {
-            if (strpos($role?->name, 'super-admin') !== false || strpos($role?->name, 'admin') !== false) {
-            } else {
-                $this->authorize('view', $user);
-            }
+        // Vérifie si l'utilisateur connecté a le rôle 'super-admin' ou 'admin'
+        if (! Auth::user()->hasRole(['super-admin', 'admin'])) {
+            $this->authorize('update', $user);
         }
 
         /* if ($user->created_by == null || $user->updated_by == null) {

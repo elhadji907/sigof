@@ -14,7 +14,7 @@
     </div><!-- End Page Title -->
     <section class="section">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                         role="alert">
@@ -34,8 +34,7 @@
                         {{-- @can('role-create') --}}
                         <div class="pt-0">
                             <a href="{{ route('roles.create') }}" class="btn btn-primary btn-sm float-end btn-rounded"><i
-                                    class="fas fa-plus"></i>
-                                <i class="bi bi-person-plus" title="Ajouter"></i> </a>
+                                    class="fas fa-plus"></i>Ajouter</a>
                         </div>
                         {{-- @endcan --}}
                         <h5 class="card-title">Roles</h5>
@@ -44,9 +43,9 @@
                         <table class="table datatables align-middle" id="table-roles">
                             <thead>
                                 <tr>
-                                    <th>N°</th>
+                                    <th width='5%'>N°</th>
                                     <th>Roles</th>
-                                    <th>#</th>
+                                    <th width='5%'>#</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -121,7 +120,7 @@
         new DataTable('#table-roles', {
             layout: {
                 topStart: {
-                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                    buttons: ['csv', 'excel', 'print'],
                 }
             },
             "order": [

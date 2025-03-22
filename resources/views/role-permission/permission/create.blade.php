@@ -3,7 +3,7 @@
 @section('space-work')
     <section class="section">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                         role="alert">
@@ -14,7 +14,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-12 pt-5">
+                            <div class="col-sm-12 pt-1">
                                 <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('permissions.index') }}"
                                         class="btn btn-success btn-sm" title="retour"><i
                                             class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
@@ -44,7 +44,7 @@
                             <table class="table table-bordered" id="dynamicAddRemove">
                                 <tr>
                                     <th>Permissions<span class="text-danger mx-1">*</span></th>
-                                    <th width="15%">Action</th>
+                                    <th width="5%">Action</th>
                                 </tr>
                                 <tr>
                                     <td><input type="text" name="permissions[0][name]"

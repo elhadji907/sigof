@@ -59,7 +59,8 @@
                         </div>
                     </div>
                 </div>
-                @can('demande-view')
+
+                @role('Employe')
                     <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                         <div class="card">
                             <div class="card-body pb-0">
@@ -78,16 +79,6 @@
                                             <td class="text-primary">Individuelle</td>
                                             <td class="text-center">
                                                 {{ count($individuelles) }}
-                                                {{-- @foreach (Auth::user()->individuelles as $individuelle)
-                                                @if (isset($individuelle->numero) && isset($individuelle->modules_id))
-                                                    @if ($loop->last)
-                                                        <a class="text-primary"
-                                                            href="{{ route('demandesIndividuelle') }}">{!! $loop->count ?? '0' !!}</a>
-                                                    @endif
-                                                @else
-                                                    <span class="text-primary">0</span>
-                                                @endif
-                                            @endforeach --}}
                                             </td>
                                             <td class="text-center">
                                                 <a href="{{ route('demandesIndividuelle') }}" title="voir"><i
@@ -98,37 +89,19 @@
                                             <td class="text-primary">Collective</td>
                                             <td class="text-center">
                                                 {{ count($collectives) }}
-                                                {{-- @foreach (Auth::user()->collectives as $collective)
-                                                @if (isset($collective->numero))
-                                                    @if ($loop->last)
-                                                        <a class="text-primary"
-                                                            href="{{ route('demandesCollective') }}">{!! $loop->count ?? '0' !!}</a>
-                                                    @endif
-                                                @else
-                                                    <span class="text-primary">0</span>
-                                                @endif
-                                            @endforeach --}}
                                             </td>
                                             <td class="text-center">
                                                 <a href="{{ route('demandesCollective') }}" title="voir"><i
                                                         class="bi bi-eye"></i></a>
                                             </td>
                                         </tr>
-                                        {{-- <tr>
-                                        <td class="text-primary">Prise en charge</td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center">
-                                            <a href="#" class="btn btn-success btn-sm" title="voir"><i
-                                                    class="bi bi-eye"></i></a>
-                                        </td>
-                                    </tr> --}}
                                     </tbody>
                                 </table>
 
                             </div>
                         </div>
                     </div>
-                @endcan
+                @endrole
 
                 @if (!empty($nouvelle_formation_count))
                     <div class="col-12">
@@ -191,9 +164,7 @@
                             @endforeach
                         @endif
                         <div class="card-body pt-3">
-                            <!-- Bordered Tabs -->
                             <ul class="nav nav-tabs nav-tabs-bordered">
-
                                 <li class="nav-item">
                                     <button class="nav-link active" data-bs-toggle="tab"
                                         data-bs-target="#profile-overview">Aperçu</button>
@@ -228,11 +199,6 @@
                                     <h5 class="card-title">À propos</h5>
                                     <p class="small fst-italic">
                                         créé, {{ Auth::user()->created_at->diffForHumans() }}
-                                        {{-- @if (Auth::user()->created_at !== Auth::user()->updated_at)
-                                            modifié, {{ Auth::user()->updated_at->diffForHumans() }}
-                                        @else
-                                            jamais modifié
-                                        @endif --}}
                                     </p>
 
                                     <div class="row">
@@ -262,25 +228,6 @@
                                         </div>
                                     </div>
 
-                                    {{-- <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="card-title">Informations personnelles :
-                                            @if (isset(Auth::user()->cin))
-                                                <span class="badge bg-success text-white">Complètes</span>
-                                            @else
-                                                <span class="badge bg-warning text-white">Incomplètes</span>, cliquez sur
-                                                modifier profil pour complèter
-                                            @endif
-                                        </h5>
-
-                                        <h5 class="card-title">Joindre fichier :
-                                            @if (!empty($user_cin))
-                                                <span class="badge bg-primary text-white">Valide</span>
-                                            @else
-                                                <span class="badge bg-warning text-white">Invalide</span>, cliquez sur
-                                                fichier pour télécharger
-                                            @endif
-                                        </h5>
-                                    </div> --}}
                                     @if (Auth::user()?->cin)
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">CIN

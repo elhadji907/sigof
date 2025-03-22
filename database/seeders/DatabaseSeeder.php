@@ -336,6 +336,8 @@ class DatabaseSeeder extends Seeder
         'antZG',
         'upload-file-view',
         'user-show-file',
+        'DG',
+        'A-DG',
     ];
 
     public function run(): void

@@ -4,19 +4,23 @@ namespace App\Providers;
 // use Illuminate\Support\Facades\Gate;
 use App\Models\Collective;
 use App\Models\Depart;
+use App\Models\Departement;
 use App\Models\Individuelle;
 use App\Models\Interne;
 use App\Models\Operateur;
-use App\Models\User;
+use App\Models\Permission;
 use App\Models\Region;
-use App\Models\Departement;
+use App\Models\Role;
+use App\Models\User;
 use App\Policies\CollectivePolicy;
 use App\Policies\DepartementPolicy;
 use App\Policies\DepartPolicy;
 use App\Policies\IndividuellePolicy;
 use App\Policies\InternePolicy;
 use App\Policies\OperateurPolicy;
+use App\Policies\PermissionPolicy;
 use App\Policies\RegionPolicy;
+use App\Policies\RolePolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -38,6 +42,8 @@ class AuthServiceProvider extends ServiceProvider
         Depart::class       => DepartPolicy::class,
         Region::class       => RegionPolicy::class,
         Departement::class  => DepartementPolicy::class,
+        Role::class         => RolePolicy::class,
+        Permission::class   => PermissionPolicy::class,
     ];
 
     /**

@@ -1,34 +1,32 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Permission;
-use Illuminate\Validation\Rule;
-
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
+use RealRashid\SweetAlert\Facades\Alert;
+use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
-    
+
     public function __construct()
     {
         $this->middleware("auth");
         $this->middleware(['role:super-admin|admin']);
-        $this->middleware("permission:permission-view", ["only"=> ["index"]]);
-        $this->middleware("permission:permission-create", ["only"=> ["create","store"]]);
-        $this->middleware("permission:permission-update", ["only"=> ["update", "edit"]]);
-        $this->middleware("permission:permission-show", ["only"=> ["show"]]);
-        $this->middleware("permission:permission-delete", ["only"=> ["destroy"]]);
-        $this->middleware("permission:give-role-permissions", ["only"=> ["givePermissionsToRole"]]);
+        $this->middleware("permission:permission-view", ["only" => ["index"]]);
+        $this->middleware("permission:permission-create", ["only" => ["create", "store"]]);
+        $this->middleware("permission:permission-update", ["only" => ["update", "edit"]]);
+        $this->middleware("permission:permission-show", ["only" => ["show"]]);
+        $this->middleware("permission:permission-delete", ["only" => ["destroy"]]);
+        $this->middleware("permission:give-role-permissions", ["only" => ["givePermissionsToRole"]]);
     }
-    
+
     public function index()
     {
         $permissions = Permission::orderBy('created_at', 'desc')->get();
         return view("role-permission.permission.index", compact('permissions'));
     }
-
 
     public function create()
     {
@@ -37,12 +35,12 @@ class PermissionController extends Controller
 
     public function store(Request $request)
     {
-        $this->validate($request, [         
-            'permissions.*.name' => 'required|unique:permissions,name'
+        $this->validate($request, [
+            'permissions.*.name' => 'required|unique:permissions,name',
         ]);
 
         /* dd($request->permissions); */
-        
+
         foreach ($request->permissions as $key => $value) {
             Permission::create($value);
         }
@@ -50,36 +48,40 @@ class PermissionController extends Controller
         /* Permission::create([
             "name" => $request->name
         ]); */
+        Alert::success('Succès ', 'Permission créée avec succès');
 
-        return redirect()->route("permissions.create")->with("status", "Permission créée avec succès");
+        return redirect()->back();
     }
 
     public function edit($id)
     {
-        $permission = Permission::find($id);
+        $permission = Permission::findOrFail($id);
         return view("role-permission.permission.update", compact('permission'));
     }
 
     public function update(Request $request, $id)
     {
+        $permission = Permission::findOrFail($id);
+        $this->authorize('update', $permission);
         $this->validate($request, [
-            'name' => ['required', 'string', Rule::unique(Permission::class)->ignore($id)]
+            'name' => ['required', 'string', Rule::unique(Permission::class)->ignore($id)],
         ]);
 
-        Permission::find($id)->update([
-            'name' => $request->name
+        Permission::findOrFail($id)->update([
+            'name' => $request->name,
         ]);
 
         $permissions = Permission::get();
-        $mesage = 'La permission a été modifiée';
-        return redirect()->route("permissions.index", compact('permissions'))->with("status", $mesage);
+        Alert::success('Succès ', 'Permission modifiée avec succès');
+        return redirect()->back();
     }
 
     public function destroy($id)
     {
-        $permission = Permission::find($id);
+        $permission = Permission::findOrFail($id);
+        $this->authorize('update', $permission);
         $permission->delete();
-        $mesage = 'La permission ' . $permission->name . ' a été supprimée';
-        return redirect()->back()->with("danger", $mesage);
+        Alert::success('Succès ', 'Permission ' . $permission->name . ' supprimée avec succès');
+        return redirect()->back();
     }
 }
