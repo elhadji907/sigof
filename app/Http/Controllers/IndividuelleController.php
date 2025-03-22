@@ -34,7 +34,7 @@ class IndividuelleController extends Controller
         $total_count = number_format($count_raw, 0, ',', ' ');
 
 // Récupération des 200 dernières demandes
-        $individuelles       = Individuelle::latest()->limit(200)->get();
+        $individuelles       = Individuelle::latest()->limit(250)->get();
         $count_demandeur_raw = $individuelles->count();
         $count_demandeur     = number_format($count_demandeur_raw, 0, ',', ' ');
 
