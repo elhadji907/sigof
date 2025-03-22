@@ -278,7 +278,7 @@ Route::group(['middleware' => ['XSS']], function () {
 
         Route::get('/mesformations', [IndividuelleController::class, 'mesformations'])->name('mesformations');
         Route::get('/nouvellesformations', [IndividuelleController::class, 'nouvellesformations'])->name('nouvellesformations');
-        Route::get('/mescourriers', [UserController::class, 'mescourriers'])->name('mescourriers');
+        Route::get('/mescourriers', [ArriveController::class, 'mescourriers'])->name('mescourriers');
         Route::get('/ingenieurformations', [UserController::class, 'ingenieurformations'])->name('ingenieurformations');
 
         Route::post('/autocomplete/fetch', [OperateurController::class, 'fetch'])->name('autocomplete.fetch');

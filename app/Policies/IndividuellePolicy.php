@@ -1,17 +1,15 @@
 <?php
-
 namespace App\Policies;
 
 use App\Models\Individuelle;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class IndividuellePolicy
 {
     /**
      * Determine whether the user can view any models.
      */
-   /*  public function viewAny(User $user): bool
+    /*  public function viewAny(User $user): bool
     {
         //
     } */
@@ -27,7 +25,7 @@ class IndividuellePolicy
     /**
      * Determine whether the user can create models.
      */
- /*    public function create(User $user): bool
+    /*    public function create(User $user): bool
     {
         //
     } */
@@ -48,6 +46,11 @@ class IndividuellePolicy
         return $user->id === $individuelle->users_id;
     }
 
+    public function show(User $user, Individuelle $individuelle): bool
+    {
+        return $user->id === $individuelle->users_id;
+    }
+
     /**
      * Determine whether the user can restore the model.
      */
@@ -59,7 +62,7 @@ class IndividuellePolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-   /*  public function forceDelete(User $user, Individuelle $individuelle): bool
+    /*  public function forceDelete(User $user, Individuelle $individuelle): bool
     {
         //
     } */

@@ -151,8 +151,7 @@
                         </a>
                     </div>
                 @else
-                    <div class="alert alert-info">Aucune notification vous concernant pour l'instant !
-                    </div>
+                    <div class="alert alert-info">Aucune notification vous concernant pour l'instant !</div>
                 @endif
             </div>
             {{-- Fin Photo de profil --}}
@@ -414,7 +413,9 @@
                                                                     class="btn btn-danger btn-sm show_confirmDeleteImage"
                                                                     data-url="{{ route('profile.image.destroy') }}"
                                                                     title="Supprimer l'image de profil">
-                                                                    <i class="bi bi-trash"></i>
+                                                                    <span class="badge border-danger border-1 text-danger">
+                                                                        <i class="bi bi-trash"></i>
+                                                                    </span>
                                                                 </button>
                                                             </div>
                                                         @endif
@@ -933,8 +934,12 @@
                                                                         value="{{ $file->id }}">
                                                                     <button type="submit"
                                                                         style="background:none;border:0px;"
-                                                                        class="show_confirm" title="retirer"><i
-                                                                            class="bi bi-trash"></i></button>
+                                                                        class="show_confirm" title="retirer">
+                                                                        <span
+                                                                            class="badge border-danger border-1 text-danger">
+                                                                            <i class="bi bi-trash"></i>
+                                                                        </span>
+                                                                    </button>
                                                                 </form>
                                                             </td>
                                                         </tr>
@@ -1020,7 +1025,7 @@
         </div>
     </section>
 
-    @can('demandeur')
+    @role('Demandeur')
         <section class="section dashboard">
             <div class="row">
                 <!-- Left side columns -->
@@ -1096,32 +1101,6 @@
                             </div>
                         </div>
 
-                        <!-- Sales Card -->
-                        {{-- <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                            <div class="card info-card sales-card">
-                                <div class="filter">
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                            class="bi bi-three-dots"></i></a>
-                                </div>
-                                <a href="{{ route('showprojetProgramme') }}">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Autres <span>| Demandes</span></h5>
-                                        <div class="d-flex align-items-center">
-                                            <div
-                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                <i class="bi bi-person-plus-fill"></i>
-                                                {{ count($count_projets) }}
-                                            </div>
-                                            <div class="ps-3">
-                                                <h6>
-                                                </h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div> --}}
-
                         @foreach ($projets as $projet)
                             <?php
                             $projet_count = $projet?->individuelles?->where('projets_id', $projet?->id)?->where('users_id', $user?->id)?->count() ?? 0;
@@ -1160,11 +1139,11 @@
                 </div>
             </div>
         </section>
-    @endcan
+    @endhasrole
 
     <div class="row">
         {{-- DIOF --}}
-        @can('dg')
+        @role('DIOF')
             @if (!empty($nouvelle_formation_count))
                 <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                     <a href="#">
@@ -1186,10 +1165,10 @@
                     </a>
                 </div>
             @endif
-        @endcan
+        @endhasrole
 
         {{-- DIOF --}}
-        @can('diof')
+        @role('DIOF')
             @if (!empty($nouvelle_formation_count))
                 <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                     <a href="#">
@@ -1211,10 +1190,10 @@
                     </a>
                 </div>
             @endif
-        @endcan
+        @endhasrole
 
         {{-- Ingénieurs --}}
-        @can('ingenieur')
+        @role('Ingenieur')
             @if (!empty($count_ingenieur_formations))
                 <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                     <a href="{{ route('ingenieurformations') }}">
@@ -1236,10 +1215,10 @@
                     </a>
                 </div>
             @endif
-        @endcan
+        @endhasrole
 
         {{-- Courriers --}}
-        @can('dg')
+        @role('Employe')
             @if (!empty($count_courriers))
                 <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                     <a href="{{ route('mescourriers') }}">
@@ -1261,101 +1240,6 @@
                     </a>
                 </div>
             @endif
-        @endcan
+        @endhasrole
     </div>
 @endsection
-
-@push('scripts')
-    <script>
-        new DataTable('#table-courriers-emp', {
-            /* layout: {
-                topStart: {
-                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                }
-            }, */
-            /* "order": [
-                [0, 'desc']
-            ], */
-
-            "lengthMenu": [
-                [1, 5, 10, 25, 50, 100, -1],
-                [1, 5, 10, 25, 50, 100, "Tout"]
-            ],
-            language: {
-                "sProcessing": "Traitement en cours...",
-                "sSearch": "Rechercher&nbsp;:",
-                "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
-                "sInfo": "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
-                "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
-                "sInfoFiltered": "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
-                "sInfoPostFix": "",
-                "sLoadingRecords": "Chargement en cours...",
-                "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
-                "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
-                "oPaginate": {
-                    "sFirst": "Premier",
-                    "sPrevious": "Pr&eacute;c&eacute;dent",
-                    "sNext": "Suivant",
-                    "sLast": "Dernier"
-                },
-                "oAria": {
-                    "sSortAscending": ": activer pour trier la colonne par ordre croissant",
-                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
-                },
-                "select": {
-                    "rows": {
-                        _: "%d lignes sÃ©lÃ©ctionnÃ©es",
-                        0: "Aucune ligne sÃ©lÃ©ctionnÃ©e",
-                        1: "1 ligne sÃ©lÃ©ctionnÃ©e"
-                    }
-                }
-            }
-        });
-    </script>
-    <script>
-        new DataTable('#table-formations', {
-            /* layout: {
-                topStart: {
-                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                }
-            }, */
-            /* "order": [
-                [0, 'desc']
-            ], */
-
-            "lengthMenu": [
-                [2, 5, 10, 25, 50, 100, -1],
-                [2, 5, 10, 25, 50, 100, "Tout"]
-            ],
-            language: {
-                "sProcessing": "Traitement en cours...",
-                "sSearch": "Rechercher&nbsp;:",
-                "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
-                "sInfo": "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
-                "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
-                "sInfoFiltered": "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
-                "sInfoPostFix": "",
-                "sLoadingRecords": "Chargement en cours...",
-                "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
-                "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
-                "oPaginate": {
-                    "sFirst": "Premier",
-                    "sPrevious": "Pr&eacute;c&eacute;dent",
-                    "sNext": "Suivant",
-                    "sLast": "Dernier"
-                },
-                "oAria": {
-                    "sSortAscending": ": activer pour trier la colonne par ordre croissant",
-                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
-                },
-                "select": {
-                    "rows": {
-                        _: "%d lignes sÃ©lÃ©ctionnÃ©es",
-                        0: "Aucune ligne sÃ©lÃ©ctionnÃ©e",
-                        1: "1 ligne sÃ©lÃ©ctionnÃ©e"
-                    }
-                }
-            }
-        });
-    </script>
-@endpush

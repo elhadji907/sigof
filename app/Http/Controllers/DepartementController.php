@@ -51,13 +51,15 @@ class DepartementController extends Controller
 
     public function edit($id)
     {
-        $departement = Departement::find($id);
+        $departement = Departement::findOrFail($id);
+        $this->authorize('view', $departement); // Vérification des permissions
         $regions = Region::orderBy("created_at", "desc")->get();
         return view("localites.departements.update", compact("departement", "regions"));
     }
     public function update(Request $request, $id)
     {
-        $departement = Departement::find($id);
+        $departement = Departement::findOrFail($id);
+        $this->authorize('update', $departement); // Vérification des permissions
         $this->validate($request, [
             'nom' => ['required', 'string', 'max:25', Rule::unique(Departement::class)->ignore($id)],
             "region" => ['required', 'string'],
@@ -74,12 +76,14 @@ class DepartementController extends Controller
     }
     public function show($id)
     {
-        $departement = Departement::find($id);
+        $departement = Departement::findOrFail($id);
+        $this->authorize('show', $departement); // Vérification des permissions
         return view("localites.departements.show", compact("departement"));
     }
     public function destroy($id)
     {
-        $departement = Departement::find($id);
+        $departement = Departement::findOrFail($id);
+        $this->authorize('delete', $departement); // Vérification des permissions
         $departement->delete();
         $status = "Département " . $departement->nom . " vient d'être supprimé";
         return redirect()->route("departements.index")->with('status', $status);

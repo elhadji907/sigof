@@ -68,7 +68,6 @@
                                             @else
                                                 Aucun
                                             @endif
-
                                         </h5>
                                     </div>
 
@@ -90,9 +89,7 @@
                                         <div class="row">
                                             <div class="col-lg-3 col-md-4 label ">Motif</div>
                                             <div class="col-lg-9 col-md-8">
-                                                <span class="alert alert-info">
-                                                    {{ $individuelle?->motif_declinaison }}
-                                                </span>
+                                                <span class="badge border-danger border-1 text-danger">{{ $individuelle?->motif_declinaison }}</span>
                                             </div>
                                         </div>
                                     @endif
@@ -101,19 +98,6 @@
                                         <div class="col-lg-3 col-md-4 label ">Bénéficiaires</div>
                                         <div class="col-lg-9 col-md-8">{{ $individuelle?->formation?->name }}</div>
                                     </div>
-
-                                    {{-- <div class="row">
-                                        <div class="col-lg-3 col-md-4 label">Module</div>
-                                        @if (!empty($individuelle?->formation?->module?->name))
-                                            <div class="col-lg-9 col-md-8">{{ $individuelle?->formation?->module?->name }}
-                                            </div>
-                                        @elseif(!empty($individuelle?->formation->collectivemodule->module))
-                                            <div class="col-lg-9 col-md-8">
-                                                {{ $individuelle?->formation->collectivemodule->module }}</div>
-                                        @else
-                                            <div class="col-lg-9 col-md-8">Aucun</div>
-                                        @endif
-                                    </div> --}}
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label ">Opérateur</div>

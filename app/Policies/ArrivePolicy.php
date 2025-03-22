@@ -8,6 +8,13 @@ use Illuminate\Auth\Access\Response;
 
 class ArrivePolicy
 {
+      /**
+     * Définir les rôles autorisés.
+     */
+    private function hasAccess(User $user)
+    {
+        return $user->hasRole(['Employe', 'DG']); // Vérifie si l'utilisateur a l'un des rôles
+    }
     /**
      * Determine whether the user can view any models.
      */
@@ -43,7 +50,22 @@ class ArrivePolicy
     /**
      * Determine whether the user can delete the model.
      */
+    
     public function delete(User $user, Arrive $arrive): bool
+    {
+        return $user->id === $arrive->courrier->users_id;
+    }
+
+    /**
+     * Determine whether the user can delete the model.
+     */
+
+    public function imputer(User $user, Arrive $arrive): bool
+    {
+        return $user->id === $arrive->courrier->users_id;
+    }
+
+    public function retour(User $user, Arrive $arrive): bool
     {
         return $user->id === $arrive->courrier->users_id;
     }

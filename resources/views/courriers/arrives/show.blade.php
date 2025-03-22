@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'Détails courrier arrivé')
+@section('title', 'Détails')
 
 @section('space-work')
     <section class="section profile">
@@ -20,28 +20,21 @@
                         </div>
                     @endforeach
                 @endif
-                <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('arrives.index') }}"
-                        class="btn btn-success btn-sm" title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                    <p> | Liste des courriers arrivés</p>
-                </span>
 
-                {{--  <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                    <div class="card border-info mb-3">
-                        <div class="card-header text-center">
-                            AUDIT
-                        </div>
-                        <div class="card-body profile-card pt-1 d-flex flex-column">
-                            <h5 class="card-title">Informations complémentaires</h5>
-                            <p>créé par <b>{{ $user_create_name }}</b>, {{ $courrier?->created_at?->diffForHumans() }}</p>
-                            @if ($courrier?->created_at != $courrier?->updated_at)
-                                <p>{{ 'modifié par ' }} <b> {{ $user_update_name }} </b>
-                                    {{ $courrier?->updated_at?->diffForHumans() }}</p>
-                            @else
-                                <p> jamais modifié</p>
-                            @endif
-                        </div>
-                    </div>
-                </div> --}}
+                @role('super-admin|courrier|a-courrier')
+                    <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('arrives.index') }}"
+                            class="btn btn-success btn-sm" title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                        <p> | Liste des courriers arrivés</p>
+                    </span>
+                @endrole
+
+                @role('Employe')
+                    <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('mescourriers') }}"
+                            class="btn btn-info btn-sm" title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
+                        <p> | Liste des courriers arrivés</p>
+                    </span>
+                @endrole
+
                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                     <div class="card border-info mb-3">
                         <div class="card-body pt-3">
@@ -56,10 +49,12 @@
                                             data-bs-target="#modifier_courrier">Modifier</button>
                                     </li>
                                 @endcan
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab"
-                                        data-bs-target="#imputer_courrier">Imputer</button>
-                                </li>
+                                @can('imputer', $arrive)
+                                    <li class="nav-item">
+                                        <button class="nav-link" data-bs-toggle="tab"
+                                            data-bs-target="#imputer_courrier">Imputer</button>
+                                    </li>
+                                @endcan
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
                                         data-bs-target="#profile-settings">Commentaires</button>

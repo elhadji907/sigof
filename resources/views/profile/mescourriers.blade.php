@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'Liste de mes courriers')
+@section('title', 'Mes courriers')
 @section('space-work')
     @can('dg')
         <section class="section faq">
@@ -14,14 +14,16 @@
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
                             <span class="d-flex align-items-baseline">
-                                <h5 class="card-title">Liste de mes courriers</h5>
+                                <h5 class="card-title">Mes courriers</h5>
                             </span>
                         </div>
                         <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                            @if (!empty(Auth::user()->employee))
-                                @foreach (Auth::user()->employee->arrives as $arrive)
-                                @endforeach
-                                @if (!empty($arrive))
+                            @php
+                                $user = Auth::user();
+                                $employee = $user?->employee;
+                            @endphp
+                            @if ($user?->employee)
+                                @if ($employee?->arrives?->isNotEmpty())
                                     <div class="table-responsive">
                                         <table class="table table-bordered" id="table-courriers-emp">
                                             <thead class="table-default">
@@ -62,8 +64,8 @@
                                                     <tr>
                                                         <td>
                                                             {{-- @if (isset($arrive?->courrier) && $arrive?->courrier?->type == 'arrive') --}}
-                                                            <h4><a href="{!! route('arrives.show', $arrive?->id) !!}">{!! $arrive?->courrier?->objet ?? '' !!}</a>
-                                                            </h4>
+                                                            <p><a href="{!! route('arrives.show', $arrive?->id) !!}">{!! $arrive?->courrier?->objet ?? '' !!}</a>
+                                                            </p>
                                                             @if (isset($arrive->courrier->file))
                                                                 <label for="reference" class="form-label">Scan courrier :
                                                                 </label>

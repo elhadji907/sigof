@@ -153,8 +153,11 @@
                                                             @method('put')
                                                             <input type="hidden" name="idFile" value="{{ $file->id }}">
                                                             <button type="submit" style="background:none;border:0px;"
-                                                                class="show_confirm" title="retirer"><i
-                                                                    class="bi bi-trash"></i></button>
+                                                                class="show_confirm" title="retirer">
+                                                                <span class="badge border-danger border-1 text-danger">
+                                                                    <i class="bi bi-trash"></i>
+                                                                </span>
+                                                            </button>
                                                         </form>
                                                     </td>
                                                 </tr>

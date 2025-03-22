@@ -8,12 +8,15 @@ use App\Models\Individuelle;
 use App\Models\Interne;
 use App\Models\Operateur;
 use App\Models\User;
+use App\Models\Region;
+use App\Models\Departement;
 use App\Policies\CollectivePolicy;
+use App\Policies\DepartementPolicy;
 use App\Policies\DepartPolicy;
-use App\Policies\RegionPolicy;
 use App\Policies\IndividuellePolicy;
 use App\Policies\InternePolicy;
 use App\Policies\OperateurPolicy;
+use App\Policies\RegionPolicy;
 use App\Policies\UserPolicy;
 use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -34,9 +37,9 @@ class AuthServiceProvider extends ServiceProvider
         Interne::class      => InternePolicy::class,
         Depart::class       => DepartPolicy::class,
         Region::class       => RegionPolicy::class,
+        Departement::class  => DepartementPolicy::class,
     ];
 
-    
     /**
      * Register any authentication / authorization services.
      */

@@ -71,7 +71,7 @@ class RegionController extends Controller
     public function show($id)
     {
         $region = Region::findOrFail($id);
-        $this->authorize('view', $region); // Vérification des permissions
+        $this->authorize('show', $region); // Vérification des permissions
 
         return view("localites.regions.show", compact("region"));
     }
@@ -79,7 +79,7 @@ class RegionController extends Controller
     public function edit($id)
     {
         $region = Region::findOrFail($id);
-        $this->authorize('show', $region); // Vérification des permissions
+        $this->authorize('view', $region); // Vérification des permissions
         return view("localites.regions.update", compact("region"));
     }
 

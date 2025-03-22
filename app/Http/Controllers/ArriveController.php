@@ -27,7 +27,7 @@ class ArriveController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|admin|courrier|a-courrier']);
+        $this->middleware(['role:super-admin|admin|courrier|a-courrier|Employe']);
     }
 
     public function index()
@@ -804,5 +804,11 @@ class ArriveController extends Controller
                 "numDossier"
             )
         );
+    }
+
+    public function mescourriers(Request $request)
+    {
+        $user = Auth::user();
+        return view("profile.mescourriers", compact("user"));
     }
 }
