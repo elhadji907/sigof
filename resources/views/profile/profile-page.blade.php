@@ -1086,7 +1086,7 @@
                 </div>
             </div>
         </section>
-    @endhasrole
+    @endrole
 
     <div class="row">
         {{-- DIOF --}}
@@ -1112,7 +1112,7 @@
                     </a>
                 </div>
             @endif
-        @endhasrole
+        @endrole
 
         {{-- DIOF --}}
         @role('DIOF')
@@ -1137,7 +1137,7 @@
                     </a>
                 </div>
             @endif
-        @endhasrole
+        @endrole
 
         {{-- Ingénieurs --}}
         @role('Ingenieur')
@@ -1162,10 +1162,10 @@
                     </a>
                 </div>
             @endif
-        @endhasrole
+        @endrole
 
         {{-- Courriers --}}
-        @role('Employe')
+        @hasrole('Employe|super-admin')
             @if (!empty($count_courriers))
                 <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                     <a href="{{ route('mescourriers') }}">
