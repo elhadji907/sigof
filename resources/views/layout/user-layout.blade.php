@@ -580,6 +580,11 @@
         #productList li:hover {
             background: #f8f9fa;
         }
+
+        .vertical-align-middle {
+            vertical-align: middle;
+            /* Aligne le contenu au milieu */
+        }
     </style>
 
 </head>

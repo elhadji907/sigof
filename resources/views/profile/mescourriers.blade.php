@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'Mes courriers')
+@section('title', 'MES COURRIERS')
 @section('space-work')
     @can('dg')
         <section class="section faq">
@@ -64,8 +64,11 @@
                                                     <tr>
                                                         <td>
                                                             {{-- @if (isset($arrive?->courrier) && $arrive?->courrier?->type == 'arrive') --}}
-                                                            <p><a href="{!! route('arrives.show', $arrive?->id) !!}">{!! $arrive?->courrier?->objet ?? '' !!}</a>
+                                                            <p><b>N° courrier</b> : {{ $arrive?->numero_arrive }}</p>
+                                                            <p><b>Objet</b> : <a
+                                                                    href="{!! route('arrives.show', $arrive?->id) !!}">{!! $arrive?->courrier?->objet ?? '' !!}</a>
                                                             </p>
+                                                            <p><b>Expéditeur</b> : {{ $arrive?->courrier?->expediteur }}</p>
                                                             @if (isset($arrive->courrier->file))
                                                                 <label for="reference" class="form-label">Scan courrier :
                                                                 </label>
@@ -80,13 +83,16 @@
                                                             {{-- <p><strong>Type de courrier : </strong> {!! $arrive?->courrier?->type ?? '' !!}</p> --}}
                                                             <div class="d-flex justify-content-between align-items-center">
                                                                 {{-- format('d/m/Y à H:i:s') --}}
-                                                                <small>Imputer le, {!! Carbon\Carbon::parse($arrive?->courrier?->date_imp)?->translatedFormat('l jS F Y') !!}</small>
+                                                                <small><b>Date imputation</b> :
+                                                                    {{-- {!! Carbon\Carbon::parse($arrive?->courrier?->date_imp)?->translatedFormat('l jS F Y') !!} --}}
+                                                                    {!! ($arrive?->courrier?->date_imp)?->diffForHumans(null, false) !!}
+                                                                </small>
                                                                 <span
                                                                     class="badge badge-info">{!! $arrive?->courrier?->user?->firstname !!}&nbsp;{!! $arrive?->courrier?->user?->name !!}</span>
                                                             </div>
                                                         </td>
-                                                        <td class="text-center">
-                                                            <p>{!! $arrive?->courrier->description ?? '' !!}</p>
+                                                        <td class="vertical-align-middle text-center">
+                                                            <p>{!! remove_accents_uppercase($arrive?->courrier->description) ?? '' !!}</p>
                                                         </td>
                                                         {{-- <td>
                                                     <div class="d-flex justify-content-between align-items-center">
@@ -247,13 +253,13 @@
                     buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
                 }
             }, */
-            /* "order": [
+            "order": [
                 [0, 'desc']
-            ], */
+            ],
 
             "lengthMenu": [
-                [1, 5, 10, 25, 50, 100, -1],
-                [1, 5, 10, 25, 50, 100, "Tout"]
+                [5, 10, 25, 50, 100, -1],
+                [5, 10, 25, 50, 100, "Tout"]
             ],
             language: {
                 "sProcessing": "Traitement en cours...",

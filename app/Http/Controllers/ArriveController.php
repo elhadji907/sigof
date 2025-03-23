@@ -32,7 +32,7 @@ class ArriveController extends Controller
 
     public function index()
     {
-        $anneeEnCours = date('Y');
+        /*  $anneeEnCours = date('Y');
         $an           = date('y');
 
         $numCourrier = Arrive::join('courriers', 'courriers.id', 'arrives.courriers_id')
@@ -64,9 +64,30 @@ class ArriveController extends Controller
             } else {
                 $numCourrier = strtolower($numCourrier);
             }
+        } */
+
+        $anneeEnCours = date('Y');
+        $an           = date('y');
+
+// Récupération du dernier numéro de courrier pour l'année en cours
+        $numCourrier = Arrive::join('courriers', 'courriers.id', '=', 'arrives.courriers_id')
+            ->select('arrives.numero_arrive')
+            ->where('courriers.annee', $anneeEnCours)
+            ->orderByDesc('arrives.numero_arrive') // Tri décroissant pour récupérer le dernier
+            ->first();                             // Récupérer le premier (dernier selon l'ordre)
+
+        if ($numCourrier) {
+            // Si un courrier existe, incrémenter son numéro
+            $numCourrier = ++$numCourrier->numero_arrive;
+        } else {
+            // Si aucun courrier n'existe, initialiser avec l'année et le numéro 0001
+            $numCourrier = $an . "0001";
         }
 
-        $total_count = Arrive::where('type', null)->get();
+// Mise en forme du numéro de courrier en ajoutant des zéros au début
+        $numCourrier = str_pad($numCourrier, 6, '0', STR_PAD_LEFT);
+
+        /* $total_count = Arrive::where('type', null)->get();
         $total_count = number_format($total_count->count(), 0, ',', ' ');
 
         $arrives = Arrive::where('type', null)->take(100)
@@ -99,12 +120,44 @@ class ArriveController extends Controller
                 "count_arrives",
                 "title"
             )
+        ); */
+
+        // Récupérer le total des arrivées sans type et les derniers 100 courriers en une seule requête
+        $totalCount  = Arrive::where('type', null);
+        $total_count = number_format($totalCount->count(), 0, ',', ' ');
+
+        $arrives        = $totalCount->latest()->take(100)->get();
+        $count_courrier = number_format($arrives->count(), 0, ',', ' ');
+
+// Compter les arrivées de type 'operateur'
+        $count_arrives = Arrive::where('type', 'operateur')->count();
+
+// Logique de titre
+        if ($count_courrier < 1) {
+            $title = 'Aucun courrier';
+        } elseif ($count_courrier == 1) {
+            $title = "{$count_courrier} courrier sur un total de {$total_count}";
+        } else {
+            $title = "{$count_courrier} derniers courriers sur un total de {$total_count}";
+        }
+
+        $today = date('Y-m-d');
+
+// Compter les arrivées du jour
+        $count_today = Arrive::where('type', null)
+            ->where('created_at', 'LIKE', "{$today}%")
+            ->count();
+
+        return view(
+            "courriers.arrives.index",
+            compact("arrives", "count_today", "anneeEnCours", "numCourrier", "count_arrives", "title")
         );
+
     }
 
     public function create()
     {
-        $anneeEnCours = date('Y');
+        /* $anneeEnCours = date('Y');
         $an           = date('y');
 
         $numCourrier = Arrive::join('courriers', 'courriers.id', 'arrives.courriers_id')
@@ -135,7 +188,28 @@ class ArriveController extends Controller
             } else {
                 $numCourrier = strtolower($numCourrier);
             }
+        } */
+
+        $anneeEnCours = date('Y');
+        $an           = date('y');
+
+// Récupérer le dernier numéro de courrier pour l'année en cours
+        $numCourrier = Arrive::join('courriers', 'courriers.id', '=', 'arrives.courriers_id')
+            ->select('arrives.numero_arrive')
+            ->where('courriers.annee', $anneeEnCours)
+            ->latest('arrives.numero_arrive') // Tri par le dernier numéro
+            ->first();                        // Récupérer le premier (dernier courrier)
+
+        if ($numCourrier) {
+            // Si un courrier existe, incrémenter son numéro
+            $numCourrier = ++$numCourrier->numero_arrive;
+        } else {
+            // Si aucun courrier n'existe, initialiser avec l'année et le numéro 0001
+            $numCourrier = $an . "0001";
         }
+
+// Mise en forme du numéro de courrier en ajoutant des zéros au début
+        $numCourrier = str_pad($numCourrier, 6, '0', STR_PAD_LEFT);
 
         return view("courriers.arrives.create", compact('anneeEnCours', 'numCourrier'));
     }
@@ -250,7 +324,7 @@ class ArriveController extends Controller
 
     public function update(Request $request, $id): RedirectResponse
     {
-        $arrive = Arrive::findOrFail($id);
+        /* $arrive = Arrive::findOrFail($id);
 
         foreach (Auth::user()->roles as $role) {
             if (! empty($role?->name) && ($role?->name != 'super-admin') && ($role?->name != 'Employe')
@@ -261,7 +335,20 @@ class ArriveController extends Controller
 
         $courrier = Courrier::findOrFail($arrive->courriers_id);
 
-        $imp = $request->input('imp');
+        $imp = $request->input('imp'); */
+
+        $arrive = Arrive::findOrFail($id);
+
+// Vérification des rôles autorisés
+        $unauthorizedRoles = ['super-admin', 'Employe', 'admin', 'DIOF', 'DEC'];
+        $roles             = Auth::user()->roles->pluck('name')->toArray();
+
+        if (empty(array_intersect($roles, $unauthorizedRoles))) {
+            $this->authorize('update', $arrive);
+        }
+
+        $courrier = Courrier::findOrFail($arrive->courriers_id);
+        $imp      = $request->input('imp');
 
         if (isset($imp) && $imp == "1") {
 
@@ -306,7 +393,7 @@ class ArriveController extends Controller
 
         }
 
-        $this->validate($request, [
+        /*  $this->validate($request, [
             "date_arrivee"        => ["required", "date", "min:10", "max:10", "date_format:Y-m-d"],
             "date_correspondance" => ["required", "date", "min:10", "max:10", "date_format:Y-m-d"],
             "numero_courrier"     => ["nullable", "string", "min:4", "max:25", "unique:courriers,numero_courrier,{$arrive->courrier->id}"],
@@ -338,8 +425,6 @@ class ArriveController extends Controller
             ]);
             Storage::disk('public')->delete($courrier->file);
             $filePath = request('file')->store('courriers', 'public');
-
-            /* dd($filePath); */
 
             $file            = $request->file('file');
             $filenameWithExt = $file->getClientOriginalName();
@@ -378,8 +463,6 @@ class ArriveController extends Controller
                 "legende" => ["required", "string"],
             ]);
             $filePath = request('file')->store('courriers', 'public');
-
-            /* dd($filePath); */
 
             $file            = $request->file('file');
             $filenameWithExt = $file->getClientOriginalName();
@@ -442,9 +525,73 @@ class ArriveController extends Controller
             ]
         );
 
-        /* $status = 'Mise à jour effectuée avec succès';
+        Alert::success('Bravo !', 'La mise à jour a été effectuée avec succès.');
 
-        return Redirect::route('arrives.index')->with('status', $status); */
+        if ($arrive->type == 'operateur') {
+            return Redirect::route('arrivesop');
+        } else {
+            return Redirect::back();
+        } */
+        $this->validate($request, [
+            "date_arrivee"        => ["required", "date", "min:10", "max:10", "date_format:Y-m-d"],
+            "date_correspondance" => ["required", "date", "min:10", "max:10", "date_format:Y-m-d"],
+            "numero_courrier"     => ["nullable", "string", "min:4", "max:25", "unique:courriers,numero_courrier,{$arrive->courrier->id}"],
+            "numero_arrive"       => ["required", "string", "min:4", "max:25", "unique:arrives,numero_arrive,{$arrive->id}"],
+            "numero_reponse"      => ["string", "min:6", "max:9", "nullable", "unique:courriers,numero_reponse,{$courrier->id}"],
+            "file"                => ['sometimes', 'file', 'mimes:jpeg,png,jpg,gif,svg,pdf', 'max:2048'],
+            "annee"               => ["required", "string"],
+            "expediteur"          => ["required", "string"],
+            "objet"               => ["required", "string"],
+            "date_reponse"        => ["nullable", "date"],
+            "observation"         => ["nullable", "string"],
+        ]);
+
+        $date_reponse = $request->input('date_reponse') ?: null;
+
+        if (request('file') || isset($courrier->file)) {
+            $this->validate($request, [
+                "legende" => ["required", "string"],
+            ]);
+
+            // Si un fichier existe déjà, le supprimer
+            if (! empty($courrier->file)) {
+                Storage::disk('public')->delete($courrier->file);
+            }
+
+            // Traitement du fichier
+            $file            = $request->file('file');
+            $filenameWithExt = $file->getClientOriginalName();
+            $filename        = preg_replace("/[^A-Za-z0-9 ]/", '', pathinfo($filenameWithExt, PATHINFO_FILENAME));
+            $filename        = preg_replace("/\s+/", '-', $filename);
+            $extension       = $file->getClientOriginalExtension();
+            $filePath        = $file->storeAs('courriers', $filename . time() . '.' . $extension, 'public');
+        }
+
+        $data = [
+            'date_recep'      => $request->input('date_arrivee'),
+            'date_cores'      => $request->input('date_correspondance'),
+            'numero_courrier' => $request->input('numero_courrier'),
+            'annee'           => $request->input('annee'),
+            'objet'           => strtoupper($request->input('objet')),
+            'expediteur'      => strtoupper($request->input('expediteur')),
+            'reference'       => strtoupper($request->input('reference')),
+            'numero_reponse'  => $request->input('numero_reponse'),
+            'date_reponse'    => $date_reponse,
+            'observation'     => strtoupper($request->input('observation')),
+            'file'            => $filePath ?? $courrier->file,
+            'legende'         => $request->input('legende'),
+            'type'            => 'arrive',
+            "user_create_id"  => Auth::user()->id,
+            "user_update_id"  => Auth::user()->id,
+            'users_id'        => Auth::user()->id,
+        ];
+
+        $courrier->update($data);
+
+        $arrive->update([
+            'numero_arrive' => $request->input('numero_arrive'),
+            'courriers_id'  => $courrier->id,
+        ]);
 
         Alert::success('Bravo !', 'La mise à jour a été effectuée avec succès.');
 
@@ -452,8 +599,8 @@ class ArriveController extends Controller
             return Redirect::route('arrivesop');
         } else {
             return Redirect::back();
-            /*  return Redirect::route('arrives.index'); */
         }
+
     }
     public function show($id)
     {
