@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'SIGOF - Enregistrement permission')
+@section('title', 'SIGOF | AJOUTER PERMISSIONS')
 @section('space-work')
     <section class="section">
         <div class="row justify-content-center">
@@ -27,20 +27,6 @@
                         <form method="post" action="{{ url('permissions') }}" enctype="multipart/form-data"
                             class="row g-3">
                             @csrf
-                            {{--  <div class="row mb-3">
-                                <label for="name" class="form-label"></label>
-                                <input type="text" name="name" value="{{ old('name') }}"
-                                    class="form-control form-control-sm @error('name') is-invalid @enderror" id="name"
-                                    placeholder="Nom permission" autofocus>
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Ajouter</button>
-                            </div> --}}
                             <table class="table table-bordered" id="dynamicAddRemove">
                                 <tr>
                                     <th>Permissions<span class="text-danger mx-1">*</span></th>
@@ -61,7 +47,8 @@
                                         class="far fa-save"></i>&nbsp;Sauvegarder</button>
                             </div>
 
-                        </form><!-- End Permission -->
+                        </form>
+                        <!-- End Permission -->
                     </div>
                 </div>
             </div>

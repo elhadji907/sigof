@@ -171,6 +171,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
         Biscolab\ReCaptcha\ReCaptchaServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -187,6 +188,7 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         'PDF' => Barryvdh\DomPDF\Facade\Pdf::class,
         'ReCaptcha' => Biscolab\ReCaptcha\Facades\ReCaptcha::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 

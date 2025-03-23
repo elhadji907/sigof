@@ -151,9 +151,9 @@ class ArriveController extends Controller
         }
 
         $courrier = Courrier::create([
+            'numero_courrier' => $request->input('numero_courrier'),
             'date_recep'      => $request->input('date_arrivee'),
             'date_cores'      => $request->input('date_correspondance'),
-            'numero_courrier' => $request->input('numero_courrier'),
             'annee'           => $request->input('annee'),
             'objet'           => strtoupper($request->input('objet')),
             'expediteur'      => strtoupper($request->input('expediteur')),
@@ -172,7 +172,7 @@ class ArriveController extends Controller
             'courriers_id'  => $courrier->id,
         ]);
 
-        Alert::success("Bravo !", "Le courrier a été ajouté avec succès.");
+        Alert::success("Succès !", "Courrier ajouté avec succès.");
 
         return redirect()->back();
     }

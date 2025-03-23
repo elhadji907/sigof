@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - courriers arrivés')
+@section('title', 'ONFP | COURRIERS ARRIVES')
 @section('space-work')
 
     <div class="pagetitle">
@@ -145,6 +145,13 @@
                                                 data-bs-target="#generate_rapport"></i>Rechercher
                                                 plus</button>
                                         </li>
+                                        @hasrole('courrier|super-admin')
+                                            <li>
+                                                <form action="{{ route('importA') }}" method="get">
+                                                    <button type="submit" class="dropdown-item btn btn-sm">Importer</button>
+                                                </form>
+                                            </li>
+                                        @endhasrole
                                     </ul>
                                 </div>
                             </span>
@@ -192,7 +199,8 @@
                                                                 @can('delete', $arrive)
                                                                     @can('arrive-delete')
                                                                         <li>
-                                                                            <form action="{{ route('arrives.destroy', $arrive?->id) }}"
+                                                                            <form
+                                                                                action="{{ route('arrives.destroy', $arrive?->id) }}"
                                                                                 method="post">
                                                                                 @csrf
                                                                                 @method('DELETE')

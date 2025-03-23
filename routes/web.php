@@ -32,6 +32,7 @@ use App\Http\Controllers\FeuillepresenceController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\FonctionController;
 use App\Http\Controllers\FormationController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\IndemniteController;
 use App\Http\Controllers\IndividuelleController;
 use App\Http\Controllers\IngenieurController;
@@ -485,6 +486,9 @@ Route::group(['middleware' => ['XSS']], function () {
 
         Route::post('/collectives/fetch', [CollectiveController::class, 'fetch'])->name('collectives.fetch');
         Route::get('/get-objet-by-numero', [CollectiveController::class, 'getObjetByNumero'])->name('getObjetByNumero');
+
+        Route::post('/import-arrives', [ImportController::class, 'importArrives'])->name('import.arrives');
+        Route::get('/import-arrives', [ImportController::class, 'importA'])->name('importA');
 
         /* Pour visualiser la page d'erreur */
         /* Route::get('/errors/restored', [UserController::class, 'errors'])->name('users.errors'); */
