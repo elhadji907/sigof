@@ -640,6 +640,11 @@
                         </a>
                     </li> --}}
                     <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ route('users.online') }}">
+                            <span>En ligne</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ route('users.actifs') }}">
                             <span>Actifs</span>
                         </a>

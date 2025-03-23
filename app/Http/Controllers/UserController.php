@@ -1020,4 +1020,10 @@ class UserController extends Controller
     {
         return view('errors.500');
     }
+
+    public function showOnlineUsers()
+    {
+        $users = User::online()->get();
+        return view('user.online', compact('users'));
+    }
 }

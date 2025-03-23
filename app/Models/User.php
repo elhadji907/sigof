@@ -28,6 +28,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $dates = [
         'date_naissance',
         'email_verified_at',
+        'last_activity' => 'datetime',
     ];
 
     protected $fillable = [
@@ -55,6 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'username',
         'fixe',
         'date_naissance',
+        'last_activity',
         'lieu_naissance',
         'bp',
         'fax',
@@ -128,6 +130,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getRouteKeyName()
     {
         return 'username';
+    }
+
+    public function scopeOnline($query)
+    {
+        return $query->where('last_activity', '>=', now()->subMinutes(5));
     }
 
     public function operateurmodules()
