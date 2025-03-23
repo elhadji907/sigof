@@ -86,9 +86,9 @@
                                                 @endif
                                             </td>
                                             <td style="text-align: center;">
-                                                @isset($user?->email_verified_at)
+                                                @if ($user?->email_verified_at)
                                                     <i class="bi bi-check-circle text-success" title="compte vérifié"></i>
-                                                @endisset
+                                                @endif
                                                 {{ \Carbon\Carbon::parse($user->last_activity)->diffForHumans() }}
                                             </td>
                                             <td>
@@ -146,13 +146,14 @@
 @push('scripts')
     <script>
         new DataTable('#table-users', {
-            layout: {
-                topStart: {
-                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                }
-            },
+
             "order": [
-                [0, 'asc']
+                [6, 'asc']
+            ],
+
+            "lengthMenu": [
+                [5, 10, 25, 50, 100, -1],
+                [5, 10, 25, 50, 100, "Tout"]
             ],
             language: {
                 "sProcessing": "Traitement en cours...",
