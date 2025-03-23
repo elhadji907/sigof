@@ -134,7 +134,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function scopeOnline($query)
     {
-        return $query->where('last_activity', '>=', now()->subMinutes(5));
+        return $query->where('last_activity', '>=', now()->subMinutes(30));
     }
 
     public function operateurmodules()
