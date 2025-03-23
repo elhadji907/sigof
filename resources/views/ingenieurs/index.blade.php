@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP | Liste des ingénieurs')
+@section('title', 'ONFP | LISTE DES INGENIEURS')
 @section('space-work')
     @can('ingenieur-view')
         <section class="section register">
