@@ -220,16 +220,22 @@
                                     @endif
 
                                     @if (!empty($individuelle?->experience))
-                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <div class="label">Expérience</div>
-                                            <div>{{ $individuelle?->experience }}</div>
+                                            <div>
+                                                {!! '- ' .
+                                                    implode('- ', array_map(fn($line) => nl2br(e($line)), explode("\n", ucfirst($individuelle?->experience)))) !!}
+                                            </div>
                                         </div>
                                     @endif
 
                                     @if (!empty($individuelle?->projetprofessionnel))
                                         <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <div class="label">Projet professionnel</div>
-                                            <div>{{ $individuelle?->projetprofessionnel }}</div>
+                                            <div>
+                                                {!! '- ' .
+                                                    implode('- ', array_map(fn($line) => nl2br(e($line)), explode("\n", ucfirst($individuelle?->projetprofessionnel)))) !!}
+                                            </div>
                                         </div>
                                     @endif
 
