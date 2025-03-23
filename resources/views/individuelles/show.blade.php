@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'Détails demande individuelle')
+@section('title', 'DETAILS DEMANDE DE ' . $individuelle->user->firstname . ' ' . $individuelle->user->name)
 @section('space-work')
     <section class="section min-vh-0 d-flex flex-column align-items-center justify-content-center py-0 section profile">
         <div class="container-fluid">
@@ -220,7 +220,7 @@
                                     @endif
 
                                     @if (!empty($individuelle?->experience))
-                                        <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <div class="label">Expérience</div>
                                             <div>{{ $individuelle?->experience }}</div>
                                         </div>
@@ -248,8 +248,8 @@
                                                 <p class="mb-0 me-3">{{ $file->legende }}</p>
 
                                                 <!-- Bouton de téléchargement -->
-                                                <a href="{{ asset($file->getFichier()) }}" class="btn btn-sm btn-secondary"
-                                                    target="_blank">
+                                                <a href="{{ asset($file->getFichier()) }}"
+                                                    class="btn btn-sm btn-secondary" target="_blank">
                                                     Télécharger
                                                 </a>
                                             </div>
