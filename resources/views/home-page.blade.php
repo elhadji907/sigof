@@ -302,10 +302,10 @@
         <section class="section dashboard">
             <div class="row">
                 <!-- Left side columns -->
-                <div class="col-lg-12">
+                <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
                     <div class="row">
                         <!-- Sales Card -->
-                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
                             <div class="card info-card sales-card">
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -313,7 +313,7 @@
                                 </div>
                                 <a href="#">
                                     <div class="card-body">
-                                        <h5 class="card-title">Deamandes<span> | Aujourd'hui</span></h5>
+                                        <h5 class="card-title">Demandes<span> | Aujourd'hui</span></h5>
                                         <div class="d-flex align-items-center">
                                             <div
                                                 class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -332,7 +332,7 @@
                                 </a>
                             </div>
                         </div>
-                        {{-- <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        {{-- <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
                             <div class="card info-card sales-card">
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -360,7 +360,7 @@
                         </div> --}}
 
                         {{-- Demandes individuelles --}}
-                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
                             <div class="card info-card sales-card">
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -391,7 +391,7 @@
                         </div>
 
                         {{-- Demandes collectives --}}
-                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
                             <div class="card info-card sales-card">
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -421,7 +421,7 @@
                             </div>
                         </div>
 
-                        {{-- <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        {{-- <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
                             <div class="card info-card sales-card">
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -450,7 +450,7 @@
                             </div>
                         </div> --}}
 
-                        {{-- <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        {{-- <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
                             <div class="card info-card sales-card">
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -478,7 +478,7 @@
                                 </a>
                             </div>
                         </div> --}}
-                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
                             <div class="card info-card sales-card">
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -520,7 +520,7 @@
                     <div class="row">
                         <!-- Sales Card -->
                         @if (auth()->user()->hasRole('super-admin|admin'))
-                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
                                 <div class="card info-card sales-card">
                                     <a href="{{ route('user.index') }}">
                                         <div class="card-body">
@@ -546,7 +546,7 @@
                         @endif
 
                         @if (auth()->user()->hasRole('super-admin|admin|courrier'))
-                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
                                 <div class="card info-card sales-card">
 
                                     <a href="{{ route('arrives.index') }}">
@@ -571,7 +571,7 @@
 
                                 </div>
                             </div><!-- End Sales Card -->
-                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
                                 <div class="card info-card sales-card">
 
                                     <a href="{{ route('departs.index') }}">
@@ -595,7 +595,7 @@
                                     </a>
                                 </div>
                             </div><!-- End Sales Card -->
-                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
                                 <div class="card info-card sales-card">
 
                                     <a href="{{ route('internes.index') }}">
