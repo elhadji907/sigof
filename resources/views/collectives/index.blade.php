@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - demandes collectives')
+@section('title', 'ONFP | DEMANDES COLLECTIVES')
 @section('space-work')
     @can('collective-view')
         <div class="pagetitle">

@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - collectives')
+@section('title', 'ONFP | DETAILS DEMANDE COLLECTIVE')
 @section('space-work')
 
     <section
@@ -82,6 +82,20 @@
                                         <button class="nav-link" data-bs-toggle="tab" data-bs-target="#modules-overview">Modules
                                         </button>
                                     </li>
+
+
+                                    @php
+                                        // Filtrer uniquement les fichiers qui ont une valeur non vide
+                                        $validFiles = $collective?->user?->files->filter(
+                                            fn($file) => !empty($file?->file),
+                                        );
+                                    @endphp
+
+                                    @can('user-delete')
+                                        <li class="nav-item">
+                                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#files">Fichiers</button>
+                                        </li>
+                                    @endcan
 
                                     @can('user-view')
                                         <li class="nav-item">
@@ -576,38 +590,120 @@
                                         <!-- End Table with stripped rows -->
                                     </div>
                                 </div>
+
+                                <div class="tab-content pt-2">
+                                    <div class="tab-pane fade files" id="files">
+                                        <div class="row mb-3">
+                                            <h5 class="card-title col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                                FICHIERS JOINTS</h5>
+                                            @if ($validFiles->isNotEmpty())
+                                                <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                    <table class="table table-bordered table-hover datatables"
+                                                        id="table-iles">
+                                                        <thead>
+                                                            <tr>
+                                                                <th width="5%" class="text-center">N°</th>
+                                                                <th>Légende</th>
+                                                                <th width="10%" class="text-center">File</th>
+                                                                @can('user-show-file')
+                                                                    <th width="5%" class="text-center"><i
+                                                                            class="bi bi-gear"></i></th>
+                                                                @endcan
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @php $i = 1; @endphp
+                                                            @foreach ($validFiles as $file)
+                                                                <tr>
+                                                                    <td class="text-center">{{ $i++ }}</td>
+                                                                    <td>{{ $file->legende }}</td>
+                                                                    <td class="text-center">
+                                                                        <a class="btn btn-default btn-sm"
+                                                                            title="Télécharger le fichier joint"
+                                                                            target="_blank"
+                                                                            href="{{ asset($file->getFichier()) }}">
+                                                                            <i class="bi bi-download"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                    @can('user-show-file')
+                                                                        <td class="text-center">
+                                                                            <form action="{{ route('fileDestroy') }}"
+                                                                                method="post">
+                                                                                @csrf
+                                                                                @method('put')
+                                                                                <input type="hidden" name="idFile"
+                                                                                    value="{{ $file->id }}">
+                                                                                <button type="submit"
+                                                                                    style="background:none;border:0px;"
+                                                                                    class="show_confirm text-danger"
+                                                                                    title="Retirer">
+                                                                                    <i class="bi bi-trash"></i>
+                                                                                </button>
+                                                                            </form>
+                                                                        </td>
+                                                                    @endcan
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            @else
+                                                <div class="alert alert-info">
+                                                    <p class="text-muted">Aucun fichier joint.</p>
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+
                                 {{-- Détail Formations --}}
                                 <div class="tab-content">
                                     <div class="tab-pane fade profile-overview pt-1" id="foration-overview">
                                         <h5 class="card-title">Formations </h5>
-                                        @if (!empty($collectives->formation))
-                                            <table class="table datatables" id="table-formations">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Code</th>
-                                                        <th>Type</th>
-                                                        <th>Localité</th>
-                                                        <th>Modules</th>
-                                                        <th class="text-center">Effectif</th>
-                                                        <th class="text-center">Statut</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <?php $i = 1; ?>
-                                                    <tr>
-                                                        <td>{{ $collectives->formation?->code }}</td>
-                                                        <td><a>{{ $collectives->formation?->types_formation?->name }}</a></td>
-                                                        <td>{{ $collectives->formation?->departement?->region?->nom }}</td>
-                                                        <td>{{ $collectives->formation?->collectivemodule?->module }}</td>
-                                                        <td class="text-center"></td>
-                                                        <td class="text-center"><a><span
-                                                                    class="{{ $collectives->formation?->statut }}">{{ $collectives->formation?->statut }}</span></a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                        @if ($collective)
+                                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                                <table class="table table-bordered table-hover datatables" id="table-iles">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="5%" class="text-center">N°</th>
+                                                            <th width="15%" class="text-center">Date dépôt</th>
+                                                            <th>Modules</th>
+                                                            <th width="10%" class="text-center">Statut</th>
+                                                            @can('user-show')
+                                                                <th width="5%" class="text-center"><i class="bi bi-gear"></i>
+                                                                </th>
+                                                            @endcan
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php $i = 1; @endphp
+                                                        @foreach ($collective->collectivemodules as $collectivemodule)
+                                                            <tr>
+                                                                <td class="text-center">{{ $i++ }}</td>
+                                                                <td class="text-center">
+                                                                    {{ $collective->date_depot ? \Carbon\Carbon::parse($collective->date_depot)->diffForHumans() : 'Aucun' }}
+                                                                </td>
+                                                                <td>{{ $collectivemodule->module }}</td>
+                                                                <td class="text-center">
+                                                                    <span class="{{ $collectivemodule?->statut }}">
+                                                                        {{ $collectivemodule?->statut }}
+                                                                    </span>
+                                                                </td>
+                                                                @can('user-show')
+                                                                    <td class="text-center">
+                                                                        <a href="{{ route('collectivemodules.show', $collectivemodule?->id) }}"
+                                                                            class="btn btn-primary btn-sm" target="_blank"
+                                                                            title="voir détails"><i class="bi bi-eye"></i></a>
+                                                                    </td>
+                                                                @endcan
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         @else
-                                            <div class="alert alert-info">Aucune formation pour l'instat
+                                            <div class="alert alert-info">
+                                                <p class="text-muted">Aucune formation pour l'instant !</p>
                                             </div>
                                         @endif
                                     </div>

@@ -310,68 +310,6 @@
                                             </div>
                                         @endif
                                     </div>
-                                    {{-- <form method="post" action="{{ route('files.update', $user?->id) }}"
-                                        enctype="multipart/form-data">
-                                        @csrf
-                                        @method('patch')
-                                        <h5 class="card-title">{{ __("Ajouter d'autres fichiers") }}</h5>
-                                        <span style="color:red;">NB:</span>
-                                        <span>Seule la Carte Nationale d'Identité (recto/verso) </span><span
-                                            style="color:red;"> est requise</span>.
-                                        <!-- Profile Edit Form -->
-                                        <div class="row mb-3 mt-3">
-                                            <label for="legende"
-                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Légende<span
-                                                    class="text-danger mx-1">*</span></label>
-                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                                <select name="legende"
-                                                    class="form-select  @error('legende') is-invalid @enderror"
-                                                    aria-label="Select" id="select-field-file"
-                                                    data-placeholder="Choisir">
-                                                    <option value="{{ old('legende') }}">
-
-                                                    </option>
-                                                    @foreach ($user_files as $file)
-                                                        <option value="{{ $file?->id }}">
-                                                            {{ $file?->legende }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                @error('legende')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <div>{{ $message }}</div>
-                                                    </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="file"
-                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Fichier<span
-                                                    class="text-danger mx-1">*</span></label>
-                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                                <div class="pt-2">
-                                                    <input type="file" name="file" id="file"
-                                                        class="form-control @error('file') is-invalid @enderror btn btn-primary btn-sm">
-                                                    @error('file')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="file"
-                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label"><span
-                                                    class="text-danger mx-1"></span></label>
-                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                                <div class="pt-2">
-                                                    <button type="submit" class="btn btn-info btn-sm">Ajouter</button>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </form> --}}
                                 </div>
                             </div>
 
@@ -427,7 +365,7 @@
                                             </div>
                                         @else
                                             <div class="alert alert-info">
-                                                <p class="text-muted">Aucun fichier joint.</p>
+                                                <p class="text-muted">Aucune formation pour l'instant !</p>
                                             </div>
                                         @endif
                                     </div>
