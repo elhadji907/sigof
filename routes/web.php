@@ -482,6 +482,8 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('/users/corbeille', [UserController::class, 'corbeille'])->name('users.corbeille');
         Route::get('/users/restored', [UserController::class, 'restored'])->name('users.restored');
         Route::get('/users/online', [UserController::class, 'showOnlineUsers'])->name('users.online');
+        Route::get('/users/demandeurs', [UserController::class, 'demandeurs'])->name('users.demandeurs');
+        Route::get('/demandeurs/{id}', [UserController::class, 'showDemandeur'])->name('demandeurs.show');
 
         Route::delete('/profile/image', [ProfileController::class, 'destroyImage'])->name('profile.image.destroy');
 

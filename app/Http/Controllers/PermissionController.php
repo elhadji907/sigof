@@ -36,7 +36,8 @@ class PermissionController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'permissions.*.name' => 'required|unique:permissions,name',
+            /* 'permissions.*.name' => 'required|unique:permissions,name', */
+            'permissions.0.name' => 'required|unique:permissions,name',
         ]);
 
         /* dd($request->permissions); */
@@ -79,7 +80,7 @@ class PermissionController extends Controller
     public function destroy($id)
     {
         $permission = Permission::findOrFail($id);
-        $this->authorize('update', $permission);
+        $this->authorize('delete', $permission);
         $permission->delete();
         Alert::success('Succès ', 'Permission ' . $permission->name . ' supprimée avec succès');
         return redirect()->back();

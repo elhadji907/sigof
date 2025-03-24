@@ -11,6 +11,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                            role="alert">{{ $error }}</div>
+                    @endforeach
+                @endif
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -33,9 +39,16 @@
                                     <th width="5%">Action</th>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="permissions[0][name]"
+                                    <td>
+                                        <input type="text" name="permissions[0][name]"
                                             placeholder="ajouter une permission" class="form-control form-control-sm"
                                             autofocus />
+
+                                        @error('permissions.0.name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
                                     </td>
                                     <td><button type="button" name="add" id="add-btn" class="btn btn-success btn-sm"
                                             title="Ajouter une ligne">Ajouter</button>

@@ -90,6 +90,15 @@
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="demande--ind-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+
+                    @can('demandeur-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ route('users.demandeurs') }}">
+                                <span>Demandeurs</span>
+                            </a>
+                        </li>
+                    @endcan
+
                     @can('individuelle-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('individuelles') }}">
@@ -633,12 +642,6 @@
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="users-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-
-                    {{-- <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('user') }}">
-                            <span>Tous</span>
-                        </a>
-                    </li> --}}
                     <li class="nav-item">
                         <a class="nav-link collapsed" href="{{ route('users.online') }}">
                             <span>En ligne</span>

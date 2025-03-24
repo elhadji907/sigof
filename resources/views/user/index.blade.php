@@ -66,7 +66,7 @@
                         {{-- <h5 class="card-title">Utilisateurs</h5> --}}
                         {{-- <p>Le tableau de tous les utilisateurs du système.</p> --}}
                         <!-- Table with stripped rows -->
-                        @isset($user_liste)
+                        @if ($user_liste->isNotEmpty())
                             <table class="table datatables align-middle" id="table-users">
                                 <thead>
                                     <tr>
