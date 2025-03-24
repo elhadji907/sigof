@@ -92,9 +92,9 @@ class RoleController extends Controller
 
     public function addPermissionsToRole($roleId)
     {
-        $this->authorize('update', $role);
         $permissions     = Permission::orderBy('created_at', 'desc')->get();
         $role            = Role::findOrFail($roleId);
+        /* $this->authorize('update', $role); */
         $rolePermissions = DB::table('role_has_permissions')
             ->where('role_has_permissions.role_id', $roleId)
             ->pluck('role_has_permissions.permission_id', 'role_has_permissions.permission_id')
@@ -104,12 +104,12 @@ class RoleController extends Controller
 
     public function givePermissionsToRole($roleId, Request $request)
     {
-        $this->authorize('update', $role);
         $request->validate([
             'permissions' => ['required'],
         ]);
 
         $role = Role::findOrFail($roleId);
+        /* $this->authorize('update', $role); */
         $role->syncPermissions($request->permissions);
 
         $messages = "Permissions accordée(s)";
