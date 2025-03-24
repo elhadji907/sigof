@@ -81,8 +81,8 @@
                                     <label for="name" class="form-label">Date naissance<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="date_naissance" value="{{ old('date_naissance') }}"
-                                        class="datepicker form-control form-control-sm @error('date_naissance') is-invalid @enderror"
-                                        id="date_naissance" placeholder="dd-mm-aaaa">
+                                        class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
+                                        id="datepicker" placeholder="JJ/MM/AAAA" autocomplete="bday">
                                     @error('date_naissance')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -149,10 +149,10 @@
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <label for="telephone" class="form-label">Téléphone personnel<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="number" min="0" name="telephone"
-                                        value="{{ old('telephone') }}"
-                                        class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                        id="telephone" placeholder="7xxxxxxxx">
+                                            <input name="telephone" type="text" maxlength="12"
+                                                class="form-control form-control-sm @error('telephone') is-invalid @enderror"
+                                                id="telephone" value="{{ old('telephone') }}"
+                                                autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                     @error('telephone')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -163,9 +163,10 @@
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <label for="cin" class="form-label">N° CIN<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="cin" value="{{ old('cin') }}"
+                                    <input name="cin" type="text"
                                         class="form-control form-control-sm @error('cin') is-invalid @enderror"
-                                        id="cin" placeholder="Numéro carte d'identité nationale">
+                                        id="cin" value="{{ old('cin') }}" autocomplete="off"
+                                        placeholder="Ex: 1 099 2005 00012" minlength="16" maxlength="17" required>
                                     @error('cin')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -177,8 +178,8 @@
                                     <label for="name" class="form-label">Date embauche<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="date_embauche" value="{{ old('date_embauche') }}"
-                                        class="datepicker form-control form-control-sm @error('date_embauche') is-invalid @enderror"
-                                        id="date_embauche" placeholder="dd-mm-aaaa">
+                                        class="form-control form-control-sm @error('date_embauche') is-invalid @enderror"
+                                        id="datepicker1" placeholder="JJ/MM/AAAA" autocomplete="bday">
                                     @error('date_embauche')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>

@@ -44,7 +44,7 @@ class ProfileUpdateRequest extends FormRequest
             'name'                      => ['required', 'string', 'max:25'],
             'date_naissance'            => ['nullable', 'date_format:d/m/Y'],
             'lieu_naissance'            => ['required', 'string'],
-            'image'                     => ['sometimes', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'image'                     => ['sometimes', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:1024'],
             /* 'email'                     => [
                 'nullable',
                 'string',

@@ -11,6 +11,13 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                            role="alert"><strong>{{ $error }}</strong></div>
+                    @endforeach
+                @endif
                 <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
                     <div class="card mb-3">
 
@@ -83,9 +90,9 @@
                                     <label for="name" class="form-label">Date naissance<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="date_naissance"
-                                        value="{{ $employe->user->date_naissance?->format('d-m-Y') ?? old('date_naissance') }}"
-                                        class="datepicker form-control form-control-sm @error('date_naissance') is-invalid @enderror"
-                                        id="date_naissance" placeholder="dd-mm-aaaa">
+                                        value="{{ old('date_naissance', optional($employe->user->date_naissance)->format('d/m/Y')) }}"
+                                        class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
+                                        id="datepicker" placeholder="JJ/MM/AAAA" autocomplete="bday">
                                     @error('date_naissance')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -142,10 +149,10 @@
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="telephone" class="form-label">Téléphone<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="telephone"
-                                        value="{{ $employe->user->telephone ?? old('telephone') }}"
+                                    <input name="telephone" type="text" maxlength="12"
                                         class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                        id="telephone" placeholder="téléphone">
+                                        id="telephone" value="{{ old('telephone', $employe->user->telephone ?? '') }}"
+                                        autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                     @error('telephone')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -156,9 +163,11 @@
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="cin" class="form-label">N° CIN<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="cin" value="{{ $employe->user->cin ?? old('cin') }}"
+                                    <input name="cin" type="text"
                                         class="form-control form-control-sm @error('cin') is-invalid @enderror"
-                                        id="cin" placeholder="Numéro carte d'identité nationale">
+                                        id="cin" value="{{ $employe->user->cin ?? old('cin') }}"
+                                        autocomplete="off" placeholder="Ex: 1 099 2005 00012" minlength="16"
+                                        maxlength="17" required>
                                     @error('cin')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -170,9 +179,9 @@
                                     <label for="name" class="form-label">Date embauche<span
                                             class="text-danger mx-1">*</span></label>
                                     <input type="text" name="date_embauche"
-                                        value="{{ $employe->date_embauche?->format('d-m-Y') ?? old('date_embauche') }}"
-                                        class="datepicker form-control form-control-sm @error('date_embauche') is-invalid @enderror"
-                                        id="date_embauche" placeholder="dd-mm-aaaa">
+                                        value="{{ old('date_embauche', optional($employe->date_embauche)->format('d/m/Y')) }}"
+                                        class="form-control form-control-sm @error('date_embauche') is-invalid @enderror"
+                                        id="datepicker1" placeholder="JJ/MM/AAAA" autocomplete="bday">
                                     @error('date_embauche')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -298,7 +307,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary">Modifier</button>
+                                    <button type="submit" class="btn btn-primary btn-sm">Modifier</button>
                                 </div>
                             </form>
 
