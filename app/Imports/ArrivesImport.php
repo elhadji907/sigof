@@ -36,7 +36,7 @@ class ArrivesImport implements ToModel, WithHeadingRow
             $dateReponse = $row['date_reponse'];
         }
 
-        $courrier = Courrier::firstOrCreate(
+        /*     $courrier = Courrier::firstOrCreate(
             ['numero_courrier' => $row['numero_courrier']],
             [
                 'date_recep'     => $dateRecep,
@@ -58,6 +58,36 @@ class ArrivesImport implements ToModel, WithHeadingRow
         return new Arrive([
             'courriers_id'  => $courrier->id,
             'numero_arrive' => $row['numero_arrive'],
-        ]);
+        ]); */
+
+        $courrier = Courrier::firstOrCreate(
+            ['numero_courrier' => $row['numero_courrier']],
+            [
+                'date_recep'     => $dateRecep,
+                'date_cores'     => $dateCores,
+                'date_reponse'   => $dateReponse,
+                'annee'          => $row['annee'],
+                'objet'          => $row['objet'],
+                'expediteur'     => $row['expediteur'],
+                'reference'      => $row['reference'],
+                'numero_reponse' => $row['numero_reponse'],
+                'observation'    => $row['observation'],
+                'type'           => $row['type'],
+                'user_create_id' => $row['user_create_id'],
+                'user_update_id' => $row['user_update_id'],
+                'users_id'       => $row['users_id'],
+            ]
+        );
+
+        // Vérifier si le numéro d'arrivée existe déjà
+        $arrive = Arrive::where('numero_arrive', $row['numero_arrive'])->first();
+        if (! $arrive) {
+            $arrive = Arrive::create([
+                'courriers_id'  => $courrier->id,
+                'numero_arrive' => $row['numero_arrive'],
+            ]);
+        }
+
+        return $arrive;
     }
 }

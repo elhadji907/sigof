@@ -38,7 +38,7 @@
                                 <span>{{ $role->name }} |</span>
                             @endforeach
                         </h3> --}}
-                            <div class="social-links mt-2">
+                            {{-- <div class="social-links mt-2">
                                 @if (!empty(Auth::user()?->twitter))
                                     <a href="{{ Auth::user()?->twitter }}" class="twitter" target="_blank"><i
                                             class="bi bi-twitter"></i></a>
@@ -55,6 +55,15 @@
                                     <a href="{{ Auth::user()?->linkedin }}" class="linkedin" target="_blank"><i
                                             class="bi bi-linkedin"></i></a>
                                 @endif
+                            </div> --}}
+                            <div class="social-links mt-2">
+                                @foreach (['twitter' => 'twitter', 'facebook' => 'facebook', 'instagram' => 'instagram', 'linkedin' => 'linkedin'] as $platform => $icon)
+                                    @if (!empty(Auth::user()?->$platform))
+                                        <a href="{{ Auth::user()->$platform }}" class="{{ $platform }}" target="_blank">
+                                            <i class="bi bi-{{ $icon }}"></i>
+                                        </a>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
                     </div>

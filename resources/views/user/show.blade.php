@@ -29,14 +29,26 @@
                         <img class="rounded-circle w-50" alt="Profil" src="{{ asset($user->getImage()) }}" width="100"
                             height="auto">
 
-                        <h2 class="pt-3">
-                            @if (isset($user?->name))
-                                {{ $user?->civilite . ' ' . $user?->firstname . ' ' . $user?->name }}
+                        <h2 class="pt-1 text-center">
+                            {{ $user?->civilite . ' ' . $user?->firstname . ' ' . $user?->name ?? $user?->username }}
+                            <br>
+                            @if ($user?->last_activity && \Carbon\Carbon::parse($user->last_activity)->diffInMinutes(now()) < 5)
+                                <span class="text-success">En ligne</span>
                             @else
-                                {{ $user?->username }}
+                                <span class="text-danger">Hors ligne</span>
+                                ({{ \Carbon\Carbon::parse($user->last_activity)->diffForHumans() }})
                             @endif
                         </h2>
                         <div class="social-links mt-2">
+                            @foreach (['twitter' => 'twitter', 'facebook' => 'facebook', 'instagram' => 'instagram', 'linkedin' => 'linkedin'] as $platform => $icon)
+                                @if (!empty($user?->$platform))
+                                    <a href="{{ $user->$platform }}" class="{{ $platform }}" target="_blank">
+                                        <i class="bi bi-{{ $icon }}"></i>
+                                    </a>
+                                @endif
+                            @endforeach
+                        </div>
+                        {{--   <div class="social-links mt-2">
                             <div class="social-links mt-2">
                                 @if (!empty($user?->twitter))
                                     <a href="{{ $user?->twitter }}" class="twitter" target="_blank"><i
@@ -55,7 +67,7 @@
                                             class="bi bi-linkedin"></i></a>
                                 @endif
                             </div>
-                        </div>
+                        </div> --}}
 
                         {{-- <h5 class="card-title">Informations complémentaires</h5>
                         <p>créé par <b>{{ $user_create_name }}</b>, {{ $user->created_at->diffForHumans() }}</p>
@@ -85,16 +97,34 @@
                                 </button>
                             </li>
 
-                            <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-autre">Détails
-                                </button>
-                            </li>
-
-                            @can('user-delete')
+                            @can('user-view')
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#files">Fichiers</button>
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-autre">Détails
+                                    </button>
                                 </li>
                             @endcan
+
+                            @php
+                                // Filtrer uniquement les fichiers qui ont une valeur non vide
+                                $validFiles = $user?->files->filter(fn($file) => !empty($file->file));
+                            @endphp
+
+                            @if ($validFiles->isNotEmpty())
+                                @can('user-delete')
+                                    <li class="nav-item">
+                                        <button class="nav-link" data-bs-toggle="tab" data-bs-target="#files">Fichiers</button>
+                                    </li>
+                                @endcan
+                            @endif
+
+                            @if ($user->individuelles->isNotEmpty())
+                                @can('user-view')
+                                    <li class="nav-item">
+                                        <button class="nav-link" data-bs-toggle="tab"
+                                            data-bs-target="#demandes">Formations</button>
+                                    </li>
+                                @endcan
+                            @endif
 
                         </ul>
                         <div class="tab-content pt-0">
@@ -219,10 +249,10 @@
                                     <div class="row mb-3">
                                         <h5 class="card-title col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             FICHIERS JOINTS</h5>
-                                        @php
+                                        {{-- @php
                                             // Filtrer uniquement les fichiers qui ont une valeur non vide
                                             $validFiles = $user?->files->filter(fn($file) => !empty($file->file));
-                                        @endphp
+                                        @endphp --}}
 
                                         @if ($validFiles->isNotEmpty())
                                             <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
@@ -342,6 +372,65 @@
                                         </div>
 
                                     </form> --}}
+                                </div>
+                            </div>
+
+                            <div class="tab-content">
+                                <div class="tab-pane fade profile-edit" id="demandes">
+                                    <h5 class="card-title">DEMANDES FORMATION</h5>
+                                    <div class="row mb-3">
+                                        @if ($user->individuelles->isNotEmpty())
+                                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                                <table class="table table-bordered table-hover datatables"
+                                                    id="table-iles">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="5%" class="text-center">N°</th>
+                                                            <th width="15%" class="text-center">Date dépôt</th>
+                                                            <th>Modules</th>
+                                                            <th width="10%" class="text-center">Statut</th>
+                                                            @can('user-show')
+                                                                <th width="5%" class="text-center"><i
+                                                                        class="bi bi-gear"></i></th>
+                                                            @endcan
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @php $i = 1; @endphp
+                                                        @foreach ($user->individuelles as $individuelle)
+                                                            <tr>
+                                                                <td class="text-center">{{ $i++ }}</td>
+                                                                <td class="text-center">
+                                                                    @if ($individuelle?->date_depot)
+                                                                        {{ $individuelle?->date_depot?->diffForHumans(null, false) }}
+                                                                    @else
+                                                                        Aucun
+                                                                    @endif
+                                                                </td>
+                                                                <td>{{ $individuelle?->module?->name }}</td>
+                                                                <td class="text-center">
+                                                                    <span class="{{ $individuelle?->statut }}">
+                                                                        {{ $individuelle?->statut }}
+                                                                    </span>
+                                                                </td>
+                                                                @can('user-show')
+                                                                    <td class="text-center">
+                                                                        <a href="{{ route('individuelles.show', $individuelle?->id) }}"
+                                                                            class="btn btn-primary btn-sm" target="_blank"
+                                                                            title="voir détails"><i class="bi bi-eye"></i></a>
+                                                                    </td>
+                                                                @endcan
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        @else
+                                            <div class="alert alert-info">
+                                                <p class="text-muted">Aucun fichier joint.</p>
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
 

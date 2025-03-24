@@ -148,7 +148,7 @@
         new DataTable('#table-users', {
 
             "order": [
-                [6, 'asc']
+                [5, 'asc']
             ],
 
             "lengthMenu": [

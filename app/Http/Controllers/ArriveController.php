@@ -218,11 +218,13 @@ class ArriveController extends Controller
     {
         $data = $request->validated();
 
-        if (! empty($request->input('date_reponse'))) {
+        /*  if (! empty($request->input('date_reponse'))) {
             $date_reponse = $request->input('date_reponse');
         } else {
             $date_reponse = null;
-        }
+        } */
+
+        $date_reponse = $request->input('date_reponse') ?: null;
 
         $courrier = Courrier::create([
             'numero_courrier' => $request->input('numero_courrier'),
@@ -255,11 +257,13 @@ class ArriveController extends Controller
     {
         $data = $request->validated();
 
-        if (! empty($request->input('date_reponse'))) {
+        /* if (! empty($request->input('date_reponse'))) {
             $date_reponse = $request->input('date_reponse');
         } else {
             $date_reponse = null;
-        }
+        } */
+
+        $date_reponse = $request->input('date_reponse') ?: null;
 
         $user = User::create([
             'username'   => strtoupper($request->input("sigle")),
