@@ -6,6 +6,7 @@ use App\Models\Collective;
 use App\Models\Collectivemodule;
 use App\Models\Commune;
 use App\Models\Departement;
+use App\Models\File;
 use App\Models\Ingenieur;
 use App\Models\Listecollective;
 use App\Models\Module;
@@ -597,13 +598,29 @@ class CollectiveController extends Controller
         $departements     = Departement::orderBy("created_at", "desc")->get();
         $modules          = Module::orderBy("created_at", "desc")->get();
         $user             = Auth::user();
-        $collective       = Collective::where('users_id', $user->id)->get();
+        $collective       = Collective::where('users_id', $user->id)->first();
         $collective_total = $collective->count();
+
+        $files = File::where('users_id', $collective?->user?->id)
+            ->whereNotNull('file') // Utilisation de whereNotNull pour plus de clarté
+            ->distinct()
+            ->get();
+
+        $user_files = File::where('users_id', $collective?->user?->id)
+            ->whereNull('file')
+            ->where(function ($query) {
+                $query->where('sigle', 'AC')
+                    ->orWhere('sigle', 'Arrêté')
+                    ->orWhere('sigle', 'Autres')
+                    ->orWhere('sigle', 'Ninea/RC');
+            })
+            ->distinct()
+            ->get();
 
         if ($collective_total == 0) {
             return view("collectives.show-collective-aucune", compact("collective_total", "departements", "modules"));
         } else {
-            return view("collectives.show-collective", compact("collective_total", "departements", "modules"));
+            return view("collectives.show-collective", compact("collective_total", "departements", "modules", "files", "user_files"));
         }
     }
 

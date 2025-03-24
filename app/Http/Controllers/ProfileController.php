@@ -44,8 +44,14 @@ class ProfileController extends Controller
             ->distinct()
             ->get();
 
-        $user_files = File::where('users_id', $user->id)
+        /* $user_files = File::where('users_id', $user->id)
             ->where('file', null)
+            ->distinct()
+            ->get(); */
+
+        $user_files = File::where('users_id', $user?->id)
+            ->whereNull('file')
+            ->whereNotIn('sigle', ['AC', 'Arrêté', 'Ninea/RC'])
             ->distinct()
             ->get();
 

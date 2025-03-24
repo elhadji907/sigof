@@ -880,7 +880,8 @@ class IndividuelleController extends Controller
             ->get();
 
         $user_files = File::where('users_id', $individuelle->user->id)
-            ->where('file', null)
+            ->whereNull('file')
+            ->whereNotIn('sigle', ['AC', 'Arrêté', 'Ninea/RC'])
             ->distinct()
             ->get();
 
@@ -1000,8 +1001,14 @@ class IndividuelleController extends Controller
             ->distinct()
             ->get();
 
-        $user_files = File::where('users_id', $user->id)
+        /* $user_files = File::where('users_id', $user->id)
             ->whereNull('file')
+            ->distinct()
+            ->get(); */
+
+        $user_files = File::where('users_id', $user?->id)
+            ->whereNull('file')
+            ->whereNotIn('sigle', ['AC', 'Arrêté', 'Ninea/RC'])
             ->distinct()
             ->get();
 

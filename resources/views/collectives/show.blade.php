@@ -51,7 +51,8 @@
                                             </span>
                                         </li>
                                     @endcan
-                                @elseif(hasRole('Employe|Demandeur'))
+                                @endcan
+                                @role('Demandeur')
                                     @can('demandeur-view')
                                         <li class="nav-item">
                                             <span class="nav-link"><a href="{{ route('demandesCollective') }}"
