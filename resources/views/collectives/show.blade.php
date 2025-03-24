@@ -153,7 +153,10 @@
                                         </div>
                                         <div class="col-12 col-md-12 col-lg-12 mb-0">
                                             <div class="label">Projet professionnel</div>
-                                            <div>{{ $collective?->projetprofessionnel }}</div>
+                                            <div>
+                                                {!! '- ' .
+                                                    implode('- ', array_map(fn($line) => nl2br(e($line)), explode("\n", ucfirst($collective?->projetprofessionnel)))) !!}
+                                            </div>
                                         </div>
                                     </form>
 
