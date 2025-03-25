@@ -50,8 +50,7 @@
                                     <tr>
                                         <th></th>
                                         <th>Matricule</th>
-                                        <th>Prénom</th>
-                                        <th>Nom</th>
+                                        <th>Prénom & NOM</th>
                                         <th>E-mail</th>
                                         <th>Téléphone</th>
                                         <th>Direction</th>
@@ -68,8 +67,8 @@
                                             </th>
                                             {{-- <td>{{ $i++ }}</td> --}}
                                             <td>{{ $employe?->matricule }}</td>
-                                            <td>{{ $employe?->user?->firstname }}</td>
-                                            <td>{{ $employe?->user?->name }}</td>
+                                            <td>{{ implode(' ', array_filter([$employe?->user?->civilite, $employe?->user?->firstname, $employe?->user?->name])) }}
+                                            </td>
                                             <td><a
                                                     href="mailto:{{ $employe?->user?->email }}">{{ $employe?->user?->email }}</a>
                                             </td>

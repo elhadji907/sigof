@@ -46,11 +46,11 @@
                                         <option value="{{ $employe->user->civilite }}">
                                             {{ $employe->user->civilite ?? old('civilite') }}
                                         </option>
-                                        <option value="Monsieur">
-                                            Monsieur
+                                        <option value="M.">
+                                            M.
                                         </option>
-                                        <option value="Madame">
-                                            Madame
+                                        <option value="Mme">
+                                            Mme
                                         </option>
                                     </select>
                                     @error('civilite')
