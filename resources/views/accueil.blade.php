@@ -271,32 +271,6 @@
 
             <div class="container">
 
-                {{-- <div class="d-flex justify-content-center">
-  
-            <ul class="nav nav-tabs" data-aos="fade-up" data-aos-delay="100">
-  
-              <li class="nav-item">
-                <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#features-tab-1">
-                  <h4>Modisit</h4>
-                </a>
-              </li><!-- End tab nav item -->
-  
-              <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-2">
-                  <h4>Praesenti</h4>
-                </a><!-- End tab nav item -->
-  
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-3">
-                  <h4>Explica</h4>
-                </a>
-              </li><!-- End tab nav item -->
-  
-            </ul>
-  
-          </div> --}}
-
                 <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
 
                     <div class="tab-pane fade active show" id="features-tab-1">
@@ -327,19 +301,6 @@
                                             utilisateur pour les demandeurs de formations et les opérateurs, accessible
                                             en ligne.</span></li>
                                 </ul>
-                                {{-- <ul>
-                                    <h5>Fonctionnalités clés :</h5>
-                                    <li><i class="bi bi-check"></i> <span><b>Gestion des formations</b> :
-                                            Planification, organisation et suivi des programmes.</span></li>
-                                    <li><i class="bi bi-check"></i> <span><b>Base de données des bénéficiaires</b>
-                                            : Enregistrement et suivi des apprenants et des formateurs.</span></li>
-                                    <li><i class="bi bi-check"></i> <span><b>Rapports et statistiques</b> :
-                                            Génération automatique de bilans et d’indicateurs pour mesurer les
-                                            performances.</span></li>
-                                    <li><i class="bi bi-check"></i> <span><b>Portail interactif</b> : Interface
-                                            utilisateur pour les apprenants, formateurs et administrateurs, accessible
-                                            en ligne.</span></li>
-                                </ul> --}}
                                 <p>
                                     En résumé, le SIGOF est un outil stratégique qui modernise et professionnalise la
                                     gestion des activités de formation de l'ONFP, améliorant ainsi l'efficacité et la
@@ -351,48 +312,7 @@
                             </div>
                         </div>
                     </div><!-- End tab content item -->
-                    {{-- 
-            <div class="tab-pane fade" id="features-tab-2">
-                <div class="row">
-                  <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">
-                    <h3>Neque exercitationem debitis</h3>
-                    <p class="fst-italic">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                      magna aliqua.
-                    </p>
-                    <ul>
-                      <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
-                      <li><i class="bi bi-check2-all"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span></li>
-                      <li><i class="bi bi-check2-all"></i> <span>Provident mollitia neque rerum asperiores dolores quos qui a. Ipsum neque dolor voluptate nisi sed.</span></li>
-                      <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</span></li>
-                    </ul>
-                  </div>
-                  <div class="col-lg-6 order-1 order-lg-2 text-center">
-                    <img src="assets/img/features-illustration-2.webp" alt="" class="img-fluid">
-                  </div>
-                </div>
-              </div><!-- End tab content item -->
-    
-              <div class="tab-pane fade" id="features-tab-3">
-                <div class="row">
-                  <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">
-                    <h3>Voluptatibus commodi accusamu</h3>
-                    <ul>
-                      <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
-                      <li><i class="bi bi-check2-all"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span></li>
-                      <li><i class="bi bi-check2-all"></i> <span>Provident mollitia neque rerum asperiores dolores quos qui a. Ipsum neque dolor voluptate nisi sed.</span></li>
-                    </ul>
-                    <p class="fst-italic">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                      magna aliqua.
-                    </p>
-                  </div>
-                  <div class="col-lg-6 order-1 order-lg-2 text-center">
-                    <img src="assets/img/features-illustration-3.webp" alt="" class="img-fluid">
-                  </div>
-                </div>
-              </div><!-- End tab content item -->
-               --}}
+                    
                 </div>
 
             </div>
@@ -728,77 +648,6 @@
             class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
             <div class="modal fade" id="loginModal" tabindex="-1">
                 <div class="modal-dialog">
-                    {{-- <div class="modal-content">
-                        <form class="row g-3 needs-validation" novalidate method="POST"
-                            action="{{ route('login') }}">
-                            @csrf
-                            <div class="modal-header">
-                                <h5 class="w-100 text-center">CONNEXION</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Fermer"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="row g-3">
-                                    <div class="col-12">
-                                        <label for="email" class="form-label">Email<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <div class="input-group has-validation">
-                                            <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                            <input type="email" name="email"
-                                                class="form-control form-control-sm @error('email') is-invalid @enderror"
-                                                id="email" required placeholder="Votre adresse e-mail"
-                                                value="{{ old('email') }}" autofocus>
-                                            <div class="invalid-feedback">
-                                                @error('email')
-                                                    {{ $message }}
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <label for="password" class="form-label">Mot de passe<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <div class="input-group has-validation">
-                                            <span class="input-group-text" id="inputGroupPrepend"><i
-                                                    class="bi bi-key"></i></span>
-                                            <input type="password" name="password"
-                                                class="form-control form-control-sm  @error('password') is-invalid @enderror"
-                                                id="password" required placeholder="Votre mot de passe">
-                                            <div class="invalid-feedback">
-                                                @error('password')
-                                                    {{ $message }}
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="remember"
-                                                value="true" id="rememberMe">
-                                            <label class="form-check-label" for="rememberMe">Souviens-toi de
-                                                moi</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
-                                        <button class="btn btn-sm w-100" type="submit"
-                                            style="background-color: #F28500; color: #FFFFFF">Se
-                                            connecter</button>
-                                    </div>
-
-                                    <div class="col-12">
-                                        @if (Route::has('password.request'))
-                                            <p class="small mb-0">Mot de passe oublié !
-                                                <a href="#" data-bs-toggle="modal"
-                                                    data-bs-target="#forgotModal"> Réinitialiser</a>
-                                            </p>
-                                        @endif
-                                    </div>
-
-                                </div>
-                        </form>
-                    </div> --}}
                     <div class="modal-content">
                         <form class="row g-3 needs-validation" novalidate method="POST"
                             action="{{ route('login') }}">
@@ -883,151 +732,6 @@
             class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
             <div class="modal fade" id="registerDemandeurModal" tabindex="-1">
                 <div class="modal-dialog">
-                    {{-- <div class="modal-content">
-                        <form class="row g-3 needs-validation contact-form" novalidate method="POST"
-                            action="{{ route('register') }}">
-                            @csrf
-                            <div class="modal-header">
-                                <h5 class="w-100 text-center">Création compte personnel</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Fermer"></button>
-                            </div>
-
-                            <div class="modal-body">
-                                <div class="row g-3">
-                                    <!-- Username -->
-                                    <input type="hidden" name="role" value="Demandeur">
-                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
-                                        <label for="username" class="form-label">Username<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <div class="input-group has-validation">
-                                            <span class="input-group-text" id="inputGroupPrepend"><i
-                                                    class="bi bi-person"></i></span>
-                                            <input type="text" name="username"
-                                                class="form-control form-control-sm @error('username') is-invalid @enderror"
-                                                id="username" required placeholder="ex : jean221"
-                                                value="{{ old('username') }}" autocomplete="username">
-                                            <div class="invalid-feedback">
-                                                @error('username')
-                                                    {{ $message }}
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Addresse E-mail -->
-                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
-                                        <label for="email" class="form-label">Email<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <div class="input-group has-validation">
-                                            <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                            <input type="email" name="email"
-                                                class="form-control form-control-sm @error('email') is-invalid @enderror"
-                                                id="email" required placeholder="Votre e-mail"
-                                                value="{{ old('email') }}" autocomplete="email">
-                                            <div class="invalid-feedback">
-                                                @error('email')
-                                                    {{ $message }}
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Telephone -->
-                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
-                                        <label for="votre_telephone" class="form-label">Téléphone<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <div class="input-group has-validation">
-                                            <span class="input-group-text" id="inputGroupPrepend"><i
-                                                    class="bi bi-telephone-plus"></i></span>
-                                            <input name="votre_telephone" type="text" maxlength="12"
-                                                class="form-control form-control-sm @error('votre_telephone') is-invalid @enderror"
-                                                id="votre_telephone" value="{{ old('votre_telephone') }}"
-                                                autocomplete="tel" placeholder="XX:XXX:XX:XX">
-                                            <div class="invalid-feedback">
-                                                @error('votre_telephone')
-                                                    {{ $message }}
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Mot de passe -->
-                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
-                                        <label for="password" class="form-label">Mot de passe<span
-                                                class="text-danger mx-1">*</span></label>
-                                        <div class="input-group has-validation">
-                                            <span class="input-group-text" id="inputGroupPrepend"><i
-                                                    class="bi bi-key"></i></span>
-                                            <input type="password" name="password"
-                                                class="form-control form-control-sm @error('password') is-invalid @enderror"
-                                                id="password" required placeholder="Votre mot de passe"
-                                                value="{{ old('password') }}" autocomplete="new-password">
-                                            <div class="invalid-feedback">
-                                                @error('password')
-                                                    {{ $message }}
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Mot de passe de confirmation -->
-                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
-                                        <label for="password_confirmation" class="form-label">Confirmez mot de
-                                            passe<span class="text-danger mx-1">*</span></label>
-                                        <div class="input-group has-validation">
-                                            <span class="input-group-text" id="inputGroupPrepend"><i
-                                                    class="bi bi-key"></i></span>
-                                            <input type="password" name="password_confirmation"
-                                                class="form-control form-control-sm @error('password_confirmation') is-invalid @enderror"
-                                                id="password_confirmation" required
-                                                placeholder="Confimez votre mot de passe"
-                                                value="{{ old('password_confirmation') }}"
-                                                autocomplete="new-password_confirmation">
-                                            <div class="invalid-feedback">
-                                                @error('password_confirmation')
-                                                    {{ $message }}
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
-                                        <div class="form-check">
-                                            <input class="form-check-input @error('termes') is-invalid @enderror"
-                                                name="termes" type="checkbox" value="1" id="acceptTerms"
-                                                required>
-                                            <label class="form-check-label" for="acceptTerms">J'accepte les
-                                                <button style="color: blue" type="button"
-                                                    class="btn btn-default btn-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#largeModal">
-                                                    termes et conditions
-                                                </button>
-                                                <span class="text-danger mx-1">*</span></label>
-                                            <div class="invalid-feedback">
-                                                @error('termes')
-                                                    {{ $message }}
-                                                @enderror
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
-                                        <button type="submit" class="btn btn-sm w-100"
-                                            style="background-color: #F28500; color: #FFFFFF">Créer un compte
-                                            personnel</button>
-                                    </div>
-
-                                    <div
-                                        class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12 justify-content-center">
-                                        <p class="small">Vous avez déjà un compte ? <a href="#"
-                                                data-bs-toggle="modal" data-bs-target="#loginModal">Se connecter</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div> --}}
                     <div class="modal-content">
                         <form class="row g-3 needs-validation contact-form" novalidate method="POST"
                             action="{{ route('register') }}">
@@ -1384,33 +1088,6 @@
                 </div>
             </div>
         </div>
-
-        {{-- <div
-            class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
-            <div class="modal fade" id="enSavoirPlusModal" tabindex="-1">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 class="w-100  text-center">{{ $une?->titre1 }}</h3>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Fermer"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row g-3">
-
-                                <h4>{{ $une?->titre2 }}</h4>
-                                <p>{{ $une?->message }}</p>
-
-                            </div>
-                        </div>
-                        <div class="modal-footer mt-5">
-                            <button type="button" class="btn btn-secondary btn-sm"
-                                data-bs-dismiss="modal">Fermer</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
 
         {{-- Antennes modal --}}
         @foreach ($antennes as $antenne)

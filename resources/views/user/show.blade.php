@@ -26,8 +26,12 @@
                         Image de profil
                     </div>
                     <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-                        <img class="rounded-circle w-50" alt="Profil" src="{{ asset($user->getImage()) }}" width="100"
-                            height="auto">
+
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#ShowProfilImage{{ $user?->id }}">
+
+                            <img class="rounded-circle w-100" alt="Profil" src="{{ asset($user->getImage()) }}"
+                                width="100" height="auto">
+                        </a>
 
                         <h2 class="pt-1 text-center">
                             {{ $user?->civilite . ' ' . $user?->firstname . ' ' . $user?->name ?? $user?->username }}
@@ -950,5 +954,30 @@
                 </div>
             </div>
         </div>
+
+        @foreach ($users as $user)
+            <div class="modal fade" id="ShowProfilImage{{ $user->id }}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">
+                                {{ $user?->civilite . ' ' . $user?->firstname . ' ' . $user?->name ?? $user?->username }}
+                            </h5>
+                            {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                <img src="{{ asset($user->getImage()) }}" class="d-block w-100 main-image rounded-4"
+                                    alt="{{ $user->legende }}">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                data-bs-dismiss="modal">Fermer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     </section>
 @endsection

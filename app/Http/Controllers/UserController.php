@@ -483,7 +483,8 @@ class UserController extends Controller
 
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        $user  = User::findOrFail($id);
+        $users = User::get();
 
         // Vérifie si l'utilisateur connecté a le rôle 'super-admin' ou 'admin'
         if (! Auth::user()->hasRole(['super-admin', 'admin'])) {
@@ -525,7 +526,15 @@ class UserController extends Controller
         $directions = Direction::latest()->get();
         $fonctions  = Fonction::latest()->get();
 
-        return view("user.show", compact("user", "user_create_name", "user_update_name", "roles", "userRoles", "directions", "fonctions"));
+        return view("user.show",
+            compact("user",
+                "user_create_name",
+                "user_update_name",
+                "roles",
+                "users",
+                "userRoles",
+                "directions",
+                "fonctions"));
     }
 
     /* public function destroy($userId)
