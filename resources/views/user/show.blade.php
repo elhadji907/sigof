@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'DETAILS UTILISATEURS')
+@section('title', 'DETAILS UTILISATEURS ' . strtoupper($user->firstname . ' ' . $user->name))
 @section('space-work')
     <section class="section profile">
         <div class="row">

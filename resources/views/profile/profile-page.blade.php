@@ -20,8 +20,11 @@
                     <div class="card">
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                             {{-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> --}}
-                            <img class="rounded-circle w-25" alt="Profil" src="{{ asset(Auth::user()?->getImage()) }}"
-                                width="50" height="auto">
+                            <a href="#" data-bs-toggle="modal"
+                                data-bs-target="#ShowProfilImage{{ Auth::user()?->id }}">
+                                <img class="rounded-circle w-100" alt="Profil"
+                                    src="{{ asset(Auth::user()?->getImage()) }}" width="100" height="auto">
+                            </a>
 
                             <h2>
                                 @if (!empty(Auth::user()?->name))
@@ -30,9 +33,9 @@
                                     {{ Auth::user()?->username }}
                                 @endif
                             </h2>
-                            @if (!empty(Auth::user()?->situation_professionnelle))
+                            {{-- @if (!empty(Auth::user()?->situation_professionnelle))
                                 <span><a href="">{{ Auth::user()?->situation_professionnelle }}</a></span>
-                            @endif
+                            @endif --}}
                             {{-- <h3>
                             @foreach (Auth::user()->roles as $role)
                                 <span>{{ $role->name }} |</span>
@@ -1196,4 +1199,28 @@
             @endif
         @endhasrole
     </div>
+
+    <div class="modal fade" id="ShowProfilImage{{ Auth::id() }}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title text-center">
+                        {{ (Auth::user()?->civilite ?? '') . ' ' . (Auth::user()?->firstname ?? '') . ' ' . (Auth::user()?->name ?? (Auth::user()?->username ?? '')) }}
+                    </h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-12">
+                        <img src="{{ asset($user->getImage() ?? 'images/default.png') }}"
+                            class="d-block w-100 main-image rounded-4"
+                            alt="{{ Auth::user()?->legende ?? 'Photo de profil' }}">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 @endsection
