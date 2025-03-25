@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'Détails')
+@section('title', 'COURRIER ARRIVE | ' . $arrive?->courrier?->objet)
 @section('space-work')
     <section class="section profile">
         <div class="container-fluid">

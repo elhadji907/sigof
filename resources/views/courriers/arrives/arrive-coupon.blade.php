@@ -199,7 +199,7 @@
                                     <tr class="item">
                                         <td colspan="2" style="padding-left:5px;">{{ $action }}</td>
                                         <td colspan="2" align="center">
-                                            @if ($action == $courrier->description)
+                                            @if (strcasecmp(trim($action), trim($courrier->description)) === 0)
                                                 <span style="color: red;">X</span>
                                             @endif
                                         </td>

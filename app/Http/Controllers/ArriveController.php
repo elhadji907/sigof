@@ -376,20 +376,35 @@ class ArriveController extends Controller
             $lienApp       = url('https://sigof.onfp.sn/');                                // Remplace ceci par l'URL de ton application
             $lienCourrier  = url("https://sigof.onfp.sn/arrives/{$arrive->courrier->id}"); // Assure-toi que l'ID est bien accessible
 
-            collect($arrive->users)
-                ->filter(fn($user) => ! empty($user?->email)) // Filtrer les utilisateurs sans email
+            /*  collect($arrive->employees)
+                ->filter(fn($user) => isset($user->email) && ! empty($user->email)) // Filtrer les utilisateurs sans email
                 ->each(function ($user) use ($objetCourrier, $lienApp, $lienCourrier) {
-                    $toEmail     = $user->email;
-                    $toUserName  = "Bonjour ! {$user->civilite} {$user->firstname} {$user->name}";
-                    $safeMessage = "Le <b>Directeur Générale</b> de l'ONFP vous a imputé un nouveau courrier. <br>
-                        Merci de vous connecter à votre compte (<a href='{$lienApp}'>ici</a>) pour voir les détails
-                        ou accéder directement au courrier via <a href='{$lienCourrier}'>ce lien</a>.";
+                    $toEmail = $user->email;
+                    $toUserName = "Bonjour ! " . ($user->civilite ?? '') . " " . ($user->firstname ?? '') . " " . ($user->name ?? '');
+
+                    $safeMessage = "Le <b>Directeur Général</b> de l'ONFP vous a imputé un nouveau courrier. <br>
+                    Merci de vous connecter à votre compte (<a href='{$lienApp}'>ici</a>) pour voir les détails
+                    ou accéder directement au courrier via <a href='{$lienCourrier}'>ce lien</a>.";
 
                     $subject = "COURRIER ONFP | $objetCourrier";
                     $message = strip_tags($safeMessage, '<b><i><p><a><br>'); // Autorise <b>, <i>, <p>, et <a>
 
                     Mail::to($toEmail)->send(new ImputationcourrierMail($message, $subject, $toEmail, $toUserName));
-                });
+                }); */
+
+            foreach ($arrive->employees as $employe) {
+                $toEmail    = $employe?->user->email;
+                $toUserName = "Bonjour ! " . ($employe?->user->civilite ?? '') . " " . ($employe?->user->firstname ?? '') . " " . ($employe?->user->name ?? '');
+
+                $safeMessage = "Le <b>Directeur Général</b> de l'ONFP vous a imputé un nouveau courrier. <br>
+                    Merci de vous connecter à votre compte (<a href='{$lienApp}'>ici</a>) pour voir les détails
+                    ou accéder directement au courrier via <a href='{$lienCourrier}'>ce lien</a>.";
+
+                $subject = "COURRIER ONFP | $objetCourrier";
+                $message = strip_tags($safeMessage, '<b><i><p><a><br>'); // Autorise <b>, <i>, <p>, et <a>
+
+                Mail::to($toEmail)->send(new ImputationcourrierMail($message, $subject, $toEmail, $toUserName));
+            }
 
             Alert::success('Bravo !', 'Le courrier a été imputé avec succès.');
 
@@ -715,7 +730,8 @@ class ArriveController extends Controller
 
         $directions = Direction::pluck('sigle', 'sigle')->all();
 
-        $arriveDirections = $courrier->directions->pluck('sigle', 'sigle')->all();
+        $arriveDirections  = $courrier->directions->pluck('sigle', 'sigle')->all();
+        $arriveDescription = $courrier->description;
 
         $numero = $courrier->numero_courrier;
 
@@ -743,6 +759,7 @@ class ArriveController extends Controller
             'courrier',
             'directions',
             'arriveDirections',
+            'arriveDescription',
             'title',
             'actions'
         )));

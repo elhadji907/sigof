@@ -181,17 +181,15 @@
                                     <td colspan="4" align="center"><b>{{ __('ACTIONS ATTENDUES') }}</b></td>
                                 </tr>
                                 @foreach ($actions as $action)
-                                    <tr class="item">
-                                        <td colspan="2" style="padding-left:5px;">
-                                            {{ $action }}
-                                        </td>
-                                        <td colspan="2" align="center">
-                                            @if ($action == $courrier->description)
-                                                <span style="color: red;">{{ __('X') }}</span>
-                                            @endif
-                                        </td>
-                                    </tr>
-                                @endforeach
+    <tr class="item">
+        <td colspan="2" style="padding-left:5px;">{{ $action }}</td>
+        <td colspan="2" align="center">
+            @if (strcasecmp(trim($action), trim($courrier->description)) === 0)
+                <span style="color: red;">X</span>
+            @endif
+        </td>
+    </tr>
+@endforeach
                             </tbody>
                         </table>
                     </td>
