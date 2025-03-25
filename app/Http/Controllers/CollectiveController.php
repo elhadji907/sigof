@@ -595,11 +595,11 @@ class CollectiveController extends Controller
     }
     public function demandesCollective(Request $request)
     {
-        $departements     = Departement::orderBy("created_at", "desc")->get();
-        $modules          = Module::orderBy("created_at", "desc")->get();
+        $departements     = Departement::latest()->get();
+        $modules          = Module::latest()->get();
         $user             = Auth::user();
-        $collective       = Collective::where('users_id', $user->id)->first();
-        $collective_total = $collective->count();
+        $collective       = $user->collectives()->first(); // Récupère le plus récent grâce à `latest() definie dans le modele User`
+        $collective_total = $user->collectives()->count(); // Compte le nombre total de collectives
 
         $files = File::where('users_id', $collective?->user?->id)
             ->whereNotNull('file') // Utilisation de whereNotNull pour plus de clarté
