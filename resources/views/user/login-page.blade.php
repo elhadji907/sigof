@@ -145,8 +145,12 @@
                                             @endif
                                         </div> --}}
                                         <div class="col-12">
-                                            <p class="small mb-0">Retour à la page d'<a
+                                            <p class="small mb-0">retour à la page d'<a
                                                     href="{{ route('accueil') }}">accueil</a></p>
+                                        </div>
+                                        <div class="col-12">
+                                            <p class="small mb-0">si vous n'avez pas encore de compte, <a
+                                                    href="{{ route('accueil') }}">S'inscrire</a></p>
                                         </div>
                                     </form>
 
