@@ -167,7 +167,7 @@
                                         class="form-control form-control-sm @error('cin') is-invalid @enderror"
                                         id="cin" value="{{ $employe->user->cin ?? old('cin') }}"
                                         autocomplete="off" placeholder="Ex: 1 099 2005 00012" minlength="16"
-                                        maxlength="17" required>
+                                        maxlength="17">
                                     @error('cin')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
