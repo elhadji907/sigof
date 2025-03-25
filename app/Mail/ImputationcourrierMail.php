@@ -63,4 +63,13 @@ class ImputationcourrierMail extends Mailable
     {
         return [];
     }
+
+    public function build()
+    {
+        return $this->view('courriers.arrives.mailimputation')
+            ->attach(public_path('onfp.png'), [
+                'as'   => 'logo.png',
+                'mime' => 'image/png',
+            ]);
+    }
 }
