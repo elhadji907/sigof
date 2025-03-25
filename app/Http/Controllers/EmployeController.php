@@ -179,7 +179,7 @@ class EmployeController extends Controller
             "matricule"           => ['nullable', 'string', 'min:8', 'max:8', Rule::unique(table: Employee::class)->ignore($employe->id)->whereNull('deleted_at')],
             'cin'                 => ['nullable', 'string', 'min:16', 'max:17', Rule::unique(User::class)->ignore($user->id)->whereNull('deleted_at')],
             'date_embauche'       => ['nullable', 'date_format:d/m/Y'],
-            'categorie'           => ['required', 'string'],
+            'categorie'           => ['nullable', 'string'],
             'fonction'            => ['required', 'string'],
             'direction'           => ['required', 'string'],
         ]);
@@ -209,7 +209,13 @@ class EmployeController extends Controller
             ]);
         }
 
-        $categorie = Category::where('name', $request->input('categorie'))->first();
+        if ($request->input('categorie')) {
+            $categorie   = Category::where('name', $request->input('categorie'))->first();
+            $categorieid = $categorie->id;
+        } else {
+            $categorieid = null;
+        }
+
         $fonction  = Fonction::where('name', $request->input('fonction'))->first();
         $direction = Direction::where('name', $request->input('direction'))->first();
 
@@ -253,7 +259,7 @@ class EmployeController extends Controller
             'fonction_precedente' => $request->fonction_precedente,
             'fonctions_id'        => $fonction->id,
             'directions_id'       => $direction->id,
-            'categories_id'       => $categorie->id,
+            'categories_id'       => $categorieid,
         ]);
 
         /* $status = 'Mise à jour effectuée avec succès';
