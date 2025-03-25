@@ -78,8 +78,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4">
-                                    <label for="name" class="form-label">Date naissance<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="name" class="form-label">Date naissance</label>
                                     <input type="text" name="date_naissance" value="{{ old('date_naissance') }}"
                                         class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
                                         id="datepicker" placeholder="JJ/MM/AAAA" autocomplete="bday">
@@ -91,8 +90,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4">
-                                    <label for="name" class="form-label">Lieu naissance<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="name" class="form-label">Lieu naissance</label>
                                     <input name="lieu_naissance" type="text"
                                         class="form-control form-control-sm @error('lieu_naissance') is-invalid @enderror"
                                         id="lieu_naissance" value="{{ old('lieu_naissance') }}"
@@ -105,8 +103,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4">
-                                    <label for="adresse" class="form-label">Adresse<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="adresse" class="form-label">Adresse</label>
                                     <input type="text" name="adresse" value="{{ old('adresse') }}"
                                         class="form-control form-control-sm @error('adresse') is-invalid @enderror"
                                         id="adresse" placeholder="adresse">
@@ -147,8 +144,7 @@
                                 </div> --}}
 
                                 <div class="col-12 col-md-6 col-lg-4">
-                                    <label for="telephone" class="form-label">Téléphone personnel<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="telephone" class="form-label">Téléphone personnel</label>
                                             <input name="telephone" type="text" maxlength="12"
                                                 class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                                 id="telephone" value="{{ old('telephone') }}"
@@ -161,12 +157,11 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4">
-                                    <label for="cin" class="form-label">N° CIN<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="cin" class="form-label">N° CIN</label>
                                     <input name="cin" type="text"
                                         class="form-control form-control-sm @error('cin') is-invalid @enderror"
                                         id="cin" value="{{ old('cin') }}" autocomplete="off"
-                                        placeholder="Ex: 1 099 2005 00012" minlength="16" maxlength="17" required>
+                                        placeholder="Ex: 1 099 2005 00012" minlength="16" maxlength="17">
                                     @error('cin')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -175,8 +170,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4">
-                                    <label for="name" class="form-label">Date embauche<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="name" class="form-label">Date embauche</label>
                                     <input type="text" name="date_embauche" value="{{ old('date_embauche') }}"
                                         class="form-control form-control-sm @error('date_embauche') is-invalid @enderror"
                                         id="datepicker1" placeholder="JJ/MM/AAAA" autocomplete="bday">
@@ -188,8 +182,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4">
-                                    <label for="categorie" class="form-label">Catégorie<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="categorie" class="form-label">Catégorie</label>
                                     <select name="categorie" class="form-select @error('categorie') is-invalid @enderror"
                                         aria-label="Select" id="select-field-categories"
                                         data-placeholder="Choisir categorie">
@@ -244,8 +237,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4">
-                                    <label for="matricule" class="form-label">Situation familiale<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="matricule" class="form-label">Situation familiale</label>
                                     <select name="situation_familiale"
                                         class="form-select  @error('situation_familiale') is-invalid @enderror"
                                         aria-label="Select" id="select-field-familiale"

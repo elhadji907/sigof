@@ -190,8 +190,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="categorie" class="form-label">Catégorie<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="categorie" class="form-label">Catégorie</label>
                                     <select name="categorie" class="form-select @error('categorie') is-invalid @enderror"
                                         aria-label="Select" id="select-field-categorie-emp"
                                         data-placeholder="Choisir categorie">

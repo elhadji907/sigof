@@ -57,31 +57,35 @@ class EmployeController extends Controller
             'name'                => ['required', 'string', 'max:25'],
             'image'               => ['image', 'max:255', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:1024'],
             'telephone'           => ['nullable', 'string', 'min:9', 'max:12'],
-            'adresse'             => ['required', 'string', 'max:255'],
+            'adresse'             => ['nullable', 'string', 'max:255'],
             'civilite'            => ['required', 'string', 'max:10'],
             'cin'                 => [
-                'required',
+                'nullable',
                 'string',
                 'min:16',
                 'max:17',
                 Rule::unique(User::class)->whereNull('deleted_at'),
             ],
-            'date_naissance'      => ['required', 'date_format:d/m/Y'],
-            'lieu_naissance'      => ['string', 'required'],
+            'date_naissance'      => ['nullable', 'date_format:d/m/Y'],
+            'lieu_naissance'      => ['nullable', 'string'],
             'email'               => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)],
-            'date_embauche'       => ['required', 'date_format:d/m/Y'],
-            'categorie'           => ['required', 'string'],
+            'date_embauche'       => ['nullable', 'date_format:d/m/Y'],
+            'categorie'           => ['nullable', 'string'],
             'fonction'            => ['nullable', 'string'],
             'direction'           => ['nullable', 'string'],
-            'situation_familiale' => ['required', 'string'],
+            'situation_familiale' => ['nullable', 'string'],
         ]);
 
         $categorie = Category::where('name', $request?->categorie)->first();
         $fonction  = Fonction::where('name', $request?->fonction)->first();
         $direction = Direction::where('name', $request?->direction)->first();
 
-        $dateNaissance  = $request->date_naissance;
-        $date_naissance = Carbon::createFromFormat('d/m/Y', $dateNaissance);
+        if ($request->date_naissance) {
+            $dateNaissance  = $request->date_naissance;
+            $date_naissance = Carbon::createFromFormat('d/m/Y', $dateNaissance);
+        } else {
+            $date_naissance = null;
+        }
 
         $user = User::create([
             'cin'                 => $request?->cin,
@@ -123,8 +127,12 @@ class EmployeController extends Controller
             ]);
         }
 
-        $dateEmbauche  = $request->date_embauche;
-        $date_embauche = Carbon::createFromFormat('d/m/Y', $dateEmbauche);
+        if ($request->date_embauche) {
+            $dateEmbauche  = $request->date_embauche;
+            $date_embauche = Carbon::createFromFormat('d/m/Y', $dateEmbauche);
+        } else {
+            $date_embauche = null;
+        }
 
         $employe = Employee::create([
             'users_id'      => $user?->id,
@@ -159,19 +167,19 @@ class EmployeController extends Controller
             'civilite'            => ['required', 'string', 'max:10'],
             'firstname'           => ['required', 'string', 'max:50'],
             'name'                => ['required', 'string', 'max:25'],
-            'date_naissance'      => ['required', 'date_format:d/m/Y'],
-            'lieu_naissance'      => ['string', 'required'],
+            'date_naissance'      => ['nullable', 'date_format:d/m/Y'],
+            'lieu_naissance'      => ['nullable', 'string'],
             'image'               => ['image', 'max:255', 'nullable', 'mimes:jpeg,png,jpg,gif,svg', 'max:1024'],
-            'telephone'           => ['required', 'string', 'max:25', 'min:9'],
-            'adresse'             => ['required', 'string', 'max:255'],
+            'telephone'           => ['nullable', 'string', 'max:25', 'min:9'],
+            'adresse'             => ['nullable', 'string', 'max:255'],
             'password'            => ['string', 'max:255', 'nullable'],
-            'situation_familiale' => ['string', 'max:15', 'required'],
+            'situation_familiale' => ['string', 'max:15', 'nullable'],
             'roles.*'             => ['string', 'max:255', 'nullable', 'max:255'],
             "email"               => ["lowercase", 'email', "max:255", Rule::unique(User::class)->ignore($user->id)->whereNull('deleted_at')],
             "matricule"           => ['nullable', 'string', 'min:8', 'max:8', Rule::unique(table: Employee::class)->ignore($employe->id)->whereNull('deleted_at')],
-            'cin'                 => ['required', 'string', 'min:16', 'max:17', Rule::unique(User::class)->ignore($user->id)->whereNull('deleted_at')],
-            'date_embauche'       => ['required', 'date_format:d/m/Y'],
-            'categorie'           => ['required', 'string'],
+            'cin'                 => ['nullable', 'string', 'min:16', 'max:17', Rule::unique(User::class)->ignore($user->id)->whereNull('deleted_at')],
+            'date_embauche'       => ['nullable', 'date_format:d/m/Y'],
+            'categorie'           => ['nullable', 'string'],
             'fonction'            => ['required', 'string'],
             'direction'           => ['required', 'string'],
         ]);
@@ -205,11 +213,19 @@ class EmployeController extends Controller
         $fonction  = Fonction::where('name', $request->input('fonction'))->first();
         $direction = Direction::where('name', $request->input('direction'))->first();
 
-        $dateNaissance  = $request->date_naissance;
-        $date_naissance = Carbon::createFromFormat('d/m/Y', $dateNaissance);
+        if ($request->date_naissance) {
+            $dateNaissance  = $request->date_naissance;
+            $date_naissance = Carbon::createFromFormat('d/m/Y', $dateNaissance);
+        } else {
+            $date_naissance = null;
+        }
 
-        $dateEmbauche  = $request->date_embauche;
-        $date_embauche = Carbon::createFromFormat('d/m/Y', $dateEmbauche);
+        if ($request->date_embauche) {
+            $dateEmbauche  = $request->date_embauche;
+            $date_embauche = Carbon::createFromFormat('d/m/Y', $dateEmbauche);
+        } else {
+            $date_embauche = null;
+        }
 
         $user->update([
             'cin'                 => $request->cin,

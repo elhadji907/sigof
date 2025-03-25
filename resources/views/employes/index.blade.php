@@ -70,8 +70,12 @@
                                             <td>{{ $employe?->matricule }}</td>
                                             <td>{{ $employe?->user?->firstname }}</td>
                                             <td>{{ $employe?->user?->name }}</td>
-                                            <td>{{ $employe?->user?->email }}</td>
-                                            <td>{{ $employe?->user?->telephone }}</td>
+                                            <td><a
+                                                    href="mailto:{{ $employe?->user?->email }}">{{ $employe?->user?->email }}</a>
+                                            </td>
+                                            <td><a
+                                                    href="tel:+221{{ $employe?->user?->telephone }}">{{ $employe?->user?->telephone }}</a>
+                                            </td>
                                             <td>{{ $employe?->direction?->name }}</td>
                                             <td>
                                                 <span class="d-flex mt-2 align-items-baseline"><a
