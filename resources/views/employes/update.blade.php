@@ -87,8 +87,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="name" class="form-label">Date naissance<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="name" class="form-label">Date naissance</label>
                                     <input type="text" name="date_naissance"
                                         value="{{ old('date_naissance', optional($employe->user->date_naissance)->format('d/m/Y')) }}"
                                         class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
@@ -101,8 +100,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="name" class="form-label">Lieu naissance<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="name" class="form-label">Lieu naissance</label>
                                     <input name="lieu_naissance" type="text"
                                         class="form-control form-control-sm @error('lieu_naissance') is-invalid @enderror"
                                         id="lieu_naissance"
@@ -116,8 +114,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="adresse" class="form-label">Adresse<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="adresse" class="form-label">Adresse</label>
                                     <input type="text" name="adresse"
                                         value="{{ $employe->user->adresse ?? old('adresse') }}"
                                         class="form-control form-control-sm @error('adresse') is-invalid @enderror"
@@ -147,8 +144,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="telephone" class="form-label">Téléphone<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="telephone" class="form-label">Téléphone</label>
                                     <input name="telephone" type="text" maxlength="12"
                                         class="form-control form-control-sm @error('telephone') is-invalid @enderror"
                                         id="telephone" value="{{ old('telephone', $employe->user->telephone ?? '') }}"
@@ -161,8 +157,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="cin" class="form-label">N° CIN<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="cin" class="form-label">N° CIN</label>
                                     <input name="cin" type="text"
                                         class="form-control form-control-sm @error('cin') is-invalid @enderror"
                                         id="cin" value="{{ $employe->user->cin ?? old('cin') }}"
@@ -176,8 +171,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="name" class="form-label">Date embauche<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="name" class="form-label">Date embauche</label>
                                     <input type="text" name="date_embauche"
                                         value="{{ old('date_embauche', optional($employe->date_embauche)->format('d/m/Y')) }}"
                                         class="form-control form-control-sm @error('date_embauche') is-invalid @enderror"
@@ -190,7 +184,8 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="categorie" class="form-label">Catégorie</label>
+                                    <label for="categorie" class="form-label">Catégorie<span
+                                            class="text-danger mx-1">*</span></label>
                                     <select name="categorie" class="form-select @error('categorie') is-invalid @enderror"
                                         aria-label="Select" id="select-field-categorie-emp"
                                         data-placeholder="Choisir categorie">
@@ -248,8 +243,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="matricule" class="form-label">Situation familiale<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="matricule" class="form-label">Situation familiale</label>
                                     <select name="situation_familiale"
                                         class="form-select  @error('situation_familiale') is-invalid @enderror"
                                         aria-label="Select" id="select-field-familiale"

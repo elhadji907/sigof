@@ -179,7 +179,7 @@ class EmployeController extends Controller
             "matricule"           => ['nullable', 'string', 'min:8', 'max:8', Rule::unique(table: Employee::class)->ignore($employe->id)->whereNull('deleted_at')],
             'cin'                 => ['nullable', 'string', 'min:16', 'max:17', Rule::unique(User::class)->ignore($user->id)->whereNull('deleted_at')],
             'date_embauche'       => ['nullable', 'date_format:d/m/Y'],
-            'categorie'           => ['nullable', 'string'],
+            'categorie'           => ['required', 'string'],
             'fonction'            => ['required', 'string'],
             'direction'           => ['required', 'string'],
         ]);
