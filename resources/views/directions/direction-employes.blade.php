@@ -112,8 +112,7 @@
                                         </tbody>
                                     </table>
                                     <div class="text-center">
-                                        <button type="submit" class="btn btn-outline-primary"><i
-                                                class="bi bi-check2-circle"></i>&nbsp;Sélectionner</button>
+                                        <button type="submit" class="btn btn-outline-primary btn-sm">Sélectionner</button>
                                     </div>
                                 </div>
                             </div>

@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'modification direction')
+@section('title', 'Modification ' . $direction->name)
 @section('space-work')
     <section class="section">
         <div class="row justify-content-center">
@@ -74,24 +74,32 @@
                             </div>
                             <div class="col-12 col-md-6 col-lg-6">
                                 <label for="employe" class="form-label">Responsable</label>
-                                <select name="employe" class="form-select  @error('employe') is-invalid @enderror"
-                                    aria-label="Select" id="select-field-employe" data-placeholder="Choisir le responsable">
-                                    <option value="{{ $chef->id }}">{{ $chef_name }}</option>
-                                    @foreach ($employe as $employes)
-                                        <option value="{{ $employes->id }}">
-                                            {{ $employes->matricule }} {{ $employes->user->firstname }}
-                                            {{ $employes->user->name }}
+                                <select name="employe" class="form-select @error('employe') is-invalid @enderror"
+                                    aria-label="Sélectionner le responsable" id="select-field-employe"
+                                    data-placeholder="Choisir le responsable" aria-describedby="employe-error">
+
+                                    {{-- Option par défaut --}}
+                                    <option value="" disabled selected>Choisir le responsable</option>
+
+                                    {{-- Liste des employés --}}
+                                    @foreach ($employes as $employe)
+                                        <option value="{{ $employe->id }}" {{-- Vérification si l'employé actuel correspond à celui déjà assigné --}}
+                                            {{ isset($direction->chef_id) && $direction->chef_id == $employe->id ? 'selected' : '' }}>
+                                            {{ $employe->matricule . ' ' . ($employe->user ? $employe->user->firstname : '') }}
+                                            {{ $employe->user->name }}
                                         </option>
                                     @endforeach
                                 </select>
+
                                 @error('employe')
-                                    <span class="invalid-feedback" role="alert">
+                                    <span class="invalid-feedback" role="alert" id="employe-error">
                                         <div>{{ $message }}</div>
                                     </span>
                                 @enderror
                             </div>
+
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Modifier</button>
+                                <button type="submit" class="btn btn-primary btn-sm">Modifier</button>
                             </div>
                         </form><!-- End type -->
                     </div>
