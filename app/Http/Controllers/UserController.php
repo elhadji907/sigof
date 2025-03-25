@@ -1034,7 +1034,7 @@ class UserController extends Controller
         $total_count = number_format($count_raw, 0, ',', ' ');
 
 // Récupération de la liste des rôles sous forme de tableau clé-valeur
-        $roles = Role::pluck('name', 'name')->all();
+        /* $roles = Role::pluck('name', 'name')->all(); */
 
 // Récupération des 100 derniers utilisateurs
         $user_liste          = User::latest()->get();
@@ -1042,16 +1042,16 @@ class UserController extends Controller
         $count_demandeur     = number_format($count_demandeur_raw, 0, ',', ' ');
 
 // Définition du titre avec des comparaisons correctes
-        if ($count_demandeur_raw < 1) {
-            $title = 'Aucun utilisateur';
+        /* if ($count_demandeur_raw < 1) {
+            $title = 'Aucun demandeur';
         } elseif ($count_demandeur_raw == 1) {
             $title = '1 utilisateur sur un total de ' . $total_count;
         } else {
             $title = 'Liste des ' . $count_demandeur . ' derniers utilisateurs sur un total de ' . $total_count;
-        }
+        } */
 
 // Retour de la vue avec les données optimisées
-        return view("user.demandeur", compact("user_liste", "title", "roles"));
+        return view("user.demandeur", compact("user_liste"));
 
     }
 

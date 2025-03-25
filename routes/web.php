@@ -461,7 +461,9 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::put('/resetuserPassword/{id}', [UserController::class, 'resetuserPassword'])->name('resetuserPassword');
 
         Route::get('backup', [UserController::class, 'backup'])->name('backup');
+
         Route::get('demandesdg', [IndividuelleController::class, 'demandesdg'])->name('demandesdg');
+        Route::get('demandesth', [IndividuelleController::class, 'demandesth'])->name('demandesth');
         Route::get('demandeszig', [IndividuelleController::class, 'demandeszig'])->name('demandeszig');
         Route::get('demandeskd', [IndividuelleController::class, 'demandeskd'])->name('demandeskd');
         Route::get('demandeskl', [IndividuelleController::class, 'demandeskl'])->name('demandeskl');

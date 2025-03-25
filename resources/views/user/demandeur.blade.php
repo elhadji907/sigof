@@ -35,6 +35,7 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
+                        <h5 class="card-title">Liste des demandeurs</h5>
                         @if ($user_liste->isNotEmpty())
                             <table class="table datatables align-middle" id="table-users">
                                 <thead>
@@ -80,6 +81,8 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                        @else
+                            <div class="alert alert-info mt-3">Aucun demandeur pour le moment !!!</div>
                         @endif
                     </div>
                 </div>

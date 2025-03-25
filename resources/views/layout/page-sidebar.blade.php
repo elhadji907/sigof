@@ -122,6 +122,14 @@
                             </a>
                         </li>
                     @endcan
+
+                    @can('antTH')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('demandesth') }}">
+                                <span>Antenne Thies</span>
+                            </a>
+                        </li>
+                    @endcan
                     @can('antKL')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('demandeskl') }}">

@@ -144,7 +144,8 @@
                                                                         method="post">
                                                                         @csrf
                                                                         @method('DELETE')
-                                                                        <button type="submit" class="dropdown-item show_confirm"><i
+                                                                        <button type="submit"
+                                                                            class="dropdown-item show_confirm"><i
                                                                                 class="bi bi-trash"></i>Supprimer</button>
                                                                     </form>
                                                                 </li>
@@ -164,7 +165,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                        @endisset
+                        @else
+                            <div class="alert alert-info mt-3">Aucun utilisateur pour le moment !!!</div>
+                        @endif
                     </div>
                 </div>
             </div>
