@@ -86,12 +86,28 @@
         @can('demande-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#demande--ind-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-folder-plus"></i><span>Demandes individuelles</span><i
+                    <i class="bi bi-folder-plus"></i><span>Gestion des demandes</span><i
                         class="bi bi-chevron-down ms-auto"></i>
                 </a>
                 <ul id="demande--ind-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 
-                    @can('demandeur-view')
+                    @can('individuelle-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('individuelles') }}">
+                                <span>Individuelles</span>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('collective-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('collectives') }}">
+                                <span>Collectives</span>
+                            </a>
+                        </li>
+                    @endcan
+
+                    @can('user-view')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ route('users.demandeurs') }}">
                                 <span>Demandeurs</span>
@@ -99,13 +115,6 @@
                         </li>
                     @endcan
 
-                    @can('individuelle-view')
-                        <li class="nav-item">
-                            <a class="nav-link collapsed" href="{{ url('individuelles') }}">
-                                <span>Demandes individuelles</span>
-                            </a>
-                        </li>
-                    @endcan
                     @can('dg')
                         <li class="nav-item">
                             <a class="nav-link collapsed" href="{{ url('demandesdg') }}">
@@ -165,7 +174,8 @@
                 </ul>
             </li>
         @endcan
-        @can('demande-view')
+
+        {{-- @can('demande-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#demande-col-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-folder-plus"></i><span>Demandes collectives</span><i
@@ -181,7 +191,7 @@
                     @endcan
                 </ul>
             </li>
-        @endcan
+        @endcan --}}
 
         @can('demandeur-view')
             <li class="nav-item">
