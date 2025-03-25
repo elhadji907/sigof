@@ -187,20 +187,19 @@
 
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
-                                        data-bs-target="#profile-change-password">Changer le mot de passe</button>
+                                        data-bs-target="#profile-change-password">Mot de passe</button>
                                 </li>
 
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab"
-                                        data-bs-target="#files">Fichiers</button>
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#files">Fichiers</button>
                                 </li>
 
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <button class="nav-link">
                                         <a style="text-decoration: none; color: black"
                                             href="{{ route('mesformations') }}" title="voir">Formations</a>
                                     </button>
-                                </li>
+                                </li> --}}
 
                             </ul>
                             <div class="tab-content pt-2">
@@ -364,15 +363,14 @@
                                                     </div>
                                                     @auth
                                                         @if (optional(Auth::user())?->image)
-                                                            <div class="d-inline">
-                                                                <button type="button"
-                                                                    class="btn btn-danger btn-sm show_confirmDeleteImage"
+                                                            <div class="form-group mb-0">
+                                                                <label for="delete-image"
+                                                                    class="btn btn-danger btn-sm text-white show_confirmDeleteImage"
                                                                     data-url="{{ route('profile.image.destroy') }}"
                                                                     title="Supprimer l'image de profil">
-                                                                    <span class="badge border-danger border-1 text-danger">
-                                                                        <i class="bi bi-trash"></i>
-                                                                    </span>
-                                                                </button>
+                                                                    <i class="bi bi-trash"></i>
+                                                                    <input type="button" id="delete-image" class="d-none">
+                                                                </label>
                                                             </div>
                                                         @endif
                                                     @endauth
@@ -790,11 +788,11 @@
                                                 @method('put')
                                                 <div class="row mb-3">
                                                     <label for="update_password_current_password"
-                                                        class="col-md-4 col-lg-3 col-form-label label">Mot de
+                                                        class="col-md-4 col-lg-4 col-form-label label">Mot de
                                                         passe actuel<span class="text-danger mx-1">*</span></label>
-                                                    <div class="col-md-6 col-lg-6">
+                                                    <div class="col-md-4 col-lg-8">
                                                         <input name="current_password" type="password"
-                                                            class="form-control @error('current_password') is-invalid @enderror"
+                                                            class="form-control form-control-sm @error('current_password') is-invalid @enderror"
                                                             id="update_password_current_password"
                                                             placeholder="Votre mot de passe actuel"
                                                             autocomplete="current-password">
@@ -804,12 +802,12 @@
                                                 <!-- Mot de passe -->
                                                 <div class="row mb-3">
                                                     <label for="password"
-                                                        class="col-md-4 col-lg-3 col-form-label label">Mot
+                                                        class="col-md-4 col-lg-4 col-form-label label">Mot
                                                         de
                                                         passe<span class="text-danger mx-1">*</span></label>
-                                                    <div class="col-md-6 col-lg-6">
+                                                    <div class="col-md-8 col-lg-8">
                                                         <input type="password" name="password"
-                                                            class="form-control @error('password') is-invalid @enderror"
+                                                            class="form-control form-control-sm @error('password') is-invalid @enderror"
                                                             id="password" placeholder="Votre mot de passe"
                                                             value="{{ old('password') }}" autocomplete="new-password">
                                                         <div class="invalid-feedback">
@@ -822,11 +820,11 @@
                                                 <!-- Mot de passe de confirmation -->
                                                 <div class="row mb-3">
                                                     <label for="password_confirmation"
-                                                        class="col-md-4 col-lg-3 col-form-label label">Confirmez<span
+                                                        class="col-md-4 col-lg-4 col-form-label label">Confirmez<span
                                                             class="text-danger mx-1">*</span></label>
-                                                    <div class="col-md-6 col-lg-6">
+                                                    <div class="col-md-8 col-lg-8">
                                                         <input type="password" name="password_confirmation"
-                                                            class="form-control @error('password_confirmation') is-invalid @enderror"
+                                                            class="form-control form-control-sm @error('password_confirmation') is-invalid @enderror"
                                                             id="password_confirmation"
                                                             placeholder="Confimez votre mot de passe"
                                                             value="{{ old('password_confirmation') }}"
@@ -839,7 +837,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="text-center">
-                                                    <button type="submit" class="btn btn-primary">Changer
+                                                    <button type="submit" class="btn btn-primary btn-sm">Changer
                                                         le mot de
                                                         passe</button>
                                                 </div>
