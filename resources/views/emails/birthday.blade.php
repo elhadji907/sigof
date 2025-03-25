@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <img src="cid:logo.png" alt="ONFP Logo" style="max-width: 20%;" class="w-25">
     <title>Joyeux Anniversaire 🎉</title>
 </head>
 

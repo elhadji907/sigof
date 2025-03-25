@@ -75,8 +75,8 @@
     <div class="email-container">
         <!-- En-tête -->
         <div class="header">
-            <img src="cid:logo.png" alt="ONFP Logo" style="max-width: 50px;">
-            <h2>ONFP | Notification</h2>
+            <img src="cid:logo.png" alt="ONFP Logo" style="max-width: 20%;" class="w-25">
+            {{-- <h2>ONFP | Notification</h2> --}}
         </div>
 
         <!-- Contenu -->
