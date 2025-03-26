@@ -11,6 +11,14 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                            role="alert">
+                            <strong>{{ $error }}</strong>
+                        </div>
+                    @endforeach
+                @endif
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -44,23 +52,22 @@
 
                             <table class="table table-bordered" id="dynamicAddRemove">
                                 <tr>
-                                    <th>fonctions<span class="text-danger mx-1">*</span></th>
+                                    <th width="60%">Fonctions<span class="text-danger mx-1">*</span></th>
                                     <th>Sigle<span class="text-danger mx-1">*</span></th>
-                                    <th width="15%">#</th>
+                                    <th width="5%">#</th>
                                 </tr>
                                 <tr>
                                     <td><input type="text" name="fonctions[0][name]" placeholder="Entrer une fonction"
                                             class="form-control form-control-sm" autofocus /></td>
                                     <td><input type="text" name="fonctions[0][sigle]" placeholder="Entrer un sigle"
                                             class="form-control form-control-sm" autofocus /></td>
-                                    <td><button type="button" name="add" id="add-btn" class="btn btn-success"
+                                    <td><button type="button" name="add" id="add-btn" class="btn btn-success btn-sm"
                                             title="Ajouter une ligne">Ajouter</button>
                                     </td>
                                 </tr>
                             </table>
                             <div class="col-xs-12 col-sm-12 col-md-12 text-left mt-2">
-                                <button type="submit" class="btn btn-outline-success"><i
-                                        class="far fa-save"></i>&nbsp;Sauvegarder</button>
+                                <button type="submit" class="btn btn-outline-success btn-sm">Sauvegarder</button>
                             </div>
 
                         </form><!-- End fonction -->
@@ -77,8 +84,9 @@
         $("#add-btn").click(function() {
             ++i;
             $("#dynamicAddRemove").append('<tr><td><input type="text" name="fonctions[' + i +
-                '][name]" placeholder="Entrer une autre fonction" class="form-control" /></td><td><input type="text" name="fonctions[' + i +
-                '][sigle]" placeholder="Entrer un autre sigle" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr">Supprimer</button></td></tr>'
+                '][name]" placeholder="Entrer une autre fonction" class="form-control form-control-sm" /></td><td><input type="text" name="fonctions[' +
+                i +
+                '][sigle]" placeholder="Entrer un autre sigle" class="form-control form-control-sm" /></td><td><button type="button" class="btn btn-danger btn-sm remove-tr">Supprimer</button></td></tr>'
             );
         });
         $(document).on('click', '.remove-tr', function() {
