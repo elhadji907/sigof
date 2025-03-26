@@ -28,6 +28,9 @@ class OperateursImport implements ToModel, WithHeadingRow
                 ]
             );
 
+            // Assigner un rôle à l'utilisateur (si présent dans le fichier Excel)
+            $user->assignRole('Operateur');
+
             // 2. Insérer ou mettre à jour l'opérateur (évite les doublons)
             $operateur = Operateur::updateOrCreate(
                 ['numero_dossier' => $row['numero_dossier']], // Vérifie l'existence d'un opérateur
@@ -43,15 +46,15 @@ class OperateursImport implements ToModel, WithHeadingRow
 
             // 3. Associer les modules et autres colonnes
             if (! empty($row['modules'])) {
-                $modules    = explode(';', $row['modules']);    // Exemple : "Module1,Module2,Module3"
-                $domaines   = explode(';', $row['domaines']);   // Exemple : "Domaine1,Domaine2,Domaine3"
-                $categories = explode(';', $row['categories']); // Exemple : "Cat1,Cat2,Cat3"
-                $niveaux    = explode(';', $row['niveaux']);    // Exemple : "Niveau1,Niveau2,Niveau3"
+                $modules    = explode(';', $row['modules']);
+                $domaines   = explode(';', $row['domaines']);
+                $categories = explode(';', $row['categories']);
+                $niveaux    = explode(';', $row['niveaux']);
 
                 foreach ($modules as $index => $module) {
                     Operateurmodule::create([
                         'operateurs_id'        => $operateur->id,
-                        "statut"               => $row['statut'], //agréer
+                        "statut"               => $row['statut'], // agréer
                         'module'               => trim($module),
                         'domaine'              => $domaines[$index] ?? null, // Vérifie si l'index existe
                         'categorie'            => $categories[$index] ?? null,
