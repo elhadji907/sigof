@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests;
 
 use App\Models\User;
@@ -24,12 +23,13 @@ class IndividuelleStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'departement'                   => ['required', 'string', 'max:255'],
-            'module'                        => ['required', 'string', 'max:255'],
-            'niveau_etude'                  => ['required', 'string', 'max:255'],
-            'diplome_academique'            => ['required', 'string', 'max:255'],
-            'diplome_professionnel'         => ['required', 'string', 'max:255'],
-            'projet_poste_formation'        => ['required', 'string', 'max:255'],
+            'departement'            => ['required', 'string', 'max:255'],
+            'module'                 => ['required', 'string', 'max:255'],
+            'niveau_etude'           => ['required', 'string', 'max:255'],
+            'diplome_academique'     => ['required', 'string', 'max:255'],
+            'diplome_professionnel'  => ['required', 'string', 'max:255'],
+            'projet_poste_formation' => ['required', 'string', 'max:255'],
+            'qualification'          => ['nullable', 'string', 'max:200'],
 
             /* 'date_depot'                => ["required", "date", "date_format:Y-m-d"],
             'numero_dossier'            => ["required", "string", "max:50", Rule::unique('dossiers', 'numero_dossier')],

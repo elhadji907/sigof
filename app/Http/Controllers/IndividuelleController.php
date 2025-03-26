@@ -70,6 +70,7 @@ class IndividuelleController extends Controller
             'diplome_professionnel'  => ['required', 'string', 'max:255'],
             'projet_poste_formation' => ['required', 'string', 'max:255'],
             'projetprofessionnel'    => ['required', 'string', 'max:2000'],
+            'qualification'          => ['nullable', 'string', 'max:200'],
         ]);
 
         $user = Auth::user();
@@ -179,6 +180,7 @@ class IndividuelleController extends Controller
             'diplome_academique'     => ['required', 'string', 'max:255'],
             'diplome_professionnel'  => ['required', 'string', 'max:255'],
             'projet_poste_formation' => ['required', 'string', 'max:255'],
+            'qualification'          => ['nullable', 'string', 'max:200'],
         ]);
 
         $user   = Auth::user();
@@ -456,6 +458,7 @@ class IndividuelleController extends Controller
             'diplome_academique'        => ['required', 'string', 'max:255'],
             'diplome_professionnel'     => ['required', 'string', 'max:255'],
             'projet_poste_formation'    => ['required', 'string', 'max:255'],
+            'qualification'             => ['nullable', 'string', 'max:200'],
         ]);
 
         $cin = $request->input('cin');
@@ -790,6 +793,7 @@ class IndividuelleController extends Controller
             'diplome_professionnel'  => ['required', 'string', 'max:255'],
             'projet_poste_formation' => ['required', 'string', 'max:255'],
             'projetprofessionnel'    => ['required', 'string', 'max:2000'],
+            'qualification'          => ['nullable', 'string', 'max:200'],
         ]);
     }
 
@@ -992,7 +996,7 @@ class IndividuelleController extends Controller
         $individuelles = Individuelle::where('users_id', $user->id)
             ->whereNotNull('numero')  // Remplacé par whereNotNull pour plus de clarté
             ->whereNull('projets_id') // Simplification
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'asc')
             ->get();
 
 // Récupérer les fichiers associés à l'utilisateur
@@ -1143,6 +1147,7 @@ class IndividuelleController extends Controller
             'diplome_professionnel'  => ['required', 'string', 'max:255'],
             'projet_poste_formation' => ['required', 'string'],
             'projetprofessionnel'    => ['required', 'string', 'max:2000'],
+            'qualification'          => ['nullable', 'string', 'max:200'],
         ]);
 
         $user = Auth::user();

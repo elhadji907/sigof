@@ -289,39 +289,6 @@ class OperateurController extends Controller
             "formulaire_signe"     => "nullable|string",
         ]);
 
-        /* $anneeEnCours = date('Y');
-        $an = date('y');
-
-        $numCourrier = Arrive::join('courriers', 'courriers.id', 'arrives.courriers_id')
-        ->select('arrives.*')
-        ->where('courriers.annee', $anneeEnCours)
-        ->get()->last();
-
-        if (isset($numCourrier)) {
-        $numCourrier = Arrive::join('courriers', 'courriers.id', 'arrives.courriers_id')
-        ->select('arrives.*')
-        ->get()->last()->numero;
-
-        $numCourrier = ++$numCourrier;
-        } else {
-        $numCourrier = $an . "0001";
-        $longueur = strlen($numCourrier);
-
-        if ($longueur <= 1) {
-        $numCourrier   =   strtolower("00000" . $numCourrier);
-        } elseif ($longueur >= 2 && $longueur < 3) {
-        $numCourrier   =   strtolower("0000" . $numCourrier);
-        } elseif ($longueur >= 3 && $longueur < 4) {
-        $numCourrier   =   strtolower("000" . $numCourrier);
-        } elseif ($longueur >= 4 && $longueur < 5) {
-        $numCourrier   =   strtolower("00" . $numCourrier);
-        } elseif ($longueur >= 5 && $longueur < 6) {
-        $numCourrier   =   strtolower("0" . $numCourrier);
-        } else {
-        $numCourrier   =   strtolower($numCourrier);
-        }
-        } */
-
         $courrier = new Courrier([
             'date_recep'      => date('Y-m-d'),
             'date_cores'      => date('Y-m-d'),

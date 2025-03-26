@@ -216,9 +216,7 @@
                             </div>
                         @endif
                         {{-- <h5 class="card-title">Liste des opérateurs</h5> --}}
-                        @foreach ($operateurs as $operateur)
-                        @endforeach
-                        @if (!empty($operateur))
+                        @if ($operateurs->isNotEmpty())
                             <div class="table-responsive">
                                 <table class="table datatables table-bordered table-hover table-striped"
                                     id="table-operateurs">

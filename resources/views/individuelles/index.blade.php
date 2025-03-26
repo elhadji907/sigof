@@ -63,10 +63,7 @@
                             </div>
                             {{-- <p>Le tableau des demandes individuelles</p> --}}
                             <!-- Table with stripped rows -->
-
-                            @foreach ($individuelles as $individuelle)
-                            @endforeach
-                            @if (!empty($individuelle))
+                            @if ($individuelles->isNotEmpty())
                                 <table class="table datatables align-middle" id="table-individuelles">
                                     <thead>
                                         <tr>
