@@ -673,6 +673,9 @@
                                                                         <option value="M'en parler">
                                                                             M'en parler
                                                                         </option>
+                                                                        <option value="Etudes et Avis">
+                                                                            Etudes et Avis
+                                                                        </option>
                                                                         <option value="Répondre">
                                                                             Répondre
                                                                         </option>
