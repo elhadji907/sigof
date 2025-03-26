@@ -2,6 +2,7 @@
 namespace App\Imports;
 
 use App\Models\Operateur;
+use App\Models\Operateurmodule;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -41,23 +42,23 @@ class OperateursImport implements ToModel, WithHeadingRow
             );
 
             // 3. Associer les modules et autres colonnes
-            /* if (! empty($row['modules'])) {
-                $modules    = explode(',', $row['modules']);    // Exemple : "Module1,Module2,Module3"
-                $domaines   = explode(',', $row['domaines']);   // Exemple : "Domaine1,Domaine2,Domaine3"
-                $categories = explode(',', $row['categories']); // Exemple : "Cat1,Cat2,Cat3"
-                $niveaux    = explode(',', $row['niveaux']);    // Exemple : "Niveau1,Niveau2,Niveau3"
+            if (! empty($row['modules'])) {
+                $modules    = explode(';', $row['modules']);    // Exemple : "Module1,Module2,Module3"
+                $domaines   = explode(';', $row['domaines']);   // Exemple : "Domaine1,Domaine2,Domaine3"
+                $categories = explode(';', $row['categories']); // Exemple : "Cat1,Cat2,Cat3"
+                $niveaux    = explode(';', $row['niveaux']);    // Exemple : "Niveau1,Niveau2,Niveau3"
 
                 foreach ($modules as $index => $module) {
-                    OperateurModule::create([
+                    Operateurmodule::create([
                         'operateurs_id'        => $operateur->id,
                         "statut"               => $row['statut'], //agréer
                         'module'               => trim($module),
                         'domaine'              => $domaines[$index] ?? null, // Vérifie si l'index existe
                         'categorie'            => $categories[$index] ?? null,
-                        'niveau_qualification' => $niveaux[$index] ?? null,
+                        'niveau_qualification' => 'Qualification',
                     ]);
                 }
-            } */
+            }
 
             return $operateur;
         });

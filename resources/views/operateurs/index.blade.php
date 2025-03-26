@@ -215,6 +215,10 @@
                                                             <button type="submit"
                                                                 class="dropdown-item btn btn-sm">Importer</button>
                                                         </form>
+
+                                                        {{-- <button type="button" class="dropdown-item btn btn-sm"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#importOperateur"></i>Importer</button> --}}
                                                     </li>
                                                 @endhasrole
                                             </ul>
@@ -1528,6 +1532,60 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="importOperateur" tabindex="-1" role="dialog"
+            aria-labelledby="importOperateurLabel" aria-hidden="true" data-bs-backdrop="static"
+            data-bs-keyboard="false">
+
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+
+                    <!-- Header du Modal avec texte centré -->
+                    {{-- <div class="modal-header bg-secondary text-white">
+                        <h5 class="modal-title w-100 text-center" id="importOperateurLabel">
+                            FAIRE UNE RECHERCHE
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div> --}}
+
+                    <div class="card-header text-center bg-gradient-default">
+                        <h1 class="h4 text-black mb-0">IMPORTER</h1>
+                    </div>
+
+                    <!-- Formulaire -->
+                    <form method="post" action="{{ route('import.operateurs') }}" enctype="multipart/form-data"
+                        class="p-3" novalidate>
+                        @csrf
+
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="file" class="form-label">
+                                    Fichier (.XLSX, .CSV, .XLS) <span class="text-danger">*</span>
+                                </label>
+                                <input type="file" name="file" value="{{ old('file') }}"
+                                    class="form-control form-control-sm @error('file') is-invalid @enderror"
+                                    id="file" required>
+
+                                @error('file')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Footer du Modal -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary btn-sm text-white">Importer</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
     </section>
 
 @endsection
