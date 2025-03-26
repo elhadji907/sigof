@@ -10,6 +10,65 @@
             </li>
         @endcan
 
+        @can('user-view')
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#users-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-person"></i><span>{{ __('Gestion utilisateurs') }}</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="users-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ route('users.online') }}">
+                            <span>En ligne</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ route('users.actifs') }}">
+                            <span>Actifs</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ route('users.inactifs') }}">
+                            <span>Inactifs</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ route('users.corbeille') }}">
+                            <span>Corbeille</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ route('users.restored') }}">
+                            <span>Restaurés</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        @endcan
+
+        @can('role-view')
+            <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#autorisation-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-key"></i><span>{{ __("Contrôle d'accès") }}</span><i
+                        class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="autorisation-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link collapsed" href="{{ url('roles') }}">
+                            <span>Roles</span>
+                        </a>
+                    </li>
+                    @can('permission-view')
+                        <li class="nav-item">
+                            <a class="nav-link collapsed" href="{{ url('permissions') }}">
+                                <span>Permissions</span>
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+        @endcan
+
         @can('une-view')
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#actualite-nav" data-bs-toggle="collapse" href="#">
@@ -650,66 +709,6 @@
                 <a class="nav-link collapsed" href="{{ route('referentiels.index') }}">
                     <i class="bi bi-journals"></i> <span>Référentiels formations</span>
                 </a>
-            </li>
-        @endcan
-
-        @can('user-view')
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#users-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-person"></i><span>{{ __('Gestion utilisateurs') }}</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="users-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ route('users.online') }}">
-                            <span>En ligne</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ route('users.actifs') }}">
-                            <span>Actifs</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ route('users.inactifs') }}">
-                            <span>Inactifs</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ route('users.corbeille') }}">
-                            <span>Corbeille</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ route('users.restored') }}">
-                            <span>Restaurés</span>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        @endcan
-
-        @can('role-view')
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#autorisation-nav" data-bs-toggle="collapse"
-                    href="#">
-                    <i class="bi bi-key"></i><span>{{ __("Contrôle d'accès") }}</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="autorisation-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link collapsed" href="{{ url('roles') }}">
-                            <span>Roles</span>
-                        </a>
-                    </li>
-                    @can('permission-view')
-                        <li class="nav-item">
-                            <a class="nav-link collapsed" href="{{ url('permissions') }}">
-                                <span>Permissions</span>
-                            </a>
-                        </li>
-                    @endcan
-                </ul>
             </li>
         @endcan
     </ul>

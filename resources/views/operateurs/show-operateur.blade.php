@@ -355,10 +355,9 @@
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="date_quitus" class="form-label">Date visa quitus<span
                                                 class="text-danger mx-1">*</span></label>
-
-                                        <input type="date" name="date_quitus" value="{{ old('date_quitus') }}"
-                                            class="datepicker form-control form-control-sm @error('date_quitus') is-invalid @enderror"
-                                            id="date_quitus" placeholder="jj/mm/aaaa">
+                                        <input type="text" name="date_quitus" value="{{ old('date_quitus') }}"
+                                            class="form-control form-control-sm @error('date_quitus') is-invalid @enderror"
+                                            id="datepicker" placeholder="JJ/MM/AAAA" autocomplete="bday">
                                         @error('date_quitus')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
