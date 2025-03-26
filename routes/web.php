@@ -495,6 +495,9 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::post('/import-arrives', [ImportController::class, 'importArrives'])->name('import.arrives');
         Route::get('/import-arrives', [ImportController::class, 'importA'])->name('importA');
 
+        Route::post('/import-operateurs', [ImportController::class, 'importOperateurs'])->name('import.operateurs');
+        Route::get('/import-operateurs', [ImportController::class, 'importO'])->name('importO');
+
         /* Pour visualiser la page d'erreur */
         /* Route::get('/errors/restored', [UserController::class, 'errors'])->name('users.errors'); */
 

@@ -209,6 +209,14 @@
                                                         data-bs-toggle="modal" data-bs-target="#generate_rapport"></i>Rechercher
                                                         plus</button>
                                                 </li>
+                                                @hasrole('admin|super-admin')
+                                                    <li>
+                                                        <form action="{{ route('importO') }}" method="get">
+                                                            <button type="submit"
+                                                                class="dropdown-item btn btn-sm">Importer</button>
+                                                        </form>
+                                                    </li>
+                                                @endhasrole
                                             </ul>
                                         </div>
                                     </span>
