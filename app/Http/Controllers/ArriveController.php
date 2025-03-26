@@ -150,7 +150,7 @@ class ArriveController extends Controller
 
         return view(
             "courriers.arrives.index",
-            compact("arrives", "count_today", "anneeEnCours", "numCourrier", "count_arrives", "title")
+            compact("arrives", "count_today", "anneeEnCours", "numCourrier", "count_arrives", "title", "total_count")
         );
 
     }

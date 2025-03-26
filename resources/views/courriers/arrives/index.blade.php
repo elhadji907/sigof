@@ -84,7 +84,7 @@
                                         </div>
                                         <div class="ps-3">
                                             <h6>
-                                                <span class="text-primary">{{ count($arrives) ?? '0' }}</span>
+                                                <span class="text-primary">{{ $total_count }}</span>
                                             </h6>
                                             <span class="text-success small pt-1 fw-bold">Tous</span>
                                             {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
