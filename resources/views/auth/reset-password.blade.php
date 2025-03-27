@@ -154,25 +154,6 @@
                                             </div>
                                         </div>
 
-                                        <!-- Mot de passe -->
-                                        {{-- <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <label for="password" class="form-label">Mot de passe<span
-                                                    class="text-danger mx-1">*</span></label>
-                                            <input type="password" name="password"
-                                                class="form-control form-control-sm @error('password') is-invalid @enderror"
-                                                id="password" placeholder="Nouveau mot de passe"
-                                                value="{{ old('password') }}" autofocus autocomplete="new-password">
-                                            <button class="btn btn-outline-secondary" type="button"
-                                                id="togglePassword">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-                                            <div class="invalid-feedback">
-                                                @error('password')
-                                                    {{ $message }}
-                                                @enderror
-                                            </div>
-                                        </div> --}}
-
                                         <div class="col-12">
                                             <label for="password" class="form-label">Mot de passe<span
                                                     class="text-danger mx-1">*</span></label>
@@ -193,22 +174,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <!-- Mot de passe de confirmation -->
-                                        {{-- <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                            <label for="password_confirmation" class="form-label">Confirmez mot de
-                                                passe<span class="text-danger mx-1">*</span></label>
-                                            <input type="password" name="password_confirmation"
-                                                class="form-control form-control-sm @error('password_confirmation') is-invalid @enderror"
-                                                id="password_confirmation" placeholder="Confimez nouveau mot de passe"
-                                                value="{{ old('password_confirmation') }}"
-                                                autocomplete="new-password_confirmation">
-                                            <div class="invalid-feedback">
-                                                @error('password_confirmation')
-                                                    {{ $message }}
-                                                @enderror
-                                            </div>
-                                        </div> --}}
 
                                         <div class="col-12">
                                             <label for="password_confirmation" class="form-label">Confirmez le mot de
@@ -232,19 +197,12 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="pt-5">
-                                            <button class="btn btn-primary btn-sm w-100" type="submit">Réinitialiser
-                                                le
-                                                mot de
-                                                passe</button>
-                                        </div>
-                                        {{-- <div class="col-12 d-flex justify-content-center">
-                                    <p class="small">Vous avez déjà un compte ? <a
-                                            href="{{ url('/login-page') }}">Se connecter</a></p>
-                                </div> --}}
+                                        <button type="submit" class="btn btn-primary w-100">Réinitialiser</button>
                                     </form>
-
+                                    <div class="text-center mt-3">
+                                        <a href="{{ url('/profil') }}" class="back-to-login">⬅ Retour à la
+                                            connexion</a>
+                                    </div>
                                 </div>
                             </div>
 

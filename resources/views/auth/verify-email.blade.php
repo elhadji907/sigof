@@ -1,66 +1,45 @@
-{{-- <x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('Merci de vous être inscrit ! Avant de commencer, pourriez-vous vérifier votre adresse e-mail en cliquant sur le lien que nous venons de vous envoyer par e-mail ? Si vous n\'avez pas reçu l\'e-mail, nous vous en enverrons un autre avec plaisir.') }}
-    </div>
+
+@extends('layout.user-layout')
+
+@section('title', 'ONFP | Vérification Email')
+
+@section('space-work')
+
+<section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center text-center">
+    
+    <i class="bi bi-envelope-check text-primary" style="font-size: 4rem;"></i> 
+    <h2 class="mt-3 text-secondary">Merci de vous être inscrit ! 🎉</h2>
+
+    <p class="mt-2 text-muted" style="max-width: 600px;">
+        Avant de commencer, veuillez vérifier votre adresse e-mail en cliquant sur le lien que nous venons de vous envoyer. 📩<br>
+        Si vous n'avez pas reçu l'e-mail, nous pouvons vous en envoyer un nouveau.
+    </p>
 
     @if (session('status') == 'verification-link-sent')
-        <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
-            {{ __('Un nouveau lien de vérification a été envoyé à l\'adresse e-mail que vous avez fournie lors de votre inscription.') }}
+        <div class="alert alert-success mt-3" role="alert">
+            ✅ Un nouveau lien de vérification a été envoyé à votre adresse e-mail.
         </div>
     @endif
 
-    <div class="mt-4 flex items-center justify-between">
-        <form method="POST" action="{{ route('verification.send') }}">
-            @csrf
+    <form method="POST" action="{{ route('verification.send') }}" class="mt-4">
+        @csrf
+        <button type="submit" class="btn btn-primary shadow-sm">
+            🔄 Renvoyer l'e-mail de vérification
+        </button>
+    </form>
 
-            <div>
-                <x-primary-button>
-                    {{ __('Renvoyer l\'e-mail de vérification') }}
-                </x-primary-button>
-            </div>
-        </form>
+    <p class="mt-3">
+        🔙 <a href="{{ route('logout') }}" class="text-decoration-none text-danger"
+             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            Déconnexion
+        </a>
+    </p>
 
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+        @csrf
+    </form>
 
-            <button type="submit"
-                class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-                {{ __('Se déconnecter') }}
-            </button>
-        </form>
-    </div>
-</x-guest-layout> --}}
-
-@extends('layout.user-layout')
-@section('title', 'ONFP')
-@section('space-work')
-
-    <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
-        {{-- <h1>ONFP.SN</h1> --}}
-        <h4>{{ __("Merci de vous être inscrit ! Avant de commencer, pourriez-vous vérifier votre adresse e-mail en cliquant sur le lien que nous venons de vous envoyer par e-mail ? Si vous n'avez pas reçu l'e-mail, nous vous en enverrons un autre avec plaisir.") }}
-        </h4>
-        <form method="POST" action="{{ route('verification.send') }}">
-            @csrf
-
-            <div>
-                <button type="submit" class="btn btn-outline-primary">{{ __('Renvoyer l\'e-mail de vérification') }}</button>
-                {{--  <x-primary-button>
-                            {{ __('Renvoyer l\'e-mail de vérification') }}
-                        </x-primary-button> --}}
-            </div>
-        </form>
-        {{-- <br>
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <button type="submit" class="btn btn-outline-danger">
-                        {{ __('Se déconnecter') }}
-                    </button>
-                </form> --}}
-
-        {{-- <a class="btn" href="index.html">{{ __('Renvoyer l\'e-mail de vérification') }}</a>
-                <img src="assets/img/not-found.svg" class="img-fluid py-5" alt="Page Not Found"> --}}
-
-    </section>
+</section>
 
 @endsection
+
