@@ -578,10 +578,12 @@ class OperateurController extends Controller
         $dateString  = $request->input('date_quitus');
         $date_quitus = ! empty($dateString) ? Carbon::createFromFormat('d/m/Y', $dateString) : null;
 
+        $numero_agrement = $request->input("numero_agrement") ?: $request->input("numero_arrive") . '/ONFP/DG/DEC/' . date('Y');
+
         $operateur = Operateur::create([
             "numero_dossier"   => $request->input("numero_dossier"),
             'numero_arrive'    => $request->input("numero_arrive"),
-            "numero_agrement"  => $request->input("numero_agrement"),
+            "numero_agrement"  => $numero_agrement,
             "type_demande"     => $request->input("type_demande"),
             "debut_quitus"     => $date_quitus,
             "annee_agrement"   => now()->format('Y-m-d'),
