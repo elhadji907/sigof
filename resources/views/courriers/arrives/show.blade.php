@@ -69,16 +69,18 @@
 
                             <div class="tab-content pt-0">
                                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                                    <div class="d-flex justify-content-between align-items-center mt-3">
-                                        <h5 class="card-title"></h5>
-                                        <form action="{{ route('couponArrive') }}" method="post" target="_blank">
-                                            @csrf
-                                            <input type="hidden" name="id" value="{{ $arrive?->id }}">
-                                            <button class="btn btn-outline-primary btn-sm"><i class="fa fa-print"
-                                                    aria-hidden="true"></i>Télécharger
-                                                coupon</button>
-                                        </form>
-                                    </div>
+                                    @hasrole('super-admin|courrier|a-courrier')
+                                        <div class="d-flex justify-content-between align-items-center mt-3">
+                                            <h5 class="card-title"></h5>
+                                            <form action="{{ route('couponArrive') }}" method="post" target="_blank">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $arrive?->id }}">
+                                                <button class="btn btn-outline-primary btn-sm"><i class="fa fa-print"
+                                                        aria-hidden="true"></i>Télécharger
+                                                    coupon</button>
+                                            </form>
+                                        </div>
+                                    @endhasrole
 
                                     <h5 class="card-title">Détails</h5>
 
