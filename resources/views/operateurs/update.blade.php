@@ -39,8 +39,7 @@
                                     <input type="hidden" name="id" value="{{ $operateur->id }}">
                                     <div class="row g-3">
                                         <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                            <label for="numero_dossier" class="form-label">Numéro dossier<span
-                                                    class="text-danger mx-1">*</span></label>
+                                            <label for="numero_dossier" class="form-label">Numéro dossier</label>
                                             <div class="input-group has-validation">
                                                 <input type="number" min="0" name="numero_dossier"
                                                     value="{{ $operateur?->numero_dossier ?? old('numero_dossier') }}"
@@ -55,8 +54,7 @@
                                         </div>
 
                                         <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                            <label for="numero_arrive" class="form-label">Numéro courrier<span
-                                                    class="text-danger mx-1">*</span></label>
+                                            <label for="numero_arrive" class="form-label">Numéro courrier</label>
                                             <div class="input-group has-validation">
                                                 <input type="number" min="0" name="numero_arrive"
                                                     value="{{ $operateur?->numero_arrive ?? old('numero_arrive') }}"

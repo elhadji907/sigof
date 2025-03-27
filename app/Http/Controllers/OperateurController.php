@@ -360,8 +360,11 @@ class OperateurController extends Controller
         $dateString  = $request->input('date_quitus');
         $date_quitus = ! empty($dateString) ? Carbon::createFromFormat('d/m/Y', $dateString) : null;
 
+        $anneeEnCours = date('Y');
+        $an           = date('y');
+
         $operateur = Operateur::create([
-            'numero_agrement' => "$numCourrier/ONFP/DG/DEC/$anneeEnCours",
+            'numero_agrement' => "/ONFP/DG/DEC/$anneeEnCours",
             'type_demande'    => $request->input("type_demande"),
             'debut_quitus'    => $date_quitus,
             'annee_agrement'  => date('Y-m-d'),
@@ -1129,15 +1132,22 @@ class OperateurController extends Controller
         $operateur   = Operateur::findOrFail($id);
         $user        = $operateur->user;
         $departement = Departement::where('nom', $request->input("departement"))->firstOrFail();
-
         $this->validate($request, [
             "departement"  => ['required', 'string'],
-            "quitus"       => ['sometimes', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            "quitus"       => ['sometimes', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:1024'],
             "date_quitus"  => ['nullable', 'date_format:d/m/Y'],
             "type_demande" => ['required', 'string'],
+            'email'        => [
+                'nullable',
+                'string',
+                'lowercase',
+                'email',
+                'max:255',
+                Rule::unique(User::class)->ignore($id ?? null)->whereNull('deleted_at'),
+            ],
         ]);
 
-        foreach (Auth::user()->roles as $key => $role) {
+/*         foreach (Auth::user()->roles as $key => $role) {
             if (! empty($role?->name) && ($role?->name != 'super-admin') && ($role?->name != 'Employe') && ($role?->name != 'admin') && ($role?->name != 'DIOF') && ($role?->name != 'DEC')) {
                 $this->authorize('update', $operateur);
             }
@@ -1145,6 +1155,23 @@ class OperateurController extends Controller
                 Alert::warning('Attention ! ', 'action impossible');
                 return redirect()->back();
             }
+        } */
+
+        $rolesValid       = ['super-admin', 'Employe', 'admin', 'DIOF', 'DEC'];
+        $rolesUtilisateur = Auth::user()->roles->pluck('name');
+
+// Vérifier si l'utilisateur possède un des rôles valides
+        $roleValide = $rolesUtilisateur->intersect($rolesValid)->isNotEmpty();
+
+        if (! $roleValide) {
+            // Vérifier le statut de l'opérateur et autoriser l'action si nécessaire
+            if ($operateur->statut_agrement !== 'nouveau') {
+                Alert::warning('Attention !', 'Action impossible');
+                return redirect()->back();
+            }
+
+            // Si l'utilisateur n'a pas de rôle valide, on l'autorise à effectuer la mise à jour
+            $this->authorize('update', $operateur);
         }
 
         /*  if (! empty($request->input('date_quitus'))) {
@@ -1630,7 +1657,7 @@ class OperateurController extends Controller
     }
     public function devenirOperateur()
     {
-        $user            = Auth::user();
+        /* $user            = Auth::user();
         $operateur       = Operateur::where('users_id', $user->id)->orderBy("created_at", "desc")->get();
         $operateurs      = Operateur::get();
         $operateur_total = $operateur->count();
@@ -1715,9 +1742,59 @@ class OperateurController extends Controller
                     "departements",
                     "operateur",
                     "operateurs"
+                    "user"
                 )
             );
+        } */
+
+        $user = Auth::user();
+
+        // Récupérer l'opérateur lié à l'utilisateur
+        $operateur    = Operateur::where('users_id', $user->id)->orderBy("created_at", "desc")->first();
+        $operateurA    = Operateur::where('users_id', $user->id)->orderBy("created_at", "desc")->get();
+        $operateurs   = Operateur::all();
+        $departements = Departement::orderBy("created_at", "desc")->get();
+
+        $operateur_total = $operateurs->count();
+
+        if ($operateur_total >= 1 && $operateur) {
+            // Récupérer les counts des relations de l'opérateur
+            $module_count     = Operateurmodule::where('operateurs_id', $operateur->id)->exists() ? "valide" : "invalide";
+            $reference_count  = Operateureference::where('operateurs_id', $operateur->id)->exists() ? "valide" : "invalide";
+            $equipement_count = Operateurequipement::where('operateurs_id', $operateur->id)->exists() ? "valide" : "invalide";
+            $formateur_count  = Operateurformateur::where('operateurs_id', $operateur->id)->exists() ? "valide" : "invalide";
+            $localite_count   = Operateurlocalite::where('operateurs_id', $operateur->id)->exists() ? "valide" : "invalide";
+
+            // Déterminer le statut de la demande
+            $statut_demande = ($module_count === "valide" && $reference_count === "valide" && $equipement_count === "valide" &&
+                $formateur_count === "valide" && $localite_count === "valide") ? "valide" : "invalide";
+            
+            // Retourner la vue avec les données
+            return view('operateurs.show-operateur',
+                compact(
+                    'operateur_total',
+                    'departements',
+                    'operateur',
+                    'operateurA',
+                    'operateurs',
+                    'statut_demande',
+                    'module_count',
+                    'reference_count',
+                    'equipement_count',
+                    'formateur_count',
+                    'localite_count'
+                ));
+        } else {
+            // Si aucun opérateur n'est trouvé, afficher une vue différente
+            return view('operateurs.show-operateur-aucun',
+                compact(
+                    'departements',
+                    'operateur',
+                    'operateurs',
+                    'user'
+                ));
         }
+
     }
     public function rapports(Request $request)
     {

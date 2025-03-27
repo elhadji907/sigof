@@ -20,37 +20,30 @@
                     <div class="card">
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                             {{-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> --}}
-                            <img class="rounded-circle w-25" alt="Profil" src="{{ asset(Auth::user()?->getImage()) }}"
-                                width="50" height="auto">
-                            <h2>
-                                {{-- @if (isset(Auth::user()?->name))
-                                    {{ Auth::user()?->civilite . ' ' . Auth::user()?->firstname . ' ' . Auth::user()?->name }}
-                                @else --}}
+                            <a href="#" data-bs-toggle="modal"
+                                data-bs-target="#ShowProfilImage{{ Auth::user()?->id }}">
+                                <img class="rounded-circle w-100" alt="Profil"
+                                    src="{{ asset(Auth::user()?->getImage()) }}" width="100" height="auto">
+                            </a>
+                            <h2 class="pt-1 text-center">
                                 {{ Auth::user()?->username }}
-                                {{-- @endif --}}
+                                <br>
+                                @if (Auth::user()?->last_activity && \Carbon\Carbon::parse($user->last_activity)->diffInMinutes(now()) < 5)
+                                    <span class="text-success">En ligne</span>
+                                @else
+                                    <span class="text-danger">Hors ligne</span>
+                                    ({{ \Carbon\Carbon::parse($user->last_activity)->diffForHumans() }})
+                                @endif
                             </h2>
-                            <span><a href="mailto:{{ Auth::user()?->email }}">{{ Auth::user()?->email }}</a></span>
+                            {{-- <span><a href="mailto:{{ Auth::user()?->email }}">{{ Auth::user()?->email }}</a></span> --}}
                             <div class="social-links mt-2">
-                                @if (!empty(Auth::user()?->twitter))
-                                    <a href="{{ Auth::user()?->twitter }}" class="twitter" target="_blank"><i
-                                            class="bi bi-twitter" title="compte twitter"></i></a>
-                                @endif
-                                @if (!empty(Auth::user()?->facebook))
-                                    <a href="{{ Auth::user()?->facebook }}" class="facebook" target="_blank"><i
-                                            class="bi bi-facebook" title="compte facebook"></i></a>
-                                @endif
-                                @if (!empty(Auth::user()?->instagram))
-                                    <a href="{{ Auth::user()?->instagram }}" class="instagram" target="_blank"><i
-                                            class="bi bi-instagram" title="compte instagram"></i></a>
-                                @endif
-                                @if (!empty(Auth::user()?->linkedin))
-                                    <a href="{{ Auth::user()?->linkedin }}" class="linkedin" target="_blank"><i
-                                            class="bi bi-linkedin" title="compte linkedin"></i></a>
-                                @endif
-                                @if (!empty(Auth::user()?->web))
-                                    <a href="{{ Auth::user()?->web }}" class="web" target="_blank"><i class="bi bi-globe"
-                                            title="site web"></i></a>
-                                @endif
+                                @foreach (['twitter' => 'twitter', 'facebook' => 'facebook', 'instagram' => 'instagram', 'linkedin' => 'linkedin'] as $platform => $icon)
+                                    @if (!empty(Auth::user()?->$platform))
+                                        <a href="{{ Auth::user()->$platform }}" class="{{ $platform }}" target="_blank">
+                                            <i class="bi bi-{{ $icon }}"></i>
+                                        </a>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -74,10 +67,10 @@
                                             <div class="ps-3">
                                                 <h6>{{ Auth::user()?->operateurs()->count() ?? 0 }}</h6>
                                                 @can('agrement-ouvert')
-                                                    <span class="text-success small fw-bold">Les agréments sont actuellement
+                                                    <span class="text-success small fw-bold">
                                                         <span class="text-uppercase">ouverts</span></span>
                                                 @elsecan('agrement-fermer')
-                                                    <span class="text-danger small fw-bold">Les agréments sont actuellement
+                                                    <span class="text-danger small fw-bold">
                                                         <span class="text-uppercase">fermés</span></span>
                                                 @endcan
                                             </div>
@@ -144,12 +137,11 @@
 
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
-                                        data-bs-target="#profile-change-password">Changer le mot de passe</button>
+                                        data-bs-target="#profile-change-password">Mot de passe</button>
                                 </li>
 
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab"
-                                        data-bs-target="#files">Fichiers</button>
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#files">Fichiers</button>
                                 </li>
 
                             </ul>
@@ -180,7 +172,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row">
+                                    {{-- <div class="row">
                                         <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
                                             Fichiers joints
                                         </div>
@@ -192,7 +184,7 @@
                                                 l'onglet fichier pour télécharger
                                             @endif
                                         </div>
-                                    </div>
+                                    </div> --}}
 
 
                                     @if (!empty(Auth::user()?->username))
@@ -631,11 +623,10 @@
                                             <label for="fixe" class="col-md-4 col-lg-3 col-form-label">Téléphone
                                                 fixe<span class="text-danger mx-1">*</span></label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="fixe" type="number" min="0" minlength="9"
-                                                    maxlength="9"
+                                                <input name="fixe" type="text" maxlength="12"
                                                     class="form-control form-control-sm @error('fixe') is-invalid @enderror"
-                                                    id="fixe" value="{{ $user->fixe ?? old('fixe') }}"
-                                                    autocomplete="fixe" placeholder="7xxxxxxxx">
+                                                    id="fixe" value="{{ old('fixe', $user->fixe ?? '') }}"
+                                                    autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                                 @error('fixe')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -649,11 +640,10 @@
                                             <label for="telephone" class="col-md-4 col-lg-3 col-form-label">Téléphone
                                                 portable<span class="text-danger mx-1">*</span></label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="telephone" type="number" min="0" minlength="9"
-                                                    maxlength="9"
+                                                <input name="telephone" type="text" maxlength="12"
                                                     class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                                    id="telephone" value="{{ $user->telephone ?? old('telephone') }}"
-                                                    autocomplete="telephone" placeholder="7xxxxxxxx">
+                                                    id="telephone" value="{{ old('telephone', $user->telephone ?? '') }}"
+                                                    autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                                 @error('telephone')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -771,8 +761,9 @@
                                                 <div class="pt-2">
                                                     <input name="cin" type="text"
                                                         class="form-control form-control-sm @error('cin') is-invalid @enderror"
-                                                        id="cin" value="{{ $user->cin ?? old('cin') }}"
-                                                        autocomplete="cin" placeholder="Votre cin">
+                                                        id="cin" value="{{ $user?->cin ?? old('cin') }}"
+                                                        autocomplete="off" placeholder="Ex: 1 099 2005 00012"
+                                                        minlength="16" maxlength="17" required>
                                                 </div>
                                                 @error('cin')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -850,12 +841,11 @@
                                                 class="col-md-4 col-lg-3 col-form-label">Téléphone<span
                                                     class="text-danger mx-1">*</span></label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="telephone_parent" type="number" min="0"
-                                                    minlength="9" maxlength="9"
+                                                <input name="telephone_parent" type="text" maxlength="12"
                                                     class="form-control form-control-sm @error('telephone_parent') is-invalid @enderror"
-                                                    id="telephone_parent"
-                                                    value="{{ $user->telephone_parent ?? old('telephone_parent') }}"
-                                                    autocomplete="telephone_parent" placeholder="7xxxxxxxx">
+                                                    id="telephone_secondaire"
+                                                    value="{{ old('telephone_parent', $user->telephone_parent ?? '') }}"
+                                                    autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                                 @error('telephone_parent')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -868,7 +858,7 @@
                                         <div class="row mb-3">
                                             <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                             <div class="col-md-8 col-lg-9">
-                                                <input name="email_responsable" type="text"
+                                                <input name="email_responsable" type="email"
                                                     class="form-control form-control-sm @error('email_responsable') is-invalid @enderror"
                                                     id="email_responsable"
                                                     value="{{ $user->email_responsable ?? old('email_responsable') }}"
@@ -883,7 +873,8 @@
 
                                         {{-- fonction --}}
                                         <div class="row mb-3">
-                                            <label for="fonction" class="col-md-4 col-lg-3 col-form-label">Fonction<span
+                                            <label for="fonction_responsable"
+                                                class="col-md-4 col-lg-3 col-form-label">Fonction<span
                                                     class="text-danger mx-1">*</span></label>
                                             <div class="col-md-8 col-lg-9">
                                                 <input name="fonction_responsable" type="text"
@@ -1058,11 +1049,11 @@
                                                 @method('put')
                                                 <div class="row mb-3">
                                                     <label for="update_password_current_password"
-                                                        class="col-md-4 col-lg-3 col-form-label label">Mot de
+                                                        class="col-md-4 col-lg-4 col-form-label label">Mot de
                                                         passe actuel<span class="text-danger mx-1">*</span></label>
-                                                    <div class="col-md-6 col-lg-6">
+                                                    <div class="col-md-8 col-lg-8">
                                                         <input name="current_password" type="password"
-                                                            class="form-control @error('current_password') is-invalid @enderror"
+                                                            class="form-control form-control-sm @error('current_password') is-invalid @enderror"
                                                             id="update_password_current_password"
                                                             placeholder="Votre mot de passe actuel"
                                                             autocomplete="current-password">
@@ -1072,12 +1063,12 @@
                                                 <!-- Mot de passe -->
                                                 <div class="row mb-3">
                                                     <label for="password"
-                                                        class="col-md-4 col-lg-3 col-form-label label">Mot
+                                                        class="col-md-4 col-lg-4 col-form-label label">Mot
                                                         de
                                                         passe<span class="text-danger mx-1">*</span></label>
-                                                    <div class="col-md-6 col-lg-6">
+                                                    <div class="col-md-8 col-lg-8">
                                                         <input type="password" name="password"
-                                                            class="form-control @error('password') is-invalid @enderror"
+                                                            class="form-control form-control-sm @error('password') is-invalid @enderror"
                                                             id="password" placeholder="Votre mot de passe"
                                                             value="{{ old('password') }}" autocomplete="new-password">
                                                         <div class="invalid-feedback">
@@ -1090,11 +1081,11 @@
                                                 <!-- Mot de passe de confirmation -->
                                                 <div class="row mb-3">
                                                     <label for="password_confirmation"
-                                                        class="col-md-4 col-lg-3 col-form-label label">Confirmez<span
+                                                        class="col-md-4 col-lg-4 col-form-label label">Confirmez<span
                                                             class="text-danger mx-1">*</span></label>
-                                                    <div class="col-md-6 col-lg-6">
+                                                    <div class="col-md-8 col-lg-8">
                                                         <input type="password" name="password_confirmation"
-                                                            class="form-control @error('password_confirmation') is-invalid @enderror"
+                                                            class="form-control form-control-sm @error('password_confirmation') is-invalid @enderror"
                                                             id="password_confirmation"
                                                             placeholder="Confimez votre mot de passe"
                                                             value="{{ old('password_confirmation') }}"
@@ -1107,7 +1098,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="text-center">
-                                                    <button type="submit" class="btn btn-primary">Changer
+                                                    <button type="submit" class="btn btn-primary btn-sm">Changer
                                                         le mot de
                                                         passe</button>
                                                 </div>
@@ -1231,6 +1222,32 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="ShowProfilImage{{ Auth::id() }}" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title mx-auto">
+                            @if (!empty(Auth::user()?->operateur))
+                                {{ (Auth::user()?->operateur ?? '') . ' (' . (Auth::user()?->username ?? '') . ')' }}
+                            @else
+                                {{ Auth::user()?->username ?? '' }}
+                            @endif
+                        </h2>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-12">
+                            <img src="{{ asset($user->getImage() ?? 'images/default.png') }}"
+                                class="d-block w-100 main-image rounded-4"
+                                alt="{{ Auth::user()?->legende ?? 'Photo de profil' }}">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
                     </div>
                 </div>
             </div>

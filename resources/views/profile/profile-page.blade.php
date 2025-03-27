@@ -32,6 +32,13 @@
                                 @else
                                     {{ Auth::user()?->username }}
                                 @endif
+                                <br>
+                                @if (Auth::user()?->last_activity && \Carbon\Carbon::parse($user->last_activity)->diffInMinutes(now()) < 5)
+                                    <span class="text-success">En ligne</span>
+                                @else
+                                    <span class="text-danger">Hors ligne</span>
+                                    ({{ \Carbon\Carbon::parse($user->last_activity)->diffForHumans() }})
+                                @endif
                             </h2>
                             {{-- @if (!empty(Auth::user()?->situation_professionnelle))
                                 <span><a href="">{{ Auth::user()?->situation_professionnelle }}</a></span>
@@ -225,7 +232,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    {{-- <div class="row">
                                         <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
                                             Fichiers joints
                                         </div>
@@ -237,7 +244,7 @@
                                                 l'onglet fichier pour télécharger
                                             @endif
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     @if (Auth::user()?->cin)
                                         <div class="row">

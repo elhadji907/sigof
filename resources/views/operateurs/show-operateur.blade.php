@@ -34,7 +34,7 @@
                                 <p> | Profil</p>
                             </span>
                             <button class="btn btn-info btn-sm">
-                                <span class="badge bg-white text-info">{{ $operateur_total }}</span>
+                                <span class="badge bg-white text-info">{{ $operateurA->count() }}</span>
                             </button>
                             @can('devenir-operateur-agrement-ouvert')
                                 @can('devenir-operateur-agrement-create')
@@ -72,7 +72,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($operateur as $operateur)
+                                    @foreach ($operateurA as $operateur)
                                         <tr>
                                             {{-- <td style="text-align: center;">
                                                 <button type="button" class="btn btn-outline-info btn-sm btn-rounded"

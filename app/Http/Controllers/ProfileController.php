@@ -106,6 +106,7 @@ class ProfileController extends Controller
                 } else {
                     $user_cin = null;
                 }
+                
                 return view('profile.profile-operateur-page', [
                     'user'                     => $request->user(),
                     'projets'                  => $projets,
