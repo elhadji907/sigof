@@ -33,7 +33,7 @@
                                 width="100" height="auto">
                         </a>
 
-                        <h2 class="pt-1 text-center">
+                        <h2 class="pt-1 d-flex flex-column align-items-center text-center">
                             {{ $user?->civilite . ' ' . $user?->firstname . ' ' . $user?->name ?? $user?->username }}
                             <br>
                             @if ($user?->last_activity && \Carbon\Carbon::parse($user->last_activity)->diffInMinutes(now()) < 5)
