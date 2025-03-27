@@ -211,22 +211,25 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: none; /* Suppression du background */
+            background: none;
+            /* Suppression du background */
         }
-    
+
         .card {
             backdrop-filter: blur(10px);
-            background: linear-gradient(135deg, #FF8000, #FFB347); /* Dégradé appliqué à la carte */
+            background: linear-gradient(135deg, #FF8000, #FFB347);
+            /* Dégradé appliqué à la carte */
             border-radius: 15px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            color: white; /* Texte blanc pour contraste */
+            color: white;
+            /* Texte blanc pour contraste */
         }
-    
+
         .form-control {
             border-radius: 10px;
         }
-    
+
         .btn-primary {
             background: #FF8000;
             border: none;
@@ -234,30 +237,30 @@
             transition: 0.3s;
             color: white;
         }
-    
+
         .btn-primary:hover {
             background: #CC6600;
         }
-    
+
         .input-group-text {
             background: transparent;
             border-right: none;
         }
-    
+
         .input-group .form-control {
             border-left: none;
         }
-    
+
         .links a {
             color: white;
             text-decoration: none;
         }
-    
+
         .links a:hover {
             text-decoration: underline;
         }
     </style>
-    
+
 
 </head>
 
@@ -274,19 +277,31 @@
                             <label for="email" class="form-label text-white">Email</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                                <input type="email" name="email" class="form-control" id="email" required
-                                    placeholder="Votre adresse e-mail" value="{{ old('email') }}">
+                                <input type="email" name="email"
+                                    class="form-control form-control-sm @error('email') is-invalid @enderror"
+                                    id="email" placeholder="Votre adresse e-mail" value="{{ old('email') }}">
+                                <div class="invalid-feedback">
+                                    @error('email')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label text-white">Mot de passe</label>
                             <div class="input-group">
                                 <span class="input-group-text"><i class="bi bi-key"></i></span>
-                                <input type="password" name="password" class="form-control" id="password" required
-                                    placeholder="Votre mot de passe">
+                                <input type="password" name="password"
+                                    class="form-control form-control-sm @error('password') is-invalid @enderror"
+                                    id="password" placeholder="Votre mot de passe">
                                 <button class="btn btn-outline-light" type="button" id="togglePassword">
                                     <i class="bi bi-eye"></i>
                                 </button>
+                                <div class="invalid-feedback">
+                                    @error('password')
+                                        {{ $message }}
+                                    @enderror
+                                </div>
                             </div>
                         </div>
                         <div class="mb-3 form-check">
