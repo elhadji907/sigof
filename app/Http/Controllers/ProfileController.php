@@ -214,7 +214,7 @@ class ProfileController extends Controller
                 'max:255',
                 Rule::unique(User::class)->ignore($id ?? null)->whereNull('deleted_at'),
             ],
-            'telephone'                 => ['nullable', 'string', 'min:9', 'max:12'],
+            'telephone'                 => ['nullable', 'string', 'size:12'],
             'adresse'                   => ['required', 'string', 'max:255'],
             'situation_familiale'       => ['required', 'string', 'max:15'],
             'situation_professionnelle' => ['required', 'string', 'max:25'],

@@ -61,7 +61,7 @@ class IndividuelleController extends Controller
     {
         $this->validate($request, [
             'module'                 => ['required', 'string', 'max:255'],
-            'telephone_secondaire'   => ['required', 'string', 'min:9', 'max:12'],
+            'telephone_secondaire'   => ['required', 'string', 'size:12'],
             'adresse'                => ['required', 'string', 'max:255'],
             'departement'            => ['required', 'string', 'max:255'],
             'module'                 => ['required', 'string', 'max:255'],
@@ -172,7 +172,7 @@ class IndividuelleController extends Controller
     public function individuellesStore(Request $request)
     {
         $this->validate($request, [
-            'telephone_secondaire'   => ['required', 'string', 'min:9', 'max:12'],
+            'telephone_secondaire'   => ['required', 'string', 'size:12'],
             'adresse'                => ['required', 'string', 'max:255'],
             'departement'            => ['required', 'string', 'max:255'],
             'module'                 => ['required', 'string', 'max:255'],
@@ -445,8 +445,8 @@ class IndividuelleController extends Controller
             ],
             'firstname'                 => ['required', 'string', 'max:50'],
             'lastname'                  => ['required', 'string', 'max:25'],
-            'telephone'                 => ['required', 'string', 'min:9', 'max:12'],
-            'telephone_secondaire'      => ['required', 'string', 'min:9', 'max:12'],
+            'telephone'                 => ['required', 'string', 'size:12'],
+            'telephone_secondaire'      => ['required', 'string', 'size:12'],
             'date_naissance'            => ['nullable', 'date_format:d/m/Y'],
             'lieu_naissance'            => ['required', 'string'],
             'adresse'                   => ['required', 'string', 'max:255'],
@@ -784,7 +784,7 @@ class IndividuelleController extends Controller
     {
         $this->validate($request, [
             'date_depot'             => ['nullable', 'date_format:d/m/Y'],
-            'telephone_secondaire'   => ['required', 'string', 'min:9', 'max:12'],
+            'telephone_secondaire'   => ['required', 'string', 'size:12'],
             'adresse'                => ['required', 'string', 'max:255'],
             'departement'            => ['required', 'string', 'max:255'],
             'module'                 => ['required', 'string', 'max:255'],
@@ -1138,7 +1138,7 @@ class IndividuelleController extends Controller
         $projet = Projet::findOrFail($request->idprojet);
 
         $this->validate($request, [
-            'telephone_secondaire'   => ['required', 'string', 'min:9', 'max:12'],
+            'telephone_secondaire'   => ['required', 'string', 'size:12'],
             'adresse'                => ['required', 'string', 'max:255'],
             'departement'            => ['required', 'string', 'max:255'],
             'module'                 => ['required', 'string', 'max:255'],

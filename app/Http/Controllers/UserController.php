@@ -656,7 +656,7 @@ class UserController extends Controller
             }
         } elseif ($request->telephone_value == "1") {
             $this->validate($request, [
-                'telephone' => 'required|string|min:9|max:9',
+                'telephone' => 'required|size:12',
             ]);
 
             $users = User::where('telephone', 'LIKE', "%{$request->telephone}%")
