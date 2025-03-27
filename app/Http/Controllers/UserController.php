@@ -605,7 +605,7 @@ class UserController extends Controller
     {
         if ($request->cin_value == "1") {
             $this->validate($request, [
-                'cin' => 'required|string|min:10|max:15',
+                'cin' => 'required|string|min:16|max:17',
             ]);
 
             $users = User::where('cin', 'LIKE', "%{$request->cin}%")
