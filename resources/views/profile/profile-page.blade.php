@@ -26,7 +26,7 @@
                                     src="{{ asset(Auth::user()?->getImage()) }}" width="100" height="auto">
                             </a>
 
-                            <h2>
+                            <h2 class="pt-1 d-flex flex-column align-items-center text-center">
                                 @if (!empty(Auth::user()?->name))
                                     {{ Auth::user()?->civilite . ' ' . Auth::user()?->firstname . ' ' . Auth::user()?->name }}
                                 @else
@@ -34,9 +34,9 @@
                                 @endif
                                 <br>
                                 @if (Auth::user()?->last_activity && \Carbon\Carbon::parse($user->last_activity)->diffInMinutes(now()) < 5)
-                                    <span class="text-success text-center">En ligne</span>
+                                    <span class="text-success">En ligne</span>
                                 @else
-                                    <span class="text-danger text-center">Hors ligne</span>
+                                    <span class="text-danger">Hors ligne</span>
                                     ({{ \Carbon\Carbon::parse($user->last_activity)->diffForHumans() }})
                                 @endif
                             </h2>
@@ -201,7 +201,8 @@
                                 </li>
 
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#files">Fichiers</button>
+                                    <button class="nav-link" data-bs-toggle="tab"
+                                        data-bs-target="#files">Fichiers</button>
                                 </li>
 
                                 {{-- <li class="nav-item">

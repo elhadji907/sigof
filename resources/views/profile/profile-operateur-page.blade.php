@@ -25,13 +25,13 @@
                                 <img class="rounded-circle w-100" alt="Profil"
                                     src="{{ asset(Auth::user()?->getImage()) }}" width="100" height="auto">
                             </a>
-                            <h2 class="pt-1 text-center">
+                            <h2 class="pt-1 d-flex flex-column align-items-center text-center">
                                 {{ Auth::user()?->username }}
                                 <br>
                                 @if (Auth::user()?->last_activity && \Carbon\Carbon::parse($user->last_activity)->diffInMinutes(now()) < 5)
-                                    <span class="text-success text-center">En ligne</span>
+                                    <span class="text-success">En ligne</span>
                                 @else
-                                    <span class="text-danger text-center">Hors ligne</span>
+                                    <span class="text-danger">Hors ligne</span>
                                     ({{ \Carbon\Carbon::parse($user->last_activity)->diffForHumans() }})
                                 @endif
                             </h2>
