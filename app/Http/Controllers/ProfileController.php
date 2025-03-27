@@ -44,11 +44,6 @@ class ProfileController extends Controller
             ->distinct()
             ->get();
 
-        /* $user_files = File::where('users_id', $user->id)
-            ->where('file', null)
-            ->distinct()
-            ->get(); */
-
         $user_files = File::where('users_id', $user?->id)
             ->whereNull('file')
             ->whereNotIn('sigle', ['AC', 'Arrêté', 'Ninea/RC'])
@@ -91,8 +86,15 @@ class ProfileController extends Controller
         foreach (Auth::user()->roles as $role) {
             if ($role->name == 'Operateur') {
 
+                // Récupérer les fichiers associés à l'utilisateur
                 $files = File::where('users_id', $user->id)
-                    ->where('file', '!=', null)
+                    ->whereNotNull('file')
+                    ->distinct()
+                    ->get();
+
+                $user_files = File::where('users_id', $user?->id)
+                    ->whereNull('file')
+                    ->whereNotIn('sigle', ['CIN', 'DAC', 'DP', 'CR', 'AD', 'Bulletins'])
                     ->distinct()
                     ->get();
 
@@ -106,7 +108,7 @@ class ProfileController extends Controller
                 } else {
                     $user_cin = null;
                 }
-                
+
                 return view('profile.profile-operateur-page', [
                     'user'                     => $request->user(),
                     'projets'                  => $projets,

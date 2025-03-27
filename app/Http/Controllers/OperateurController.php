@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Arrive;
 use App\Models\Commissionagrement;
 use App\Models\Departement;
+use App\Models\File;
 use App\Models\Operateur;
 use App\Models\Operateureference;
 use App\Models\Operateurequipement;
@@ -1751,11 +1752,28 @@ class OperateurController extends Controller
 
         // Récupérer l'opérateur lié à l'utilisateur
         $operateur    = Operateur::where('users_id', $user->id)->orderBy("created_at", "desc")->first();
-        $operateurA    = Operateur::where('users_id', $user->id)->orderBy("created_at", "desc")->get();
+        $operateurA   = Operateur::where('users_id', $user->id)->orderBy("created_at", "desc")->get();
         $operateurs   = Operateur::all();
         $departements = Departement::orderBy("created_at", "desc")->get();
 
         $operateur_total = $operateurs->count();
+
+        // Récupérer les fichiers associés à l'utilisateur
+        $files = File::where('users_id', $user->id)
+            ->whereNotNull('file')
+            ->distinct()
+            ->get();
+
+        /* $user_files = File::where('users_id', $user->id)
+            ->whereNull('file')
+            ->distinct()
+            ->get(); */
+
+        $user_files = File::where('users_id', $user?->id)
+            ->whereNull('file')
+            ->whereNotIn('sigle', ['CIN', 'DAC', 'DP', 'CR', 'AD', 'Bulletins'])
+            ->distinct()
+            ->get();
 
         if ($operateur_total >= 1 && $operateur) {
             // Récupérer les counts des relations de l'opérateur
@@ -1768,11 +1786,13 @@ class OperateurController extends Controller
             // Déterminer le statut de la demande
             $statut_demande = ($module_count === "valide" && $reference_count === "valide" && $equipement_count === "valide" &&
                 $formateur_count === "valide" && $localite_count === "valide") ? "valide" : "invalide";
-            
+
             // Retourner la vue avec les données
             return view('operateurs.show-operateur',
                 compact(
                     'operateur_total',
+                    'user_files',
+                    'files',
                     'departements',
                     'operateur',
                     'operateurA',

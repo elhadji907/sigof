@@ -54,44 +54,24 @@
                             <table class="table table-bordered table-hover table-borderless">
                                 <thead>
                                     <tr>
-                                        {{-- <th class="text-center" width="2%">Info</th> --}}
-                                        {{-- <th width="12%">N° agrément</th> --}}
-                                        {{-- <th width="10%" class="text-center">Sigle</th> --}}
-                                        {{-- <th width="10%" class="text-center">Téléphone</th> --}}
-                                        <th width="2%" class="text-center">Année</th>
-                                        <th width="5%" class="text-center">Module</th>
-                                        <th width="5%" class="text-center">Référence</th>
+                                        <th class="text-center">Année</th>
+                                        <th class="text-center">Module</th>
+                                        <th class="text-center">Référence</th>
                                         <th class="text-center">Equi. & Infras.</th>
-                                        <th width="5%" class="text-center">Formateurs</th>
-                                        {{-- <th width="5%" class="text-center">Localités</th> --}}
+                                        <th class="text-center">Formateurs</th>
                                         <th class="text-center">Type demande</th>
-                                        <th width="10%" class="text-center">Etat</th>
-                                        <th width="10%" class="text-center">Statut</th>
-                                        <th width="5%" class="text-center">Quitus</th>
-                                        <th width="5%" class="text-center"><i class="bi bi-gear"></i></th>
+                                        <th class="text-center">Etat</th>
+                                        <th class="text-center">Statut</th>
+                                        <th class="text-center">Quitus</th>
+                                        <th class="text-center"><i class="bi bi-gear"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($operateurA as $operateur)
                                         <tr>
-                                            {{-- <td style="text-align: center;">
-                                                <button type="button" class="btn btn-outline-info btn-sm btn-rounded"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#validationViewModal{{ $operateur?->id }}">
-                                                    <i class="bi bi-info" title="Détails validation"></i>
-                                                </button>
-                                            </td> --}}
-                                            {{-- <td>{{ $operateur?->numero_agrement }}</td> --}}
-                                            {{-- <td style="text-align: center;">{{ $operateur?->user?->username }}</td> --}}
-                                            {{-- <td style="text-align: center;"><a
-                                                    href="tel:+221{{ $operateur?->user?->fixe }}">{{ $operateur?->user?->fixe }}</a>
-                                            </td> --}}
                                             <td style="text-align: center;">{{ $operateur?->annee_agrement?->format('Y') }}
                                             </td>
                                             <td style="text-align: center;">
-                                                {{--  <span class="{{ $module_count }} align-items-baseline">
-                                                    {{ count($operateur->operateurmodules) }}
-                                                </span> --}}
                                                 <span class="badge bg-info">
                                                     {{ count($operateur->operateurmodules) }}
                                                 </span>
@@ -103,10 +83,6 @@
                                                 @endcan
                                             </td>
                                             <td style="text-align: center;">
-                                                {{-- <span class="{{ $reference_count }}">
-                                                    {{ count($operateur->operateureferences) }}
-                                                </span> --}}
-
                                                 <span class="badge bg-info">
                                                     {{ count($operateur->operateureferences) }}
                                                 </span>
@@ -120,11 +96,6 @@
                                                 @endcan
                                             </td>
                                             <td style="text-align: center;">
-                                                {{-- <span
-                                                    class="{{ $equipement_count }}">
-                                                    {{ count($operateur->operateurequipements) }}
-                                                </span> --}}
-
                                                 <span class="badge bg-info">
                                                     {{ count($operateur->operateurequipements) }}
                                                 </span>
@@ -138,9 +109,6 @@
                                                 @endcan
                                             </td>
                                             <td style="text-align: center;">
-                                                {{-- <span
-                                                    class="{{ $formateur_count }}">{{ count($operateur->operateurformateurs) }}</span> --}}
-
                                                 <span class="badge bg-info">
                                                     {{ count($operateur->operateurformateurs) }}
                                                 </span>
@@ -152,16 +120,6 @@
                                                     @endcan
                                                 @endcan
                                             </td>
-                                            {{-- <td style="text-align: center;">
-                                                <span class="badge bg-info">
-                                                    {{ count($operateur->operateurlocalites) }}
-                                                </span>
-                                                @can('devenir-operateur-agrement-ouvert')
-                                                    <a href="{{ route('showLocalite', ['id' => $operateur->id]) }}"
-                                                        target="_blank">
-                                                        <i class="bi bi-plus" title="Ajouter, Modifier, Supprimer"></i> </a>
-                                                @endcan
-                                            </td> --}}
                                             <td style="text-align: center;"><span
                                                     class="{{ $operateur?->type_demande }}">{{ $operateur?->type_demande }}</span>
                                             </td>
@@ -169,23 +127,6 @@
                                                 <span class="{{ $statut_demande }} mb-2">
                                                     {{ $statut_demande }}
                                                 </span>
-
-                                                {{-- @foreach ($operateur?->operateurmodules as $operateurmodule)
-                                                @endforeach
-                                                @foreach ($operateur?->operateureferences as $operateureference)
-                                                @endforeach
-                                                @foreach ($operateur?->operateurequipements as $operateurequipement)
-                                                @endforeach
-                                                @foreach ($operateur?->operateurformateurs as $operateurformateur)
-                                                @endforeach
-                                                @foreach ($operateur?->operateurlocalites as $operateurlocalite)
-                                                @endforeach
-                                                @if (!empty($operateurmodule) && !empty($operateureference) && !empty($operateurequipement) && !empty($operateurformateur) && !empty($operateurlocalite))
-                                                    <span class="badge bg-success text-white">Complètes</span>
-                                                @else
-                                                    <span class="badge bg-warning text-white">Incomplètes</span>
-                                                @endif --}}
-
                                             </td>
                                             <td style="text-align: center;">
                                                 <span class="{{ $operateur?->statut_agrement }} mb-2">
@@ -213,8 +154,7 @@
                                                                         @can('devenir-operateur-agrement-update')
                                                                             @can('update', $operateur)
                                                                                 <li>
-                                                                                    <button type="button"
-                                                                                        class="dropdown-item btn btn-sm mx-1"
+                                                                                    <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                                         data-bs-toggle="modal"
                                                                                         data-bs-target="#EditOperateurModal{{ $operateur->id }}">
                                                                                         <i class="bi bi-pencil" title="Modifier"></i>
@@ -250,8 +190,117 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                        </div>
 
+                        </div>
+                        @can('upload-file-view')
+                            <hr>
+                            <div class="row pt-5">
+                                <h5 class="card-title col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                    FICHIERS JOINTS</h5>
+                                <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-6">
+                                    <table class="table table-bordered table-hover datatables" id="table-iles">
+                                        <thead>
+                                            <tr>
+                                                <th width="5%" class="text-center">N°</th>
+                                                <th>LENGENDE</th>
+                                                <th width="10%" class="text-center">FILE</th>
+                                                <th width="5%" class="text-center"><i class="bi bi-gear"></i>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php $i = 1; ?>
+                                            @foreach ($files as $file)
+                                                <tr>
+                                                    <td class="text-center">{{ $i++ }}</td>
+                                                    <td>{{ $file?->legende }}</td>
+                                                    <td class="text-center">
+                                                        <a class="btn btn-default btn-sm" title="télécharger le fichier joint"
+                                                            target="_blank" href="{{ asset($file->getFichier()) }}">
+                                                            <i class="bi bi-download"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <form action="{{ route('fileDestroy') }}" method="post">
+                                                            @csrf
+                                                            @method('put')
+                                                            <input type="hidden" name="idFile"
+                                                                value="{{ $file->id }}">
+                                                            <button type="submit" style="background:none;border:0px;"
+                                                                class="show_confirm" title="retirer">
+                                                                <span class="badge border-danger border-1 text-danger">
+                                                                    <i class="bi bi-trash"></i>
+                                                                </span>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <form method="post" action="{{ route('files.update', $operateur?->user?->id) }}"
+                                enctype="multipart/form-data">
+                                @csrf
+                                @method('patch')
+                                <h5 class="card-title">JOINDRE VOS SCANS DE DOSSIERS</h5>
+                                <span style="color:red;">NB:</span>
+                                <span>Seuls l'acte ou l'arrêté
+                                    de création, ainsi que le NINEA ou le registre de commerce,</span> <span
+                                    style="color:red;"> sont exigés</span>.
+                                <!-- Profile Edit Form -->
+                                <div class="row mb-3 mt-3">
+                                    <label for="legende"
+                                        class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">LEGENDE<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-6">
+                                        <select name="legende" class="form-select  @error('legende') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-file" data-placeholder="Choisir">
+                                            <option value="{{ old('legende') }}">
+
+                                            </option>
+                                            @foreach ($user_files as $file)
+                                                <option value="{{ $file?->id }}">
+                                                    {{ $file?->legende }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('legende')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="file"
+                                        class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">FICHIER<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-6">
+                                        <div class="pt-2">
+                                            <input type="file" name="file" id="file"
+                                                class="form-control @error('file') is-invalid @enderror btn btn-primary btn-sm">
+                                            @error('file')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="file"
+                                        class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label"><span
+                                            class="text-danger mx-1"></span></label>
+                                    <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-6">
+                                        <div class="pt-2">
+                                            <button type="submit" class="btn btn-info btn-sm text-white">ENREGISTRER</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        @endcan
                         @foreach ($operateurs as $operateur)
                             <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
                                 <div class="modal fade" id="validationViewModal{{ $operateur?->id }}" tabindex="-1">
