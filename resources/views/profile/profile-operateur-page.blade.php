@@ -29,9 +29,9 @@
                                 {{ Auth::user()?->username }}
                                 <br>
                                 @if (Auth::user()?->last_activity && \Carbon\Carbon::parse($user->last_activity)->diffInMinutes(now()) < 5)
-                                    <span class="text-success">En ligne</span>
+                                    <span class="text-success text-center">En ligne</span>
                                 @else
-                                    <span class="text-danger">Hors ligne</span>
+                                    <span class="text-danger text-center">Hors ligne</span>
                                     ({{ \Carbon\Carbon::parse($user->last_activity)->diffForHumans() }})
                                 @endif
                             </h2>
