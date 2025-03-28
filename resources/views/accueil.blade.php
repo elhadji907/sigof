@@ -184,6 +184,55 @@
                     </div>
 
                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                        {{-- <div class="hero-content" data-aos="fade-up" data-aos-delay="200">
+                            <div class="company-customers mb-4">
+                                Les modules les plus demandés
+                            </div>
+
+                        </div> --}}
+                        <!-- Standard Plan -->
+
+                        <section class="pricing section">
+                            <div class="container">
+
+                                <div class="row g-4 justify-content-center">
+                                    <div class="col-lg-12">
+                                        <div class="pricing-card">
+                                            <div class="popular-badge">Modules</div>
+                                            <p class="description">Voici la liste des modules les plus sollicités actuellement.</p>
+
+                                            <h4>Featured Included:</h4>
+                                            <ul class="features-list">
+                                                <li>
+                                                    <i class="bi bi-check-circle-fill"></i>
+                                                    Lorem ipsum dolor sit amet
+                                                </li>
+                                                <li>
+                                                    <i class="bi bi-check-circle-fill"></i>
+                                                    Consectetur adipiscing elit
+                                                </li>
+                                                <li>
+                                                    <i class="bi bi-check-circle-fill"></i>
+                                                    Sed do eiusmod tempor
+                                                </li>
+                                                <li>
+                                                    <i class="bi bi-check-circle-fill"></i>
+                                                    Ut labore et dolore magna
+                                                </li>
+                                            </ul>
+
+                                            <a href="#" class="btn btn-light">
+                                                Buy Now
+                                                <i class="bi bi-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                {{-- <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                         <div class="hero-image" data-aos="zoom-out" data-aos-delay="300">
 
                             @if (!empty($une?->image))
@@ -203,30 +252,31 @@
                                 </p>
                             </div>
                         </div>
-                    </div>
-                </div>
-                @foreach ($posts as $post)
-                @endforeach
-                @if (!empty($post))
-                    <div class="row stats-row gy-4 mt-5" data-aos="fade-up" data-aos-delay="500">
-                        @foreach ($posts as $post)
-                            @if (!empty($post->image))
-                                <div class="col-12 col-md-12 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
-                                    <a href="#" data-bs-toggle="modal"
-                                        data-bs-target="#ShowPostModal{{ $post->id }}">
-                                        <div class="stat-item">
-                                            <img class="rounded-circle" alt="{{ $post->titre }}"
-                                                src="{{ asset($post->getPoste()) }}" width="50" height="auto">
-                                            <div class="stat-content">
-                                                <p>{{ $post?->titre }}</p>
-                                            </div>
+                    </div> --}}
+
+            </div>
+            @foreach ($posts as $post)
+            @endforeach
+            @if (!empty($post))
+                <div class="row stats-row gy-4 mt-5" data-aos="fade-up" data-aos-delay="500">
+                    @foreach ($posts as $post)
+                        @if (!empty($post->image))
+                            <div class="col-12 col-md-12 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                <a href="#" data-bs-toggle="modal"
+                                    data-bs-target="#ShowPostModal{{ $post->id }}">
+                                    <div class="stat-item">
+                                        <img class="rounded-circle" alt="{{ $post->titre }}"
+                                            src="{{ asset($post->getPoste()) }}" width="50" height="auto">
+                                        <div class="stat-content">
+                                            <p>{{ $post?->titre }}</p>
                                         </div>
-                                    </a>
-                                </div>
-                            @endif
-                        @endforeach
-                    </div>
-                @endif
+                                    </div>
+                                </a>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
+            @endif
 
             </div>
 
@@ -1267,7 +1317,7 @@
             </div>
         @endforeach
         @foreach ($posts as $post)
-            <div class="modal fade" id="ShowPostModal{{ $post->id }}" tabindex="-1">
+            {{-- <div class="modal fade" id="ShowPostModal{{ $post->id }}" tabindex="-1">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <section class="pricing section light-background">
@@ -1291,6 +1341,29 @@
                                 </div>
                             </div>
                         </section>
+                    </div>
+                </div>
+            </div> --}}
+
+
+            <div class="modal fade" id="ShowPostModal{{ $post->id }}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ $post->titre }}</h5>
+                            {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                <img src="{{ asset($post->getPoste()) }}" class="d-block w-100 main-image rounded-4"
+                                    alt="{{ $post->legende }}">
+                            </div>
+                            <p class="small fst-italic pt-1">{{ $post->name }}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                data-bs-dismiss="modal">Fermer</button>
+                        </div>
                     </div>
                 </div>
             </div>
