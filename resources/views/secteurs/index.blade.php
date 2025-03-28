@@ -43,10 +43,8 @@
                                     class="fas fa-plus"></i>
                                 <i class="bi bi-person-plus" title="Ajouter"></i> </a> --}}
                                 @can('secteur-create')
-                                    <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                        data-bs-target="#AddSecteurModal">
-                                        <i class="bi bi-person-plus" title="Ajouter"></i>
-                                    </button>
+                                    <button type="button" class="btn btn-primary float-end btn-rounded btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#AddSecteurModal">Ajouter</button>
                                 @endcan
                             </div>
                             {{-- @endcan --}}
@@ -55,9 +53,9 @@
                             <table class="table datatables align-middle justify-content-center" id="table-secteurs">
                                 <thead>
                                     <tr>
-                                        <th class="text-center"  width="5%">N°</th>
+                                        <th class="text-center" width="5%">N°</th>
                                         <th width="80%">Secteurs</th>
-                                        <th class="text-center"  width="15%">#</th>
+                                        <th class="text-center" width="15%">#</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -118,13 +116,18 @@
                         @csrf --}}
                         <form method="post" action="{{ url('secteurs') }}" enctype="multipart/form-data" class="row g-3">
                             @csrf
-                            <div class="modal-header">
+                            {{-- <div class="modal-header">
                                 <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter un secteur</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div> --}}
+
+                            <div class="modal-header">
+                                <h5 class="modal-title">Ajouter un nouveau secteur d'activité</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
                                 <div class="form-floating mb-3">
-                                    <input type="text" name="secteur" value="{{ old('secteur') }}"
+                                    <input type="text" name="name" value="{{ old('secteur') }}"
                                         class="form-control form-control-sm @error('secteur') is-invalid @enderror"
                                         id="secteur" placeholder="Nom secteur" autofocus>
                                     @error('secteur')
@@ -136,9 +139,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                    Enregistrer</button>
+                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
                             </div>
                         </form>
                     </div>
@@ -179,9 +181,8 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                        Modifier</button>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                    <button type="submit" class="btn btn-primary btn-sm">Modifier</button>
                                 </div>
                             </form>
                         </div>

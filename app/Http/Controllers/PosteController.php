@@ -15,7 +15,7 @@ class PosteController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|admin|DIOF|DEC|DPP']);
+        $this->middleware(['role:super-admin|admin|COM|DG']);
         $this->middleware("permission:post-view", ["only" => ["index"]]);
         $this->middleware("permission:post-create", ["only" => ["create", "store"]]);
         $this->middleware("permission:post-update", ["only" => ["update", "edit"]]);

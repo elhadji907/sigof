@@ -1,9 +1,7 @@
 <?php
-
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -26,14 +24,18 @@ class BirthdayMail extends Mailable
     public function build()
     {
         return $this->subject("Joyeux Anniversaire, {$this->user->name} !")
-                    ->view('emails.birthday')
-                    ->with('user', $this->user);
+            ->view('emails.birthday')
+            ->attach(public_path('onfp.png'), [
+                'as'   => 'logo.png',
+                'mime' => 'image/png',
+            ])
+            ->with('user', $this->user);
     }
 
     /**
      * Get the message envelope.
      */
- /*    public function envelope(): Envelope
+    /*    public function envelope(): Envelope
     {
         return new Envelope(
             subject: 'Birthday Mail',
@@ -43,7 +45,7 @@ class BirthdayMail extends Mailable
     /**
      * Get the message content definition.
      */
- /*    public function content(): Content
+    /*    public function content(): Content
     {
         return new Content(
             view: 'view.name',
@@ -55,7 +57,7 @@ class BirthdayMail extends Mailable
      *
      * @return array<int, \Illuminate\Mail\Mailables\Attachment>
      */
-   /*  public function attachments(): array
+    /*  public function attachments(): array
     {
         return [];
     } */

@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - demandes operateurs')
+@section('title', 'ONFP | OPERATEURS')
 @section('space-work')
 
     <div class="pagetitle">
@@ -209,6 +209,18 @@
                                                         data-bs-toggle="modal" data-bs-target="#generate_rapport"></i>Rechercher
                                                         plus</button>
                                                 </li>
+                                                @hasrole('admin|super-admin')
+                                                    <li>
+                                                        <form action="{{ route('importO') }}" method="get">
+                                                            <button type="submit"
+                                                                class="dropdown-item btn btn-sm">Importer</button>
+                                                        </form>
+
+                                                        {{-- <button type="button" class="dropdown-item btn btn-sm"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#importOperateur"></i>Importer</button> --}}
+                                                    </li>
+                                                @endhasrole
                                             </ul>
                                         </div>
                                     </span>
@@ -216,9 +228,7 @@
                             </div>
                         @endif
                         {{-- <h5 class="card-title">Liste des opérateurs</h5> --}}
-                        @foreach ($operateurs as $operateur)
-                        @endforeach
-                        @if (!empty($operateur))
+                        @if ($operateurs->isNotEmpty())
                             <div class="table-responsive">
                                 <table class="table datatables table-bordered table-hover table-striped"
                                     id="table-operateurs">
@@ -413,10 +423,14 @@
                                         <label for="numero_arrive" class="form-label">Numéro courrier<span
                                                 class="text-danger mx-1">*</span></label>
                                         <div class="input-group has-validation">
-                                            <input type="number" min="0" name="numero_arrive"
+                                            {{-- <input type="number" min="0" name="numero_arrive"
                                                 value="{{ old('numero_arrive') }}"
                                                 class="form-control form-control-sm @error('numero_arrive') is-invalid @enderror"
-                                                id="numero_arrive" placeholder="Numéro de correspondance">
+                                                id="numero_arrive" placeholder="Numéro de correspondance"> --}}
+                                            <input type="text" placeholder="Rechercher numéro courrier..."
+                                                class="form-control form-control-sm @error('product') is-invalid @enderror"
+                                                name="numero_arrive" id="numero" required>
+                                            <div id="productList"></div>
                                             @error('numero_arrive')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -442,9 +456,12 @@
                                     <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                         <label for="operateur" class="form-label">Raison sociale opérateur<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <textarea name="operateur" id="operateur" rows="1"
+                                        {{-- <textarea name="operateur" id="operateur" rows="1"
                                             class="form-control form-control-sm @error('operateur') is-invalid @enderror"
-                                            placeholder="La raison sociale de l'opérateur">{{ old('operateur') }}</textarea>
+                                            placeholder="La raison sociale de l'opérateur">{{ old('operateur') }}</textarea> --}}
+                                        <input type="text" placeholder="La raison sociale de l'opérateur"
+                                            class="form-control form-control-sm @error('objet') is-invalid @enderror"
+                                            name="operateur" id="objet" value="" required>
                                         @error('operateur')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -481,9 +498,10 @@
                                     <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="fixe" class="form-label">Téléphone fixe<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="number" min="0" name="fixe" value="{{ old('fixe') }}"
+                                        <input name="fixe" type="text" maxlength="12"
                                             class="form-control form-control-sm @error('fixe') is-invalid @enderror"
-                                            id="fixe" placeholder="3xxxxxxxx">
+                                            id="fixe" value="{{ old('fixe') }}" autocomplete="tel"
+                                            placeholder="XX:XXX:XX:XX">
                                         @error('fixe')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -494,10 +512,10 @@
                                     <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="telephone" class="form-label">Téléphone<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="number" min="0" name="telephone"
-                                            value="{{ old('telephone') }}"
+                                        <input name="telephone" type="text" maxlength="12"
                                             class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                            id="telephone" placeholder="7xxxxxxxx">
+                                            id="telephone" value="{{ old('telephone') }}" autocomplete="tel"
+                                            placeholder="XX:XXX:XX:XX">
                                         @error('telephone')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -787,9 +805,9 @@
                                     </div> --}}
                                     <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="date_quitus" class="form-label">Date délivrance</label>
-                                        <input type="date" name="date_quitus" value="{{ old('date_quitus') }}"
-                                            class="datepicker form-control form-control-sm @error('date_quitus') is-invalid @enderror"
-                                            id="date_quitus" placeholder="jj/mm/aaaa">
+                                        <input type="text" name="date_quitus" value="{{ old('date_quitus') }}"
+                                            class="form-control form-control-sm @error('date_quitus') is-invalid @enderror"
+                                            id="datepicker" placeholder="JJ/MM/AAAA" autocomplete="bday">
                                         @error('date_quitus')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -898,11 +916,11 @@
                                             <option value="{{ old('civilite') }}">
                                                 {{ old('civilite') }}
                                             </option>
-                                            <option value="Monsieur">
-                                                Monsieur
+                                            <option value="M.">
+                                                M.
                                             </option>
-                                            <option value="Madame">
-                                                Madame
+                                            <option value="Mme">
+                                                Mme
                                             </option>
                                         </select>
                                         @error('civilite')
@@ -966,10 +984,10 @@
 
                                     <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                         <label for="telephone_parent" class="form-label">Téléphone responsable</label>
-                                        <input type="number" min="0" name="telephone_parent"
-                                            value="{{ old('telephone_parent') }}"
+                                        <input name="telephone_parent" type="text" maxlength="12"
                                             class="form-control form-control-sm @error('telephone_parent') is-invalid @enderror"
-                                            id="telephone_parent" placeholder="7xxxxxxxx">
+                                            id="telephone_secondaire" value="{{ old('telephone_parent') }}"
+                                            autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                         @error('telephone_parent')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -1310,11 +1328,11 @@
                                                 <option value="{{ $operateur?->civilite_responsable }}">
                                                     {{ $operateur?->civilite_responsable ?? old('civilite') }}
                                                 </option>
-                                                <option value="Monsieur">
-                                                    Monsieur
+                                                <option value="M.">
+                                                    M.
                                                 </option>
-                                                <option value="Madame">
-                                                    Madame
+                                                <option value="Mme">
+                                                    Mme
                                                 </option>
                                             </select>
                                             @error('civilite')
@@ -1522,6 +1540,60 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal fade" id="importOperateur" tabindex="-1" role="dialog"
+            aria-labelledby="importOperateurLabel" aria-hidden="true" data-bs-backdrop="static"
+            data-bs-keyboard="false">
+
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+
+                    <!-- Header du Modal avec texte centré -->
+                    {{-- <div class="modal-header bg-secondary text-white">
+                        <h5 class="modal-title w-100 text-center" id="importOperateurLabel">
+                            FAIRE UNE RECHERCHE
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div> --}}
+
+                    <div class="card-header text-center bg-gradient-default">
+                        <h1 class="h4 text-black mb-0">IMPORTER</h1>
+                    </div>
+
+                    <!-- Formulaire -->
+                    <form method="post" action="{{ route('import.operateurs') }}" enctype="multipart/form-data"
+                        class="p-3" novalidate>
+                        @csrf
+
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label for="file" class="form-label">
+                                    Fichier (.XLSX, .CSV, .XLS) <span class="text-danger">*</span>
+                                </label>
+                                <input type="file" name="file" value="{{ old('file') }}"
+                                    class="form-control form-control-sm @error('file') is-invalid @enderror"
+                                    id="file" required>
+
+                                @error('file')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!-- Footer du Modal -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                data-bs-dismiss="modal">Fermer</button>
+                            <button type="submit" class="btn btn-primary btn-sm text-white">Importer</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
     </section>
 
 @endsection
@@ -1565,6 +1637,62 @@
                     }
                 }
             }
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#numero').keyup(function() {
+                var query = $(this).val().trim();
+                if (query !== '') {
+                    $.ajax({
+                        url: "{{ route('collectives.fetch') }}", // Changez cette URL si nécessaire
+                        method: "POST",
+                        data: {
+                            query: query,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            if (response.html) {
+                                $('#productList').fadeIn().html(response.html);
+                            } else {
+                                $('#productList').fadeOut();
+                            }
+                        }
+                    });
+                } else {
+                    $('#productList').fadeOut();
+                }
+            });
+
+            $(document).on('click', 'li', function() {
+                var selectedNumero = $(this).text();
+                var selectedId = $(this).data("id");
+
+                $('#numero').val(selectedNumero); // Remplir le champ numéro
+                $('#id').val(selectedId);
+
+                // Appeler l'API pour récupérer l'objet associé au numéro sélectionné
+                $.ajax({
+                    url: "{{ route('getObjetByNumero') }}", // Définir une route pour récupérer l'objet
+                    method: "GET",
+                    data: {
+                        numero: selectedNumero
+                    },
+                    success: function(response) {
+                        $('#objet').val(response
+                            .objet); // Remplir automatiquement le champ 'objet'
+                        $('#date_depot').val(response
+                            .date_depot); // Remplir automatiquement le champ 'objet'
+                    },
+                    error: function() {
+                        alert('Erreur lors de la récupération de l\'objet.');
+                    }
+                });
+
+                $('#productList').fadeOut();
+            });
         });
     </script>
 @endpush

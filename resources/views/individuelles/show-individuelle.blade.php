@@ -1,6 +1,6 @@
 @extends('layout.user-layout')
-@section('title', 'Demande individuelle de ' . Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' .
-    Auth::user()->name)
+@section('title', 'DEMANDE INDIVIDUELLE DE ' . strtoupper(Auth::user()->civilite . ' ' . Auth::user()->firstname . ' ' .
+    Auth::user()->name))
 @section('space-work')
     <section class="section">
         <div class="row justify-content-center">
@@ -38,27 +38,30 @@
                                 <p> | retour</p>
                             </span>
                             <button type="button" class="btn btn-info btn-sm">
-                                <span class="badge bg-white text-info">{{ $individuelle_total }}/3</span>
+                                <span class="badge bg-white text-info">{{ $individuelle_total }} sur 3</span>
                             </button>
-                            @if(!empty(Auth::user()->cin))
-                                <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded"
+                            @if ($individuelle_total < 3 && !empty(Auth::user()?->cin))
+                                <button type="button" class="btn btn-primary btn-sm float-end btn-rounded"
                                     data-bs-toggle="modal" data-bs-target="#AddIndividuelleModal">
-                                    <i class="bi bi-plus" title="Ajouter"></i>
+                                    Ajouter
                                 </button>
                             @endif
                         </div>
                         <h5 class="card-title">
-                            Bonjour {{ Auth::user()->civilite . ' ' . Auth::user()->firstname. ' ' . Auth::user()->name }}</h5>
+                            Bonjour
+                            {{ Auth::user()?->civilite . ' ' . Auth::user()?->firstname . ' ' . Auth::user()?->name }}
+                        </h5>
                         <table class="table table-bordered table-hover table-borderless">
                             <thead>
                                 <tr>
                                     <th width="2%" class="text-center">N°</th>
-                                    <th width="8%" class="text-center">Numéro</th>
+                                    <th width="10%" class="text-center">Numéro</th>
                                     <th>Module</th>
                                     <th width="12%" class="text-center">Département</th>
-                                    <th width="15%" class="text-center">Niveau étude</th>
-                                    <th width="15%" class="text-center">Diplome académique</th>
-                                    <th width="15%" class="text-center">Diplome professionnel</th>
+                                    {{-- <th width="15%" class="text-center">Niveau étude</th>
+                                    <th width="15%" class="text-center">Diplome académique</th> --}}
+                                    {{-- <th width="15%" class="text-center">Diplome professionnel</th> --}}
+                                    <th width="15%" class="text-center">Date dépôt</th>
                                     <th width="5%" class="text-center">Statut</th>
                                     <th style="width:5%;"><i class="bi bi-gear"></i></th>
                                 </tr>
@@ -66,15 +69,16 @@
                             <tbody>
                                 <?php $i = 1; ?>
                                 @foreach ($individuelles as $individuelle)
-                                    @if(!empty($individuelle->numero))
+                                    @if (!empty($individuelle->numero))
                                         <tr>
                                             <td class="text-center">{{ $i++ }}</td>
                                             <td class="text-center">{{ $individuelle?->numero }}</td>
                                             <td>{{ $individuelle?->module?->name }}</td>
                                             <td class="text-center">{{ $individuelle?->departement?->nom }}</td>
-                                            <td class="text-center">{{ $individuelle?->niveau_etude }}</td>
-                                            <td class="text-center">{{ $individuelle?->diplome_academique }}</td>
-                                            <td class="text-center">{{ $individuelle?->diplome_professionnel }}</td>
+                                            {{-- <td class="text-center">{{ $individuelle?->niveau_etude }}</td>
+                                            <td class="text-center">{{ $individuelle?->diplome_academique }}</td> --}}
+                                            {{-- <td class="text-center">{{ $individuelle?->diplome_professionnel }}</td> --}}
+                                            <td class="text-center">{{ $individuelle?->date_depot?->format('d/m/Y') }}</td>
                                             <td class="text-center">
                                                 <span class="{{ $individuelle?->statut }}">{{ $individuelle?->statut }}
                                                 </span>
@@ -99,7 +103,8 @@
                                                                     method="post">
                                                                     @csrf
                                                                     @method('DELETE')
-                                                                    <button type="submit" class="dropdown-item show_confirm"
+                                                                    <button type="submit"
+                                                                        class="dropdown-item show_confirm"
                                                                         title="Supprimer"><i
                                                                             class="bi bi-trash"></i>Supprimer</button>
                                                                 </form>
@@ -114,19 +119,132 @@
                             </tbody>
                         </table>
                         {{-- </form> --}}
+                        @can('upload-file-view')
+                            <hr>
+                            <div class="row mb-3 pt-5">
+                                <h5 class="card-title col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                    FICHIERS JOINTS</h5>
+                                <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                    <table class="table table-bordered table-hover datatables" id="table-iles">
+                                        <thead>
+                                            <tr>
+                                                <th width="5%" class="text-center">N°</th>
+                                                <th>LENGENDE</th>
+                                                <th width="10%" class="text-center">FILE</th>
+                                                <th width="5%" class="text-center"><i class="bi bi-gear"></i>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php $i = 1; ?>
+                                            @foreach ($files as $file)
+                                                <tr>
+                                                    <td class="text-center">{{ $i++ }}</td>
+                                                    <td>{{ $file?->legende }}</td>
+                                                    <td class="text-center">
+                                                        <a class="btn btn-default btn-sm" title="télécharger le fichier joint"
+                                                            target="_blank" href="{{ asset($file->getFichier()) }}">
+                                                            <i class="bi bi-download"></i>
+                                                        </a>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <form action="{{ route('fileDestroy') }}" method="post">
+                                                            @csrf
+                                                            @method('put')
+                                                            <input type="hidden" name="idFile" value="{{ $file->id }}">
+                                                            <button type="submit" style="background:none;border:0px;"
+                                                                class="show_confirm" title="retirer">
+                                                                <span class="badge border-danger border-1 text-danger">
+                                                                    <i class="bi bi-trash"></i>
+                                                                </span>
+                                                            </button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <form method="post" action="{{ route('files.update', $user?->id) }}"
+                                enctype="multipart/form-data">
+                                @csrf
+                                @method('patch')
+                                <h5 class="card-title">JOINDRE VOS SCANS DE DOSSIERS</h5>
+                                <span style="color:red;">NB:</span>
+                                <span>Seule la Carte Nationale d'Identité (recto/verso) </span><span style="color:red;"> est
+                                    requise</span>.
+                                <!-- Profile Edit Form -->
+                                <div class="row mb-3 mt-3">
+                                    <label for="legende"
+                                        class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">LEGENDE<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                        {{-- <input name="legende" type="text"
+                                        class="form-control form-control-sm @error('legende') is-invalid @enderror"
+                                        id="legende" value="{{ old('legende') }}" autocomplete="legende"
+                                        placeholder="Légende"> --}}
+                                        <select name="legende" class="form-select  @error('legende') is-invalid @enderror"
+                                            aria-label="Select" id="select-field-file" data-placeholder="Choisir">
+                                            <option value="{{ old('legende') }}">
+
+                                            </option>
+                                            @foreach ($user_files as $file)
+                                                <option value="{{ $file?->id }}">
+                                                    {{ $file?->legende }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('legende')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="file"
+                                        class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">FICHIER<span
+                                            class="text-danger mx-1">*</span></label>
+                                    <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                        <div class="pt-2">
+                                            <input type="file" name="file" id="file"
+                                                class="form-control @error('file') is-invalid @enderror btn btn-primary btn-sm">
+                                            @error('file')
+                                                <span class="text-danger">{{ $message }}</span>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="file"
+                                        class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label"><span
+                                            class="text-danger mx-1"></span></label>
+                                    <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                        <div class="pt-2">
+                                            <button type="submit" class="btn btn-info btn-sm text-white">ENREGISTRER</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        @endcan
                     </div>
                 </div>
             </div>
         </div>
-        
+
         {{-- Ajouter un autre choix --}}
 
         @foreach (Auth::user()?->individuelles as $individuelle)
-            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
+            <div
+                class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
                 <div class="modal fade" id="AddIndividuelleModal" tabindex="-1">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
-                            <form method="post" action="{{ route('individuelles.store') }}" enctype="multipart/form-data">
+                            <form method="post" action="{{ route('individuelles.store') }}"
+                                enctype="multipart/form-data">
                                 @csrf
                                 <div class="card-header text-center bg-gradient-default">
                                     <h1 class="h4 text-black mb-0">Ajouter une nouvelle demande individuelle</h1>
@@ -141,12 +259,12 @@
                                 <div class="modal-body">
                                     <div class="row g-3">
                                         <div class="col-12 col-md-12 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                            <label for="module" class="form-label">Formation sollicitée<span
+                                            <label for="module" class="form-label">Formation sollicitée (module)<span
                                                     class="text-danger mx-1">*</span></label>
 
                                             <input type="text" name="module" value="{{ old('module_name') }}"
                                                 class="form-control form-control-sm @error('module_name') is-invalid @enderror"
-                                                id="module_name" placeholder="Nom du module" autofocus>
+                                                id="module_name" placeholder="Formation choisie" autofocus>
                                             <div id="countryList"></div>
                                             {{ csrf_field() }}
                                             @error('module')
@@ -225,10 +343,11 @@
                                         <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="telephone_secondaire" class="form-label">Téléphone secondaire<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="number" name="telephone_secondaire" min="0"
-                                                value="{{ $individuelle?->telephone ?? old('telephone_secondaire') }}"
+                                            <input name="telephone_secondaire" type="text" maxlength="12"
                                                 class="form-control form-control-sm @error('telephone_secondaire') is-invalid @enderror"
-                                                id="telephone_secondaire" placeholder="7x xxx xx xx">
+                                                id="telephone_secondaire"
+                                                value="{{ old('telephone_secondaire', $individuelle->telephone ?? '') }}"
+                                                autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                             @error('telephone_secondaire')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -510,8 +629,8 @@
                                                 complémentaires
                                                 sur
                                                 le projet
-                                                professionnel</label>
-                                            <textarea name="projetprofessionnel" id="projetprofessionnel" rows="2"
+                                                professionnel<span class="text-danger mx-1">*</span></label>
+                                            <textarea name="projetprofessionnel" id="projetprofessionnel" rows="5"
                                                 class="form-control form-control-sm @error('projetprofessionnel') is-invalid @enderror"
                                                 placeholder="Si vous disposez déjà d'un projet professionnel, merci d'écrire son résumé en quelques lignes">{{ $individuelle?->projetprofessionnel ?? old('projetprofessionnel') }}</textarea>
                                             @error('projetprofessionnel')
@@ -524,8 +643,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary btn-sm"
                                             data-bs-dismiss="modal">Fermer</button>
-                                        <button type="submit" class="btn btn-primary btn-sm"><i
-                                                class="bi bi-printer"></i>
+                                        <button type="submit" class="btn btn-primary btn-sm">
                                             Ajouter</button>
                                     </div>
                                 </div>

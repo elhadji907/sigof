@@ -183,8 +183,7 @@
                                             <h5 class="card-title">
                                                 <div class="pt-1">
                                                     <a href="{{ url('directionAgent', ['$iddirection' => $direction->id]) }}"
-                                                        class="btn btn-primary float-end btn-sm">
-                                                        <i class="bi bi-plus" title="Ajouter agent"></i> </a>
+                                                        class="btn btn-primary float-end btn-sm">Ajouter</a>
                                                 </div>
                                             </h5>
                                         </div>

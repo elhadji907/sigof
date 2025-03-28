@@ -73,8 +73,9 @@
                                         <th>Modules</th>
                                         <th>Domaines</th>
                                         <th>Secteurs</th>
+                                        <th>Niveau qualification</th>
                                         <th class="text-center" scope="col">Formations</th>
-                                        <th class="text-center" scope="col">Effectif</th>
+                                        <th class="text-center" scope="col">Demandes</th>
                                         <th class="text-center" scope="col">#</th>
                                     </tr>
                                 </thead>
@@ -85,6 +86,7 @@
                                             <td>{{ $module->name }}</td>
                                             <td>{{ $module?->domaine?->name }}</td>
                                             <td>{{ $module?->domaine?->secteur?->name }}</td>
+                                            <td>{{ $module?->niveau_qualification }}</td>
                                             <td style="text-align: center;">
                                                 @foreach ($module->formations as $formation)
                                                     @if ($loop->last)
@@ -119,13 +121,18 @@
                                                                     class="bi bi-three-dots"></i></a>
                                                             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                                                 @can('module-update')
-                                                                    <li>
+                                                                    {{-- <li>
                                                                         <button type="button" class="dropdown-item btn btn-sm mx-1"
                                                                             data-bs-toggle="modal"
                                                                             data-bs-target="#EditRegionModal{{ $module->id }}">
                                                                             <i class="bi bi-pencil" title="Modifier"></i> Modifier
                                                                         </button>
-                                                                    </li>
+                                                                    </li> --}}
+                                                                <li><a class="dropdown-item btn btn-sm"
+                                                                    href="{{ route('modules.edit', $module?->id) }}"
+                                                                    class="mx-1"><i class="bi bi-pencil"></i>
+                                                                    Modifier</a>
+                                                            </li>
                                                                 @endcan
                                                                 @can('module-delete')
                                                                     <li>
@@ -152,35 +159,34 @@
                 </div>
             </div>
 
-            {{-- <div class="col-lg-12 col-md-12 d-flex flex-column align-items-center justify-content-center">
-            <div class="modal fade" id="AddIndividuelModal" tabindex="-1">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                        <form method="post" action="{{ route('addModule') }}" enctype="multipart/form-data">
+
+            <div class="modal fade" id="AddIndividuelModal" tabindex="-1" role="dialog"
+                aria-labelledby="AddIndividuelModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">                       
+                        <div class="card-header text-center bg-gradient-default">
+                            <h1 class="h4 text-black mb-0">AJOUTER UN NOUVEAU MODULE</h1>
+                        </div>
+                        <form method="post" action="{{ url('addModule') }}" enctype="multipart/form-data">
                             @csrf
-                            <div class="modal-header">
-                                <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter un nouveau module
-                                </h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
                             <div class="modal-body">
                                 <div class="row g-3">
-
-                                    <div class="col-12 col-md-6 col-lg-6 mb-0">
-                                        <label for="name" class="form-label">Module</label>
-                                        <input type="text" name="name" value="{{ old('name') }}"
-                                            class="form-control form-control-sm @error('name') is-invalid @enderror"
-                                            id="name" placeholder="Module">
-                                        @error('name')
-                                            <span class="invalid-feedback" role="alert">
-                                                <div>{{ $message }}</div>
-                                            </span>
-                                        @enderror
+                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                        <label for="name" class="form-label">Module<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <div class="input-group has-validation">
+                                            <input type="text" name="name" value="{{ old('name') }}"
+                                                class="form-control form-control-sm @error('name') is-invalid @enderror"
+                                                id="name" placeholder="Module">
+                                            @error('name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
                                     </div>
-
-                                    <div class="col-12 col-md-6 col-lg-6 mb-0 pb-5">
-                                        <label for="domaine" class="form-label">Domaine<span
+                                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                        <label for="name" class="form-label">Module<span
                                                 class="text-danger mx-1">*</span></label>
                                         <select name="domaine" class="form-select  @error('domaine') is-invalid @enderror"
                                             aria-label="Select" id="select-field-domaine-indiv"
@@ -189,8 +195,8 @@
                                                 {{ old('domaine') }}
                                             </option>
                                             @foreach ($domaines as $domaine)
-                                                <option value="{{ $domaine->id }}">
-                                                    {{ $domaine->name }}
+                                                <option value="{{ $domaine?->id }}">
+                                                    {{ $domaine?->name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -200,68 +206,12 @@
                                             </span>
                                         @enderror
                                     </div>
-
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                        Enregistrer</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-
-            <div class="modal fade" id="AddIndividuelModal" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form method="post" action="{{ url('addModule') }}" enctype="multipart/form-data" class="row g-3">
-                            @csrf
-                            <div class="modal-header">
-                                <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter un nouveau module
-                                </h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-floating mb-3">
-                                    <input type="text" name="name" value="{{ old('name') }}"
-                                        class="form-control form-control-sm @error('name') is-invalid @enderror" id="name"
-                                        placeholder="Nom du module" autofocus>
-                                    @error('name')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                    <label for="floatingInput">Module</label>
-                                </div>
-                                <div class="form-floating mb-3">
-                                    <select name="domaine" class="form-select  @error('domaine') is-invalid @enderror"
-                                        aria-label="Select" id="select-field-domaine-indiv"
-                                        data-placeholder="Choisir domaine">
-                                        <option value="">
-                                            {{ old('domaine') }}
-                                        </option>
-                                        @foreach ($domaines as $domaine)
-                                            <option value="{{ $domaine?->id }}">
-                                                {{ $domaine?->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('domaine')
-                                        <span class="invalid-feedback" role="alert">
-                                            <div>{{ $message }}</div>
-                                        </span>
-                                    @enderror
-                                    <label for="floatingInput">Domaine</label>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                    Enregistrer</button>
+                                <button type="button" class="btn btn-secondary btn-sm"
+                                    data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
                             </div>
                         </form>
                     </div>
@@ -278,8 +228,13 @@
                                 enctype="multipart/form-data" class="row g-3">
                                 @csrf
                                 @method('patch')
-                                <div class="modal-header" id="EditRegionModalLabel{{ $module->id }}">
+                                {{-- <div class="modal-header" id="EditRegionModalLabel{{ $module->id }}">
                                     <h5 class="modal-title"><i class="bi bi-pencil" title="Ajouter"></i> Modifier module</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div> --}}
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Modification module</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
@@ -318,9 +273,9 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                        Modifier</button>
+                                    <button type="button" class="btn btn-secondary btn-sm"
+                                        data-bs-dismiss="modal">Fermer</button>
+                                    <button type="submit" class="btn btn-primary btn-sm">Modifier</button>
                                 </div>
                             </form>
                         </div>

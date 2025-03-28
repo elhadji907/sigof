@@ -560,7 +560,7 @@
                                                     En cours
                                                 </option>
                                                 <option value="retirés">
-                                                    retirers
+                                                    retirés
                                                 </option>
                                             </select>
                                             @error('statut')

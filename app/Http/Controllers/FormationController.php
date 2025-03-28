@@ -936,7 +936,7 @@ class FormationController extends Controller
         return redirect()->back();
     }
 
-    public function giveindisponibles($idformation, Request $request)
+    public function giveindisponibles(Request $request, $idformation)
     {
         $request->validate([
             'motif' => ['required'],
@@ -945,13 +945,24 @@ class FormationController extends Controller
         $individuelle = Individuelle::findOrFail($request->input('individuelleid'));
         $formation    = Formation::findOrFail($idformation);
 
+        $date = date('d');
+        $date = $date . ' ' . date('m');
+        $date = $date . ' ' . date('Y');
+        $date = $date . ' à ' . date('H') . 'h';
+        $date = $date . ' ' . date('i') . 'min';
+        $date = $date . ' ' . date('s') . 's';
+
         if ($formation->statut == "Terminée" && $individuelle->note_obtenue > 0) {
             Alert::warning('Avertissement !', 'Ce demandeur ne peut pas être retiré.');
         } else {
             $individuelle->update([
                 "formations_id" => null,
                 "statut"        => 'Retirée',
-                "motif_rejet"   => $individuelle->motif_rejet . ' retirer de la formation ' . $formation->name . ' pour mitif : ' . $request->input('motif'),
+                "motif_rejet"   => $individuelle->motif_rejet
+                . ' retiré de la formation ' . $formation->name
+                . ', le ' . $date . ' par ' . Auth::user()->firstname
+                . ' pour motif : ' . $request->input('motif')
+                . ' ' . Auth::user()->name . ';',
             ]);
 
             $individuelle->save();
@@ -977,6 +988,43 @@ class FormationController extends Controller
         }
         return redirect()->back();
     }
+    public function givedisponibles($id, Request $request)
+    {
+        $request->validate([
+            'motif' => ['required'],
+        ]);
+
+        $individuelle = Individuelle::findOrFail($id);
+
+        $date = date('d');
+        $date = $date . ' ' . date('m');
+        $date = $date . ' ' . date('Y');
+        $date = $date . ' à ' . date('H') . 'h';
+        $date = $date . ' ' . date('i') . 'min';
+        $date = $date . ' ' . date('s') . 's';
+
+        $individuelle->update([
+            "statut"      => 'Attente',
+            "motif_rejet" => 'Remis en attente le '
+            . $date . ' par ' . Auth::user()->firstname
+            . ' ' . Auth::user()->name . ';',
+        ]);
+
+        $individuelle->save();
+
+        $validated_by = new Validationindividuelle([
+            'validated_id'     => Auth::user()->id,
+            'action'           => 'Attente',
+            'motif'            => $request->input('motif'),
+            'individuelles_id' => $individuelle->id,
+        ]);
+
+        $validated_by->save();
+
+        Alert::success('Opération réussie', 'Le demandeur est maintenant éligible.');
+
+        return redirect()->back();
+    }
 
     public function givecollectiveindisponibles($idformation, Request $request)
     {
@@ -987,13 +1035,22 @@ class FormationController extends Controller
         $listecollective = Listecollective::findOrFail($request->input('listecollectiveid'));
         $formation       = Formation::findOrFail($idformation);
 
+        $date = date('d');
+        $date = $date . ' ' . date('m');
+        $date = $date . ' ' . date('Y');
+        $date = $date . ' à ' . date('H') . 'h';
+        $date = $date . ' ' . date('i') . 'min';
+        $date = $date . ' ' . date('s') . 's';
+
         if ($formation->statut == "Terminée" && $listecollective->note_obtenue > 0) {
             Alert::warning('Avertissement !', 'Ce demandeur ne peut pas être retiré.');
         } else {
             $listecollective->update([
                 "formations_id" => null,
                 "statut"        => 'Retirée',
-                "motif_rejet"   => $request->motif,
+                "motif_rejet"   => $request->motif . ' '
+                . $date . ' par ' . Auth::user()->firstname
+                . ' ' . Auth::user()->name . ';',
             ]);
 
             $listecollective->save();
@@ -3371,38 +3428,5 @@ class FormationController extends Controller
         Alert::success('Les e-mails ont été envoyés avec succès !');
 
         return redirect()->back();
-    }
-
-    public function confirmer(Request $request, $id)
-    {
-        $individuelle = Individuelle::findOrFail($id);
-
-        $individuelle->update([
-            'confirmation' => 'confirmer',
-        ]);
-
-        Alert::success('Félicitations !', 'Merci pour votre confiance');
-
-        return redirect()->back();
-
-    }
-
-    public function decliner(Request $request, $id)
-    {
-        $this->validate($request, [
-            'motif' => "required|string",
-        ]);
-
-        $individuelle = Individuelle::findOrFail($id);
-
-        $individuelle->update([
-            'confirmation'      => 'décliner',
-            'motif_declinaison' => $request->motif,
-        ]);
-
-        Alert::success('Dommage !', 'Nous espérons vous retrouver bientôt');
-
-        return redirect()->back();
-
     }
 }

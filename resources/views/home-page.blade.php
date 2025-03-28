@@ -108,9 +108,9 @@
                                                 <div class="progress-bar progress-bar-striped progress-bar-animated {{ $color }}"
                                                     role="progressbar" style="width: {{ $progress }}%"
                                                     aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
-                                                    @if ($progress == 100) 
+                                                    @if ($progress == 100)
                                                         terminée
-                                                    @else 
+                                                    @else
                                                         {{ $progress }}%
                                                     @endif
                                                 </div>
@@ -120,7 +120,9 @@
                                         {{-- Pour les demandes collectives --}}
                                         @php
                                             $progress = round(
-                                                (count($formation->emargementcollectives) / $formation->duree_formation) * 100,
+                                                (count($formation->emargementcollectives) /
+                                                    $formation->duree_formation) *
+                                                    100,
                                             );
                                             // Déterminer la couleur en fonction du pourcentage
                                             if ($progress <= 20) {
@@ -141,9 +143,9 @@
                                             <div class="progress-bar progress-bar-striped progress-bar-animated {{ $color }}"
                                                 role="progressbar" style="width: {{ $progress }}%"
                                                 aria-valuenow="{{ $progress }}" aria-valuemin="0" aria-valuemax="100">
-                                                @if ($progress == 100) 
+                                                @if ($progress == 100)
                                                     terminée
-                                                @else 
+                                                @else
                                                     {{ $progress }}%
                                                 @endif
                                             </div>
@@ -267,7 +269,7 @@
                                             },
                                             data: [{
                                                     value: {{ $nouvelle }},
-                                                    name: 'nouvelles'
+                                                    name: 'Nouvelles'
                                                 },
                                                 {
                                                     value: {{ $attente }},
@@ -275,15 +277,15 @@
                                                 },
                                                 {
                                                     value: {{ $retenue }},
-                                                    name: 'sélectionnés'
+                                                    name: 'Sélectionnés'
                                                 },
                                                 {
                                                     value: {{ $terminer }},
-                                                    name: 'formés'
+                                                    name: 'Formés'
                                                 },
                                                 {
                                                     value: {{ $rejeter }},
-                                                    name: 'Rejetée'
+                                                    name: 'Rejetés'
                                                 }
                                             ]
                                         }]
@@ -300,10 +302,10 @@
         <section class="section dashboard">
             <div class="row">
                 <!-- Left side columns -->
-                <div class="col-lg-12">
+                <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
                     <div class="row">
                         <!-- Sales Card -->
-                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
                             <div class="card info-card sales-card">
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -311,7 +313,7 @@
                                 </div>
                                 <a href="#">
                                     <div class="card-body">
-                                        <h5 class="card-title">Individuelles<span> | aujourd'hui</span></h5>
+                                        <h5 class="card-title">Demandes<span> | Aujourd'hui</span></h5>
                                         <div class="d-flex align-items-center">
                                             <div
                                                 class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -330,7 +332,7 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        {{-- <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
                             <div class="card info-card sales-card">
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -350,14 +352,76 @@
                                                         class="text-primary">{{ number_format(count($individuelles), 0, '', ' ') }}</span>
                                                 </h6>
                                                 <span class="text-success small pt-1 fw-bold">Toutes</span>
-                                                {{-- <span class="text-muted small pt-2 ps-1">increase</span> --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div> --}}
+
+                        {{-- Demandes individuelles --}}
+                        <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
+                            <div class="card info-card sales-card">
+                                <div class="filter">
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                            class="bi bi-three-dots"></i></a>
+                                </div>
+                                <a href="{{ route('individuelles.index') }}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Demandes <span>| individuelles</span></h5>
+                                        <div class="d-flex align-items-center">
+                                            <div
+                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-file-earmark-text"></i>
+                                            </div>
+                                            <div class="ps-3">
+                                                <h6>
+                                                    <span
+                                                        class="text-primary">{{ number_format(count($individuelles), 0, '', ' ') }}</span>
+                                                </h6>
+                                                <span class="text-muted small pt-2 ps-1">dont</span>
+                                                <span
+                                                    class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_femmes, 2, ',', ' ') . '%' }}</span>
+                                                <span class="text-muted small pt-2 ps-1">de femmes</span>
                                             </div>
                                         </div>
                                     </div>
                                 </a>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+
+                        {{-- Demandes collectives --}}
+                        <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
+                            <div class="card info-card sales-card">
+                                <div class="filter">
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                            class="bi bi-three-dots"></i></a>
+                                </div>
+                                <a href="{{ route('collectives.index') }}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Demandes <span>| collectives</span></h5>
+                                        <div class="d-flex align-items-center">
+                                            <div
+                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-file-earmark-text"></i>
+                                            </div>
+                                            <div class="ps-3">
+                                                <h6>
+                                                    <span
+                                                        class="text-primary">{{ number_format(count($collectives), 0, '', ' ') }}</span>
+                                                </h6>
+                                                <span class="text-muted small pt-2 ps-1">dont</span>
+                                                <span
+                                                    class="text-success small pt-1 fw-bold">{{ number_format($pourcentage_femmes_collective, 2, ',', ' ') . '%' }}</span>
+                                                <span class="text-muted small pt-2 ps-1">de femmes</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        {{-- <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
                             <div class="card info-card sales-card">
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -384,8 +448,9 @@
                                     </div>
                                 </a>
                             </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                        </div> --}}
+
+                        {{-- <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
                             <div class="card info-card sales-card">
                                 <div class="filter">
                                     <a class="icon" href="#" data-bs-toggle="dropdown"><i
@@ -412,8 +477,36 @@
                                     </div>
                                 </a>
                             </div>
-                        </div>
+                        </div> --}}
+                        <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
+                            <div class="card info-card sales-card">
+                                <div class="filter">
+                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                            class="bi bi-three-dots"></i></a>
+                                </div>
+                                <a href="#">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Demandes <span>| toutes</span></h5>
+                                        <div class="d-flex align-items-center">
+                                            <div
+                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                                <i class="bi bi-file-earmark-text"></i>
+                                            </div>
+                                            <div class="ps-3">
+                                                @php
+                                                    $total = count($individuelles) + count($collectives);
+                                                @endphp
 
+                                                <h6>
+                                                    <span class="text-primary">{{ number_format($total) }}</span>
+                                                </h6>
+                                                <span class="text-success small pt-1 fw-bold">Toutes</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -427,7 +520,7 @@
                     <div class="row">
                         <!-- Sales Card -->
                         @if (auth()->user()->hasRole('super-admin|admin'))
-                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
                                 <div class="card info-card sales-card">
                                     <a href="{{ route('user.index') }}">
                                         <div class="card-body">
@@ -441,8 +534,8 @@
                                                 <div class="ps-3">
                                                     <h6>{{ number_format($total_user, 0, '', ' ') }}</h6>
                                                     <span
-                                                        class="text-success small pt-1 fw-bold">{{ number_format($email_verified_at, 2, ',', ' ') . '%' }}</span>
-                                                    <span class="text-muted small pt-2 ps-1">comptes vérifiés</span>
+                                                        class="text-success small pt-1 fw-bold">{{ $email_verified_at . '%' }}</span>
+                                                    <span class="text-muted small pt-2 ps-1">comptes valides</span>
 
                                                 </div>
                                             </div>
@@ -453,7 +546,7 @@
                         @endif
 
                         @if (auth()->user()->hasRole('super-admin|admin|courrier'))
-                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
                                 <div class="card info-card sales-card">
 
                                     <a href="{{ route('arrives.index') }}">
@@ -478,7 +571,7 @@
 
                                 </div>
                             </div><!-- End Sales Card -->
-                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
                                 <div class="card info-card sales-card">
 
                                     <a href="{{ route('departs.index') }}">
@@ -502,7 +595,7 @@
                                     </a>
                                 </div>
                             </div><!-- End Sales Card -->
-                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+                            <div class="col-12 col-lg-3 col-md-3 col-sm-12 col-xs-12 col-xxl-3">
                                 <div class="card info-card sales-card">
 
                                     <a href="{{ route('internes.index') }}">

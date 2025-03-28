@@ -12,7 +12,7 @@
     </div>
     <section class="section">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                         role="alert">
@@ -29,11 +29,10 @@
                 @endif
                 <div class="card">
                     <div class="card-body">
-                        <div class="pt-5">
+                        <div class="pt-1">
                             <a href="{{ route('permissions.create') }}" class="btn btn-primary btn-sm float-end btn-rounded">Ajouter </a>
                         </div>
                         <h5 class="card-title">Permissions</h5>
-                        <p>Le tableau de toutes les permissions du système.</p>
                         <table class="table datatables align-middle" id="table-permissions">
                             <thead>
                                 <tr>

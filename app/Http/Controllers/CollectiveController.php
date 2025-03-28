@@ -1,13 +1,13 @@
 <?php
-
 namespace App\Http\Controllers;
 
+use App\Models\Arrive;
 use App\Models\Collective;
 use App\Models\Collectivemodule;
 use App\Models\Commune;
-use App\Models\Demandeur;
 use App\Models\Departement;
-use App\Models\Formation;
+use App\Models\File;
+use App\Models\Ingenieur;
 use App\Models\Listecollective;
 use App\Models\Module;
 use App\Models\User;
@@ -35,12 +35,12 @@ class CollectiveController extends Controller
     }
     public function index()
     {
-        $collectives = Collective::get();
+        $collectives  = Collective::get();
         $departements = Departement::orderBy("created_at", "desc")->get();
-        $communes = Commune::orderBy("created_at", "desc")->get();
-        $modules = Module::orderBy("created_at", "desc")->get();
-        $today = date('Y-m-d');
-        $count_today = Collective::where("created_at", "LIKE",  "{$today}%")->count();
+        $communes     = Commune::orderBy("created_at", "desc")->get();
+        $modules      = Module::orderBy("created_at", "desc")->get();
+        $today        = date('Y-m-d');
+        $count_today  = Collective::where("created_at", "LIKE", "{$today}%")->count();
         return view('collectives.index', compact('collectives', 'departements', 'communes', 'modules', 'count_today'));
     }
     public function store(Request $request)
@@ -55,23 +55,23 @@ class CollectiveController extends Controller
             "email"                 => ["required", "string", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "fixe"                  => ["nullable", "string", "min:9", "max:9", Rule::unique('collectives')->where(function ($query) {
+            "fixe"                  => ["nullable", "string", "min:9", "max:12", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
             "telephone"             => ["required", "string", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
             /* "module"                =>      ["required","string"], */
-            "adresse"               =>      ["required", "string"],
-            "statut"                =>      ["required", "string"],
-            "description"           =>      ["required", "string"],
-            "projetprofessionnel"   =>      ["required", "string"],
-            "departement"           =>      ["required", "string"],
-            "civilite"              =>      ["required", "string"],
-            "prenom"                =>      ["required", "string"],
-            "nom"                   =>      ["required", "string"],
-            "fonction_responsable"  =>      ["required", "string"],
-            "telephone_responsable" => ["required", "string", "min:9", "max:9", Rule::unique('collectives')->where(function ($query) {
+            "adresse"               => ["required", "string"],
+            "statut"                => ["required", "string"],
+            "description"           => ["required", "string"],
+            "projetprofessionnel"   => ["required", "string"],
+            "departement"           => ["required", "string"],
+            "civilite"              => ["required", "string"],
+            "prenom"                => ["required", "string"],
+            "nom"                   => ["required", "string"],
+            "fonction_responsable"  => ["required", "string"],
+            "telephone_responsable" => ["required", "string", "min:9", "max:12", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
             "email_responsable"     => ["required", "string", Rule::unique('collectives')->where(function ($query) {
@@ -125,12 +125,12 @@ class CollectiveController extends Controller
                 $numero_collective = "00001";
                 $numero_collective = 'C' . $annee . $numero_collective;
             } */
-            $anneeEnCours = date('Y');
-            $an = date('y');
+            /*  $anneeEnCours = date('Y');
+            $an           = date('y');
 
             $numero_collective = Collective::join('users', 'users.id', 'collectives.users_id')
                 ->select('collectives.*')
-                ->where('collectives.date_depot',  "LIKE",  "{$anneeEnCours}%")
+                ->where('collectives.date_depot', "LIKE", "{$anneeEnCours}%")
                 ->get()->last();
 
             if (isset($numero_collective)) {
@@ -146,52 +146,82 @@ class CollectiveController extends Controller
             $longueur = strlen($numero_collective);
 
             if ($longueur <= 1) {
-                $numero_collective   =   strtolower("00000" . $numero_collective);
+                $numero_collective = strtolower("00000" . $numero_collective);
             } elseif ($longueur >= 2 && $longueur < 3) {
-                $numero_collective   =   strtolower("0000" . $numero_collective);
+                $numero_collective = strtolower("0000" . $numero_collective);
             } elseif ($longueur >= 3 && $longueur < 4) {
-                $numero_collective   =   strtolower("000" . $numero_collective);
+                $numero_collective = strtolower("000" . $numero_collective);
             } elseif ($longueur >= 4 && $longueur < 5) {
-                $numero_collective   =   strtolower("00" . $numero_collective);
+                $numero_collective = strtolower("00" . $numero_collective);
             } elseif ($longueur >= 5 && $longueur < 6) {
-                $numero_collective   =   strtolower("0" . $numero_collective);
+                $numero_collective = strtolower("0" . $numero_collective);
             } else {
-                $numero_collective   =   strtolower($numero_collective);
+                $numero_collective = strtolower($numero_collective);
             }
 
             $numero_collective = strtoupper($numero_collective);
 
             $departement = Departement::where('nom', $request->input("departement"))->get()->first();
-            $regionid = $departement->region->id;
+            $regionid    = $departement->region->id; */
+            $anneeEnCours = date('Y');
+            $an           = date('y');
+
+            $prefix = 'C' . $an;
+
+            // Récupérer le dernier numéro pour l'année en cours
+            $lastCollective = Collective::where('numero', 'LIKE', "{$prefix}%")
+                ->orderBy('id', 'desc')
+                ->first();
+
+            if ($lastCollective) {
+                // Extraire la partie numérique après "C" + $an
+                $lastNumero = intval(substr($lastCollective->numero, 3));
+                $newNumero  = $lastNumero + 1;
+            } else {
+                $newNumero = 1;
+            }
+
+            // Générer le numéro formaté
+            do {
+                $numero_collective = $prefix . str_pad($newNumero, 4, '0', STR_PAD_LEFT);
+                $exists            = Collective::where('numero', $numero_collective)->exists();
+                if ($exists) {
+                    $newNumero++; // Incrémenter et tester à nouveau
+                }
+            } while ($exists);
+
+            // Récupération de l'ID de la région
+            $departement = Departement::where("nom", $request->input("departement"))->first();
+            $regionid    = $departement->region->id;
 
             /* $module_find    = DB::table('modules')->where('name', $request->input("module"))->first(); */
 
             $collective = Collective::create([
-                "name"                      =>       $request->input("name"),
-                "sigle"                     =>       $request->input("sigle"),
-                "numero"                    =>       $numero_collective,
-                "date_depot"                =>       now(),
-                "description"               =>       $request->input("description"),
-                "projetprofessionnel"       =>       $request->input("projetprofessionnel"),
-                "telephone"                 =>       $request->input("telephone"),
-                "email"                     =>       $request->input("email"),
-                "email_responsable"         =>       $request->input("email_responsable"),
-                "fixe"                      =>       $request->input("fixe"),
-                "adresse"                   =>       $request->input("adresse"),
-                "bp"                        =>       $request->input("bp"),
-                "statut_juridique"          =>       $request->input("statut"),
-                "autre_statut_juridique"    =>       $request->input("autre_statut"),
-                "statut_demande"            =>       'Nouvelle',
-                "civilite_responsable"      =>       $request->input("civilite"),
-                "prenom_responsable"        =>       $request->input("prenom"),
-                "nom_responsable"           =>       $request->input("nom"),
-                "telephone_responsable"     =>       $request->input("telephone_responsable"),
-                "fonction_responsable"      =>       $request->input("fonction_responsable"),
-                "departements_id"           =>       $departement->id,
+                "name"                   => $request->input("name"),
+                "sigle"                  => $request->input("sigle"),
+                "numero"                 => $numero_collective,
+                "date_depot"             => now(),
+                "description"            => $request->input("description"),
+                "projetprofessionnel"    => $request->input("projetprofessionnel"),
+                "telephone"              => $request->input("telephone"),
+                "email"                  => $request->input("email"),
+                "email_responsable"      => $request->input("email_responsable"),
+                "fixe"                   => $request->input("fixe"),
+                "adresse"                => $request->input("adresse"),
+                "bp"                     => $request->input("bp"),
+                "statut_juridique"       => $request->input("statut"),
+                "autre_statut_juridique" => $request->input("autre_statut"),
+                "statut_demande"         => 'Nouvelle',
+                "civilite_responsable"   => $request->input("civilite"),
+                "prenom_responsable"     => $request->input("prenom"),
+                "nom_responsable"        => $request->input("nom"),
+                "telephone_responsable"  => $request->input("telephone_responsable"),
+                "fonction_responsable"   => $request->input("fonction_responsable"),
+                "departements_id"        => $departement->id,
                 /* "modules_id"                =>       $module_find->id, */
-                "regions_id"                =>       $regionid,
+                "regions_id"             => $regionid,
                 /* "demandeurs_id"             =>       $demandeur->id, */
-                'users_id'                  =>       $user->id,
+                'users_id'               => $user->id,
             ]);
 
             $collective->save();
@@ -210,18 +240,19 @@ class CollectiveController extends Controller
             "sigle"                 => ["nullable", "string", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "email"                => ["required", "string", Rule::unique('collectives')->where(function ($query) {
+            "email"                 => ["required", "string", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "fixe"                  => ["nullable", "string", "min:9", "max:9", Rule::unique('collectives')->where(function ($query) {
+            "fixe"                  => ["nullable", "string", "min:9", "max:12", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
-            "telephone"             => ["required", "string", "min:9", "max:9", Rule::unique('collectives')->where(function ($query) {
+            "telephone"             => ["required", "string", "min:9", "max:12", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
             'date_depot'            => ['required', 'date', 'min:10', 'max:10', 'date_format:Y-m-d'],
             "adresse"               => ["required", "string"],
             "statut"                => ["required", "string"],
+            "numero_courrier"       => ["required", "string"],
             "description"           => ["required", "string"],
             "projetprofessionnel"   => ["required", "string"],
             "departement"           => ["required", "string"],
@@ -229,7 +260,7 @@ class CollectiveController extends Controller
             "prenom"                => ["required", "string"],
             "nom"                   => ["required", "string"],
             "fonction_responsable"  => ["required", "string"],
-            "telephone_responsable" => ["required", "string", "min:9", "max:9", Rule::unique('collectives')->where(function ($query) {
+            "telephone_responsable" => ["required", "string", "min:9", "max:12", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })],
             "email_responsable"     => ["required", "string", Rule::unique('collectives')->where(function ($query) {
@@ -237,12 +268,12 @@ class CollectiveController extends Controller
             })],
         ]);
 
-        $anneeEnCours = date('Y');
-        $an = date('y');
+        /* $anneeEnCours = date('Y');
+        $an           = date('y');
 
         $numero_collective = Collective::join('users', 'users.id', 'collectives.users_id')
             ->select('collectives.*')
-            ->where('date_depot',  "LIKE",  "{$anneeEnCours}%")
+            ->where('date_depot', "LIKE", "{$anneeEnCours}%")
             ->get()->last();
 
         if (isset($numero_collective)) {
@@ -258,31 +289,62 @@ class CollectiveController extends Controller
         $longueur = strlen($numero_collective);
 
         if ($longueur <= 1) {
-            $numero_collective   =   strtolower("00000" . $numero_collective);
+            $numero_collective = strtolower("00000" . $numero_collective);
         } elseif ($longueur >= 2 && $longueur < 3) {
-            $numero_collective   =   strtolower("0000" . $numero_collective);
+            $numero_collective = strtolower("0000" . $numero_collective);
         } elseif ($longueur >= 3 && $longueur < 4) {
-            $numero_collective   =   strtolower("000" . $numero_collective);
+            $numero_collective = strtolower("000" . $numero_collective);
         } elseif ($longueur >= 4 && $longueur < 5) {
-            $numero_collective   =   strtolower("00" . $numero_collective);
+            $numero_collective = strtolower("00" . $numero_collective);
         } elseif ($longueur >= 5 && $longueur < 6) {
-            $numero_collective   =   strtolower("0" . $numero_collective);
+            $numero_collective = strtolower("0" . $numero_collective);
         } else {
-            $numero_collective   =   strtolower($numero_collective);
+            $numero_collective = strtolower($numero_collective);
         }
 
         $numero_collective = strtoupper($numero_collective);
 
         $departement = Departement::where("nom", $request->input("departement"))->first();
-        $regionid = $departement->region->id;
+        $regionid    = $departement->region->id; */
+
+        $anneeEnCours = date('Y');
+        $an           = date('y');
+
+        $prefix = 'C' . $an;
+
+// Récupérer le dernier numéro pour l'année en cours
+        $lastCollective = Collective::where('numero', 'LIKE', "{$prefix}%")
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if ($lastCollective) {
+            // Extraire la partie numérique après "C" + $an
+            $lastNumero = intval(substr($lastCollective->numero, 3));
+            $newNumero  = $lastNumero + 1;
+        } else {
+            $newNumero = 1;
+        }
+
+// Générer le numéro formaté
+        do {
+            $numero_collective = $prefix . str_pad($newNumero, 4, '0', STR_PAD_LEFT);
+            $exists            = Collective::where('numero', $numero_collective)->exists();
+            if ($exists) {
+                $newNumero++; // Incrémenter et tester à nouveau
+            }
+        } while ($exists);
+
+// Récupération de l'ID de la région
+        $departement = Departement::where("nom", $request->input("departement"))->first();
+        $regionid    = $departement->region->id;
 
         $user = User::create([
-            'name'          =>  $request->input('name'),
-            'email'         =>  $request->input('email'),
-            'username'      =>  $request->input('sigle'),
-            'telephone'     =>  $request->input('telephone'),
-            'adresse'       =>  $request->input('adresse'),
-            'password'      =>  Hash::make($request->email),
+            'name'      => $request->input('name'),
+            'email'     => $request->input('email'),
+            'username'  => $request->input('sigle'),
+            'telephone' => $request->input('telephone'),
+            'adresse'   => $request->input('adresse'),
+            'password'  => Hash::make($request->email),
         ]);
 
         $user->save();
@@ -297,29 +359,30 @@ class CollectiveController extends Controller
         /* $user->assignRole('Collective'); */
 
         $collective = Collective::create([
-            "name"                   =>  $request->input("name"),
-            "sigle"                  =>  $request->input("sigle"),
-            "numero"                 =>  $numero_collective,
-            "description"            =>  $request->input("description"),
-            "date_depot"             =>  $request->input("date_depot"),
-            "projetprofessionnel"    =>  $request->input("projetprofessionnel"),
-            "telephone"              =>  $request->input("telephone"),
-            "email"                  =>  $request->input("email"),
-            "email_responsable"      =>  $request->input("email_responsable"),
-            "fixe"                   =>  $request->input("fixe"),
-            "adresse"                =>  $request->input("adresse"),
-            "bp"                     =>  $request->input("bp"),
-            "statut_juridique"       =>  $request->input("statut"),
-            "autre_statut_juridique" =>  $request->input("autre_statut"),
-            "statut_demande"         =>  'Nouvelle',
-            "civilite_responsable"   =>  $request->input("civilite"),
-            "prenom_responsable"     =>  $request->input("prenom"),
-            "nom_responsable"        =>  $request->input("nom"),
-            "telephone_responsable"  =>  $request->input("telephone_responsable"),
-            "fonction_responsable"   =>  $request->input("fonction_responsable"),
-            "departements_id"        =>  $departement->id,
-            "regions_id"             =>  $regionid,
-            'users_id'               =>  $user->id,
+            "name"                   => $request->input("name"),
+            "numero_courrier"        => $request->input("numero_courrier"),
+            "sigle"                  => $request->input("sigle"),
+            "numero"                 => $numero_collective,
+            "description"            => $request->input("description"),
+            "date_depot"             => $request->input("date_depot"),
+            "projetprofessionnel"    => $request->input("projetprofessionnel"),
+            "telephone"              => $request->input("telephone"),
+            "email"                  => $request->input("email"),
+            "email_responsable"      => $request->input("email_responsable"),
+            "fixe"                   => $request->input("fixe"),
+            "adresse"                => $request->input("adresse"),
+            "bp"                     => $request->input("bp"),
+            "statut_juridique"       => $request->input("statut"),
+            "autre_statut_juridique" => $request->input("autre_statut"),
+            "statut_demande"         => 'Nouvelle',
+            "civilite_responsable"   => $request->input("civilite"),
+            "prenom_responsable"     => $request->input("prenom"),
+            "nom_responsable"        => $request->input("nom"),
+            "telephone_responsable"  => $request->input("telephone_responsable"),
+            "fonction_responsable"   => $request->input("fonction_responsable"),
+            "departements_id"        => $departement->id,
+            "regions_id"             => $regionid,
+            'users_id'               => $user->id,
         ]);
 
         $collective->save();
@@ -332,8 +395,8 @@ class CollectiveController extends Controller
     public function update(Request $request, $id)
     {
         $collective = Collective::findOrFail($id);
-        $user_id = $collective?->users_id;
-        
+        $user_id    = $collective?->users_id;
+
         /* $this->authorize('update', $collective); */
 
         $this->validate($request, [
@@ -343,13 +406,13 @@ class CollectiveController extends Controller
             "sigle"                 => ["nullable", "string", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })->ignore($id)],
-            "email"                => ["required", "string", Rule::unique('collectives')->where(function ($query) {
+            "email"                 => ["required", "string", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })->ignore($id)],
-            "fixe"                  => ["nullable", "string", "min:9", "max:9", Rule::unique('collectives')->where(function ($query) {
+            "fixe"                  => ["nullable", "string", "min:9", "max:12", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })->ignore($id)],
-            "telephone"             => ["required", "string", "min:9", "max:9", Rule::unique('collectives')->where(function ($query) {
+            "telephone"             => ["required", "string", "min:9", "max:12", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })->ignore($id)],
             'date_depot'            => ['nullable', 'date', 'min:10', 'max:10', 'date_format:Y-m-d'],
@@ -362,7 +425,7 @@ class CollectiveController extends Controller
             "prenom"                => ["required", "string"],
             "nom"                   => ["required", "string"],
             "fonction_responsable"  => ["required", "string"],
-            "telephone_responsable" => ["required", "string", "min:9", "max:9", Rule::unique('collectives')->where(function ($query) {
+            "telephone_responsable" => ["required", "string", "min:9", "max:12", Rule::unique('collectives')->where(function ($query) {
                 return $query->whereNull('deleted_at');
             })->ignore($id)],
             "email_responsable"     => ["required", "string", Rule::unique('collectives')->where(function ($query) {
@@ -371,68 +434,98 @@ class CollectiveController extends Controller
         ]);
 
         $departement = Departement::where('nom', $request->input("departement"))->first();
-        $regionid = $departement->region->id;
+        $regionid    = $departement->region->id;
 
         foreach (Auth::user()->roles as $key => $role) {
         }
 
-        if ($collective->statut_demande != 'Nouvelle' && !empty($role?->name) && ($role?->name != 'super-admin')) {
+        if ($collective->statut_demande != 'Nouvelle' && ! empty($role?->name) && ($role?->name != 'super-admin')) {
             Alert::warning('Attention ! ', 'action impossible demande déjà traitée.');
             return redirect()->back();
         }
 
-        if ($request->input(key: "date_depot") == null) {
+        /* if ($request->input(key: "date_depot") == null) {
             $collective->update([
-                "name"                      =>       $request->input("name"),
-                "sigle"                     =>       $request->input("sigle"),
-                "description"               =>       $request->input("description"),
-                "projetprofessionnel"       =>       $request->input("projetprofessionnel"),
-                "telephone"                 =>       $request->input("telephone"),
-                "email"                     =>       $request->input("email"),
-                "email_responsable"         =>       $request->input("email_responsable"),
-                "fixe"                      =>       $request->input("fixe"),
-                "adresse"                   =>       $request->input("adresse"),
-                "bp"                        =>       $request->input("bp"),
-                "statut_juridique"          =>       $request->input("statut"),
-                "autre_statut_juridique"    =>       $request->input("autre_statut"),
-                "civilite_responsable"      =>       $request->input("civilite"),
-                "prenom_responsable"        =>       $request->input("prenom"),
-                "nom_responsable"           =>       $request->input("nom"),
-                "telephone_responsable"     =>       $request->input("telephone_responsable"),
-                "fonction_responsable"      =>       $request->input("fonction_responsable"),
-                "departements_id"           =>       $departement->id,
-                /* "modules_id"                =>       $request->input("module"), */
-                "regions_id"                =>       $regionid,
-                /* "demandeurs_id"             =>       $demandeur->id, */
-                "users_id"                  =>       $user_id
+                "numero_courrier"        => $request->input("numero_courrier"),
+                "name"                   => $request->input("name"),
+                "sigle"                  => $request->input("sigle"),
+                "description"            => $request->input("description"),
+                "projetprofessionnel"    => $request->input("projetprofessionnel"),
+                "telephone"              => $request->input("telephone"),
+                "email"                  => $request->input("email"),
+                "email_responsable"      => $request->input("email_responsable"),
+                "fixe"                   => $request->input("fixe"),
+                "adresse"                => $request->input("adresse"),
+                "bp"                     => $request->input("bp"),
+                "statut_juridique"       => $request->input("statut"),
+                "autre_statut_juridique" => $request->input("autre_statut"),
+                "civilite_responsable"   => $request->input("civilite"),
+                "prenom_responsable"     => $request->input("prenom"),
+                "nom_responsable"        => $request->input("nom"),
+                "telephone_responsable"  => $request->input("telephone_responsable"),
+                "fonction_responsable"   => $request->input("fonction_responsable"),
+                "departements_id"        => $departement->id,
+                "regions_id"             => $regionid,
+                "users_id"               => $user_id,
             ]);
         } else {
             $collective->update([
-                "name"                      =>       $request->input("name"),
-                "sigle"                     =>       $request->input("sigle"),
-                "description"               =>       $request->input("description"),
-                "projetprofessionnel"       =>       $request->input("projetprofessionnel"),
-                "telephone"                 =>       $request->input("telephone"),
-                "email"                     =>       $request->input("email"),
-                "email_responsable"         =>       $request->input("email_responsable"),
-                "fixe"                      =>       $request->input("fixe"),
-                "date_depot"                =>       $request->input(key: "date_depot"),
-                "adresse"                   =>       $request->input("adresse"),
-                "bp"                        =>       $request->input("bp"),
-                "statut_juridique"          =>       $request->input("statut"),
-                "autre_statut_juridique"    =>       $request->input("autre_statut"),
-                "civilite_responsable"      =>       $request->input("civilite"),
-                "prenom_responsable"        =>       $request->input("prenom"),
-                "nom_responsable"           =>       $request->input("nom"),
-                "telephone_responsable"     =>       $request->input("telephone_responsable"),
-                "fonction_responsable"      =>       $request->input("fonction_responsable"),
-                "departements_id"           =>       $departement->id,
-                /* "modules_id"                =>       $request->input("module"), */
-                "regions_id"                =>       $regionid,
-                /* "demandeurs_id"             =>       $demandeur->id, */
-                "users_id"                  =>       $user_id
+                "numero_courrier"        => $request->input("numero_courrier"),
+                "name"                   => $request->input("name"),
+                "sigle"                  => $request->input("sigle"),
+                "description"            => $request->input("description"),
+                "projetprofessionnel"    => $request->input("projetprofessionnel"),
+                "telephone"              => $request->input("telephone"),
+                "email"                  => $request->input("email"),
+                "email_responsable"      => $request->input("email_responsable"),
+                "fixe"                   => $request->input("fixe"),
+                "date_depot"             => $request->input(key: "date_depot"),
+                "adresse"                => $request->input("adresse"),
+                "bp"                     => $request->input("bp"),
+                "statut_juridique"       => $request->input("statut"),
+                "autre_statut_juridique" => $request->input("autre_statut"),
+                "civilite_responsable"   => $request->input("civilite"),
+                "prenom_responsable"     => $request->input("prenom"),
+                "nom_responsable"        => $request->input("nom"),
+                "telephone_responsable"  => $request->input("telephone_responsable"),
+                "fonction_responsable"   => $request->input("fonction_responsable"),
+                "departements_id"        => $departement->id,
+                "regions_id"             => $regionid,
+                "users_id"               => $user_id,
             ]);
+        } */
+
+        $data = [
+            "numero_courrier"        => $request->input("numero_courrier"),
+            "name"                   => $request->input("name"),
+            "sigle"                  => $request->input("sigle"),
+            "description"            => $request->input("description"),
+            "projetprofessionnel"    => $request->input("projetprofessionnel"),
+            "telephone"              => $request->input("telephone"),
+            "email"                  => $request->input("email"),
+            "email_responsable"      => $request->input("email_responsable"),
+            "fixe"                   => $request->input("fixe"),
+            "adresse"                => $request->input("adresse"),
+            "bp"                     => $request->input("bp"),
+            "statut_juridique"       => $request->input("statut"),
+            "autre_statut_juridique" => $request->input("autre_statut"),
+            "civilite_responsable"   => $request->input("civilite"),
+            "prenom_responsable"     => $request->input("prenom"),
+            "nom_responsable"        => $request->input("nom"),
+            "telephone_responsable"  => $request->input("telephone_responsable"),
+            "fonction_responsable"   => $request->input("fonction_responsable"),
+            "departements_id"        => $departement->id,
+            "regions_id"             => $regionid,
+            "users_id"               => $user_id,
+        ];
+
+        // Ajouter `date_depot` seulement si elle est présente
+        if ($request->input("date_depot") !== null) {
+            $data["date_depot"] = $request->input("date_depot");
         }
+
+        // Effectuer la mise à jour avec les données
+        $collective->update($data);
 
         $collective->save();
 
@@ -443,16 +536,18 @@ class CollectiveController extends Controller
 
     public function edit($id)
     {
-        $collective = Collective::findOrFail($id);
+        $collective   = Collective::findOrFail($id);
         $departements = Departement::orderBy("created_at", "desc")->get();
-        $modules = Module::orderBy("created_at", "desc")->get();
+        $modules      = Module::orderBy("created_at", "desc")->get();
         return view("collectives.update", compact("collective", "departements", "modules"));
     }
     public function show($id)
     {
         $collective = Collective::findOrFail($id);
 
-       /*  $this->authorize('view', $collective); */
+        /*  $this->authorize('view', $collective); */
+
+        $ingenieur = $collective?->ingenieur;
 
         $listecollective = Listecollective::where('collectives_id', $id)->first();
 
@@ -460,11 +555,12 @@ class CollectiveController extends Controller
 
         $collectivemodules = Collectivemodule::where("collectives_id", $id)->get();
 
-        $collectives    = Collective::where('users_id', $collective?->users_id)->first();
+        $collectives = Collective::where('users_id', $collective?->users_id)->first();
 
         return view(
             'collectives.show',
             compact(
+                'ingenieur',
                 'collective',
                 'collectivemodules',
                 'collectives',
@@ -476,16 +572,16 @@ class CollectiveController extends Controller
 
     public function destroy($id)
     {
-        $collective   = Collective::find($id);
+        $collective = Collective::find($id);
 
-        $this->authorize('delete', $collective);
+        /* $this->authorize('delete', $collective); */
 
         if ($collective->statut_demande != 'Nouvelle') {
             Alert::warning('Attention !', 'Cette action est impossible, la demande a déjà été traitée.');
             return redirect()->back();
         } else {
             $collective->update([
-                'numero'        => $collective->numero . '/' . $id,
+                'numero' => $collective->numero . '/' . $id,
             ]);
 
             $collective->save();
@@ -499,16 +595,32 @@ class CollectiveController extends Controller
     }
     public function demandesCollective(Request $request)
     {
-        $departements = Departement::orderBy("created_at", "desc")->get();
-        $modules = Module::orderBy("created_at", "desc")->get();
-        $user = Auth::user();
-        $collective = Collective::where('users_id', $user->id)->get();
-        $collective_total = $collective->count();
+        $departements     = Departement::latest()->get();
+        $modules          = Module::latest()->get();
+        $user             = Auth::user();
+        $collective       = $user->collectives()->first(); // Récupère le plus récent grâce à `latest() definie dans le modele User`
+        $collective_total = $user->collectives()->count(); // Compte le nombre total de collectives
+
+        $files = File::where('users_id', $collective?->user?->id)
+            ->whereNotNull('file') // Utilisation de whereNotNull pour plus de clarté
+            ->distinct()
+            ->get();
+
+        $user_files = File::where('users_id', $collective?->user?->id)
+            ->whereNull('file')
+            ->where(function ($query) {
+                $query->where('sigle', 'AC')
+                    ->orWhere('sigle', 'Arrêté')
+                    ->orWhere('sigle', 'Autres')
+                    ->orWhere('sigle', 'Ninea/RC');
+            })
+            ->distinct()
+            ->get();
 
         if ($collective_total == 0) {
             return view("collectives.show-collective-aucune", compact("collective_total", "departements", "modules"));
         } else {
-            return view("collectives.show-collective", compact("collective_total", "departements", "modules"));
+            return view("collectives.show-collective", compact("collective_total", "departements", "modules", "files", "user_files"));
         }
     }
 
@@ -527,16 +639,16 @@ class CollectiveController extends Controller
             'to_date'   => 'required|date|date_format:Y-m-d',
         ]);
 
-        $now =  Carbon::now()->format('H:i:s');
+        $now = Carbon::now()->format('H:i:s');
 
         $from_date = date_format(date_create($request->from_date), 'd/m/Y');
 
         $to_date = date_format(date_create($request->to_date), 'd/m/Y');
 
-        if (!empty($request?->statut)) {
-            $collectives = Collective::where('statut_juridique', $request?->statut)?->whereBetween(DB::raw('DATE(created_at)'), array($request?->from_date, $request?->to_date))?->get();
+        if (! empty($request?->statut)) {
+            $collectives = Collective::where('statut_juridique', $request?->statut)?->whereBetween(DB::raw('DATE(created_at)'), [$request?->from_date, $request?->to_date])?->get();
         } else {
-            $collectives = Collective::whereBetween(DB::raw('DATE(created_at)'), array($request?->from_date, $request?->to_date))?->get();
+            $collectives = Collective::whereBetween(DB::raw('DATE(created_at)'), [$request?->from_date, $request?->to_date])?->get();
         }
 
         $count = $collectives->count();
@@ -566,4 +678,83 @@ class CollectiveController extends Controller
             'title'
         ));
     }
+
+    public function addcollectiveingenieurs($id)
+    {
+        $collective = Collective::findOrFail($id);
+        $ingenieur  = $collective?->ingenieur?->name;
+
+        $ingenieurs = Ingenieur::get();
+
+        $ingenieurCollective = DB::table('collectives')
+            ->where('ingenieurs_id', $collective->ingenieurs_id)
+            ->pluck('ingenieurs_id', 'ingenieurs_id')
+            ->all();
+
+        return view("collectives.ingenieur", compact('collective', 'ingenieurs', 'ingenieur', 'ingenieurCollective'));
+    }
+
+    public function givecollectiveingenieurs($id, Request $request)
+    {
+        $request->validate([
+            'ingenieur' => ['required'],
+        ]);
+
+        $collective = Collective::findOrFail($id);
+
+        $collective->update([
+            "ingenieurs_id" => $request->input('ingenieur'),
+        ]);
+
+        $collective->save();
+
+        Alert::success('Bravo !', 'imputation effectuée avec succès');
+
+        return redirect()->back();
+    }
+
+    public function fetch(Request $request)
+    {
+        if ($request->has('query')) {
+            $query = $request->input('query');
+
+            $data = Arrive::where('numero_arrive', 'LIKE', "%{$query}%")->get();
+
+            if ($data->isEmpty()) {
+                return response()->json(['html' => '']);
+            }
+
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+
+            foreach ($data as $arrive) {
+                $output .= '<li data-id="' . $arrive->id . '" data-objet="' . e($arrive->courrier->expediteur) . '">
+                            <a href="#">' . e($arrive->numero_arrive) . '</a>
+                        </li>';
+            }
+
+            $output .= '</ul>';
+
+            return response()->json(['html' => $output]);
+        }
+
+        return response()->json(['html' => ''], 400);
+    }
+
+    public function getObjetByNumero(Request $request)
+    {
+        $numero = $request->input('numero');
+
+        // Rechercher l'objet en fonction du numéro
+        $arrive = Arrive::where('numero_arrive', $numero)->first();
+
+        if ($arrive) {
+            return response()->json([
+                'objet'      => $arrive->courrier->expediteur,
+                'date_depot' => $arrive->courrier->date_recep->format('Y-m-d'), // Formater la date
+            ]);
+        } else {
+            return response()->json(['objet' => '']); // Retourner une chaîne vide si aucun résultat
+        }
+    }
+
 }

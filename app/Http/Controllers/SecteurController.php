@@ -34,11 +34,11 @@ class SecteurController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            "secteur" => "required|string|unique:secteurs,name,except,id",
+            "name"             => ["required", "string", Rule::unique(Secteur::class)->whereNull('deleted_at')],
         ]);
 
         $secteur = Secteur::create([
-            "name" => $request->input("secteur"),
+            "name" => $request->input("name"),
         ]);
 
         $secteur->save();

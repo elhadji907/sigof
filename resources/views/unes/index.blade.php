@@ -53,8 +53,12 @@
                                 @foreach ($unes as $une)
                                     <tr>
                                         <th scope="row" style="text-align: center">
-                                            <img class="rounded-circle" alt="Profil" src="{{ asset($une->getUne()) }}"
-                                                width="40" height="auto">
+                                            @if (!empty($une?->image))
+                                                <img class="rounded-circle" alt="Profil"
+                                                    src="{{ asset($une?->getUne()) }}" width="40" height="auto">
+                                            @else
+                                                <div class="badge bg-warning">Aucun</div>
+                                            @endif
                                         </th>
                                         <td>{{ $une?->titre1 }}</td>
                                         <td>{{ $une?->titre2 }}</td>
@@ -62,7 +66,8 @@
                                         <td>{{ $une?->status }}</td>
                                         <td>
                                             @if (!empty($une->video))
-                                                <a href="{{ $une->video }}" class="btn btn-link mt-2 mt-sm-0 glightbox" target="_blank">
+                                                <a href="{{ $une->video }}" class="btn btn-link mt-2 mt-sm-0 glightbox"
+                                                    target="_blank">
                                                     <i class="bi bi-play-circle me-1"></i>
                                                 </a>
                                             @endif
@@ -98,9 +103,10 @@
                                                         <form action="{{ route('suprimeralaunes') }}" method="post">
                                                             @csrf
                                                             @method('PUT')
-                                                            <input type="hidden" name="suprimerdelaune" id="suprimerdelaune"
-                                                                value="{{ $une->id }}">
-                                                            <button type="submit" class="dropdown-item une_confirm">Enlever
+                                                            <input type="hidden" name="suprimerdelaune"
+                                                                id="suprimerdelaune" value="{{ $une->id }}">
+                                                            <button type="submit"
+                                                                class="dropdown-item une_confirmer">Enlever
                                                                 de la une</button>
                                                         </form>
                                                     </ul>
@@ -135,8 +141,8 @@
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <label for="titre1" class="form-label">Titre 1<span
                                             class="text-danger mx-1">*</span></label>
-                                    <textarea name="titre1" rows="1" maxlength="15" class="form-control form-control-sm @error('titre1') is-invalid @enderror"
-                                        placeholder="Titre 1">{{ old('titre1') }}</textarea>
+                                    <textarea name="titre1" rows="1" maxlength="15"
+                                        class="form-control form-control-sm @error('titre1') is-invalid @enderror" placeholder="Titre 1">{{ old('titre1') }}</textarea>
                                     @error('titre1')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -147,8 +153,8 @@
                                 <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                     <label for="titre2" class="form-label">Titre 2<span
                                             class="text-danger mx-1">*</span></label>
-                                    <textarea name="titre2" rows="1" maxlength="20" class="form-control form-control-sm @error('titre2') is-invalid @enderror"
-                                        placeholder="Titre 2">{{ old('titre2') }}</textarea>
+                                    <textarea name="titre2" rows="1" maxlength="20"
+                                        class="form-control form-control-sm @error('titre2') is-invalid @enderror" placeholder="Titre 2">{{ old('titre2') }}</textarea>
                                     @error('titre2')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -170,8 +176,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                    <label for="image" class="form-label">Image<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="image" class="form-label">Image</label>
                                     <input type="file" name="image" value="{{ old('image') }}"
                                         class="form-control form-control-sm @error('image') is-invalid @enderror"
                                         id="image" placeholder="Image">
@@ -213,8 +218,8 @@
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="titre1" class="form-label">Titre 1<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <textarea name="titre1" rows="1" maxlength="20" class="form-control form-control-sm @error('titre1') is-invalid @enderror"
-                                            placeholder="Titre1">{{ $une->titre1 ?? old('titre1') }}</textarea>
+                                        <textarea name="titre1" rows="1" maxlength="20"
+                                            class="form-control form-control-sm @error('titre1') is-invalid @enderror" placeholder="Titre1">{{ $une->titre1 ?? old('titre1') }}</textarea>
                                         @error('titre1')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -224,8 +229,8 @@
                                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="titre2" class="form-label">Titre 2<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <textarea name="titre2" rows="1" maxlength="20" class="form-control form-control-sm @error('titre2') is-invalid @enderror"
-                                            placeholder="Titre 2">{{ $une->titre2 ?? old('titre2') }}</textarea>
+                                        <textarea name="titre2" rows="1" maxlength="20"
+                                            class="form-control form-control-sm @error('titre2') is-invalid @enderror" placeholder="Titre 2">{{ $une->titre2 ?? old('titre2') }}</textarea>
                                         @error('titre2')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -246,8 +251,7 @@
                                     </div>
 
                                     <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                        <label for="image" class="form-label">Image<span
-                                                class="text-danger mx-1">*</span></label>
+                                        <label for="image" class="form-label">Image</label>
                                         <input type="file" name="image" value="{{ old('image') }}"
                                             class="form-control form-control-sm @error('image') is-invalid @enderror"
                                             id="image" placeholder="Image">

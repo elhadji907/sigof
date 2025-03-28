@@ -39,18 +39,16 @@
                         <div class="card-body">
                             @can('domaine-create')
                                 <button type="button" class="btn btn-primary btn-sm float-end btn-rounded" data-bs-toggle="modal"
-                                    data-bs-target="#AddIndividuelModal">
-                                    <i class="bi bi-person-plus" title="Ajouter"></i>
-                                </button>
+                                    data-bs-target="#AddIndividuelModal">Ajouter</button>
                             @endcan
                             <h5 class="card-title">Domaines</h5>
                             <table class="table datatables align-middle justify-content-center" id="table-domaines">
                                 <thead>
                                     <tr>
-                                        <th>Domaine</th>
-                                        <th>Secteur</th>
-                                        <th class="text-center" scope="col">Effectif</th>
-                                        <th class="text-center" scope="col">#</th>
+                                        <th>Domaines</th>
+                                        <th>Secteurs</th>
+                                        <th class="text-center">Modules</th>
+                                        <th class="text-center" width="5%">#</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -71,7 +69,7 @@
                                             <td style="text-align: center;">
                                                 @can('domaine-create')
                                                     <span class="d-flex mt-2 align-items-baseline"><a
-                                                            href="{{ url('domaines/' . $domaine->id) }}"
+                                                            href="{{ route('domaines.show', $domaine->id) }}"
                                                             class="btn btn-success btn-sm mx-1" title="Voir détails">
                                                             <i class="bi bi-eye"></i></a>
                                                         <div class="filter">
@@ -117,9 +115,14 @@
                     <div class="modal-content">
                         <form method="post" action="{{ url('addDomaine') }}" enctype="multipart/form-data" class="row g-3">
                             @csrf
-                            <div class="modal-header">
+                            {{-- <div class="modal-header">
                                 <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter un nouveau domaine
                                 </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div> --}}
+
+                            <div class="modal-header">
+                                <h5 class="modal-title">Ajouter un nouveau domaine</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
@@ -155,9 +158,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                    Enregistrer</button>
+                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                <button type="submit" class="btn btn-primary btn-sm">Ajouter</button>
                             </div>
                         </form>
                     </div>
@@ -214,9 +216,8 @@
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                                    <button type="submit" class="btn btn-primary"><i class="bi bi-printer"></i>
-                                        Modifier</button>
+                                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                    <button type="submit" class="btn btn-primary btn-sm">Modifier</button>
                                 </div>
                             </form>
                         </div>

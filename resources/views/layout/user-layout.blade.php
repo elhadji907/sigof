@@ -7,6 +7,24 @@
     <title>@yield('title', 'ONFP | HOME')</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
+    <!-- Google Tag Manager -->
+    <script>
+        (function(w, d, s, l, i) {
+            w[l] = w[l] || [];
+            w[l].push({
+                'gtm.start': new Date().getTime(),
+                event: 'gtm.js'
+            });
+            var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s),
+                dl = l != 'dataLayer' ? '&l=' + l : '';
+            j.async = true;
+            j.src =
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+            f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-NGJKZ3DD');
+    </script>
+    <!-- End Google Tag Manager -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <script type="text/javascript">
         function callbackThen(response) {
@@ -35,7 +53,7 @@
     ]) !!}
     <!-- Favicons -->
     <link href="{{ asset('assets/img/favicon-onfp.png') }}" rel="icon">
-    <link href="{{ asset('assets/img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+    <link href="{{ asset('assets/img/favicon-onfp.png') }}" rel="favicon-onfp">
 
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -535,6 +553,38 @@
         a {
             text-decoration: none;
         }
+
+        #productList {
+            position: absolute;
+            z-index: 1000;
+            width: 100%;
+            max-height: 200px;
+            overflow-y: auto;
+            background: white;
+            border: 1px solid #ddd;
+            display: none;
+        }
+
+        #productList ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #productList li {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #productList li:hover {
+            background: #f8f9fa;
+        }
+
+        .vertical-align-middle {
+            vertical-align: middle;
+            /* Aligne le contenu au milieu */
+        }
     </style>
 
 </head>
@@ -727,6 +777,44 @@
                 });
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.show_confirmDeleteImage').click(function(event) {
+                event.preventDefault();
+                var url = $(this).data('url'); // Récupère l'URL de suppression
+
+                swal({
+                    title: "Êtes-vous sûr de vouloir supprimer ?",
+                    text: "Si vous supprimez, l'image disparaîtra pour toujours.",
+                    icon: "warning",
+                    buttons: ["Annuler", "Oui, supprimer !"],
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        $.ajax({
+                            url: url,
+                            type: "POST",
+                            data: {
+                                _token: "{{ csrf_token() }}",
+                                _method: "DELETE"
+                            },
+                            success: function(response) {
+                                swal("Succès", "Votre image a été supprimée.",
+                                        "success")
+                                    .then(() => location.reload());
+                            },
+                            error: function(response) {
+                                swal("Erreur", "Une erreur s'est produite.", "error");
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+
     <script type="text/javascript">
         $('.show_confirm_disconnect').click(function(event) {
             var form = $(this).closest("form");
@@ -736,7 +824,7 @@
                     title: `Êtes-vous sûr de vouloir vous déconnecter ?`,
                     text: "Vous pouvez cliquer sur ok pour confirmer ou cliquer sur cancel pour annuler.",
                     icon: "warning",
-                    buttons: true,
+                    buttons: ["Annuler", "Oui, déconnecter !"],
                     dangerMode: true,
                 })
                 .then((willDelete) => {
@@ -760,7 +848,7 @@
                     title: `Êtes-vous sûr ?`,
                     text: "Si oui, cliquer sur ok.",
                     icon: "success",
-                    buttons: true,
+                    buttons: ["Annuler", "Oui, valider !"],
                 })
                 .then((willValide) => {
                     if (willValide) {
@@ -778,7 +866,7 @@
                     title: `Êtes-vous sûr de bien vouloir suivre ce bénéficiaire ?`,
                     text: "Si oui, cliquer sur ok.",
                     icon: "success",
-                    buttons: true,
+                    buttons: ["Annuler", "Oui, suivre !"],
                 })
                 .then((willValide) => {
                     if (willValide) {
@@ -796,7 +884,7 @@
                     title: `Êtes-vous sûr de vouloir ajouter à la base de données des employés ?`,
                     text: "Si oui, cliquer sur ok.",
                     icon: "success",
-                    buttons: true,
+                    buttons: ["Annuler", "Oui, ajouter !"],
                 })
                 .then((willValide) => {
                     if (willValide) {
@@ -814,7 +902,7 @@
                     title: `Êtes-vous sûr de vouloir retirer ?`,
                     text: "Si oui, cliquer sur ok.",
                     icon: "success",
-                    buttons: true,
+                    buttons: ["Annuler", "Oui, retirer !"],
                 })
                 .then((willValide) => {
                     if (willValide) {
@@ -832,7 +920,7 @@
                     title: `Êtes-vous sûr de vouloir rejeter ?`,
                     text: "Si oui, cliquer sur ok.",
                     icon: "error",
-                    buttons: true,
+                    buttons: ["Annuler", "Oui, rejeter !"],
                     dangerMode: true,
                 })
                 .then((willValide) => {
@@ -848,10 +936,29 @@
             var name = $(this).data("name");
             event.preventDefault();
             swal({
-                    title: `Êtes-vous sûr de vouloir mettre à la une?`,
+                    title: `Êtes-vous sûr ?`,
                     text: "Si oui, cliquez sur ok.",
                     icon: "success",
-                    buttons: true,
+                    buttons: ["Annuler", "Oui, mettre !"],
+                    dangerMode: false,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        form.submit();
+                    }
+                });
+        });
+    </script>
+    <script type="text/javascript">
+        $('.une_confirmer').click(function(event) {
+            var form = $(this).closest("form");
+            var name = $(this).data("name");
+            event.preventDefault();
+            swal({
+                    title: `Êtes-vous sûr ?`,
+                    text: "Si oui, cliquez sur ok.",
+                    icon: "success",
+                    buttons: ["Annuler", "Oui, enlever !"],
                     dangerMode: true,
                 })
                 .then((willDelete) => {
@@ -2021,6 +2128,17 @@
     </script>
 
     <script>
+        $('#select-field-domaine-module').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+            closeOnSelect: true,
+            selectionCssClass: "select2--small",
+            dropdownCssClass: "select2--small",
+        });
+    </script>
+
+    <script>
         $('#select-field-domaine-indiv').select2({
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
@@ -2512,7 +2630,9 @@
     </script>
 
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
     <script src="https://code.jquery.com/ui/1.14.1/jquery-ui.js"></script>
+
     <script>
         $(function() {
             $("#datepicker").kendoDatePicker().datepicker({
@@ -2551,6 +2671,152 @@
             });
         });
     </script>
+
+    <!-- Script pour ajouter un masque de saisie -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var dateInput = document.getElementById("datepicker");
+
+            dateInput.addEventListener("input", function(e) {
+                var v = e.target.value.replace(/\D/g, ""); // Supprime tout sauf les chiffres
+                if (v.length >= 2) v = v.slice(0, 2) + "/" + v.slice(2);
+                if (v.length >= 5) v = v.slice(0, 5) + "/" + v.slice(5, 9);
+                e.target.value = v.slice(0, 10); // Limite à 10 caractères
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $("#datepicker").datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "1900:2100"
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $("#datepicker1").datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "1900:2100"
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $("#datepicker2").datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "1900:2100"
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var telephoneInput = document.getElementById("telephone");
+
+            telephoneInput.addEventListener("input", function(e) {
+                var value = e.target.value.replace(/\D/g, ""); // Supprime tout sauf les chiffres
+
+                // Appliquer le format XX:XXX:XX:XX
+                if (value.length > 2) value = value.slice(0, 2) + " " + value.slice(2);
+                if (value.length > 6) value = value.slice(0, 6) + " " + value.slice(6);
+                if (value.length > 9) value = value.slice(0, 9) + " " + value.slice(9, 11);
+
+                e.target.value = value.slice(0, 12); // Limite à 12 caractères (avec les ":")
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var telephoneInput = document.getElementById("telephone_secondaire");
+
+            telephoneInput.addEventListener("input", function(e) {
+                var value = e.target.value.replace(/\D/g, ""); // Supprime tout sauf les chiffres
+
+                // Appliquer le format XX:XXX:XX:XX
+                if (value.length > 2) value = value.slice(0, 2) + " " + value.slice(2);
+                if (value.length > 6) value = value.slice(0, 6) + " " + value.slice(6);
+                if (value.length > 9) value = value.slice(0, 9) + " " + value.slice(9, 11);
+
+                e.target.value = value.slice(0, 12); // Limite à 12 caractères (avec les ":")
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var cinInput = document.getElementById("cin");
+
+            cinInput.addEventListener("input", function(e) {
+                var value = e.target.value.replace(/[^A-Za-z0-9]/g,
+                    ""); // Supprimer tout sauf lettres et chiffres
+
+                // Convertir toutes les lettres en majuscule si elles existent
+                value = value.toUpperCase();
+
+                // Appliquer le format: 1 chiffre - espace - 3 chiffres - espace - 4 chiffres - espace - 5 ou 6 chiffres
+                if (value.length > 1) value = value.slice(0, 1) + " " + value.slice(
+                    1); // 1er chiffre + espace
+                if (value.length > 5) value = value.slice(0, 5) + " " + value.slice(
+                    5); // 3 chiffres + espace
+                if (value.length > 10) value = value.slice(0, 10) + " " + value.slice(
+                    10); // 4 chiffres + espace
+
+                // Limiter à 16 ou 17 caractères (espaces inclus)
+                e.target.value = value.slice(0, 17); // 16 ou 17 caractères au total
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var telephoneInput = document.getElementById("telephone_responsable");
+
+            telephoneInput.addEventListener("input", function(e) {
+                var value = e.target.value.replace(/\D/g, ""); // Supprime tout sauf les chiffres
+
+                // Appliquer le format XX:XXX:XX:XX
+                if (value.length > 2) value = value.slice(0, 2) + " " + value.slice(2);
+                if (value.length > 6) value = value.slice(0, 6) + " " + value.slice(6);
+                if (value.length > 9) value = value.slice(0, 9) + " " + value.slice(9, 11);
+
+                e.target.value = value.slice(0, 12); // Limite à 12 caractères (avec les ":")
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var telephoneInput = document.getElementById("fixe");
+
+            telephoneInput.addEventListener("input", function(e) {
+                var value = e.target.value.replace(/\D/g, ""); // Supprime tout sauf les chiffres
+
+                // Appliquer le format XX:XXX:XX:XX
+                if (value.length > 2) value = value.slice(0, 2) + " " + value.slice(2);
+                if (value.length > 6) value = value.slice(0, 6) + " " + value.slice(6);
+                if (value.length > 9) value = value.slice(0, 9) + " " + value.slice(9, 11);
+
+                e.target.value = value.slice(0, 12); // Limite à 12 caractères (avec les ":")
+            });
+        });
+    </script>
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NGJKZ3DD" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
     @stack('scripts')
 </body>
 

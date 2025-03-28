@@ -15,7 +15,7 @@
                     <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                         <div class="card">
                             <div class="card-body pb-0">
-                                @if (auth()->user()->hasRole('super-admin|admin|DEC'))
+                                @if (auth()->user()->hasRole('super-admin|admin|COM'))
                                     <div class="pt-1">
                                         <button type="button" class="btn btn-primary btn-sm float-end btn-rounded"
                                             data-bs-toggle="modal" data-bs-target="#AddPosteModal">Ajouter</button>

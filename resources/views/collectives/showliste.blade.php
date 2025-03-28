@@ -1,5 +1,6 @@
 @extends('layout.user-layout')
-@section('title', $collectivemodule?->collective?->sigle . ' - Liste des bénéficiaires en ' . $collectivemodule?->module)
+@section('title', $collectivemodule?->collective?->sigle . ' - Liste des bénéficiaires en ' .
+    $collectivemodule?->module)
 @section('space-work')
     <section class="section">
         <div class="row justify-content-center">
@@ -155,9 +156,10 @@
                                     <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="cin" class="form-label">CIN<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="text" name="cin" value="{{ old('cin') }}"
+                                        <input name="cin" type="text"
                                             class="form-control form-control-sm @error('cin') is-invalid @enderror"
-                                            id="cin" placeholder="CIN">
+                                            id="cin" value="{{ old('cin') }}" autocomplete="off"
+                                            placeholder="Ex: 1 099 2005 00012" minlength="16" maxlength="17" required>
                                         @error('cin')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -175,11 +177,11 @@
                                             <option value="{{ old('civilite') }}">
                                                 {{ old('civilite') }}
                                             </option>
-                                            <option value="Monsieur">
-                                                Monsieur
+                                            <option value="M.">
+                                                M.
                                             </option>
-                                            <option value="Madame">
-                                                Madame
+                                            <option value="Mme">
+                                                Mme
                                             </option>
                                         </select>
                                         @error('civilite')
@@ -217,9 +219,9 @@
                                     <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                                         <label for="date_naissance" class="form-label">Date naissance<span
                                                 class="text-danger mx-1">*</span></label>
-                                        <input type="date" name="date_naissance" value="{{ old('date_naissance') }}"
-                                            class="datepicker form-control form-control-sm @error('date_naissance') is-invalid @enderror"
-                                            id="date_naissance" placeholder="jj/mm/aaaa">
+                                        <input type="text" name="date_naissance" value="{{ old('date_naissance') }}"
+                                            class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
+                                            id="datepicker" placeholder="JJ/MM/AAAA" autocomplete="bday">
                                         @error('date_naissance')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -244,12 +246,11 @@
                                     <input type="hidden" name="module" value="{{ $collectivemodule->id }}">
 
                                     <div class="col-12 col-md-6 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                                        <label for="telephone" class="form-label">Téléphone<span
-                                            class="text-danger mx-1">*</span></label>
-                                        <input type="number" min="0" name="telephone"
-                                            value="{{ old('telephone') }}"
+                                        <label for="telephone" class="form-label">Téléphone</label>
+                                        <input name="telephone" type="text" maxlength="12"
                                             class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                            id="telephone" placeholder="7xxxxxxxx">
+                                            id="telephone" value="{{ old('telephone', $user->telephone ?? '') }}"
+                                            autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                         @error('telephone')
                                             <span class="invalid-feedback" role="alert">
                                                 <div>{{ $message }}</div>
@@ -353,7 +354,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div> --}}
-                            
+
                             <div class="card-header text-center bg-gradient-default">
                                 <h1 class="h4 text-black mb-0">Détails</h1>
                             </div>
@@ -430,7 +431,8 @@
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
+                                <button type="button" class="btn btn-secondary btn-sm"
+                                    data-bs-dismiss="modal">Fermer</button>
                                 </form>
                             </div>
                         </div>

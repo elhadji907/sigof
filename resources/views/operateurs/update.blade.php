@@ -38,11 +38,8 @@
                                     @method('PUT')
                                     <input type="hidden" name="id" value="{{ $operateur->id }}">
                                     <div class="row g-3">
-
-
                                         <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                            <label for="numero_dossier" class="form-label">Numéro dossier<span
-                                                    class="text-danger mx-1">*</span></label>
+                                            <label for="numero_dossier" class="form-label">Numéro dossier</label>
                                             <div class="input-group has-validation">
                                                 <input type="number" min="0" name="numero_dossier"
                                                     value="{{ $operateur?->numero_dossier ?? old('numero_dossier') }}"
@@ -57,11 +54,10 @@
                                         </div>
 
                                         <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                            <label for="numero_arrive" class="form-label">Numéro courrier<span
-                                                    class="text-danger mx-1">*</span></label>
+                                            <label for="numero_arrive" class="form-label">Numéro courrier</label>
                                             <div class="input-group has-validation">
                                                 <input type="number" min="0" name="numero_arrive"
-                                                    value="{{ $operateur?->courrier?->numero ?? old('numero_arrive') }}"
+                                                    value="{{ $operateur?->numero_arrive ?? old('numero_arrive') }}"
                                                     class="form-control form-control-sm @error('numero_arrive') is-invalid @enderror"
                                                     id="numero_arrive" placeholder="Numéro de correspondance">
                                                 @error('numero_arrive')
@@ -129,10 +125,10 @@
                                         <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="fixe" class="form-label">Téléphone fixe<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="number" min="0" name="fixe"
-                                                value="{{ $operateur?->user?->fixe ?? old('fixe') }}"
+                                            <input name="fixe" type="text" maxlength="12"
                                                 class="form-control form-control-sm @error('fixe') is-invalid @enderror"
-                                                id="fixe" placeholder="3xxxxxxxx">
+                                                id="fixe" value="{{ old('fixe', $operateur?->user?->fixe ?? '') }}"
+                                                autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                             @error('fixe')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -143,10 +139,11 @@
                                         <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="telephone" class="form-label">Téléphone<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="number" min="0" name="telephone"
-                                                value="{{ $operateur?->user?->telephone ?? old('telephone') }}"
+                                            <input name="telephone" type="text" maxlength="12"
                                                 class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                                id="telephone" placeholder="7xxxxxxxx">
+                                                id="telephone"
+                                                value="{{ old('telephone', $operateur?->user?->telephone ?? '') }}"
+                                                autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                             @error('telephone')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -170,7 +167,8 @@
                                         <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="categorie" class="form-label">Catégorie<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <select name="categorie" class="form-select  @error('categorie') is-invalid @enderror"
+                                            <select name="categorie"
+                                                class="form-select  @error('categorie') is-invalid @enderror"
                                                 aria-label="Select" id="select-field-categorie-update"
                                                 data-placeholder="Choisir">
                                                 <option value="{{ $operateur?->user?->categorie ?? old('categorie') }}">
@@ -421,12 +419,14 @@
 
                                         <div class="col-12 col-md-6 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
                                             <label for="quitus" class="form-label">Scan quitus fiscal</label>
-                                            <input type="file" name="quitus" id="quitus" accept=".jpg, .jpeg, .png, .svg, .gif"
+                                            <input type="file" name="quitus" id="quitus"
+                                                accept=".jpg, .jpeg, .png, .svg, .gif"
                                                 class="form-control @error('quitus') is-invalid @enderror btn btn-outline-primary btn-sm">
                                             @error('quitus')
                                                 <span class="text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
+
                                         <div class="col-12 col-md-12 col-lg-1 col-sm-12 col-xs-12 col-xxl-1">
                                             <label for="file_convention" class="form-label">Fichier</label>
                                             @if (!empty($operateur?->quitus))
@@ -440,12 +440,13 @@
                                                 <div class="badge bg-warning">Aucun</div>
                                             @endif
                                         </div>
+
                                         <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="date_quitus" class="form-label">Date délivrance </label>
-                                            <input type="date" name="date_quitus"
-                                                value="{{ $operateur?->debut_quitus?->format('Y-m-d') ?? old('date_quitus') }}"
-                                                class="datepicker form-control form-control-sm @error('date_quitus') is-invalid @enderror"
-                                                id="date_quitus" placeholder="jj/mm/aaaa">
+                                            <input type="text" name="date_quitus"
+                                                value="{{ old('date_quitus', optional($operateur?->debut_quitus)->format('d/m/Y')) }}"
+                                                class="form-control form-control-sm @error('date_quitus') is-invalid @enderror"
+                                                id="datepicker" placeholder="JJ/MM/AAAA" autocomplete="bday">
                                             @error('date_quitus')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -569,11 +570,11 @@
                                                 <option value="{{ $operateur?->user?->civilite ?? old('civilite') }}">
                                                     {{ $operateur?->user?->civilite ?? old('civilite') }}
                                                 </option>
-                                                <option value="Monsieur">
-                                                    Monsieur
+                                                <option value="M.">
+                                                    M.
                                                 </option>
-                                                <option value="Madame">
-                                                    Madame
+                                                <option value="Mme">
+                                                    Mme
                                                 </option>
                                             </select>
                                             @error('civilite')
@@ -640,10 +641,11 @@
 
                                         <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="telephone_parent" class="form-label">Téléphone responsable</label>
-                                            <input type="number" min="0" name="telephone_parent"
-                                                value="{{ $operateur?->user?->telephone_parent ?? old('telephone_parent') }}"
+                                            <input name="telephone_parent" type="text" maxlength="12"
                                                 class="form-control form-control-sm @error('telephone_parent') is-invalid @enderror"
-                                                id="telephone_parent" placeholder="7xxxxxxxx">
+                                                id="telephone_secondaire"
+                                                value="{{ old('telephone_parent', $operateur?->user?->telephone_parent ?? '') }}"
+                                                autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                             @error('telephone_parent')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>

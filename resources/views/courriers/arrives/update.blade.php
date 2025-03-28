@@ -37,8 +37,8 @@
                                 <h5 class="card-title text-center pb-0 fs-4">Modification</h5>
                                 <p class="text-center small">modification courrier arrivé</p>
                             </div> --}}
-                            <form method="post" action="{{ route('arrives.update', $arrive?->id) }}" enctype="multipart/form-data"
-                                class="row g-3">
+                            <form method="post" action="{{ route('arrives.update', $arrive?->id) }}"
+                                enctype="multipart/form-data" class="row g-3">
                                 @csrf
                                 @method('PUT')
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
@@ -86,8 +86,7 @@
                                 </div>
 
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                    <label for="numero_courrier" class="form-label">Numéro correspondance<span
-                                            class="text-danger mx-1">*</span></label>
+                                    <label for="numero_courrier" class="form-label">Numéro correspondance</label>
                                     <div class="input-group has-validation">
                                         <input type="text" min="0" name="numero_courrier"
                                             value="{{ $arrive?->courrier?->numero_courrier ?? old('numero_courrier') }}"
@@ -132,10 +131,17 @@
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="objet" class="form-label">Objet<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="text" name="objet"
+                                    {{-- <input type="text" name="objet"
                                         value="{{ $arrive?->courrier?->objet ?? old('objet') }}"
                                         class="form-control form-control-sm @error('objet') is-invalid @enderror"
-                                        id="objet" placeholder="Objet">
+                                        id="objet" placeholder="Objet"> --}}
+                                    <textarea name="objet" id="objet" rows="4"
+                                        class="form-control form-control-sm @error('objet') is-invalid @enderror" placeholder="Objet">{{ old('objet', $arrive?->courrier?->objet) }}</textarea>
+                                    @error('objet')
+                                        <span class="invalid-feedback" role="alert">
+                                            <div>{{ $message }}</div>
+                                        </span>
+                                    @enderror
                                     @error('objet')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -184,7 +190,7 @@
 
                                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                     <label for="observation" class="form-label">Observations </label>
-                                    <textarea name="observation" id="observation" rows="1" class="form-control form-control-sm"
+                                    <textarea name="observation" id="observation" rows="2" class="form-control form-control-sm"
                                         placeholder="Observations">{{ old('observation', $arrive?->courrier?->observation) }}</textarea>
                                     @error('observation')
                                         <span class="invalid-feedback" role="alert">
@@ -208,7 +214,8 @@
 
                                 <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                     <label for="reference" class="form-label">Scan courrier</label>
-                                    <input type="file" name="file" id="file" accept=".jpg, .jpeg, .png, .svg, .gif"
+                                    <input type="file" name="file" id="file"
+                                        accept=".jpg, .jpeg, .png, .svg, .gif"
                                         class="form-control @error('file') is-invalid @enderror btn btn-outline-primary btn-sm">
                                     @error('file')
                                         <span class="text-danger">{{ $message }}</span>

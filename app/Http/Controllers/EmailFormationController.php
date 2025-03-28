@@ -23,15 +23,26 @@ class EmailFormationController extends Controller
         $formation = Formation::findOrFail($request->input('id'));
         foreach ($formation->individuelles as $individuelle) {
             $toEmail    = $individuelle?->user?->email;
-            $toUserName = 'Félicitations ! ' . $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name;
+            $Name       = '<b>Bonjour ' . $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name . ' </b>! ';
+            $toUserName = strip_tags($Name, '<b><i><p><br>'); // Autorise seulement <b>, <i>, et <p>
 
-            $message = $formation?->lieu . ', ' . $formation?->departement?->nom . ', du ' . $formation?->date_debut?->format('d/m/Y') .
-            ' au ' . $formation?->date_fin?->format('d/m/Y') . ' et sera assurée par l\'opérateur : '
+            $message = $formation?->lieu . ', du ' . $formation?->date_debut?->format('d/m/Y') .
+            ' au ' . $formation?->date_fin?->format('d/m/Y') . '. <br> <b>Opérateur</b> : '
             . $formation?->operateur?->user?->operateur .
-            '(' . $formation?->operateur?->user?->username . ')' . '. Pour toute information complémentaire, vous pouvez contacter le formateur au '
-            . $formation?->operateur?->user?->fixe;
-            $subject = 'Notification démarrage formation !';
-            $module  = 'Vous avez été sélectionnée pour participer à la formation en ' . $formation?->module?->name . '. Celle-ci se déroulera à ' . $message;
+            ' (<b><i>' . $formation?->operateur?->user?->username . '</b></i>)' . '. <br>Pour toute information complémentaire, vous pouvez contacter le formateur au '
+            .
+            substr($formation?->operateur?->user?->fixe, 0, 2) .
+            ' ' .
+            substr($formation?->operateur?->user?->fixe, 2, 3) .
+            ' ' .
+            substr($formation?->operateur?->user?->fixe, 5, 2) .
+            ' ' .
+            substr($formation?->operateur?->user?->fixe, 7, 2)
+            ;
+            $subject     = 'Notification démarrage formation !';
+            $safeMessage = 'Vous avez été sélectionnée pour participer à la formation en <b><i>' . ($individuelle?->module?->name ?? 'cette formation') .
+                '</i></b>. <br><b>Lieu</b> : ' . $message;
+            $module = strip_tags($safeMessage, '<b><i><p><br>'); // Autorise seulement <b>, <i>, et <p>
             Mail::to($toEmail)->send(new WelcomeFormationEmail($message, $subject, $toEmail, $toUserName, $module));
         }
         return back();
@@ -45,7 +56,7 @@ class EmailFormationController extends Controller
         $toEmailStructure   = $formation?->collectivemodule?->collective?->email;
         $toEmailResponsable = $formation?->collectivemodule?->collective?->email_responsable;
 
-        $toUserName = 'Félicitations ! ' . $formation?->collectivemodule?->collective?->name . ' (' . $formation?->collectivemodule?->collective?->sigle . ').';
+        $toUserName = 'Bonjour ! ' . $formation?->collectivemodule?->collective?->name . ' (' . $formation?->collectivemodule?->collective?->sigle . ').';
 
         $message = $formation?->lieu . ', ' . $formation?->departement?->nom . ', du ' . $formation?->date_debut?->format('d/m/Y') .
         ' au ' . $formation?->date_fin?->format('d/m/Y') . '. La formation sera assurée par l\'opérateur : ' . $formation?->operateur?->user?->operateur .

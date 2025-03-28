@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class ArriveOperateurStoreRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class ArriveOperateurStoreRequest extends FormRequest
         return [
             'date_arrivee'              =>  ["required", "date", "min:10", "max:10", "date_format:Y-m-d"],
             'date_correspondance'       =>  ["required", "date", "min:10", "max:10", "date_format:Y-m-d"],
-            'numero_arrive'             =>  ["required", "string", "min:4", "max:6", "unique:arrives,numero_arrive,Null,id,deleted_at,NULL"],
+            'numero_arrive'             =>  ["required", "string", "min:4", "max:6", Rule::unique('users')->ignore($user->id)->whereNull('deleted_at')],
             /* 'numero_courrier'     =>  ["required", "string", "min:4", "max:6", "unique:courriers,numero_courrier,Null,id,deleted_at,NULL"], */
             'annee'                     =>  ['required', 'numeric', 'min:2022'],
             'expediteur'                =>  ['required', 'string', 'max:200'],

@@ -4,12 +4,12 @@ use App\Http\Controllers\AntenneController;
 use App\Http\Controllers\ArriveController;
 use App\Http\Controllers\ArrondissementController;
 use App\Http\Controllers\ArticleController;
-use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\CollectiveController;
 use App\Http\Controllers\CollectivemoduleController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CommissionagrementController;
+use App\Http\Controllers\CommissionmembreController;
 use App\Http\Controllers\CommuneController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ConventionController;
@@ -23,11 +23,16 @@ use App\Http\Controllers\DirectionController;
 use App\Http\Controllers\DomaineController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\EmailFormationController;
+use App\Http\Controllers\EmargementcollectiveController;
+use App\Http\Controllers\EmargementController;
 use App\Http\Controllers\EmployeController;
 use App\Http\Controllers\EvaluateurController;
+use App\Http\Controllers\FeuillepresencecollectiveController;
+use App\Http\Controllers\FeuillepresenceController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\FonctionController;
 use App\Http\Controllers\FormationController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\IndemniteController;
 use App\Http\Controllers\IndividuelleController;
 use App\Http\Controllers\IngenieurController;
@@ -55,15 +60,9 @@ use App\Http\Controllers\ProjetlocaliteController;
 use App\Http\Controllers\ProjetmoduleController;
 use App\Http\Controllers\ReferentielController;
 use App\Http\Controllers\RegionController;
-use App\Http\Controllers\EmargementController;
-use App\Http\Controllers\SMSController;
-use App\Http\Controllers\FeuillepresenceController;
-use App\Http\Controllers\FeuillepresencecollectiveController;
-use App\Http\Controllers\EmargementcollectiveController;
-use App\Http\Controllers\CommissionmembreController;
-
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SecteurController;
+use App\Http\Controllers\SMSController;
 use App\Http\Controllers\UneController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ValidationcollectiveController;
@@ -71,10 +70,8 @@ use App\Http\Controllers\ValidationformationController;
 use App\Http\Controllers\ValidationIndividuelleController;
 use App\Http\Controllers\ValidationmoduleController;
 use App\Http\Controllers\ValidationoperateurController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -205,7 +202,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::post('ficheSuiviCol', [FormationController::class, 'ficheSuiviCol'])->name('ficheSuiviCol');
 
         Route::get('notifications/', [CourrierController::class, 'notifications'])->name('notifications');
-        Route::get('validationsRejetMessage/{id}', [IndividuelleController::class, 'validationsRejetMessage'])->name('validationsRejetMessage');
+        Route::post('validationmessage', [IndividuelleController::class, 'validationsRejetMessage'])->name('validationmessage');
 
         Route::get('modulelocalite/{idmodule}/{idlocalite}', [ModuleController::class, 'modulelocalite'])->name('modulelocalite');
         Route::get('modulelocalitestatut/{idmodule}/{idlocalite}/{statut}', [ModuleController::class, 'modulelocalitestatut'])->name('modulelocalitestatut');
@@ -237,6 +234,9 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('formationingenieurs/{idformation}', [FormationController::class, 'addformationingenieurs']);
         Route::put('formationingenieurs/{idformation}', [FormationController::class, 'giveformationingenieurs']);
 
+        Route::get('collectiveingenieurs/{id}', [CollectiveController::class, 'addcollectiveingenieurs'])->name('addcollectiveingenieurs');
+        Route::put('collectiveingenieurs/{id}', [CollectiveController::class, 'givecollectiveingenieurs'])->name('givecollectiveingenieurs');
+
         Route::get('formationcollectives/{idformation}/{idlocalite}', [FormationController::class, 'addformationcollectives']);
         Route::put('formationcollectives/{idformation}', [FormationController::class, 'giveformationcollectives'])->name('formationcollectives');
         Route::put('retirermoduleformation/{id}', [FormationController::class, 'retirermoduleformation'])->name('retirermoduleformation');
@@ -250,7 +250,8 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('collectiveformations/{idformation}/{idlocalite}', [FormationController::class, 'addcollectiveformations']);
         Route::put('collectiveformations/{idformation}/{idlocalite}', [FormationController::class, 'givecollectiveformations']);
 
-        Route::put('indisponibles/{idformation}', [FormationController::class, 'giveindisponibles']);
+        Route::put('indisponibles/{idformation}', [FormationController::class, 'giveindisponibles'])->name('giveindisponibles');
+        Route::put('disponibles/{id}', [FormationController::class, 'givedisponibles'])->name('givedisponibles');
         Route::put('collectiveindisponibles/{idformation}', [FormationController::class, 'givecollectiveindisponibles']);
 
         Route::put('remiseAttestations/{idformation}', [FormationController::class, 'giveremiseAttestations']);
@@ -278,6 +279,8 @@ Route::group(['middleware' => ['XSS']], function () {
 
         Route::get('/mesformations', [IndividuelleController::class, 'mesformations'])->name('mesformations');
         Route::get('/nouvellesformations', [IndividuelleController::class, 'nouvellesformations'])->name('nouvellesformations');
+        Route::get('/mescourriers', [ArriveController::class, 'mescourriers'])->name('mescourriers');
+        Route::get('/ingenieurformations', [UserController::class, 'ingenieurformations'])->name('ingenieurformations');
 
         Route::post('/autocomplete/fetch', [OperateurController::class, 'fetch'])->name('autocomplete.fetch');
         Route::post('/autocomplete/fetchModuleOperateur', [OperateurController::class, 'fetchModuleOperateur'])->name('autocomplete.fetchModuleOperateur');
@@ -447,7 +450,7 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::post('ficheSynthese', [OperateurController::class, 'ficheSynthese'])->name('ficheSynthese');
         Route::post('ficheSyntheseOperateur', [OperateurController::class, 'ficheSyntheseOperateur'])->name('ficheSyntheseOperateur');
 
-        Route::post('lettreAgrement', [OperateurController::class, 'lettreAgrement'])->name('lettreAgrement');                                                
+        Route::post('lettreAgrement', [OperateurController::class, 'lettreAgrement'])->name('lettreAgrement');
         Route::post('lettreOperateur', [OperateurController::class, 'lettreOperateur'])->name('lettreOperateur');
 
         Route::get('arrivesop', [ArriveController::class, 'arrivesop'])->name('arrivesop');
@@ -458,7 +461,9 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::put('/resetuserPassword/{id}', [UserController::class, 'resetuserPassword'])->name('resetuserPassword');
 
         Route::get('backup', [UserController::class, 'backup'])->name('backup');
+
         Route::get('demandesdg', [IndividuelleController::class, 'demandesdg'])->name('demandesdg');
+        Route::get('demandesth', [IndividuelleController::class, 'demandesth'])->name('demandesth');
         Route::get('demandeszig', [IndividuelleController::class, 'demandeszig'])->name('demandeszig');
         Route::get('demandeskd', [IndividuelleController::class, 'demandeskd'])->name('demandeskd');
         Route::get('demandeskl', [IndividuelleController::class, 'demandeskl'])->name('demandeskl');
@@ -468,11 +473,33 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::get('demandesdl', [IndividuelleController::class, 'demandesdl'])->name('demandesdl');
 
         Route::post('/send-training-start-email/{trainingId}', [FormationController::class, 'sendTrainingStartEmail'])->name('send-training-start-email');
-        
-        Route::put('/confirmer/{id}', [FormationController::class, 'confirmer'])->name('confirmer');
-        Route::put('/decliner/{id}', [FormationController::class, 'decliner'])->name('decliner');
+
+        Route::put('/confirmer/{id}', [IndividuelleController::class, 'confirmer'])->name('confirmer');
+        Route::put('/decliner/{id}', [IndividuelleController::class, 'decliner'])->name('decliner');
         Route::get('/jurycommissionagrements/{id}', [CommissionagrementController::class, 'jury'])->name('jurycommissionagrements.jury');
         Route::patch('/addMembreJury/{id}', [CommissionagrementController::class, 'addMembreJury'])->name('addMembreJury');
+
+        Route::get('/users/actifs', [UserController::class, 'actifs'])->name('users.actifs');
+        Route::get('/users/inactifs', [UserController::class, 'inactifs'])->name('users.inactifs');
+        Route::get('/users/corbeille', [UserController::class, 'corbeille'])->name('users.corbeille');
+        Route::get('/users/restored', [UserController::class, 'restored'])->name('users.restored');
+        Route::get('/users/online', [UserController::class, 'showOnlineUsers'])->name('users.online');
+        Route::get('/users/demandeurs', [UserController::class, 'demandeurs'])->name('users.demandeurs');
+        Route::get('/demandeurs/{id}', [UserController::class, 'showDemandeur'])->name('demandeurs.show');
+
+        Route::delete('/profile/image', [ProfileController::class, 'destroyImage'])->name('profile.image.destroy');
+
+        Route::post('/collectives/fetch', [CollectiveController::class, 'fetch'])->name('collectives.fetch');
+        Route::get('/get-objet-by-numero', [CollectiveController::class, 'getObjetByNumero'])->name('getObjetByNumero');
+
+        Route::post('/import-arrives', [ImportController::class, 'importArrives'])->name('import.arrives');
+        Route::get('/import-arrives', [ImportController::class, 'importA'])->name('importA');
+
+        Route::post('/import-operateurs', [ImportController::class, 'importOperateurs'])->name('import.operateurs');
+        Route::get('/import-operateurs', [ImportController::class, 'importO'])->name('importO');
+
+        /* Pour visualiser la page d'erreur */
+        /* Route::get('/errors/restored', [UserController::class, 'errors'])->name('users.errors'); */
 
         /* Vues ressouces */
         Route::resource('/users', UserController::class);
@@ -540,6 +567,21 @@ Route::group(['middleware' => ['XSS']], function () {
         Route::resource('/commissionmembres', CommissionmembreController::class);
     });
     Route::resource('/contacts', ContactController::class);
+    Route::get('/services-details', [ContactController::class, 'servicesDetails'])->name('services.details');
+    Route::get('nos-modules', [ContactController::class, 'nosModules'])->name('nos-modules');
+
+    Route::get('/guide', function () {
+        $path = public_path('guide.pdf');
+
+        if (! file_exists($path)) {
+            abort(404);
+        }
+
+        return response()->file($path, [
+            'Content-Type' => 'application/pdf',
+        ]);
+    });
+
 });
 
 require __DIR__ . '/auth.php';

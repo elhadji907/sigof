@@ -9,7 +9,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -31,17 +31,53 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // Vérification incluant les utilisateurs soft deleted
         $request->validate([
-            'username' => ['required', 'string', 'min:3', 'max:25', 'unique:' . User::class],
-            'email'    => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
-            'termes'    => ['required', 'accepted'], // 'accepted' est plus approprié pour un champ de type checkbox
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'username'        => [
+                'required',
+                'string',
+                'min:3',
+                'max:10',
+                Rule::unique('users')->whereNull('deleted_at'), // Ignore les utilisateurs supprimés
+            ],
+            'email'           => [
+                'required',
+                'string',
+                'email',
+                'max:255',
+                Rule::unique('users')->whereNull('deleted_at'), // Ignore les utilisateurs supprimés
+            ],
+            'votre_telephone' => ['required', 'string', 'min:12', 'max:12'],
+            'termes'          => ['required', 'accepted'], // 'accepted' est plus approprié pour un champ de type checkbox
+            /* 'password' => ['required', 'confirmed', Rules\Password::defaults()], */
+            'password'        => 'required|string|min:8|confirmed',
         ]);
 
+        // Vérifier si l'utilisateur existe mais est supprimé
+        $user = User::withTrashed()->where('email', $request->email)->first();
+
+        if ($user) {
+            // Restaurer l'utilisateur supprimé
+            $user->restore();
+
+            // Mettre à jour le role
+            $user->assignRole($request->input('role'));
+            // Mettre à jour le mot de passe (optionnel)
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            Alert::success('Bonjour ' . $user->username . ', Heureux de vous retrouver !', 'Votre compte restauré avec succès');
+
+            return redirect(RouteServiceProvider::LOGIN);
+
+            /* return response()->json(['message' => 'Compte restauré avec succès !'], 200); */
+        }
+
         $user = User::create([
-            'username' => $request->username,
-            'email'    => $request->email,
-            'password' => Hash::make($request->password),
+            'username'  => substr(str_replace(' ', '', $request->username), 0, 10),
+            'email'     => $request->email,
+            'telephone' => $request->votre_telephone,
+            'password'  => Hash::make($request->password),
         ]);
 
         $files = File::where('users_id', null)->distinct()->get();
@@ -58,7 +94,15 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        alert()->html('<i>Félicitations </i> <a href="#">' . $user->username . '</a>', "Votre inscription a été effectuée avec <b>succès</b>, <br>
+        // Afficher une alerte de succès pour la création de compte
+        /*  Alert::success(
+            'Bienvenue ' . $user->username . ' !',
+            "Votre inscription a été réussie.
+            Pour activer votre compte, veuillez vérifier votre boîte e-mail et suivre les instructions.
+            Si vous ne trouvez pas l'e-mail, pensez à vérifier votre dossier spam."
+        ); */
+
+        alert()->html('<i>Bienvenue </i> <a href="#">' . $user->username . '</a> !', "Votre inscription a été effectuée avec <b>succès</b>, <br>
         Pour activer votre compte, veuillez vérifier votre <a href='#'>boîte e-mail</a> et suivre les instructions. <br>
         Si vous ne trouvez pas l'e-mail, pensez à vérifier votre dossier spam.", 'success');
 

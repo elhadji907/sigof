@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class StoreArriveOperateurRequest extends FormRequest
 {
@@ -23,9 +23,15 @@ class StoreArriveOperateurRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'date_arrivee'        => ["required", "date", "min:10", "max:10", "date_format:Y-m-d"],
-            'date_correspondance' => ["required", "date", "min:10", "max:10", "date_format:Y-m-d"],
-            'numero_arrive'       => ["required", "string", "min:4", "max:6", "unique:arrives,numero,Null,id,deleted_at,NULL"],
+            'date_arrivee'        => ["required", "date", "size:10", "date_format:Y-m-d"],
+            'date_correspondance' => ["required", "date", "size:10", "date_format:Y-m-d"],
+            'numero_arrive'       => [
+                "required",
+                "string",
+                "min:4",
+                "max:6",
+                Rule::unique('arrives', 'numero')->whereNull('deleted_at'),
+            ],
             'annee'               => ['required', 'numeric', 'min:2022'],
             'expediteur'          => ['required', 'string', 'max:200'],
             'objet'               => ['required', 'string', 'max:200'],

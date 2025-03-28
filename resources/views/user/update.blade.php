@@ -16,7 +16,7 @@
 
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-12 pt-5">
+                                <div class="col-sm-12 pt-2">
                                     <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('user.index') }}"
                                             class="btn btn-success btn-sm" title="retour"><i
                                                 class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
@@ -24,10 +24,9 @@
                                     </span>
                                 </div>
                             </div>
-
-                            <div class="pt-4 pb-2">
-                                <h5 class="card-title text-center pb-0 fs-4">Modification</h5>
-                                <p class="text-center small">Introduire les nouvelles données pour modifier</p>
+                            <div class="text-center">
+                                <h5 class="card-title pb-0 fs-4">Modification</h5>
+                                <p class="small">Saisissez les nouvelles informations pour effectuer la modification.</p>
                             </div>
                             <form method="post" action="{{ route('users.update', $user->id) }}"
                                 enctype="multipart/form-data" class="row g-3">
@@ -109,10 +108,10 @@
 
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="date naissance" class="form-label">Date naissance</label>
-                                    <input type="date" name="date_naissance"
-                                        value="{{ $user->date_naissance?->format('Y-m-d') ?? old('date_naissance') }}"
-                                        class="datepicker form-control form-control-sm @error('date_naissance') is-invalid @enderror"
-                                        id="date_naissance" placeholder="jj/mm/aaaa">
+                                    <input type="text" name="date_naissance"
+                                        value="{{ old('date_naissance', optional($user->date_naissance)->format('d/m/Y')) }}"
+                                        class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
+                                        id="datepicker" placeholder="JJ/MM/AAAA" autocomplete="bday">
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -138,7 +137,8 @@
                                             class="text-danger mx-1">*</span></label>
                                     <div class="input-group has-validation">
                                         {{-- <span class="input-group-text" id="email">@</span> --}}
-                                        <input type="email" name="email" value="{{ $user->email ?? old('email') }}"
+                                        <input type="email" name="email"
+                                            value="{{ old('email', $user->email ?? '') }}"
                                             class="form-control form-control-sm @error('email') is-invalid @enderror"
                                             id="email" placeholder="email">
                                         @error('email')
@@ -152,10 +152,10 @@
                                 <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="telephone" class="form-label">Téléphone<span
                                             class="text-danger mx-1">*</span></label>
-                                    <input type="number" min="0" minlength="9" maxlength="9" name="telephone"
-                                        value="{{ $user->telephone ?? old('telephone') }}"
+                                    <input name="telephone" type="text" maxlength="12"
                                         class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                        id="telephone" placeholder="7xxxxxxxx">
+                                        id="telephone" value="{{ old('telephone', $user->telephone ?? '') }}"
+                                        autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                     @error('telephone')
                                         <span class="invalid-feedback" role="alert">
                                             <div>{{ $message }}</div>
@@ -242,7 +242,7 @@
                                     @enderror
                                 </div>
 
-                               {{--  <div class="col-12 col-md-6 col-lg-4 mb-0">
+                                {{--  <div class="col-12 col-md-6 col-lg-4 mb-0">
                                     <label for="password" class="form-label">Modifier mot de passe</label>
                                     <input type="password" name="password"
                                         class="form-control form-control-sm @error('password') is-invalid @enderror"

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -25,10 +24,11 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var array<int, string>
      */
-    
+
     protected $dates = [
         'date_naissance',
-        'email_verified_at'
+        'email_verified_at',
+        'last_activity' => 'datetime',
     ];
 
     protected $fillable = [
@@ -56,6 +56,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'username',
         'fixe',
         'date_naissance',
+        'last_activity',
         'lieu_naissance',
         'bp',
         'fax',
@@ -78,7 +79,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_responsable',
         'fonction_responsable',
 
-        'remember_token'
+        'remember_token',
+        'restored_at',
     ];
 
     /**
@@ -98,8 +100,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-        'date_naissance' => 'datetime'
+        'password'          => 'hashed',
+        'date_naissance'    => 'datetime',
     ];
 
     public function getImage()
@@ -111,18 +113,28 @@ class User extends Authenticatable implements MustVerifyEmail
     protected static function boot()
     {
         parent::boot();
+
         static::created(function ($user) {
             $user->profile()->create([
-                'titre'    =>    '',
-                'description'    =>    '',
-                'url'    =>    ''
+                'titre'       => '',
+                'description' => '',
+                'url'         => '',
             ]);
+        });
+
+        static::restored(function ($user) {
+            $user->update(['restored_at' => now()]);
         });
     }
 
     public function getRouteKeyName()
     {
         return 'username';
+    }
+
+    public function scopeOnline($query)
+    {
+        return $query->where('last_activity', '>=', now()->subMinutes(30));
     }
 
     public function operateurmodules()
@@ -189,7 +201,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Collective::class, 'users_id')->latest();
     }
 
-
     public function pcharges()
     {
         return $this->hasMany(Pcharge::class, 'users_id')->latest();
@@ -247,11 +258,11 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function arrives()
-	{
-		return $this->belongsToMany(Arrive::class, 'courrierarrivesusers', 'users_id', 'arrives_id')
-			->withPivot('id', 'deleted_at')
-			->withTimestamps();
-	}
+    {
+        return $this->belongsToMany(Arrive::class, 'courrierarrivesusers', 'users_id', 'arrives_id')
+            ->withPivot('id', 'deleted_at')
+            ->withTimestamps();
+    }
 
     public function files()
     {

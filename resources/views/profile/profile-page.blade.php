@@ -20,25 +20,35 @@
                     <div class="card">
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
                             {{-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> --}}
-                            <img class="rounded-circle w-25" alt="Profil" src="{{ asset(Auth::user()?->getImage()) }}"
-                                width="50" height="auto">
+                            <a href="#" data-bs-toggle="modal"
+                                data-bs-target="#ShowProfilImage{{ Auth::user()?->id }}">
+                                <img class="rounded-circle w-100" alt="Profil"
+                                    src="{{ asset(Auth::user()?->getImage()) }}" width="100" height="auto">
+                            </a>
 
-                            <h2>
+                            <h2 class="pt-1 d-flex flex-column align-items-center text-center">
                                 @if (!empty(Auth::user()?->name))
                                     {{ Auth::user()?->civilite . ' ' . Auth::user()?->firstname . ' ' . Auth::user()?->name }}
                                 @else
                                     {{ Auth::user()?->username }}
                                 @endif
+                                <br>
+                                @if (Auth::user()?->last_activity && \Carbon\Carbon::parse($user->last_activity)->diffInMinutes(now()) < 5)
+                                    <span class="text-success">En ligne</span>
+                                @else
+                                    <span class="text-danger">Hors ligne</span>
+                                    ({{ \Carbon\Carbon::parse($user->last_activity)->diffForHumans() }})
+                                @endif
                             </h2>
-                            @if (!empty(Auth::user()?->situation_professionnelle))
+                            {{-- @if (!empty(Auth::user()?->situation_professionnelle))
                                 <span><a href="">{{ Auth::user()?->situation_professionnelle }}</a></span>
-                            @endif
+                            @endif --}}
                             {{-- <h3>
                             @foreach (Auth::user()->roles as $role)
                                 <span>{{ $role->name }} |</span>
                             @endforeach
                         </h3> --}}
-                            <div class="social-links mt-2">
+                            {{-- <div class="social-links mt-2">
                                 @if (!empty(Auth::user()?->twitter))
                                     <a href="{{ Auth::user()?->twitter }}" class="twitter" target="_blank"><i
                                             class="bi bi-twitter"></i></a>
@@ -55,78 +65,62 @@
                                     <a href="{{ Auth::user()?->linkedin }}" class="linkedin" target="_blank"><i
                                             class="bi bi-linkedin"></i></a>
                                 @endif
+                            </div> --}}
+                            <div class="social-links mt-2">
+                                @foreach (['twitter' => 'twitter', 'facebook' => 'facebook', 'instagram' => 'instagram', 'linkedin' => 'linkedin'] as $platform => $icon)
+                                    @if (!empty(Auth::user()?->$platform))
+                                        <a href="{{ Auth::user()->$platform }}" class="{{ $platform }}" target="_blank">
+                                            <i class="bi bi-{{ $icon }}"></i>
+                                        </a>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                    <div class="card">
-                        <div class="card-body pb-0">
-                            <h5 class="card-title">Demandes <span>| Personnelles</span></h5>
 
-                            <table class="table table-borderless">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Demande</th>
-                                        <th scope="col" class="text-center">Nombre</th>
-                                        <th scope="col" class="text-center">#</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="text-primary">Individuelle</td>
-                                        <td class="text-center">
-                                            {{ count($individuelles) }}
-                                            {{-- @foreach (Auth::user()->individuelles as $individuelle)
-                                                @if (isset($individuelle->numero) && isset($individuelle->modules_id))
-                                                    @if ($loop->last)
-                                                        <a class="text-primary"
-                                                            href="{{ route('demandesIndividuelle') }}">{!! $loop->count ?? '0' !!}</a>
-                                                    @endif
-                                                @else
-                                                    <span class="text-primary">0</span>
-                                                @endif
-                                            @endforeach --}}
-                                        </td>
-                                        <td class="text-center">
-                                            <a href="{{ route('demandesIndividuelle') }}" title="voir"><i
-                                                    class="bi bi-eye"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-primary">Collective</td>
-                                        <td class="text-center">
-                                            {{ count($collectives) }}
-                                            {{-- @foreach (Auth::user()->collectives as $collective)
-                                                @if (isset($collective->numero))
-                                                    @if ($loop->last)
-                                                        <a class="text-primary"
-                                                            href="{{ route('demandesCollective') }}">{!! $loop->count ?? '0' !!}</a>
-                                                    @endif
-                                                @else
-                                                    <span class="text-primary">0</span>
-                                                @endif
-                                            @endforeach --}}
-                                        </td>
-                                        <td class="text-center">
-                                            <a href="{{ route('demandesCollective') }}" title="voir"><i
-                                                    class="bi bi-eye"></i></a>
-                                        </td>
-                                    </tr>
-                                    {{-- <tr>
-                                        <td class="text-primary">Prise en charge</td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center">
-                                            <a href="#" class="btn btn-success btn-sm" title="voir"><i
-                                                    class="bi bi-eye"></i></a>
-                                        </td>
-                                    </tr> --}}
-                                </tbody>
-                            </table>
+                @role('Employe')
+                    <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                        <div class="card">
+                            <div class="card-body pb-0">
+                                <h5 class="card-title">Demandes <span>| Personnelles</span></h5>
 
+                                <table class="table table-borderless">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Demande</th>
+                                            <th scope="col" class="text-center">Nombre</th>
+                                            <th scope="col" class="text-center">#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-primary">Individuelle</td>
+                                            <td class="text-center">
+                                                {{ count($individuelles) }}
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="{{ route('demandesIndividuelle') }}" title="voir"><i
+                                                        class="bi bi-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-primary">Collective</td>
+                                            <td class="text-center">
+                                                {{ count($collectives) }}
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="{{ route('demandesCollective') }}" title="voir"><i
+                                                        class="bi bi-eye"></i></a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endrole
 
                 @if (!empty($nouvelle_formation_count))
                     <div class="col-12">
@@ -134,7 +128,7 @@
                             <div class="card shadow-lg border-0 rounded-lg">
                                 <div class="card-body d-flex align-items-center justify-content-between">
                                     <div>
-                                        <h5 class="card-title text-primary d-flex align-items-center">
+                                        <h5 class="card-title text-info d-flex align-items-center">
                                             <i class="bi bi-graduation-cap me-0"></i> Nouvelle <span class="fw-bold">&nbsp;|
                                                 Formation</span>
                                         </h5>
@@ -148,6 +142,8 @@
                             </div>
                         </a>
                     </div>
+                @else
+                    <div class="alert alert-info">Aucune notification vous concernant pour l'instant !</div>
                 @endif
             </div>
             {{-- Fin Photo de profil --}}
@@ -187,9 +183,7 @@
                             @endforeach
                         @endif
                         <div class="card-body pt-3">
-                            <!-- Bordered Tabs -->
                             <ul class="nav nav-tabs nav-tabs-bordered">
-
                                 <li class="nav-item">
                                     <button class="nav-link active" data-bs-toggle="tab"
                                         data-bs-target="#profile-overview">Aperçu</button>
@@ -203,7 +197,7 @@
 
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
-                                        data-bs-target="#profile-change-password">Changer le mot de passe</button>
+                                        data-bs-target="#profile-change-password">Mot de passe</button>
                                 </li>
 
                                 <li class="nav-item">
@@ -211,12 +205,12 @@
                                         data-bs-target="#files">Fichiers</button>
                                 </li>
 
-                                <li class="nav-item">
+                                {{-- <li class="nav-item">
                                     <button class="nav-link">
                                         <a style="text-decoration: none; color: black"
                                             href="{{ route('mesformations') }}" title="voir">Formations</a>
                                     </button>
-                                </li>
+                                </li> --}}
 
                             </ul>
                             <div class="tab-content pt-2">
@@ -224,11 +218,6 @@
                                     <h5 class="card-title">À propos</h5>
                                     <p class="small fst-italic">
                                         créé, {{ Auth::user()->created_at->diffForHumans() }}
-                                        {{-- @if (Auth::user()->created_at !== Auth::user()->updated_at)
-                                            modifié, {{ Auth::user()->updated_at->diffForHumans() }}
-                                        @else
-                                            jamais modifié
-                                        @endif --}}
                                     </p>
 
                                     <div class="row">
@@ -244,7 +233,7 @@
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    {{-- <div class="row">
                                         <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
                                             Fichiers joints
                                         </div>
@@ -256,28 +245,9 @@
                                                 l'onglet fichier pour télécharger
                                             @endif
                                         </div>
-                                    </div>
-
-                                    {{-- <div class="d-flex justify-content-between align-items-center">
-                                        <h5 class="card-title">Informations personnelles :
-                                            @if (isset(Auth::user()->cin))
-                                                <span class="badge bg-success text-white">Complètes</span>
-                                            @else
-                                                <span class="badge bg-warning text-white">Incomplètes</span>, cliquez sur
-                                                modifier profil pour complèter
-                                            @endif
-                                        </h5>
-
-                                        <h5 class="card-title">Joindre fichier :
-                                            @if (!empty($user_cin))
-                                                <span class="badge bg-primary text-white">Valide</span>
-                                            @else
-                                                <span class="badge bg-warning text-white">Invalide</span>, cliquez sur
-                                                fichier pour télécharger
-                                            @endif
-                                        </h5>
                                     </div> --}}
-                                    @if (!empty(Auth::user()->cin))
+
+                                    @if (Auth::user()?->cin)
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">CIN
                                             </div>
@@ -286,7 +256,7 @@
                                         </div>
                                     @endif
 
-                                    @if (!empty(Auth::user()->username))
+                                    @if (Auth::user()?->username)
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
                                                 Username
@@ -296,17 +266,17 @@
                                         </div>
                                     @endif
 
-                                    @if (!empty(Auth::user()->firstname))
+                                    @if (Auth::user()?->firstname)
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
                                                 Prénom
                                             </div>
                                             <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                                {{ Auth::user()->firstname }}</div>
+                                                {{ format_proper_name(Auth::user()->firstname) }}</div>
                                         </div>
                                     @endif
 
-                                    @if (!empty(Auth::user()->name))
+                                    @if (Auth::user()?->name)
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Nom
                                             </div>
@@ -315,7 +285,7 @@
                                         </div>
                                     @endif
 
-                                    @if (!empty(Auth::user()->date_naissance))
+                                    @if (Auth::user()?->date_naissance)
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Date
                                                 naissance
@@ -325,7 +295,17 @@
                                         </div>
                                     @endif
 
-                                    @if (!empty(Auth::user()->email))
+                                    @if (Auth::user()?->lieu_naissance)
+                                        <div class="row">
+                                            <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Lieu
+                                                naissance
+                                            </div>
+                                            <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                                {{ Auth::user()->lieu_naissance }}</div>
+                                        </div>
+                                    @endif
+
+                                    @if (Auth::user()?->email)
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">Email
                                             </div>
@@ -335,7 +315,7 @@
                                         </div>
                                     @endif
 
-                                    @if (!empty(Auth::user()->telephone))
+                                    @if (Auth::user()?->telephone)
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
                                                 Téléphone
@@ -346,13 +326,13 @@
                                         </div>
                                     @endif
 
-                                    @if (!empty(Auth::user()->adresse))
+                                    @if (Auth::user()?->adresse)
                                         <div class="row">
                                             <div class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 label">
                                                 Adresse
                                             </div>
                                             <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                                {{ Auth::user()->adresse }}</div>
+                                                {{ remove_accents_uppercase(Auth::user()->adresse) }}</div>
                                         </div>
                                     @endif
                                 </div>
@@ -370,30 +350,41 @@
 
                                         <div class="row mb-3">
                                             <label for="profileImage"
-                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Image
-                                                de
-                                                profil</label>
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">
+                                                Image de profil
+                                            </label>
                                             {{-- <div class="col-md-8 col-lg-9"> --}}
                                             <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <img class="rounded-circle w-25" alt="Profil"
                                                     src="{{ asset(Auth::user()->getImage()) }}" width="50"
                                                     height="auto">
 
-                                                {{-- <div class="pt-2">
-                                                            <a href="#" class="btn btn-primary btn-sm"
-                                                                title="Upload new profile image"><i
-                                                                    class="bi bi-upload"></i></a>
-                                                            <a href="#" class="btn btn-danger btn-sm"
-                                                                title="Remove my profile image"><i
-                                                                    class="bi bi-trash"></i></a>
-                                                        </div> --}}
-                                                <div class="pt-2">
-                                                    <input type="file" name="image" id="image"
-                                                        accept=".jpg, .jpeg, .png, .svg, .gif"
-                                                        class="form-control @error('image') is-invalid @enderror btn btn-primary btn-sm">
-                                                    @error('image')
-                                                        <span class="text-danger">{{ $message }}</span>
-                                                    @enderror
+                                                <div class="pt-2 d-flex align-items-center gap-2">
+                                                    <div class="form-group mb-0">
+                                                        <label for="image" class="btn btn-primary btn-sm text-white"
+                                                            title="Image de profil">
+                                                            <i class="bi bi-upload"></i>
+                                                            <input type="file" name="image" id="image"
+                                                                accept=".jpg, .jpeg, .png, .svg, .gif"
+                                                                class="form-control d-none @error('image') is-invalid @enderror">
+                                                        </label>
+                                                        @error('image')
+                                                            <span class="text-danger d-block">{{ $message }}</span>
+                                                        @enderror
+                                                    </div>
+                                                    @auth
+                                                        @if (optional(Auth::user())?->image)
+                                                            <div class="form-group mb-0">
+                                                                <label for="delete-image"
+                                                                    class="btn btn-danger btn-sm text-white show_confirmDeleteImage"
+                                                                    data-url="{{ route('profile.image.destroy') }}"
+                                                                    title="Supprimer l'image de profil">
+                                                                    <i class="bi bi-trash"></i>
+                                                                    <input type="button" id="delete-image" class="d-none">
+                                                                </label>
+                                                            </div>
+                                                        @endif
+                                                    @endauth
                                                 </div>
                                             </div>
                                         </div>
@@ -401,15 +392,16 @@
                                         {{-- CIN --}}
                                         <div class="row mb-3">
                                             <label for="cin"
-                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">CIN<span
-                                                    class="text-danger mx-1">*</span>
+                                                class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">N°
+                                                CIN (NIN)<span class="text-danger mx-1">*</span>
                                             </label>
                                             <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                                 <div class="pt-2">
                                                     <input name="cin" type="text"
                                                         class="form-control form-control-sm @error('cin') is-invalid @enderror"
-                                                        id="cin" value="{{ $user->cin ?? old('cin') }}"
-                                                        autocomplete="cin" placeholder="Votre cin">
+                                                        id="cin" value="{{ $user?->cin ?? old('cin') }}"
+                                                        autocomplete="off" placeholder="Ex: 1 099 2005 00012"
+                                                        minlength="16" maxlength="17" required>
                                                 </div>
                                                 @error('cin')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -505,10 +497,10 @@
                                                 class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Date
                                                 naissance<span class="text-danger mx-1">*</span></label>
                                             <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                                <input type="date" name="date_naissance"
-                                                    value="{{ $user->date_naissance?->format('Y-m-d') ?? old('date_naissance') }}"
+                                                <input type="text" name="date_naissance"
+                                                    value="{{ old('date_naissance', optional($user->date_naissance)->format('d/m/Y')) }}"
                                                     class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
-                                                    id="datepicker" placeholder="jj/mm/aaaa">
+                                                    id="datepicker" placeholder="JJ/MM/AAAA" autocomplete="bday">
                                                 @error('date_naissance')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -551,17 +543,17 @@
                                                 @enderror
                                             </div>
                                         </div>
+
                                         {{-- Telephone --}}
                                         <div class="row mb-3">
                                             <label for="telephone"
                                                 class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">Téléphone<span
                                                     class="text-danger mx-1">*</span></label>
                                             <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                                <input name="telephone" type="number" min="0" minlength="9"
-                                                    maxlength="9"
+                                                <input name="telephone" type="text" maxlength="12"
                                                     class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                                    id="telephone" value="{{ $user->telephone ?? old('telephone') }}"
-                                                    autocomplete="telephone" placeholder="7xxxxxxxx">
+                                                    id="telephone" value="{{ old('telephone', $user->telephone ?? '') }}"
+                                                    autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                                 @error('telephone')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -569,6 +561,7 @@
                                                 @enderror
                                             </div>
                                         </div>
+
                                         {{-- Adresse --}}
                                         <div class="row mb-3">
                                             <label for="adresse"
@@ -586,6 +579,7 @@
                                                 @enderror
                                             </div>
                                         </div>
+
                                         {{-- Situation familiale --}}
                                         <div class="row mb-3">
                                             <label for="adresse"
@@ -620,6 +614,7 @@
                                                 @enderror
                                             </div>
                                         </div>
+
                                         {{-- Situation professionnelle --}}
                                         <div class="row mb-3">
                                             <label for="adresse"
@@ -669,7 +664,8 @@
                                                 <input name="facebook" type="facebook"
                                                     class="form-control form-control-sm @error('facebook') is-invalid @enderror"
                                                     id="facebook" value="{!! $user->facebook ?? old('facebook') !!}"
-                                                    autocomplete="facebook" placeholder="lien de votre compte facebook">
+                                                    autocomplete="facebook"
+                                                    placeholder="Entrez l'URL de votre compte facebook">
                                                 @error('facebook')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -688,7 +684,7 @@
                                                     class="form-control form-control-sm @error('twitter') is-invalid @enderror"
                                                     id="twitter" value="{{ $user->twitter ?? old('twitter') }}"
                                                     autocomplete="twitter"
-                                                    placeholder="lien de votre compte x (ex twitter)">
+                                                    placeholder="Entrez l'URL de votre compte x (ex twitter)">
                                                 @error('twitter')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -705,7 +701,8 @@
                                                 <input name="instagram" type="instagram"
                                                     class="form-control form-control-sm @error('instagram') is-invalid @enderror"
                                                     id="instagram" value="{{ $user->instagram ?? old('instagram') }}"
-                                                    autocomplete="instagram" placeholder="lien de votre compte instagram">
+                                                    autocomplete="instagram"
+                                                    placeholder="Entrez l'URL de votre compte instagram">
                                                 @error('instagram')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -722,7 +719,8 @@
                                                 <input name="linkedin" type="linkedin"
                                                     class="form-control form-control-sm @error('linkedin') is-invalid @enderror"
                                                     id="linkedin" value="{{ $user->linkedin ?? old('linkedin') }}"
-                                                    autocomplete="linkedin" placeholder="lien de votre ompte linkedin">
+                                                    autocomplete="linkedin"
+                                                    placeholder="Entrez l'URL de votre ompte linkedin">
                                                 @error('linkedin')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -801,11 +799,11 @@
                                                 @method('put')
                                                 <div class="row mb-3">
                                                     <label for="update_password_current_password"
-                                                        class="col-md-4 col-lg-3 col-form-label label">Mot de
+                                                        class="col-md-4 col-lg-4 col-form-label label">Mot de
                                                         passe actuel<span class="text-danger mx-1">*</span></label>
-                                                    <div class="col-md-6 col-lg-6">
+                                                    <div class="col-md-4 col-lg-8">
                                                         <input name="current_password" type="password"
-                                                            class="form-control @error('current_password') is-invalid @enderror"
+                                                            class="form-control form-control-sm @error('current_password') is-invalid @enderror"
                                                             id="update_password_current_password"
                                                             placeholder="Votre mot de passe actuel"
                                                             autocomplete="current-password">
@@ -815,12 +813,12 @@
                                                 <!-- Mot de passe -->
                                                 <div class="row mb-3">
                                                     <label for="password"
-                                                        class="col-md-4 col-lg-3 col-form-label label">Mot
+                                                        class="col-md-4 col-lg-4 col-form-label label">Mot
                                                         de
                                                         passe<span class="text-danger mx-1">*</span></label>
-                                                    <div class="col-md-6 col-lg-6">
+                                                    <div class="col-md-8 col-lg-8">
                                                         <input type="password" name="password"
-                                                            class="form-control @error('password') is-invalid @enderror"
+                                                            class="form-control form-control-sm @error('password') is-invalid @enderror"
                                                             id="password" placeholder="Votre mot de passe"
                                                             value="{{ old('password') }}" autocomplete="new-password">
                                                         <div class="invalid-feedback">
@@ -833,11 +831,11 @@
                                                 <!-- Mot de passe de confirmation -->
                                                 <div class="row mb-3">
                                                     <label for="password_confirmation"
-                                                        class="col-md-4 col-lg-3 col-form-label label">Confirmez<span
+                                                        class="col-md-4 col-lg-4 col-form-label label">Confirmez<span
                                                             class="text-danger mx-1">*</span></label>
-                                                    <div class="col-md-6 col-lg-6">
+                                                    <div class="col-md-8 col-lg-8">
                                                         <input type="password" name="password_confirmation"
-                                                            class="form-control @error('password_confirmation') is-invalid @enderror"
+                                                            class="form-control form-control-sm @error('password_confirmation') is-invalid @enderror"
                                                             id="password_confirmation"
                                                             placeholder="Confimez votre mot de passe"
                                                             value="{{ old('password_confirmation') }}"
@@ -850,7 +848,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="text-center">
-                                                    <button type="submit" class="btn btn-primary">Changer
+                                                    <button type="submit" class="btn btn-primary btn-sm">Changer
                                                         le mot de
                                                         passe</button>
                                                 </div>
@@ -868,7 +866,7 @@
                                 <div class="tab-pane fade files" id="files">
                                     <div class="row mb-3">
                                         <h5 class="card-title col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                                            {{ __('Fichiers téléchargés') }}</h5>
+                                            FICHIERS JOINTS</h5>
                                         <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
                                             <table class="table table-bordered table-hover datatables" id="table-iles">
                                                 <thead>
@@ -901,8 +899,12 @@
                                                                         value="{{ $file->id }}">
                                                                     <button type="submit"
                                                                         style="background:none;border:0px;"
-                                                                        class="show_confirm" title="retirer"><i
-                                                                            class="bi bi-trash"></i></button>
+                                                                        class="show_confirm" title="retirer">
+                                                                        <span
+                                                                            class="badge border-danger border-1 text-danger">
+                                                                            <i class="bi bi-trash"></i>
+                                                                        </span>
+                                                                    </button>
                                                                 </form>
                                                             </td>
                                                         </tr>
@@ -988,7 +990,7 @@
         </div>
     </section>
 
-    @can('demandeur')
+    @role('Demandeur')
         <section class="section dashboard">
             <div class="row">
                 <!-- Left side columns -->
@@ -1064,40 +1066,6 @@
                             </div>
                         </div>
 
-                        <!-- Sales Card -->
-                        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                            <div class="card info-card sales-card">
-                                <div class="filter">
-                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                            class="bi bi-three-dots"></i></a>
-                                </div>
-                                <a href="{{ route('showprojetProgramme') }}">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Partenaires <span></span></h5>
-                                        <div class="d-flex align-items-center">
-                                            <div
-                                                class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                                <i class="bi bi-person-plus-fill"></i>
-                                                {{ count($count_projets) }}
-                                            </div>
-                                            <div class="ps-3">
-                                                <h6>
-                                                    {{-- @foreach (Auth::user()->individuelles as $individuelle)
-                                                @if (isset($individuelle->numero) && isset($individuelle->modules_id))
-                                                    @if ($loop->last)
-                                                        {!! $loop->count ?? '0' !!}
-                                                    @endif
-                                                @else
-                                                    <span class="text-primary">0</span>
-                                                @endif
-                                            @endforeach --}}
-                                                </h6>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
                         @foreach ($projets as $projet)
                             <?php
                             $projet_count = $projet?->individuelles?->where('projets_id', $projet?->id)?->where('users_id', $user?->id)?->count() ?? 0;
@@ -1132,472 +1100,135 @@
                                 </div>
                             </div>
                         @endforeach
-                        {{-- <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-                    <div class="card info-card sales-card">
-                        <div class="filter">
-                            <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                    class="bi bi-three-dots"></i></a>
-                        </div>
-                        <a href="{{ route('devenirOperateur') }}">
-                            <div class="card-body">
-                                <h5 class="card-title">Devenir <span>| opérateur</span></h5>
-                                <div class="d-flex align-items-center">
-                                    <div
-                                        class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-person-plus-fill"></i>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6>
-                                            @foreach (Auth::user()->operateurs as $operateur)
-                                                @if (isset($operateur->sigle))
-                                                    @if ($loop->last)
-                                                        {!! $loop->count ?? '0' !!}
-                                                    @endif
-                                                @else
-                                                    <span class="text-primary">0</span>
-                                                @endif
-                                            @endforeach
-                                        </h6>
-                                    </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endrole
+
+    <div class="row">
+        {{-- DIOF --}}
+        @role('DIOF')
+            @if (!empty($nouvelle_formation_count))
+                <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                    <a href="#">
+                        <div class="card shadow-lg border-0 rounded-lg">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h5 class="card-title text-warning d-flex align-items-center">
+                                        <i class="bi bi-graduation-cap me-0"></i> Demandes <span class="fw-bold">&nbsp;|
+                                            Collectives</span>
+                                    </h5>
+                                    <p class="text-muted">Nouvelles demandes collectives</p>
+                                </div>
+                                <div class="card-icon bg-warning text-white rounded-circle d-flex align-items-center justify-content-center"
+                                    style="width: 30px; height: 30px; font-size: 1.2rem;">
+                                    {{ $nouvelle_formation_count }}
                                 </div>
                             </div>
-                        </a>
-                    </div>
-                </div> --}}
+                        </div>
+                    </a>
+                </div>
+            @endif
+        @endrole
+
+        {{-- DIOF --}}
+        @role('DIOF')
+            @if (!empty($nouvelle_formation_count))
+                <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                    <a href="#">
+                        <div class="card shadow-lg border-0 rounded-lg">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h5 class="card-title text-secondary d-flex align-items-center">
+                                        <i class="bi bi-graduation-cap me-0"></i> Formations <span class="fw-bold">&nbsp;|
+                                            DIOF</span>
+                                    </h5>
+                                    <p class="text-muted">Nouvelles formations</p>
+                                </div>
+                                <div class="card-icon bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center"
+                                    style="width: 30px; height: 30px; font-size: 1.2rem;">
+                                    {{ $nouvelle_formation_count }}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endif
+        @endrole
+
+        {{-- Ingénieurs --}}
+        @role('Ingenieur')
+            @if (!empty($count_ingenieur_formations))
+                <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                    <a href="{{ route('ingenieurformations') }}">
+                        <div class="card shadow-lg border-0 rounded-lg">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h5 class="card-title text-primary d-flex align-items-center">
+                                        <i class="bi bi-graduation-cap me-0"></i> Formations <span class="fw-bold">&nbsp;|
+                                            Ingénieurs</span>
+                                    </h5>
+                                    <p class="text-muted">Mes formations</p>
+                                </div>
+                                <div class="card-icon bg-primary text-white rounded-circle d-flex align-items-center justify-content-center"
+                                    style="width: 30px; height: 30px; font-size: 1.2rem;">
+                                    {{ $count_ingenieur_formations }}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endif
+        @endrole
+
+        {{-- Courriers --}}
+        @hasrole('Employe|super-admin')
+            @if (!empty($count_courriers))
+                <div class="col-12 col-md-4 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                    <a href="{{ route('mescourriers') }}">
+                        <div class="card shadow-lg border-0 rounded-lg">
+                            <div class="card-body d-flex align-items-center justify-content-between">
+                                <div>
+                                    <h5 class="card-title text-success d-flex align-items-center">
+                                        <i class="bi bi-graduation-cap me-0"></i> Courriers <span class="fw-bold">&nbsp;|
+                                            Personnels</span>
+                                    </h5>
+                                    <p class="text-muted">Mes courriers</p>
+                                </div>
+                                <div class="card-icon bg-success text-white rounded-circle d-flex align-items-center justify-content-center"
+                                    style="width: 30px; height: 30px; font-size: 1.2rem;">
+                                    {{ $count_courriers }}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            @endif
+        @endhasrole
+    </div>
+
+    <div class="modal fade" id="ShowProfilImage{{ Auth::id() }}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title mx-auto">
+                        {{ (Auth::user()?->civilite ?? '') . ' ' . (Auth::user()?->firstname ?? '') . ' ' . (Auth::user()?->name ?? (Auth::user()?->username ?? '')) }}
+                    </h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-12">
+                        <img src="{{ asset($user->getImage() ?? 'images/default.png') }}"
+                            class="d-block w-100 main-image rounded-4"
+                            alt="{{ Auth::user()?->legende ?? 'Photo de profil' }}">
                     </div>
                 </div>
-            </div>
-        </section>
-    @endcan
-    {{-- Ingénieurs --}}
-    @can('dg')
-        <section class="section faq">
-            <div class="row">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="d-flex align-items-baseline">
-                                <h5 class="card-title">Liste des formations</h5>
-                            </span>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                            @if (!empty(Auth::user()->ingenieur))
-                                @foreach (Auth::user()->ingenieur->formations as $formation)
-                                @endforeach
-                                @if (!empty($formation))
-                                    <table class="table datatables" id="table-formations">
-                                        <thead>
-                                            <tr>
-                                                <th width='5%' class="text-center">Code</th>
-                                                <th width='15%'>Type formation</th>
-                                                {{-- <th>Bénéficiaires</th> --}}
-                                                <th width='15%'>Localité</th>
-                                                <th width='5%'>Modules</th>
-                                                <th width='15%'>Niveau qualification</th>
-                                                <th width='5%' class="text-center">Statut</th>
-                                                <th width='3%'><i class="bi bi-gear"></i></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php $i = 1; ?>
-                                            @foreach (Auth::user()->ingenieur->formations as $formation)
-                                                <tr>
-                                                    <td style="text-align: center">{{ $formation?->code }}</td>
-                                                    <td>{{ $formation->types_formation?->name }}</td>
-                                                    {{-- <td>{{ $formation?->name }}</td> --}}
-                                                    <td>{{ $formation->departement?->region?->nom }}</td>
-                                                    <td>
-                                                        @isset($formation?->module?->name)
-                                                            {{ $formation?->module?->name }}
-                                                        @endisset
-                                                        @isset($formation?->collectivemodule?->module)
-                                                            {{ $formation?->collectivemodule?->module }}
-                                                        @endisset
-                                                    </td>
-                                                    <td>{{ $formation->type_certification }}</td>
-                                                    <td class="text-center"><a><span
-                                                                class="{{ $formation?->statut }}">{{ $formation?->statut }}</span></a>
-                                                    </td>
-                                                    <td>
-                                                        @can('formation-show')
-                                                            <span class="d-flex align-items-baseline"><a
-                                                                    href="{{ route('formations.show', $formation->id) }}"
-                                                                    class="btn btn-primary btn-sm" title="voir détails"><i
-                                                                        class="bi bi-eye"></i></a>
-                                                                <div class="filter">
-                                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                            class="bi bi-three-dots"></i></a>
-                                                                    <ul
-                                                                        class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                        @can('formation-update')
-                                                                            <li>
-                                                                                <a class="dropdown-item btn btn-sm"
-                                                                                    href="{{ route('formations.edit', $formation->id) }}"
-                                                                                    class="mx-1" title="Modifier"><i
-                                                                                        class="bi bi-pencil"></i>Modifier</a>
-                                                                            </li>
-                                                                        @endcan
-                                                                        @can('formation-delete')
-                                                                            <li>
-                                                                                <form
-                                                                                    action="{{ route('formations.destroy', $formation->id) }}"
-                                                                                    method="post">
-                                                                                    @csrf
-                                                                                    @method('DELETE')
-                                                                                    <button type="submit"
-                                                                                        class="dropdown-item show_confirm"
-                                                                                        title="Supprimer"><i
-                                                                                            class="bi bi-trash"></i>Supprimer</button>
-                                                                                </form>
-                                                                            </li>
-                                                                        @endcan
-                                                                    </ul>
-                                                                </div>
-                                                            </span>
-                                                        @endcan
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-
-                                        </tbody>
-                                    </table>
-                                @else
-                                    <div class="alert alert-secondary">
-                                        {{ __('Aucune formation ne vous a été attribuée pour le moment.') }} </div>
-                                @endif
-                            @else
-                                <div class="alert alert-secondary"> {{ __("Vous n'êtes pas un ingénieur.") }} </div>
-                            @endif
-                        </div>
-                    </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fermer</button>
                 </div>
             </div>
-        </section>
-    @endcan
+        </div>
+    </div>
 
-    {{-- Courriers --}}
-    @can('dg')
-        <section class="section faq">
-            <div class="row">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="d-flex align-items-baseline">
-                                <h5 class="card-title">Liste des courriers</h5>
-                            </span>
-                        </div>
-                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                            @if (!empty(Auth::user()->employee))
-                                @foreach (Auth::user()->employee->arrives as $arrive)
-                                @endforeach
-                                @if (!empty($arrive))
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="table-courriers-emp">
-                                            <thead class="table-default">
-                                                <tr>
-                                                    <th style="width:40%;">Imputations</th>
-                                                    <th style="width:15%;" class="text-center">Instructions DG</th>
-                                                    {{-- <th style="width:10%;">Suivi dossier</th> --}}
-                                                    <th class="text-center">
-                                                        @unless (auth()->user()->unReadNotifications->isEmpty())
-                                                            <a class="nav-link nav-icon" href="#"
-                                                                data-bs-toggle="dropdown">
-                                                                <i class="bi bi-bell"></i>
-                                                                <span
-                                                                    class="badge bg-primary badge-number">{!! auth()->user()->unReadNotifications->count() !!}</span>
-                                                            </a><!-- End Notification Icon -->
-                                                            <ul
-                                                                class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-                                                                <li class="dropdown-header">
-                                                                    {!! auth()->user()->unReadNotifications->count() !!} nouveaux commentaires non lus
-                                                                    <a href="{{ url('notifications') }}" target="_blank"><span
-                                                                            class="badge rounded-pill bg-primary p-2 ms-2">Voir
-                                                                            tous</span></a>
-                                                                </li>
-                                                            </ul>
-                                                        @endunless
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach (Auth::user()->employee?->arrives as $arrive)
-                                                    <?php
-                                                    $i = 1;
-                                                    $x = 0;
-                                                    $y = 0;
-                                                    $z = 0;
-                                                    $xy = 0;
-                                                    $xz = 0;
-                                                    ?>
-                                                    <tr>
-                                                        <td>
-                                                            {{-- @if (isset($arrive?->courrier) && $arrive?->courrier?->type == 'arrive') --}}
-                                                            <h4><a href="{!! route('arrives.show', $arrive?->id) !!}">{!! $arrive?->courrier?->objet ?? '' !!}</a>
-                                                            </h4>
-                                                            @if (isset($arrive->courrier->file))
-                                                                <label for="reference" class="form-label">Scan courrier :
-                                                                </label>
-                                                                <a class="btn btn-outline-secondary btn-sm"
-                                                                    title="télécharger le fichier joint" target="_blank"
-                                                                    href="{{ asset($arrive->courrier->getFile()) }}">
-                                                                    <i class="bi bi-download"></i>
-                                                                </a>
-                                                            @endif
-                                                            {{-- @endif --}}
-                                                            <p>{!! $arrive?->courrier?->message !!}</p>
-                                                            {{-- <p><strong>Type de courrier : </strong> {!! $arrive?->courrier?->type ?? '' !!}</p> --}}
-                                                            <div class="d-flex justify-content-between align-items-center">
-                                                                {{-- format('d/m/Y à H:i:s') --}}
-                                                                <small>Imputer le, {!! Carbon\Carbon::parse($arrive?->courrier?->date_imp)?->translatedFormat('l jS F Y') !!}</small>
-                                                                <span
-                                                                    class="badge badge-info">{!! $arrive?->courrier?->user?->firstname !!}&nbsp;{!! $arrive?->courrier?->user?->name !!}</span>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <p>{!! $arrive?->courrier->description ?? '' !!}</p>
-                                                        </td>
-                                                        {{-- <td>
-                                                    <div class="d-flex justify-content-between align-items-center">
-                                                        @foreach ($arrive?->employees->unique('id') as $employee)
-                                                            {{ $employee->user->firstname . ' ' . $employee->user->name }}<br>
-                                                        @endforeach
-                                                    </div>
-                                                </td> --}}
-                                                        <td>
-                                                            <h5 class="card-title">Commentaires
-                                                                ({{ count($arrive->courrier->comments) }})
-                                                            </h5>
-                                                            @forelse ($arrive->courrier->comments as $comment)
-                                                                <div class="accordion accordion-flush"
-                                                                    id="accordionFlushExample">
-                                                                    <div class="accordion-item">
-                                                                        <h2 class="accordion-header"
-                                                                            id="flush-heading{{ $x++ }}">
-                                                                            <button class="accordion-button collapsed"
-                                                                                type="button" data-bs-toggle="collapse"
-                                                                                data-bs-target="#flush-collapse{{ $z++ }}"
-                                                                                aria-expanded="false"
-                                                                                aria-controls="flush-collapse{{ $xy++ }}">
-                                                                                Commentaire # {{ $i++ }}
-                                                                            </button>
-                                                                        </h2>
-                                                                        <div id="flush-collapse{{ $xz++ }}"
-                                                                            class="accordion-collapse collapse"
-                                                                            aria-labelledby="flush-heading{{ $y++ }}"
-                                                                            data-bs-parent="#accordionFlushExample">
-                                                                            <div class="accordion-body">
-                                                                                <span>{!! $comment?->user?->firstname . ' ' . $comment?->user?->name !!}</span>
-                                                                                <div class="activity">
-                                                                                    <div
-                                                                                        class="activity-item d-flex col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                                                                        <div
-                                                                                            class="activite-label col-2 col-md-2 col-lg-2 col-sm-2 col-xs-2 col-xxl-2">
-                                                                                            {!! Carbon\Carbon::parse($comment?->created_at)?->diffForHumans() !!}
-                                                                                        </div>
-                                                                                        &nbsp;
-                                                                                        <i
-                                                                                            class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                                                                                        &nbsp;
-                                                                                        <div
-                                                                                            class="activity-content col-10 col-md-10 col-lg-10 col-sm-10 col-xs-10 col-xxl-10">
-                                                                                            {!! $comment->content !!}
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <?php
-                                                                                $a = 1;
-                                                                                $b = '1a';
-                                                                                $c = '1a';
-                                                                                $d = '1a';
-                                                                                $e = '1a';
-                                                                                $f = '1a';
-                                                                                ?>
-                                                                                <h5 class="card-title">Réponses au
-                                                                                    commentaire #
-                                                                                    {{ $i - 1 }}</h5>
-                                                                                <div class="activity">
-                                                                                    @forelse ($comment->comments as $replayComment)
-                                                                                        <div
-                                                                                            class="row col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                                                                            <label for=""
-                                                                                                class="col-1 col-md-1 col-lg-1 col-sm-1 col-xs-1 col-xxl-1"></label>
-                                                                                            <div
-                                                                                                class="col-11 col-md-11 col-lg-11 col-sm-11 col-xs-11 col-xxl-11">
-
-                                                                                                <h2 class="accordion-header"
-                                                                                                    id="flush-heading{{ $b++ }}">
-                                                                                                    <button
-                                                                                                        class="accordion-button collapsed"
-                                                                                                        type="button"
-                                                                                                        data-bs-toggle="collapse"
-                                                                                                        data-bs-target="#flush-collapse{{ $d++ }}"
-                                                                                                        aria-expanded="false"
-                                                                                                        aria-controls="flush-collapse{{ $e++ }}">
-                                                                                                        Réponse #
-                                                                                                        {{ $a++ }}
-                                                                                                    </button>
-                                                                                                </h2>
-                                                                                                {{-- <h5 class="card-title">
-                                                                                                Réponse
-                                                                                                {!! $replayComment?->user?->firstname . ' ' . $replayComment?->user?->name !!}<span></span>
-                                                                                            </h5> --}}
-
-                                                                                                <div id="flush-collapse{{ $f++ }}"
-                                                                                                    class="accordion-collapse collapse"
-                                                                                                    aria-labelledby="flush-heading{{ $c++ }}"
-                                                                                                    data-bs-parent="#accordionFlushExample">
-                                                                                                    <div
-                                                                                                        class="accordion-body">
-                                                                                                        <span>{!! $comment?->user?->firstname . ' ' . $comment?->user?->name !!}</span>
-                                                                                                        <div
-                                                                                                            class="activity-item d-flex">
-                                                                                                            <div
-                                                                                                                class="activite-label col-3 col-md-3 col-lg-3 col-sm-3 col-xs-3 col-xxl-3">
-                                                                                                                {{-- <span class="fw-bold text-dark"></span> --}}
-                                                                                                                {!! Carbon\Carbon::parse($replayComment?->created_at)?->diffForHumans() !!}
-                                                                                                            </div>
-                                                                                                            &nbsp;
-                                                                                                            <i
-                                                                                                                class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-                                                                                                            &nbsp;
-                                                                                                            <div
-                                                                                                                class="activity-content col-8 col-md-8 col-lg-8 col-sm-8 col-xs-8 col-xxl-8">
-                                                                                                                {!! $replayComment?->content !!}
-                                                                                                            </div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    @empty
-                                                                                        <div class="alert alert-info">
-                                                                                            Aucune
-                                                                                            réponse à ce commentaire</div>
-                                                                                    @endforelse
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            @empty
-
-                                                                <div class="alert alert-info">Aucun commentaire pour ce
-                                                                    courrier
-                                                                </div>
-                                                            @endforelse
-
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                @else
-                                    <div class="alert alert-info"> {{ __("Vous n'avez pas de courrier à votre nom") }}
-                                    </div>
-                                @endif
-                            @else
-                                <div class="alert alert-info"> {{ __("Vous n'êtes pas encore employé(e)") }} </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    @endcan
 @endsection
-
-@push('scripts')
-    <script>
-        new DataTable('#table-courriers-emp', {
-            /* layout: {
-                topStart: {
-                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                }
-            }, */
-            /* "order": [
-                [0, 'desc']
-            ], */
-
-            "lengthMenu": [
-                [1, 5, 10, 25, 50, 100, -1],
-                [1, 5, 10, 25, 50, 100, "Tout"]
-            ],
-            language: {
-                "sProcessing": "Traitement en cours...",
-                "sSearch": "Rechercher&nbsp;:",
-                "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
-                "sInfo": "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
-                "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
-                "sInfoFiltered": "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
-                "sInfoPostFix": "",
-                "sLoadingRecords": "Chargement en cours...",
-                "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
-                "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
-                "oPaginate": {
-                    "sFirst": "Premier",
-                    "sPrevious": "Pr&eacute;c&eacute;dent",
-                    "sNext": "Suivant",
-                    "sLast": "Dernier"
-                },
-                "oAria": {
-                    "sSortAscending": ": activer pour trier la colonne par ordre croissant",
-                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
-                },
-                "select": {
-                    "rows": {
-                        _: "%d lignes sÃ©lÃ©ctionnÃ©es",
-                        0: "Aucune ligne sÃ©lÃ©ctionnÃ©e",
-                        1: "1 ligne sÃ©lÃ©ctionnÃ©e"
-                    }
-                }
-            }
-        });
-    </script>
-    <script>
-        new DataTable('#table-formations', {
-            /* layout: {
-                topStart: {
-                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
-                }
-            }, */
-            /* "order": [
-                [0, 'desc']
-            ], */
-
-            "lengthMenu": [
-                [2, 5, 10, 25, 50, 100, -1],
-                [2, 5, 10, 25, 50, 100, "Tout"]
-            ],
-            language: {
-                "sProcessing": "Traitement en cours...",
-                "sSearch": "Rechercher&nbsp;:",
-                "sLengthMenu": "Afficher _MENU_ &eacute;l&eacute;ments",
-                "sInfo": "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
-                "sInfoEmpty": "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
-                "sInfoFiltered": "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
-                "sInfoPostFix": "",
-                "sLoadingRecords": "Chargement en cours...",
-                "sZeroRecords": "Aucun &eacute;l&eacute;ment &agrave; afficher",
-                "sEmptyTable": "Aucune donn&eacute;e disponible dans le tableau",
-                "oPaginate": {
-                    "sFirst": "Premier",
-                    "sPrevious": "Pr&eacute;c&eacute;dent",
-                    "sNext": "Suivant",
-                    "sLast": "Dernier"
-                },
-                "oAria": {
-                    "sSortAscending": ": activer pour trier la colonne par ordre croissant",
-                    "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
-                },
-                "select": {
-                    "rows": {
-                        _: "%d lignes sÃ©lÃ©ctionnÃ©es",
-                        0: "Aucune ligne sÃ©lÃ©ctionnÃ©e",
-                        1: "1 ligne sÃ©lÃ©ctionnÃ©e"
-                    }
-                }
-            }
-        });
-    </script>
-@endpush

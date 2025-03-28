@@ -27,6 +27,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                            role="alert"><strong>{{ $error }}</strong></div>
+                    @endforeach
+                @endif
                 <div class="card">
                     <div class="card-body">
                         <div class="pt-2">
@@ -44,8 +50,7 @@
                                     <tr>
                                         <th></th>
                                         <th>Matricule</th>
-                                        <th>Prénom</th>
-                                        <th>Nom</th>
+                                        <th>Prénom & NOM</th>
                                         <th>E-mail</th>
                                         <th>Téléphone</th>
                                         <th>Direction</th>
@@ -62,10 +67,14 @@
                                             </th>
                                             {{-- <td>{{ $i++ }}</td> --}}
                                             <td>{{ $employe?->matricule }}</td>
-                                            <td>{{ $employe?->user?->firstname }}</td>
-                                            <td>{{ $employe?->user?->name }}</td>
-                                            <td>{{ $employe?->user?->email }}</td>
-                                            <td>{{ $employe?->user?->telephone }}</td>
+                                            <td>{{ implode(' ', array_filter([$employe?->user?->civilite, $employe?->user?->firstname, $employe?->user?->name])) }}
+                                            </td>
+                                            <td><a
+                                                    href="mailto:{{ $employe?->user?->email }}">{{ $employe?->user?->email }}</a>
+                                            </td>
+                                            <td><a
+                                                    href="tel:+221{{ $employe?->user?->telephone }}">{{ $employe?->user?->telephone }}</a>
+                                            </td>
                                             <td>{{ $employe?->direction?->name }}</td>
                                             <td>
                                                 <span class="d-flex mt-2 align-items-baseline"><a

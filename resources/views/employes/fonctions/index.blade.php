@@ -12,7 +12,7 @@
             </ol>
         </nav>
     </div><!-- End Page Title -->
-    <section class="section">
+    <section class="section fst-italic">
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 @if ($message = Session::get('status'))
@@ -29,12 +29,20 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                            role="alert">
+                            <strong>{{ $error }}</strong>
+                        </div>
+                    @endforeach
+                @endif
                 <div class="card">
                     <div class="card-body">
                         <div class="pt-0">
-                            <a href="{{ route('fonctions.create') }}" class="btn btn-primary float-end btn-rounded"><i
-                                    class="fas fa-plus"></i>
-                                <i class="bi bi-person-plus" title="Ajouter"></i> </a>
+                            <a href="{{ route('fonctions.create') }}"
+                                class="btn btn-primary btn-sm float-end btn-rounded">Ajouter</a>
                         </div>
                         <h5 class="card-title">Fonctions</h5>
                         {{-- <p>Le tableau de toutes les fonctions du système.</p> --}}
@@ -42,21 +50,22 @@
                         <table class="table datatables align-middle" id="table-fonctions">
                             <thead>
                                 <tr>
-                                    <th>N°</th>
+                                    <th width="5%" class="text-center">N°</th>
                                     <th>Fonctions</th>
                                     <th>Sigle</th>
-                                    <th>#</th>
+                                    <th width="5%">#</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php $i = 1; ?>
                                 @foreach ($fonctions as $fonction)
                                     <tr>
-                                        <td>{{ $i++ }}</td>
+                                        <td class="text-center">{{ $i++ }}</td>
                                         <td>{{ $fonction->name }}</td>
                                         <td>{{ $fonction->sigle }}</td>
                                         <td>
-                                            <span class="d-flex mt-2 align-items-baseline"><a href="{{ url('fonctions/'.$fonction->id.'/edit') }}"
+                                            <span class="d-flex mt-2 align-items-baseline"><a
+                                                    href="{{ url('fonctions/' . $fonction->id . '/edit') }}"
                                                     class="btn btn-success btn-sm" title="Modifier"><i
                                                         class="bi bi-pencil-square"></i></a>&nbsp;
                                                 <form action="{{ url('fonctions', $fonction->id) }}" method="post">

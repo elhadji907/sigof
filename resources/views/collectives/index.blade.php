@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - demandes collectives')
+@section('title', 'ONFP | DEMANDES COLLECTIVES')
 @section('space-work')
     @can('collective-view')
         <div class="pagetitle">
@@ -103,98 +103,198 @@
                             @can('collective-create')
                                 <div class="pt-1">
                                     <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded"
-                                        data-bs-toggle="modal" data-bs-target="#AddCollectiveModal">
-                                        <i class="bi bi-plus" title="Ajouter"></i>
-                                    </button>
+                                        data-bs-toggle="modal" data-bs-target="#AddCollectiveModal">Ajouter</button>
                                 </div>
                             @endcan
                             <h5 class="card-title">Liste demandes collectives</h5>
-                            
-                            @foreach ($collectives as $collective)                                
+                            {{-- 
+                            @foreach ($collectives as $collective)
                             @endforeach
                             @if (!empty($collective))
-                            <table class="table datatables align-middle" id="table-collectives">
-                                <thead>
-                                    <tr>
-                                        <th>N° DEM.</th>
-                                        <th>Nom structure</th>
-                                        <th>E-mail</th>
-                                        <th>Téléphone</th>
-                                        <th>Région</th>
-                                        <th class="text-center">Modules</th>
-                                        <th class="text-center">Effectif</th>
-                                        <th class="text-center">Statut</th>
-                                        <th class="text-center">#</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php $i = 1; ?>
-                                    @foreach ($collectives as $collective)
-                                        @if(!empty($collective?->numero))
-                                            <tr>
-                                                <td>{{ $collective?->numero }}
-                                                </td>
-                                                <td>{{ $collective?->name }}
-                                                    @if(!empty($collective?->sigle))
-                                                        {{ '(' . $collective?->sigle . ')' }}
-                                                    @endif
-                                                </td>
-                                                <td><a href="mailto:{{ $collective->user->email }}">{{ $collective->user->email }}</a>
-                                                </td>
-                                                <td><a
-                                                        href="tel:+221{{ $collective->telephone }}">{{ $collective->telephone }}</a>
-                                                </td>
-                                                <td>{{ $collective->departement?->region?->nom }}</td>
-                                                <td class="text-center">{{ count($collective->collectivemodules) }}</td>
-                                                <td class="text-center">{{ count($collective->listecollectives) }}</td>
-                                                <td>
-                                                    <span
-                                                        class="{{ $collective?->statut_demande }}">{{ $collective?->statut_demande }}</span>
-                                                </td>
-                                                <td>
-                                                    @can('collective-show')
-                                                        <span class="d-flex align-items-baseline"><a
-                                                                href="{{ route('collectives.show', $collective->id) }}"
-                                                                class="btn btn-primary btn-sm" title="voir détails"><i
-                                                                    class="bi bi-eye"></i></a>
-                                                            <div class="filter">
-                                                                <a class="icon" href="#" data-bs-toggle="dropdown"><i
-                                                                        class="bi bi-three-dots"></i></a>
-                                                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                                                    @can('collective-update')
-                                                                        <li><a class="dropdown-item btn btn-sm"
-                                                                                href="{{ route('collectives.edit', $collective->id) }}"
-                                                                                class="mx-1" title="Modifier"><i
-                                                                                    class="bi bi-pencil"></i>Modifier</a>
-                                                                        </li>
-                                                                    @endcan
-                                                                    @can('collective-delete')
-                                                                        <li>
-                                                                            <form
-                                                                                action="{{ route('collectives.destroy', $collective->id) }}"
-                                                                                method="post">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <button type="submit" class="dropdown-item show_confirm"
-                                                                                    title="Supprimer"><i
-                                                                                        class="bi bi-trash"></i>Supprimer</button>
-                                                                            </form>
-                                                                        </li>
-                                                                    @endcan
-                                                                </ul>
-                                                            </div>
-                                                        </span>
-                                                    @endcan
-                                                </td>
-                                            </tr>
-                                        @endif
-                                    @endforeach
-                                </tbody>
-                            </table>
+                                <table class="table datatables align-middle" id="table-collectives">
+                                    <thead>
+                                        <tr>
+                                            <th>N° DEM.</th>
+                                            <th>Nom structure</th>
+                                            <th>E-mail</th>
+                                            <th>Téléphone</th>
+                                            <th>Région</th>
+                                            <th width="15%" class="text-center">Dépôt</th>
+                                            <th class="text-center">Modules</th>
+                                            <th class="text-center">Effectif</th>
+                                            <th class="text-center">Statut</th>
+                                            <th class="text-center">#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php $i = 1; ?>
+                                        @foreach ($collectives as $collective)
+                                            @if (!empty($collective?->numero))
+                                                <tr>
+                                                    <td>{{ $collective?->numero }}
+                                                    </td>
+                                                    <td>{{ $collective?->name }}
+                                                        @if (!empty($collective?->sigle))
+                                                            {{ '(' . $collective?->sigle . ')' }}
+                                                        @endif
+                                                    </td>
+                                                    <td><a
+                                                            href="mailto:{{ $collective?->user?->email }}">{{ $collective?->user?->email }}</a>
+                                                    </td>
+                                                    <td><a
+                                                            href="tel:+221{{ $collective?->telephone }}">{{ $collective?->telephone }}</a>
+                                                    </td>
+                                                    <td>{{ $collective->departement?->region?->nom }}</td>
+                                                    <td class="text-center">
+                                                        @if ($collective?->date_depot)
+                                                            {{ \Carbon\Carbon::parse($collective->date_depot)->diffForHumans() }}
+                                                        @else
+                                                            Aucun
+                                                        @endif
+                                                    </td>
+                                                    <td class="text-center">{{ count($collective->collectivemodules) }}</td>
+                                                    <td class="text-center">{{ count($collective->listecollectives) }}</td>
+                                                    <td>
+                                                        <span
+                                                            class="{{ $collective?->statut_demande }}">{{ $collective?->statut_demande }}</span>
+                                                    </td>
+                                                    <td>
+                                                        @can('collective-show')
+                                                            <span class="d-flex align-items-baseline"><a
+                                                                    href="{{ route('collectives.show', $collective->id) }}"
+                                                                    class="btn btn-primary btn-sm" title="voir détails"><i
+                                                                        class="bi bi-eye"></i></a>
+                                                                <div class="filter">
+                                                                    <a class="icon" href="#" data-bs-toggle="dropdown"><i
+                                                                            class="bi bi-three-dots"></i></a>
+                                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                        @can('collective-update')
+                                                                            <li><a class="dropdown-item btn btn-sm"
+                                                                                    href="{{ route('collectives.edit', $collective->id) }}"
+                                                                                    class="mx-1" title="Modifier"><i
+                                                                                        class="bi bi-pencil"></i>Modifier</a>
+                                                                            </li>
+                                                                        @endcan
+                                                                        @can('collective-delete')
+                                                                            <li>
+                                                                                <form
+                                                                                    action="{{ route('collectives.destroy', $collective->id) }}"
+                                                                                    method="post">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button type="submit"
+                                                                                        class="dropdown-item show_confirm"
+                                                                                        title="Supprimer"><i
+                                                                                            class="bi bi-trash"></i>Supprimer</button>
+                                                                                </form>
+                                                                            </li>
+                                                                        @endcan
+                                                                    </ul>
+                                                                </div>
+                                                            </span>
+                                                        @endcan
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                <div class="alert alert-info">Aucune demande collective reçue pour l'instant !</div>
+                            @endif --}}
+
+                            @if ($collectives->isNotEmpty())
+                                <table class="table datatables align-middle" id="table-collectives">
+                                    <thead>
+                                        <tr>
+                                            <th>N°</th>
+                                            <th width="20%">Nom structure</th>
+                                            <th>E-mail</th>
+                                            <th>Téléphone</th>
+                                            <th>Région</th>
+                                            <th width="15%" class="text-center">Dépôt</th>
+                                            <th class="text-center">Modules</th>
+                                            <th class="text-center">Effectif</th>
+                                            <th class="text-center">Statut</th>
+                                            <th class="text-center">#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($collectives as $collective)
+                                            @if (!empty($collective->numero))
+                                                <tr>
+                                                    <td>{{ $collective->numero }}</td>
+                                                    <td>
+                                                        {{ $collective->name }}
+                                                        @isset($collective->sigle)
+                                                            ({{ $collective->sigle }})
+                                                        @endisset
+                                                    </td>
+                                                    <td><a
+                                                            href="mailto:{{ optional($collective->user)->email }}">{{ optional($collective->user)->email }}</a>
+                                                    </td>
+                                                    <td><a
+                                                            href="tel:+221{{ $collective->telephone }}">{{ $collective->telephone }}</a>
+                                                    </td>
+                                                    <td>{{ optional(optional($collective->departement)->region)->nom }}</td>
+                                                    <td class="text-center">
+                                                        {{ $collective->date_depot ? \Carbon\Carbon::parse($collective->date_depot)->diffForHumans() : 'Aucun' }}
+                                                    </td>
+                                                    <td class="text-center">{{ $collective->collectivemodules->count() }}</td>
+                                                    <td class="text-center">{{ $collective->listecollectives->count() }}</td>
+                                                    <td><span
+                                                            class="{{ $collective->statut_demande }}">{{ $collective->statut_demande }}</span>
+                                                    </td>
+                                                    <td>
+                                                        @can('collective-show')
+                                                            <span class="d-flex align-items-baseline">
+                                                                <a href="{{ route('collectives.show', $collective->id) }}"
+                                                                    class="btn btn-primary btn-sm" title="Voir détails">
+                                                                    <i class="bi bi-eye"></i>
+                                                                </a>
+                                                                <div class="filter">
+                                                                    <a class="icon" href="#" data-bs-toggle="dropdown">
+                                                                        <i class="bi bi-three-dots"></i>
+                                                                    </a>
+                                                                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                                                        @can('collective-update')
+                                                                            <li>
+                                                                                <a class="dropdown-item btn btn-sm"
+                                                                                    href="{{ route('collectives.edit', $collective->id) }}"
+                                                                                    title="Modifier">
+                                                                                    <i class="bi bi-pencil"></i> Modifier
+                                                                                </a>
+                                                                            </li>
+                                                                        @endcan
+                                                                        @can('collective-delete')
+                                                                            <li>
+                                                                                <form
+                                                                                    action="{{ route('collectives.destroy', $collective->id) }}"
+                                                                                    method="post">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button type="submit"
+                                                                                        class="dropdown-item show_confirm"
+                                                                                        title="Supprimer">
+                                                                                        <i class="bi bi-trash"></i> Supprimer
+                                                                                    </button>
+                                                                                </form>
+                                                                            </li>
+                                                                        @endcan
+                                                                    </ul>
+                                                                </div>
+                                                            </span>
+                                                        @endcan
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             @else
                                 <div class="alert alert-info">Aucune demande collective reçue pour l'instant !</div>
                             @endif
-                            <!-- End Table with stripped rows -->
+
                         </div>
                     </div>
                 </div>
@@ -207,23 +307,31 @@
                             <form method="post" action="{{ route('addCollective') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="card-header text-center bg-gradient-default">
-                                    <h1 class="h4 text-black mb-0">ajouter une nouvelle demande collective</h1>
+                                    <h1 class="h4 text-black mb-0">Ajouter une nouvelle demande collective</h1>
                                 </div>
-                                {{-- <div class="modal-header">
-                                    <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une demande
-                                        collective</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div> --}}
                                 <div class="modal-body">
                                     <div class="row g-3">
-                                        <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                            <label for="name" class="form-label">Nom de la structure<span
+
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                            <label for="numero" class="form-label">N° courrier<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <textarea name="name" id="name" rows="1"
-                                                class="form-control form-control-sm @error('name') is-invalid @enderror"
-                                                placeholder="La raison sociale de l'opérateur">{{ old('name') }}</textarea>
-                                            @error('name')
+                                            <input type="text" placeholder="Rechercher numéro courrier..."
+                                                class="form-control form-control-sm @error('product') is-invalid @enderror"
+                                                name="numero_courrier" id="numero" required>
+                                            <div id="productList"></div>
+                                            @error('numero')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                        <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                                            <label for="objet" class="form-label">Nom de la structure<span
+                                                    class="text-danger mx-1">*</span></label>
+                                            <input type="text" placeholder="La raison sociale de l'opérateur"
+                                                class="form-control form-control-sm @error('objet') is-invalid @enderror"
+                                                name="name" id="objet" value="" required>
+                                            @error('objet')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
                                                 </span>
@@ -257,9 +365,10 @@
 
                                         <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="fixe" class="form-label">Téléphone fixe</label>
-                                            <input type="number" min="0" name="fixe" value="{{ old('fixe') }}"
+                                            <input name="fixe" type="text" maxlength="12"
                                                 class="form-control form-control-sm @error('fixe') is-invalid @enderror"
-                                                id="fixe" placeholder="3xxxxxxxx">
+                                                id="fixe" value="{{ old('fixe') }}" autocomplete="tel"
+                                                placeholder="XX:XXX:XX:XX">
                                             @error('fixe')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -270,10 +379,10 @@
                                         <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="telephone" class="form-label">Téléphone portable<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="number" name="telephone" min="0"
-                                                value="{{ old('telephone') }}"
+                                            <input name="telephone" type="text" maxlength="12"
                                                 class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                                id="telephone" placeholder="7xxxxxxxx">
+                                                id="telephone" value="{{ old('telephone') }}" autocomplete="tel"
+                                                placeholder="XX:XXX:XX:XX">
                                             @error('telephone')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -340,6 +449,7 @@
                                                 </span>
                                             @enderror
                                         </div>
+
                                         <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="date_depot" class="form-label">Date dépot<span
                                                     class="text-danger mx-1">*</span></label>
@@ -352,6 +462,7 @@
                                                 </span>
                                             @enderror
                                         </div>
+
                                         <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="departement" class="form-label">Département<span
                                                     class="text-danger mx-1">*</span></label>
@@ -373,12 +484,11 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="adresse" class="form-label">Adresse<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="text" name="adresse" value="{{ old('adresse') }}"
-                                                class="form-control form-control-sm @error('adresse') is-invalid @enderror"
-                                                id="adresse" placeholder="Adresse exacte">
+                                            <textarea name="adresse" id="adresse" rows="1"
+                                                class="form-control form-control-sm @error('adresse') is-invalid @enderror" placeholder="Adresse exacte">{{ old('description') }}</textarea>
                                             @error('adresse')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -505,10 +615,10 @@
                                         <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="telephone_responsable" class="form-label">Téléphone responsable<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="number" min="0" name="telephone_responsable"
-                                                value="{{ old('telephone_responsable') }}"
+                                            <input name="telephone_responsable" type="text" maxlength="12"
                                                 class="form-control form-control-sm @error('telephone_responsable') is-invalid @enderror"
-                                                id="telephone_responsable" placeholder="7xxxxxxxx">
+                                                id="telephone_responsable" value="{{ old('telephone_responsable') }}"
+                                                autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                             @error('telephone_responsable')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -533,8 +643,7 @@
                                     <div class="modal-footer mt-5">
                                         <button type="button" class="btn btn-secondary btn-sm"
                                             data-bs-dismiss="modal">Fermer</button>
-                                        <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-printer"></i>
-                                            Enregistrer</button>
+                                        <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
                                     </div>
                                 </div>
                             </form>
@@ -585,6 +694,61 @@
                     }
                 }
             }
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#numero').keyup(function() {
+                var query = $(this).val().trim();
+                if (query !== '') {
+                    $.ajax({
+                        url: "{{ route('collectives.fetch') }}", // Changez cette URL si nécessaire
+                        method: "POST",
+                        data: {
+                            query: query,
+                            _token: "{{ csrf_token() }}"
+                        },
+                        dataType: "json",
+                        success: function(response) {
+                            if (response.html) {
+                                $('#productList').fadeIn().html(response.html);
+                            } else {
+                                $('#productList').fadeOut();
+                            }
+                        }
+                    });
+                } else {
+                    $('#productList').fadeOut();
+                }
+            });
+
+            $(document).on('click', 'li', function() {
+                var selectedNumero = $(this).text();
+                var selectedId = $(this).data("id");
+
+                $('#numero').val(selectedNumero); // Remplir le champ numéro
+                $('#id').val(selectedId);
+
+                // Appeler l'API pour récupérer l'objet associé au numéro sélectionné
+                $.ajax({
+                    url: "{{ route('getObjetByNumero') }}", // Définir une route pour récupérer l'objet
+                    method: "GET",
+                    data: {
+                        numero: selectedNumero
+                    },
+                    success: function(response) {
+                        $('#objet').val(response
+                            .objet); // Remplir automatiquement le champ 'objet'
+                        $('#date_depot').val(response
+                            .date_depot); // Remplir automatiquement le champ 'objet'
+                    },
+                    error: function() {
+                        alert('Erreur lors de la récupération de l\'objet.');
+                    }
+                });
+
+                $('#productList').fadeOut();
+            });
         });
     </script>
 @endpush

@@ -25,7 +25,7 @@ class StorePostRequest extends FormRequest
             'titre'    => ['required', 'string', 'max:25'],
             'name'     => ['required', 'string'],
             'legende'  => ['sometimes', 'string'],
-            'image'    => ['image', 'sometimes', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'image'    => ['image', 'sometimes', 'mimes:jpeg,png,jpg,gif,svg', 'max:1024'],
             'users_id' => ['nullable'],
 
         ];

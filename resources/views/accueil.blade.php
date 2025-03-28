@@ -1,115 +1,8 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-
-<head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>@yield('title', 'ONFP')</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <!-- Favicons -->
-    <link href="{{ asset('assets/img/favicon-onfp.png') }}" rel="icon">
-    <link href="{{ asset('assets/img/favicon-onfp.png') }}" rel="icon">
-
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-
-    <!-- Vendor CSS Files -->
-    <link href="{{ asset('asset/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('asset/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
-    <link href="{{ asset('asset/vendor/aos/aos.css') }}" rel="stylesheet">
-    <link href="{{ asset('asset/vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('asset/vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
-
-
-    <!-- Main CSS File -->
-    <link href="{{ asset('asset/css/main.css') }}" rel="stylesheet">
-
-    {{-- Pour sweetAlert --}}
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-    <script type="text/javascript">
-        function callbackThen(response) {
-            // read Promise object
-            response.json().then(function(data) {
-                console.log(data);
-                if (data.success && data.score > 0.5) {
-                    console.log('recpatcha valid');
-                } else {
-                    document.getElementById('registerForm').addEventListener('submit', function(event) {
-                        event.preventDefault();
-                        alert('erreur recpatcha');
-                    });
-                }
-            });
-        }
-
-        function callbackCatch(error) {
-            console.error('Error:', error)
-        }
-    </script>
-
-    {!! htmlScriptTagJsApi([
-        'callback_then' => 'callbackThen',
-        'callback_catch' => 'callbackCatch',
-    ]) !!}
-    <!-- =======================================================
-  * Template Name: iLanding
-  * Template URL: https://bootstrapmade.com/ilanding-bootstrap-landing-page-template/
-  * Updated: Oct 28 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-</head>
+@include('header-accueil')
 
 <body class="index-page">
 
-    <header id="header" class="header d-flex align-items-center fixed-top">
-        <div
-            class="header-container container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
-
-            <a href="{{ url('/') }}" class="logo d-flex align-items-center me-auto me-xl-0">
-                <!-- Uncomment the line below if you also wish to use an image logo -->
-                <!-- <img src="{{ asset('asset/img/logo.png') }}" alt=""> -->
-                {{-- <img src="{{ asset('assets/img/logo_sigle.png') }}" alt=""> --}}
-                <h1 class="sitename"><b>SIGOF</b></h1>
-            </a>
-
-            <nav id="navmenu" class="navmenu">
-                <ul>
-                    <li><a href="#accueil" class="active">Accueil</a></li>
-                    <li><a href="#apropos">À propos</a></li>
-                    <li><a href="#partenaires">Partenaires</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#contact">Contact</a></li>
-
-                    <li class="dropdown"><a><span>S'inscrire</span> <i
-                                class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li> <a href="#" data-bs-toggle="modal"
-                                    data-bs-target="#registerDemandeurModal">Compte personnel</a>
-                            </li>
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#registerOperateurModal">Compte
-                                    opérateur</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                </ul>
-                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-            </nav>
-
-            <a class="btn-getstarted" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Se
-                connecter</a>
-
-        </div>
-    </header>
+    @include('header')
 
     <main class="main">
         <!-- Hero Section -->
@@ -138,24 +31,33 @@
                     @endif
                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                         <div class="hero-content" data-aos="fade-up" data-aos-delay="200">
-                            <div class="company-badge mb-4">
-                                <i class="bi bi-gear-fill me-2"></i>
-                                ONFP - La référence de la formation professionnelle
-                            </div>
 
-                            <h1 class="mb-4">
-                                @if (!empty($une?->titre1))
-                                    {{ $une?->titre1 }} <br>
-                                @else
-                                    M. Mouhamadou Lamine Bara LO <br>
-                                @endif
+                            @if (!empty($une?->titre1))
+                                <div class="company-badge mb-4">
+                                    <i class="bi bi-gear-fill me-2"></i>
+                                    ONFP - La référence de la formation professionnelle
+                                </div>
+                                <h1 class="mb-4">
+                                    @if (!empty($une?->titre1))
+                                        {{ $une?->titre1 }} <br>
+                                    @else
+                                        M. Mouhamadou Lamine Bara LO <br>
+                                    @endif
 
-                                @if (!empty($une?->titre2))
-                                    <span class="accent-text">{{ $une?->titre2 }}</span>
-                                @else
-                                    <span class="accent-text">Directeur Général</span>
-                                @endif
-                            </h1>
+                                    @if (!empty($une?->titre2))
+                                        <span class="accent-text">{{ $une?->titre2 }}</span>
+                                    @else
+                                        <span class="accent-text">Directeur Général</span>
+                                    @endif
+                                </h1>
+                            @else
+                                <h2 class="mb-4">
+                                    ONFP<br>
+                                    LA REFERENCE<br>
+                                    <span class="accent-text">DE LA FORMATION</span><br>
+                                    <span class="accent-text">PROFESSIONNELLE AU SENEGAL</span>
+                                </h2>
+                            @endif
 
                             <p class="mb-4 mb-md-5">
                                 @if (!empty($une?->message))
@@ -175,7 +77,7 @@
                                     <a href="{{ $une?->video }}" class="btn btn-sm btn-link mt-2 mt-sm-0 glightbox">
                                         <i class="bi bi-play-circle me-1"></i>Lire la vidéo</a>
                                 @else
-                                    <a href="https://www.youtube.com/watch?v=UVn3WAv8XbM&t=49s"
+                                    <a href="https://www.youtube.com/watch?v=lceGzvSiL1Y&t=5s"
                                         class="btn btn-sm btn-link mt-2 mt-sm-0 glightbox">
                                         <i class="bi bi-play-circle me-1"></i>Vidéo présentation</a>
                                 @endif
@@ -184,6 +86,7 @@
                     </div>
 
                     <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+<<<<<<< HEAD
                         {{-- <div class="hero-content" data-aos="fade-up" data-aos-delay="200">
                             <div class="company-customers mb-4">
                                 Les modules les plus demandés
@@ -234,6 +137,9 @@
 
                 {{-- <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
                         <div class="hero-image" data-aos="zoom-out" data-aos-delay="300">
+=======
+                        {{-- <div class="hero-image" data-aos="zoom-out" data-aos-delay="300">
+>>>>>>> refs/remotes/origin/main
 
                             @if (!empty($une?->image))
                                 <img class="img-fluid main-image rounded-4" alt="Image"
@@ -251,6 +157,7 @@
                                     {{ $title }}
                                 </p>
                             </div>
+<<<<<<< HEAD
                         </div>
                     </div> --}}
 
@@ -277,8 +184,77 @@
                     @endforeach
                 </div>
             @endif
+=======
+                        </div> --}}
+                        <section class="service-details py-6">
+                            <div class="container mx-auto px-4">
+                                <div class="p-6 rounded-lg">
+                                    <h4 class="text-xl font-bold text-blue-600 mb-4 flex items-center">
+                                        <i class="bi bi-link-45deg text-2xl mr-2"></i> Ressources utiles
+                                    </h4>
+                                    <div class="services-list space-y-3">
+                                        <a href="{{ route('services.details') }}"
+                                            class="flex items-center text-gray-700 hover:text-blue-500 transition duration-300">
+                                            <i class="bi bi-arrow-right-circle mr-2 text-blue-500"></i>
+                                            <span>Comment s'inscrire ?</span>
+                                        </a>
+                                        <a href="{{ route('services.details') }}"
+                                            class="flex items-center text-gray-700 hover:text-blue-500 transition duration-300">
+                                            <i class="bi bi-arrow-right-circle mr-2 text-blue-500"></i>
+                                            <span>Comment déposer une demande de formation individuelle ?</span>
+                                        </a>
+                                        <a href="{{ route('services.details') }}"
+                                            class="flex items-center text-gray-700 hover:text-blue-500 transition duration-300">
+                                            <i class="bi bi-arrow-right-circle mr-2 text-blue-500"></i>
+                                            <span>Comment déposer une demande de formation collective ?</span>
+                                        </a>
+                                        {{-- <a href="{{ route('services.details') }}"
+                                            class="flex items-center text-gray-700 hover:text-blue-500 transition duration-300">
+                                            <i class="bi bi-arrow-right-circle mr-2 text-blue-500"></i>
+                                            <span>Comment devenir opérateur ?</span>
+                                        </a> --}}
+                                        <a href="{{ route('nos-modules') }}"
+                                            class="flex items-center text-gray-700 hover:text-blue-500 transition duration-300"
+                                            target="_blank">
+                                            <i class="bi bi-filetype-pdf"></i>
+                                            <span>Quels sont nos modules de formation ?</span>
+                                        </a>
+>>>>>>> refs/remotes/origin/main
 
-            </div>
+                                        <a href="{{ url('/guide.pdf') }}"
+                                            class="flex items-center text-gray-700 hover:text-blue-500 transition duration-300"
+                                            target="_blank">
+                                            <i class="bi bi-filetype-pdf"></i>
+                                            <span>Guide d'utilisation (PDF) ?</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    @if ($posts_count)
+                        <div class="row stats-row gy-4 mt-5" data-aos="fade-up" data-aos-delay="500">
+                            @foreach ($posts as $post)
+                                @if (!empty($post->image))
+                                    <div class="col-12 col-md-12 col-lg-3 col-sm-12 col-xs-12 col-xxl-3">
+                                        <a href="#" data-bs-toggle="modal"
+                                            data-bs-target="#ShowPostModal{{ $post->id }}">
+                                            <div class="stat-item">
+                                                <img class="rounded-circle" alt="{{ $post->titre }}"
+                                                    src="{{ asset($post->getPoste()) }}" width="50" height="auto">
+                                                <div class="stat-content">
+                                                    <p>{{ $post?->titre }}</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
+
+                </div>
 
         </section>
 
@@ -377,32 +353,6 @@
 
             <div class="container">
 
-                {{-- <div class="d-flex justify-content-center">
-  
-            <ul class="nav nav-tabs" data-aos="fade-up" data-aos-delay="100">
-  
-              <li class="nav-item">
-                <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#features-tab-1">
-                  <h4>Modisit</h4>
-                </a>
-              </li><!-- End tab nav item -->
-  
-              <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-2">
-                  <h4>Praesenti</h4>
-                </a><!-- End tab nav item -->
-  
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#features-tab-3">
-                  <h4>Explica</h4>
-                </a>
-              </li><!-- End tab nav item -->
-  
-            </ul>
-  
-          </div> --}}
-
                 <div class="tab-content" data-aos="fade-up" data-aos-delay="200">
 
                     <div class="tab-pane fade active show" id="features-tab-1">
@@ -433,19 +383,6 @@
                                             utilisateur pour les demandeurs de formations et les opérateurs, accessible
                                             en ligne.</span></li>
                                 </ul>
-                                {{-- <ul>
-                                    <h5>Fonctionnalités clés :</h5>
-                                    <li><i class="bi bi-check"></i> <span><b>Gestion des formations</b> :
-                                            Planification, organisation et suivi des programmes.</span></li>
-                                    <li><i class="bi bi-check"></i> <span><b>Base de données des bénéficiaires</b>
-                                            : Enregistrement et suivi des apprenants et des formateurs.</span></li>
-                                    <li><i class="bi bi-check"></i> <span><b>Rapports et statistiques</b> :
-                                            Génération automatique de bilans et d’indicateurs pour mesurer les
-                                            performances.</span></li>
-                                    <li><i class="bi bi-check"></i> <span><b>Portail interactif</b> : Interface
-                                            utilisateur pour les apprenants, formateurs et administrateurs, accessible
-                                            en ligne.</span></li>
-                                </ul> --}}
                                 <p>
                                     En résumé, le SIGOF est un outil stratégique qui modernise et professionnalise la
                                     gestion des activités de formation de l'ONFP, améliorant ainsi l'efficacité et la
@@ -457,48 +394,7 @@
                             </div>
                         </div>
                     </div><!-- End tab content item -->
-                    {{-- 
-            <div class="tab-pane fade" id="features-tab-2">
-                <div class="row">
-                  <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">
-                    <h3>Neque exercitationem debitis</h3>
-                    <p class="fst-italic">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                      magna aliqua.
-                    </p>
-                    <ul>
-                      <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
-                      <li><i class="bi bi-check2-all"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span></li>
-                      <li><i class="bi bi-check2-all"></i> <span>Provident mollitia neque rerum asperiores dolores quos qui a. Ipsum neque dolor voluptate nisi sed.</span></li>
-                      <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</span></li>
-                    </ul>
-                  </div>
-                  <div class="col-lg-6 order-1 order-lg-2 text-center">
-                    <img src="assets/img/features-illustration-2.webp" alt="" class="img-fluid">
-                  </div>
-                </div>
-              </div><!-- End tab content item -->
-    
-              <div class="tab-pane fade" id="features-tab-3">
-                <div class="row">
-                  <div class="col-lg-6 order-2 order-lg-1 mt-3 mt-lg-0 d-flex flex-column justify-content-center">
-                    <h3>Voluptatibus commodi accusamu</h3>
-                    <ul>
-                      <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
-                      <li><i class="bi bi-check2-all"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span></li>
-                      <li><i class="bi bi-check2-all"></i> <span>Provident mollitia neque rerum asperiores dolores quos qui a. Ipsum neque dolor voluptate nisi sed.</span></li>
-                    </ul>
-                    <p class="fst-italic">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                      magna aliqua.
-                    </p>
-                  </div>
-                  <div class="col-lg-6 order-1 order-lg-2 text-center">
-                    <img src="assets/img/features-illustration-3.webp" alt="" class="img-fluid">
-                  </div>
-                </div>
-              </div><!-- End tab content item -->
-               --}}
+                    
                 </div>
 
             </div>
@@ -866,11 +762,14 @@
                                         <label for="password" class="form-label">Mot de passe<span
                                                 class="text-danger mx-1">*</span></label>
                                         <div class="input-group has-validation">
-                                            <span class="input-group-text" id="inputGroupPrepend"><i
-                                                    class="bi bi-key"></i></span>
+                                            <span class="input-group-text"><i class="bi bi-key"></i></span>
                                             <input type="password" name="password"
-                                                class="form-control form-control-sm  @error('password') is-invalid @enderror"
+                                                class="form-control form-control-sm @error('password') is-invalid @enderror"
                                                 id="password" required placeholder="Votre mot de passe">
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                id="togglePassword">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
                                             <div class="invalid-feedback">
                                                 @error('password')
                                                     {{ $message }}
@@ -887,22 +786,23 @@
                                                 moi</label>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="col-12">
                                         <button class="btn btn-sm w-100" type="submit"
-                                            style="background-color: #F28500; color: #FFFFFF">Se
-                                            connecter</button>
+                                            style="background-color: #F28500; color: #FFFFFF">
+                                            Se connecter
+                                        </button>
                                     </div>
 
                                     <div class="col-12">
                                         @if (Route::has('password.request'))
-                                            <p class="small mb-0">Mot de passe oublié !
+                                            <p class="small mb-0">Mot de passe oublié ?
                                                 <a href="#" data-bs-toggle="modal"
-                                                    data-bs-target="#forgotModal"> Réinitialiser</a>
+                                                    data-bs-target="#forgotModal">Réinitialiser</a>
                                             </p>
                                         @endif
                                     </div>
-
                                 </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -926,14 +826,14 @@
 
                             <div class="modal-body">
                                 <div class="row g-3">
-                                    <!-- Username -->
                                     <input type="hidden" name="role" value="Demandeur">
-                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
+
+                                    <!-- Username -->
+                                    <div class="col-12">
                                         <label for="username" class="form-label">Username<span
                                                 class="text-danger mx-1">*</span></label>
                                         <div class="input-group has-validation">
-                                            <span class="input-group-text" id="inputGroupPrepend"><i
-                                                    class="bi bi-person"></i></span>
+                                            <span class="input-group-text"><i class="bi bi-person"></i></span>
                                             <input type="text" name="username"
                                                 class="form-control form-control-sm @error('username') is-invalid @enderror"
                                                 id="username" required placeholder="ex : jean221"
@@ -946,12 +846,12 @@
                                         </div>
                                     </div>
 
-                                    <!-- Addresse E-mail -->
-                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <!-- Email -->
+                                    <div class="col-12">
                                         <label for="email" class="form-label">Email<span
                                                 class="text-danger mx-1">*</span></label>
                                         <div class="input-group has-validation">
-                                            <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                            <span class="input-group-text">@</span>
                                             <input type="email" name="email"
                                                 class="form-control form-control-sm @error('email') is-invalid @enderror"
                                                 id="email" required placeholder="Votre e-mail"
@@ -964,17 +864,38 @@
                                         </div>
                                     </div>
 
+                                    <!-- Téléphone -->
+                                    <div class="col-12">
+                                        <label for="votre_telephone" class="form-label">Téléphone<span
+                                                class="text-danger mx-1">*</span></label>
+                                        <div class="input-group has-validation">
+                                            <span class="input-group-text"><i class="bi bi-telephone-plus"></i></span>
+                                            <input name="votre_telephone" type="text" maxlength="12"
+                                                class="form-control form-control-sm @error('votre_telephone') is-invalid @enderror"
+                                                id="votre_telephone" value="{{ old('votre_telephone') }}"
+                                                autocomplete="tel" placeholder="XX:XXX:XX:XX">
+                                            <div class="invalid-feedback">
+                                                @error('votre_telephone')
+                                                    {{ $message }}
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <!-- Mot de passe -->
-                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="col-12">
                                         <label for="password" class="form-label">Mot de passe<span
                                                 class="text-danger mx-1">*</span></label>
                                         <div class="input-group has-validation">
-                                            <span class="input-group-text" id="inputGroupPrepend"><i
-                                                    class="bi bi-key"></i></span>
+                                            <span class="input-group-text"><i class="bi bi-key"></i></span>
                                             <input type="password" name="password"
                                                 class="form-control form-control-sm @error('password') is-invalid @enderror"
-                                                id="password" required placeholder="Votre mot de passe"
-                                                value="{{ old('password') }}" autocomplete="new-password">
+                                                id="passwordR" required placeholder="Votre mot de passe"
+                                                autocomplete="new-password">
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                id="togglePasswordR">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
                                             <div class="invalid-feedback">
                                                 @error('password')
                                                     {{ $message }}
@@ -983,19 +904,21 @@
                                         </div>
                                     </div>
 
-                                    <!-- Mot de passe de confirmation -->
-                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
-                                        <label for="password_confirmation" class="form-label">Confirmez mot de
+                                    <!-- Confirmation mot de passe -->
+                                    <div class="col-12">
+                                        <label for="password_confirmation" class="form-label">Confirmez le mot de
                                             passe<span class="text-danger mx-1">*</span></label>
                                         <div class="input-group has-validation">
-                                            <span class="input-group-text" id="inputGroupPrepend"><i
-                                                    class="bi bi-key"></i></span>
+                                            <span class="input-group-text"><i class="bi bi-key"></i></span>
                                             <input type="password" name="password_confirmation"
                                                 class="form-control form-control-sm @error('password_confirmation') is-invalid @enderror"
                                                 id="password_confirmation" required
-                                                placeholder="Confimez votre mot de passe"
-                                                value="{{ old('password_confirmation') }}"
-                                                autocomplete="new-password_confirmation">
+                                                placeholder="Confirmez votre mot de passe"
+                                                autocomplete="new-password">
+                                            <button class="btn btn-outline-secondary" type="button"
+                                                id="toggleConfirmPassword">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
                                             <div class="invalid-feedback">
                                                 @error('password_confirmation')
                                                     {{ $message }}
@@ -1004,18 +927,20 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="col-12">
                                         <div class="form-check">
                                             <input class="form-check-input @error('termes') is-invalid @enderror"
                                                 name="termes" type="checkbox" value="1" id="acceptTerms"
                                                 required>
-                                            <label class="form-check-label" for="acceptTerms">J'accepte les
+                                            <label class="form-check-label" for="acceptTerms">
+                                                J'accepte les
                                                 <button style="color: blue" type="button"
                                                     class="btn btn-default btn-sm" data-bs-toggle="modal"
                                                     data-bs-target="#largeModal">
                                                     termes et conditions
                                                 </button>
-                                                <span class="text-danger mx-1">*</span></label>
+                                                <span class="text-danger mx-1">*</span>
+                                            </label>
                                             <div class="invalid-feedback">
                                                 @error('termes')
                                                     {{ $message }}
@@ -1024,14 +949,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
+                                    <div class="col-12">
                                         <button type="submit" class="btn btn-sm w-100"
-                                            style="background-color: #F28500; color: #FFFFFF">Créer un compte
-                                            personnel</button>
+                                            style="background-color: #F28500; color: #FFFFFF">
+                                            <b>S'inscrire</b>
+                                        </button>
                                     </div>
 
-                                    <div
-                                        class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12 justify-content-center">
+                                    <div class="col-12 text-center">
                                         <p class="small">Vous avez déjà un compte ? <a href="#"
                                                 data-bs-toggle="modal" data-bs-target="#loginModal">Se connecter</a>
                                         </p>
@@ -1222,28 +1147,25 @@
         </div>
 
         {{-- En savoir plus --}}
-        <div
-            class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12 d-flex flex-column align-items-center justify-content-center">
-            <div class="modal fade" id="enSavoirPlusModal" tabindex="-1">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h3 class="w-100  text-center">{{ $une?->titre1 }}</h3>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Fermer"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row g-3">
 
-                                <h4>{{ $une?->titre2 }}</h4>
-                                <p>{{ $une?->message }}</p>
-
+        <div class="modal fade" id="enSavoirPlusModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">{{ $une?->titre1 . ' | ' . $une?->titre2 }}</h5>
+                    </div>
+                    <div class="modal-body">
+                        {{-- @if (!empty($une->image))
+                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                <img src="{{ asset($une?->getUne()) }}" class="d-block w-100 main-image rounded-4"
+                                    alt="{{ $une->titre1 }}">
                             </div>
-                        </div>
-                        <div class="modal-footer mt-5">
-                            <button type="button" class="btn btn-secondary btn-sm"
-                                data-bs-dismiss="modal">Fermer</button>
-                        </div>
+                        @endif --}}
+                        <p>{{ $une?->message }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary btn-sm"
+                            data-bs-dismiss="modal">Fermer</button>
                     </div>
                 </div>
             </div>
@@ -1272,7 +1194,7 @@
 
                                                 @if (!empty($antenne?->date_ouverture))
                                                     <div class="popular-badge">
-                                                        {{ 'DEPUIS LE ' . mb_strtoupper($antenne?->date_ouverture?->translatedFormat('d F Y'), 'UTF-8') }}
+                                                        {{ 'SINCE ' . mb_strtoupper($antenne?->date_ouverture?->translatedFormat('Y'), 'UTF-8') }}
                                                     </div>
                                                 @else
                                                     <div class="popular-badge">{{ $antenne?->code }}</div>
@@ -1316,31 +1238,31 @@
                 </div>
             </div>
         @endforeach
+
         @foreach ($posts as $post)
+<<<<<<< HEAD
             {{-- <div class="modal fade" id="ShowPostModal{{ $post->id }}" tabindex="-1">
                 <div class="modal-dialog modal-lg">
+=======
+            <div class="modal fade" id="ShowPostModal{{ $post->id }}" tabindex="-1">
+                <div class="modal-dialog">
+>>>>>>> refs/remotes/origin/main
                     <div class="modal-content">
-                        <section class="pricing section light-background">
-                            <div class="container section-title" data-aos="fade-up">
-                                <h1 class="h4 text-black mb-0">{{ $post->titre }}</h1>
+                        <div class="modal-header">
+                            <h5 class="modal-title">{{ $post->titre }}</h5>
+                            {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
+                                <img src="{{ asset($post->getPoste()) }}" class="d-block w-100 main-image rounded-4"
+                                    alt="{{ $post->legende }}">
                             </div>
-                            <div class="modal-body">
-                                <div class="row g-3">
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                                        <img src="{{ asset($post->getPoste()) }}"
-                                            class="d-block w-100 main-image rounded-4" alt="{{ $post->legende }}">
-                                    </div>
-                                    <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
-                                        <p>{{ $post->name }}</p>
-                                    </div>
-
-                                </div>
-                                <div class="modal-footer mt-2">
-                                    <button type="button" class="btn btn-secondary btn-sm"
-                                        data-bs-dismiss="modal">Fermer</button>
-                                </div>
-                            </div>
-                        </section>
+                            <p class="small fst-italic pt-1">{{ $post->name }}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                data-bs-dismiss="modal">Fermer</button>
+                        </div>
                     </div>
                 </div>
             </div> --}}
@@ -1371,220 +1293,7 @@
         @include('sweetalert::alert')
     </main>
 
-    <footer id="footer" class="footer">
-
-        <div class="container footer-top">
-            <div class="row gy-4">
-                <div class="col-lg-4 col-md-6 footer-about">
-                    <a href="{{ url('/') }}" class="logo d-flex align-items-center">
-                        <span class="sitename">SIGOF</span>
-                    </a>
-                    <div class="footer-contact pt-0">
-                        <p>Direction générale (Dakar & Thiès)</p>
-                        <p>Sipres 1, lot 2</p>
-                        <p>2 voies liberté 6, extension VDN</p>
-                        <p class="mt-3"><strong>Téléphone:</strong> <span><a href="tel:+2211338279251">+221 33 827
-                                    92 51</a></span></p>
-                        <p><strong>Email:</strong> <span><a href="mailto:onfp@onfp.sn">onfp@onfp.sn</a></span></p>
-                    </div>
-                    <div class="social-links d-flex mt-4">
-                        <a href="https://x.com/ONFP_Officiel/" target="_blank"><i class="bi bi-twitter-x"></i></a>
-                        <a href="https://www.facebook.com/profile.php?id=61566912421177" target="_blank"><i
-                                class="bi bi-facebook"></i></a>
-                        <a href="https://www.instagram.com/onfp.sn/" target="_blank"><i
-                                class="bi bi-instagram"></i></a>
-                        <a href="https://www.linkedin.com/company/104719756/admin/page-posts/published/"
-                            target="_blank"><i class="bi bi-linkedin"></i></a>
-                        <a href="https://www.youtube.com/@onfp9383/featured" target="_blank"><i
-                                class="bi bi-youtube"></i></a>
-                        <a href="https://wa.me/221772911838" target="_blank"><i class="bi bi-whatsapp"></i></a>
-                    </div>
-                </div>
-
-                <div class="col-lg-2 col-md-3 footer-links">
-                    <h4>Réseaux sociaux</h4>
-                    <ul>
-                        <li><a href="#accueil">Accueil</a></li>
-                        <li><a href="#apropos">A propos</a></li>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#partenaires">Partenaires</a></li>
-                        <li><a href="#contact">Contact</a></li>
-                    </ul>
-                </div>
-
-                {{-- <div class="col-lg-2 col-md-3 footer-links">
-                    <h4>Nos services</h4>
-                    <ul>
-                        <li><a href="#">Web Design</a></li>
-                        <li><a href="#">Web Development</a></li>
-                        <li><a href="#">Product Management</a></li>
-                        <li><a href="#">Marketing</a></li>
-                        <li><a href="#">Graphic Design</a></li>
-                    </ul>
-                </div> --}}
-
-                <div class="col-lg-2 col-md-3 footer-links">
-                    <h4>Nos antennes</h4>
-                    <ul>
-                        @foreach ($antennes as $antenne)
-                            <li><a href="#" data-bs-toggle="modal"
-                                    data-bs-target="#antenneModal{{ $antenne?->id }}">{{ $antenne?->name }}</a></li>
-                        @endforeach
-                    </ul>
-                </div>
-
-                <div class="contact-form col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 footer-links">
-                    <h4>Connexion</h4>
-                    <ul>
-                        {{-- <li><a data-bs-toggle="modal" data-bs-target="#loginModal">Se connecter</a></li>
-                        <li><a data-bs-toggle="modal" data-bs-target="#registerDemandeurModal">Créer un compte
-                                personnel</a></li>
-                        <li><a data-bs-toggle="modal" data-bs-target="#registerOperateurModal">Créer un compte
-                                opérateur</a></li> --}}
-
-                        <div class="modal-content">
-                            <form class="needs-validation" novalidate method="POST" action="{{ route('login') }}">
-                                @csrf
-                                <div class="modal-body">
-                                    <div class="row g-3">
-                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            {{-- <label for="email" class="form-label">Email<span
-                                                    class="text-danger mx-1">*</span></label> --}}
-                                            <div class="input-group has-validation">
-                                                <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                <input type="email" name="email"
-                                                    class="form-control @error('email') is-invalid @enderror"
-                                                    id="email" required placeholder="Votre adresse e-mail"
-                                                    value="{{ old('email') }}">
-                                                <div class="invalid-feedback">
-                                                    @error('email')
-                                                        {{ $message }}
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            {{-- <label for="password" class="form-label">Mot de passe<span
-                                                    class="text-danger mx-1">*</span></label> --}}
-                                            <div class="input-group has-validation">
-                                                <span class="input-group-text" id="inputGroupPrepend"><i
-                                                        class="bi bi-key"></i></span>
-                                                <input type="password" name="password"
-                                                    class="form-control @error('password') is-invalid @enderror"
-                                                    id="password" required placeholder="Votre mot de passe">
-                                                <div class="invalid-feedback">
-                                                    @error('password')
-                                                        {{ $message }}
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="remember"
-                                                    value="true" id="rememberMe">
-                                                <label class="form-check-label" for="rememberMe">Souviens-toi de
-                                                    moi</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12">
-                                            <button class="btn btn-sm w-100" type="submit"
-                                                style="background-color: #F28500; color: #FFFFFF">Se
-                                                connecter</button>
-                                        </div>
-
-                                        <div
-                                            class="col-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 col-xxl-12 justify-content-center">
-                                            @if (Route::has('password.request'))
-                                                <p class="small mb-0">Mot de passe oublié !
-                                                    <a href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#forgotModal">
-                                                        Réinitialiser</a>
-                                                </p>
-                                            @endif
-                                        </div>
-                                    </div>
-                            </form>
-                    </ul>
-
-                    {{-- <div class="footer-links">
-                        <h4>
-                            <form action="{{ route('logout') }}" method="post">
-                                @csrf
-                                <button type="submit" class="dropdown-item show_confirm_disconnect">Se
-                                    déconnecter</button>
-                            </form>
-                        </h4>
-                    </div> --}}
-
-                </div>
-            </div>
-        </div>
-
-        @include('user.termes')
-
-        <div class="container copyright text-center mt-4">
-            <p>© <span>Copyright</span> <strong class="px-1 sitename">SIGOF</strong> <span></span></p>
-            <div class="credits">
-                <!-- All the links in the footer should remain intact. -->
-                <!-- You can delete the links only if you've purchased the pro version. -->
-                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-                Conçu par <a href="https://www.onfp.sn/" target="_blank">ONFP</a>, MAI 2024
-            </div>
-        </div>
-
-    </footer>
-
-    <!-- Scroll Top -->
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-            class="bi bi-arrow-up-short"></i></a>
-
-    <!-- Vendor JS Files -->
-    <script src="{{ asset('asset/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('asset/vendor/php-email-form/validate.js') }}"></script>
-    <script src="{{ asset('asset/vendor/aos/aos.js') }}"></script>
-    <script src="{{ asset('asset/vendor/glightbox/js/glightbox.min.js') }}"></script>
-    <script src="{{ asset('asset/vendor/swiper/swiper-bundle.min.js') }}"></script>
-    <script src="{{ asset('asset/vendor/purecounter/purecounter_vanilla.js') }}"></script>
-
-    <!-- Main JS File -->
-    <script src="{{ asset('asset/js/main.js') }}"></script>
-
-    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-        crossorigin="anonymous"></script>
-
-    <script>
-        setTimeout(function() {
-            $('.alert-success').remove();
-        }, 120000);
-    </script>
-
-    <script>
-        setTimeout(function() {
-            $('.alert-danger').remove();
-        }, 120000);
-    </script>
-
-    <script>
-        function myFunction() {
-            var element = document.body;
-            element.dataset.bsTheme =
-                element.dataset.bsTheme == "light" ? "dark" : "light";
-        }
-
-        function stepFunction(event) {
-            debugger;
-            var element = document.getElementsByClassName(("html")[0].innerHTML);
-            for (var i = 0; i < element.length; i++) {
-                if (element[i] !== event.target.ariaControls) {
-                    element[i].classList.remove("show");
-                }
-            }
-        }
-    </script>
+    @include('footer-accueil')
 
 </body>
 

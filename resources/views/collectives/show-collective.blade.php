@@ -39,12 +39,6 @@
                             <button type="button" class="btn btn-info btn-sm">
                                 <span class="badge bg-white text-info">{{ $collective_total }}/1</span>
                             </button>
-                            {{-- @isset(Auth::user()->cin)
-                                <button type="button" class="btn btn-outline-primary btn-sm float-end btn-rounded"
-                                    data-bs-toggle="modal" data-bs-target="#AddCollectiveModal">
-                                    <i class="bi bi-plus" title="Ajouter"></i>
-                                </button>
-                            @endisset --}}
                         </div>
                         <h5 class="card-title">
                             Bienvenue {{ Auth::user()->civilite . ' ' . Auth::user()->name }}</h5>
@@ -120,6 +114,108 @@
                         {{-- </form> --}}
                     </div>
                 </div>
+                <div class="row mb-3 pt-5">
+                    <h5 class="card-title col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
+                        FICHIERS JOINTS</h5>
+                    <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                        <table class="table table-bordered table-hover datatables" id="table-iles">
+                            <thead>
+                                <tr>
+                                    <th width="5%" class="text-center">N°</th>
+                                    <th>LENGENDE</th>
+                                    <th width="10%" class="text-center">FILE</th>
+                                    <th width="5%" class="text-center"><i class="bi bi-gear"></i>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $i = 1; ?>
+                                @foreach ($files as $file)
+                                    <tr>
+                                        <td class="text-center">{{ $i++ }}</td>
+                                        <td>{{ $file?->legende }}</td>
+                                        <td class="text-center">
+                                            <a class="btn btn-default btn-sm" title="télécharger le fichier joint"
+                                                target="_blank" href="{{ asset($file->getFichier()) }}">
+                                                <i class="bi bi-download"></i>
+                                            </a>
+                                        </td>
+                                        <td class="text-center">
+                                            <form action="{{ route('fileDestroy') }}" method="post">
+                                                @csrf
+                                                @method('put')
+                                                <input type="hidden" name="idFile" value="{{ $file->id }}">
+                                                <button type="submit" style="background:none;border:0px;"
+                                                    class="show_confirm" title="retirer">
+                                                    <span class="badge border-danger border-1 text-danger">
+                                                        <i class="bi bi-trash"></i>
+                                                    </span>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <form method="post" action="{{ route('files.update', Auth::user()?->id) }}" enctype="multipart/form-data">
+                    @csrf
+                    @method('patch')
+                    <h5 class="card-title">JOINDRE LES DOCUMENTS DE VOTRE STRUCTURE</h5>
+                    <span style="color:red;">NB:</span>
+                    <span>Seul l'acte de création </span><span style="color:red;"> est
+                        exigé</span>.
+                    <div class="row mb-3 mt-3">
+                        <label for="legende"
+                            class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">LEGENDE<span
+                                class="text-danger mx-1">*</span></label>
+                        <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                            <select name="legende" class="form-select  @error('legende') is-invalid @enderror"
+                                aria-label="Select" id="select-field-file" data-placeholder="Choisir">
+                                <option value="{{ old('legende') }}">
+
+                                </option>
+                                @foreach ($user_files as $file)
+                                    <option value="{{ $file?->id }}">
+                                        {{ $file?->legende }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('legende')
+                                <span class="invalid-feedback" role="alert">
+                                    <div>{{ $message }}</div>
+                                </span>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="file"
+                            class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label">FICHIER<span
+                                class="text-danger mx-1">*</span></label>
+                        <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                            <div class="pt-2">
+                                <input type="file" name="file" id="file"
+                                    class="form-control @error('file') is-invalid @enderror btn btn-primary btn-sm">
+                                @error('file')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <label for="file"
+                            class="col-12 col-md-4 col-lg-4 col-sm-12 col-xs-12 col-xxl-4 col-form-label"><span
+                                class="text-danger mx-1"></span></label>
+                        <div class="col-12 col-md-8 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
+                            <div class="pt-2">
+                                <button type="submit" class="btn btn-info btn-sm text-white">ENREGISTRER</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
         {{-- Ajouter un autre choix --}}

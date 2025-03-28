@@ -18,18 +18,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ __("ONFP E-MAIL") }}</title>
+    <title>{{ __('ONFP E-MAIL') }}</title>
 </head>
 
 <body>
     <header>
         {{-- <img src="assets/img/logo-onfp.jpg" alt="Logo ONFP" width="150" height="50"> --}}
-        <p>{{ $subject }}</p>
+        {{-- <p>{{ $subject }}</p> --}}
     </header>
 
     <body>
-        <p>{{ $toUserName }}</p>
-        <p> {{ $module }}</p>
+        <p>{!! $toUserName !!}</p>
+        <p> {!! $module !!}</p>
         {{-- <a href="#"
             style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; text-decoration: none;">Cliquez ici pour vérifiez
             votre adresse e-mail</a> --}}

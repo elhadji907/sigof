@@ -1,10 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Mail\ValidationDemandeIndividuelleNotification;
 use App\Models\Individuelle;
 use App\Models\Validationindividuelle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ValidationIndividuelleController extends Controller
@@ -44,7 +46,17 @@ class ValidationIndividuelleController extends Controller
 
                 $validated_by->save();
 
-                Alert::success('Félicitation !', 'demande acceptée');
+                /* Envoie de mail */
+                $toEmail     = $individuelle?->user?->email;
+                $toUserName  = 'Félicitations ! ' . $individuelle?->user?->civilite . ' ' . $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name;
+                $safeMessage = "Votre demande de formation en <b><i>" . ($individuelle->module->name ?? 'cette formation') .
+                    "</i></b> a été retenue. Vous pouvez désormais bénéficier de nos offres de formations.";
+                $subject = 'Notification de validation !';
+                $message = strip_tags($safeMessage, '<b><i><p>'); // Autorise seulement <b>, <i>, et <p>
+                Mail::to($toEmail)->send(new ValidationDemandeIndividuelleNotification($message, $subject, $toEmail, $toUserName));
+
+                /* Déplacer au niveau de ValidationDemandeIndividuelleNotification */
+                /* Alert::success('Félicitation !', 'demande acceptée'); */
             }
         }
         return redirect()->back();

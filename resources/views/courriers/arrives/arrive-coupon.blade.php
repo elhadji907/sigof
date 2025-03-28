@@ -6,14 +6,14 @@
 
     <meta charset="utf-8" />
     <style>
-         @page {
+        @page {
             size: 21cm 29.7cm;
             margin-top: 0cm;
             margin-bottom: 0cm;
         }
 
         .invoice-box {
-            max-width: 800px;
+            max-width: 100%;
             margin: auto;
             padding: 30px;
             font-size: 14px;
@@ -71,6 +71,11 @@
             border-radius: 25% 10%;
             /* border-radius: 5px; */
         }
+
+        td {
+            word-wrap: break-word;
+            white-space: normal;
+        }
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="//db.onlinewebfonts.com/c/dd79278a2e4c4a2090b763931f2ada53?family=ArialW02-Regular" rel="stylesheet"
@@ -108,7 +113,7 @@
                         </div>
                     </td>
                     <td colspan="3" align="right" valign="top">
-                        <p>
+                        <h3>
                             <b> {{ __("Date d'imputation : ") }} </b>
                             @if (isset($courrier->date_imp))
                                 {{ $courrier->date_imp?->format('d/m/Y') }} <br />
@@ -118,10 +123,11 @@
                             <b> {{ __("Date d'arrivée : ") }} </b>
                             {{ $courrier->date_recep?->format('d/m/Y') }} <br />
                             <b> {{ __('N° du courrier : ') }} </b> <span
-                                style="color:red">{{ 'CA-' . $arrive->numero_arrive }}</span> <br />
-                        <h2><br><u>{{ __("FICHE D'IMPUTATION") }}</u></h2>
+                                style="color:rgb(255, 0, 0)"><b><strong>{{ 'CA-' . $arrive->numero_arrive }}</strong></b></span>
+                            <br />
+                            <h2><br><u>{{ __("FICHE D'IMPUTATION") }}</u></h2>
 
-                        </p>
+                        </h3>
                     </td>
                 </tr>
             </tbody>
@@ -143,77 +149,58 @@
         <table class="table table-responsive" style="margin-top: -20px;">
             <tbody>
                 <tr>
-                    <td colspan="4" align="left" valign="top">
+                    <!-- Colonne Expéditeur (8 colonnes) -->
+                    <td class="col-md-8" style="word-wrap: break-word;">
                         <p>
-                            <b>{{ __('Expéditeur') }}</u></b> : {{ mb_strtoupper($courrier->expediteur) }}<br>
-                            <b>{{ __('Réf') }}</u></b> : {{ $courrier->reference }}&nbsp;&nbsp;&nbsp;&nbsp;
-                            <b>{{ __('du') }}</u></b> :
-                            {{ $courrier->date_recep?->format('d/m/Y') }}<br>
-                            <b>{{ __('Objet') }}</u></b> : {{ ucfirst($courrier->objet) }}<br>
-                            {{-- @if ($courrier->directions != '[]')
-                                <span class="card-category"><u>Imputation </u></b>:
-                                    @foreach ($courrier->directions->unique('id') as $imputation)
-                                        <span>{!! $imputation->sigle ?? 'Aucune' !!}, </span>
-                                    @endforeach
-                                @else
-                            @endif
-                            <br> --}}
+                            <b>{{ __('Expéditeur') }}</b> : {{ mb_strtoupper($courrier->expediteur) }}<br>
+                            <b>{{ __('Réf') }}</b> : {{ $courrier->reference }}&nbsp;&nbsp;&nbsp;&nbsp;
+                            <b>{{ __('du') }}</b> : {{ $courrier->date_recep?->format('d/m/Y') }}<br>
+                            <b>{{ __('Objet') }}</b> :
+                            <span class="d-inline-block text-truncate" style="max-width: 300px;">
+                                {{-- {!! wordwrap(ucfirst($courrier?->objet), 40, '<br>', true) !!}   --}}
+                                {{-- {!! nl2br(e(old('objet', $courrier?->objet))) !!} --}}
+                                {{-- {!! '- ' . implode('<br>- ', array_map('e', explode("\n", old('objet', $courrier?->objet )))) !!} --}}
+                                {!! '- ' .
+                                    implode(
+                                        '- ',
+                                        array_map(
+                                            fn($line) => nl2br(e(wordwrap($line, 40, "\n", true))),
+                                            explode("\n", old('objet', ucfirst($courrier?->objet))),
+                                        ),
+                                    ) !!}
+                            </span>
                         </p>
-                        <table class="table table-responsive table-striped">
+                        <table class="table table-striped">
                             <tbody>
-                                {{-- <tr class="item">
-                                    @foreach ($directions as $direction)
-                                        <td>
-
-                                            <input type="checkbox" name="directions[]" value="{{ $direction }}"
-                                                {{ in_array($direction, $arriveDirections) ? 'checked' : '' }}
-                                                class="form-check-input @error('directions') is-invalid @enderror">
-                                            {{ $direction }}
-                                            @error('directions')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <div>{{ $message }}</div>
+                                @foreach (collect($directions)->chunk(6) as $chunk)
+                                    <tr class="item">
+                                        @foreach ($chunk as $direction)
+                                            <td style="padding-left:5px; width: 25%;">
+                                                {!! $direction ?? 'Aucune' !!}
+                                                <span style="float:right; color: red; padding-right:5px;">
+                                                    {!! in_array($direction, $arriveDirections) ? 'X' : '' !!}
                                                 </span>
-                                            @enderror
-
-                                        </td>
-                                    @endforeach
-                                </tr> --}}
-
-                                <tr class="item">
-                                    <?php $i = 1; ?>
-                                    @foreach ($directions as $direction)
-                                        <td style="padding-left:5px;">
-                                            {!! $direction ?? 'Aucune' !!}
-                                            <span style="float:right;">
-                                                <span
-                                                    style="color: red; padding-right:5px;">{!! in_array($direction, $arriveDirections) ? 'X' : '' !!}</span></span>
-                                        </td>
-                                        @if ($i % 4 == 0)
-                                </tr>
-                                <tr class="item">
-                                    @endif
-                                    <?php $i++; ?>
-                                    @endforeach
-                                </tr>
+                                            </td>
+                                        @endforeach
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
-
                     </td>
-                    <td style="padding-left:10px; padding-top:20px; float:right;" colspan="4" valign="top">
-                        <table class="table table-responsive table-striped">
+
+                    <!-- Colonne Actions Attendues (4 colonnes) -->
+                    <td class="col-md-4" valign="top" style="padding-left:10px; padding-top:20px;">
+                        <table class="table table-striped">
                             <tbody>
                                 <tr class="heading">
-                                    <td colspan="4" align="center"><b>{{ __('ACTIONS ATTENDUES') }}</b>
-                                    </td>
+                                    <td colspan="4" align="center"><b>{{ __('ACTIONS ATTENDUES') }}</b></td>
                                 </tr>
                                 @foreach ($actions as $action)
                                     <tr class="item">
-                                        <td colspan="2" style="padding-left:5px;">
-                                            {{ $action }}
-                                        </td>
+                                        <td colspan="2" style="padding-left:5px;">{{ $action }}</td>
                                         <td colspan="2" align="center">
-                                            @if ($action == $courrier->description)
-                                                <span style="color: red;">{{ __('X') }}</span>
+                                            @if (strcasecmp(trim($action), trim($courrier->description)) === 0)
+                                                <span style="color: red;">X</span>
                                             @endif
                                         </td>
                                     </tr>
@@ -224,6 +211,7 @@
                 </tr>
             </tbody>
         </table>
+
         {{--         <br>
         <table class="table table-responsive">
             <tbody>
@@ -310,6 +298,7 @@
             </span>
         </div> --}}
     </div>
+    <hr>
 </body>
 
 </html>

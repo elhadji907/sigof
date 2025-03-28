@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property string|null $name
  * @property string|null $sigle
  * @property string|null $description
+ * @property string|null $niveau_qualification
  * @property string|null $qualification
  * @property int|null $domaines_id
  * @property int|null $specialites_id
@@ -65,6 +66,7 @@ class Module extends Model
 		'name',
 		'sigle',
 		'description',
+		'niveau_qualification',
 		'qualification',
 		'domaines_id',
 		'specialites_id',

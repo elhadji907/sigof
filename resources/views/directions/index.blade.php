@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - Liste des directions')
+@section('title', 'ONFP | Liste des directions')
 @section('space-work')
 
     <div class="pagetitle">
@@ -32,9 +32,8 @@
                     <div class="card-body">
                         {{-- @can('direction-create') --}}
                         <div class="pt-0">
-                            <a href="{{ route('directions.create') }}" class="btn btn-primary float-end btn-rounded"><i
-                                    class="fas fa-plus"></i>
-                                <i class="bi bi-person-plus" title="Ajouter"></i> </a>
+                            <a href="{{ route('directions.create') }}"
+                                class="btn btn-primary btn-sm float-end btn-rounded"><i class="fas fa-plus">Ajouter</a>
                         </div>
                         {{-- @endcan --}}
                         <h5 class="card-title">Directions</h5>
@@ -43,7 +42,7 @@
                         <table class="table datatables align-middle" id="table-directions">
                             <thead>
                                 <tr>
-                                    <th>N°</th>
+                                    <th style="text-align: center;">N°</th>
                                     <th>Direction</th>
                                     <th>Sigle</th>
                                     <th>Type</th>
@@ -56,7 +55,7 @@
                                 <?php $i = 1; ?>
                                 @foreach ($directions as $direction)
                                     <tr>
-                                        <td>{{ $i++ }}</td>
+                                        <td style="text-align: center;">{{ $i++ }}</td>
                                         <td>{{ $direction->name }}</td>
                                         <td>{{ $direction->sigle }}</td>
                                         <td>{{ $direction->type }}</td>
@@ -114,7 +113,7 @@
         new DataTable('#table-directions', {
             layout: {
                 topStart: {
-                    buttons: ['copy', 'csv', 'excel', 'pdf', 'print'],
+                    buttons: ['csv', 'excel', 'print'],
                 }
             },
             "order": [

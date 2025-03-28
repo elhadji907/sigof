@@ -1,5 +1,6 @@
 @extends('layout.user-layout')
-@section('title', $operateur?->user?->username . ' - localités')
+@section('title', remove_accents_uppercase($operateur?->user?->username) . ' | ' .
+    remove_accents_uppercase('localités'))
 @section('space-work')
 
     <section class="section register">
@@ -40,12 +41,14 @@
                         <div class="d-flex justify-content-between align-items-center">
                             <h5 class="card-title">LOCALITES</h5>
                             @can('devenir-operateur-agrement-ouvert')
-                                <h5 class="card-title">
-                                    <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#AddlocaliteModal">
-                                        <i class="bi bi-plus" title="Ajouter une référence"></i>
-                                    </button>
-                                </h5>
+                                @can('agrement-visible-par-op')
+                                    <h5 class="card-title">
+                                        <button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal"
+                                            data-bs-target="#AddlocaliteModal">
+                                            <i class="bi bi-plus" title="Ajouter une référence"></i>
+                                        </button>
+                                    </h5>
+                                @endcan
                             @endcan
                         </div>
                         <!-- Table with stripped rows -->

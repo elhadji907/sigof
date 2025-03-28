@@ -168,10 +168,11 @@
                                             <div class="form-group">
                                                 <label for="cin" class="form-label">N° CIN<span
                                                         class="text-danger mx-1">*</span></label>
-                                                <input minlength="10" maxlength="15" type="text" name="cin"
-                                                    value="{{ old('cin') }}"
+                                                <input name="cin" type="text"
                                                     class="form-control form-control-sm @error('cin') is-invalid @enderror"
-                                                    id="cin" placeholder="Numéro carte d'identité nationale">
+                                                    id="cin" value="{{ old('cin') }}" autocomplete="off"
+                                                    placeholder="Ex: 1 099 2005 00012" minlength="16" maxlength="17"
+                                                    required>
                                                 @error('cin')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>
@@ -271,10 +272,10 @@
                                             <div class="form-group">
                                                 <label for="telephone" class="form-label">Téléphone<span
                                                         class="text-danger mx-1">*</span></label>
-                                                <input minlength="9" maxlength="9" type="text" name="telephone"
-                                                    value="{{ old('telephone') }}"
+                                                <input name="telephone" type="text" maxlength="12"
                                                     class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                                    id="telephone" placeholder="7xxxxxxxx">
+                                                    id="telephone" value="{{ old('telephone') }}" autocomplete="tel"
+                                                    placeholder="XX:XXX:XX:XX">
                                                 @error('telephone')
                                                     <span class="invalid-feedback" role="alert">
                                                         <div>{{ $message }}</div>

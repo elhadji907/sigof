@@ -1,6 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'Détails courrier arrivé')
-
+@section('title', 'COURRIER ARRIVE | ' . $arrive?->courrier?->objet)
 @section('space-work')
     <section class="section profile">
         <div class="container-fluid">
@@ -20,28 +19,23 @@
                         </div>
                     @endforeach
                 @endif
-                <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('arrives.index') }}"
-                        class="btn btn-success btn-sm" title="retour"><i class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
-                    <p> | Liste des courriers arrivés</p>
-                </span>
 
-                {{--  <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
-                    <div class="card border-info mb-3">
-                        <div class="card-header text-center">
-                            AUDIT
-                        </div>
-                        <div class="card-body profile-card pt-1 d-flex flex-column">
-                            <h5 class="card-title">Informations complémentaires</h5>
-                            <p>créé par <b>{{ $user_create_name }}</b>, {{ $courrier?->created_at?->diffForHumans() }}</p>
-                            @if ($courrier?->created_at != $courrier?->updated_at)
-                                <p>{{ 'modifié par ' }} <b> {{ $user_update_name }} </b>
-                                    {{ $courrier?->updated_at?->diffForHumans() }}</p>
-                            @else
-                                <p> jamais modifié</p>
-                            @endif
-                        </div>
-                    </div>
-                </div> --}}
+                @hasrole('super-admin|courrier|a-courrier')
+                    <span class="d-flex mt-2 align-items-baseline">
+                        <a href="{{ route('arrives.index') }}" class="btn btn-success btn-sm" title="Retour">
+                            <i class="bi bi-arrow-counterclockwise"></i>
+                        </a>&nbsp;
+                        <p> | Liste des courriers arrivés</p>
+                    </span>
+                    @elsehasrole('Employe|super-admin')
+                    <span class="d-flex mt-2 align-items-baseline">
+                        <a href="{{ route('mescourriers') }}" class="btn btn-info btn-sm" title="Retour">
+                            <i class="bi bi-arrow-counterclockwise"></i>
+                        </a>&nbsp;
+                        <p> | Liste des courriers arrivés</p>
+                    </span>
+                @endhasrole
+
                 <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                     <div class="card border-info mb-3">
                         <div class="card-body pt-3">
@@ -50,16 +44,20 @@
                                     <button class="nav-link active" data-bs-toggle="tab"
                                         data-bs-target="#profile-overview">Courrier</button>
                                 </li>
+
                                 @can('update', $arrive)
                                     <li class="nav-item">
                                         <button class="nav-link" data-bs-toggle="tab"
                                             data-bs-target="#modifier_courrier">Modifier</button>
                                     </li>
                                 @endcan
-                                <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab"
-                                        data-bs-target="#imputer_courrier">Imputer</button>
-                                </li>
+
+                                @hasrole('super-admin|courrier|a-courrier')
+                                    <li class="nav-item">
+                                        <button class="nav-link" data-bs-toggle="tab"
+                                            data-bs-target="#imputer_courrier">Imputer</button>
+                                    </li>
+                                @endhasrole
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab"
                                         data-bs-target="#profile-settings">Commentaires</button>
@@ -71,10 +69,25 @@
 
                             <div class="tab-content pt-0">
                                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                                    <h5 class="card-title">Objet</h5>
-                                    <p class="small fst-italic">{{ $arrive?->courrier?->objet }}</p>
+                                    @hasrole('super-admin|courrier|a-courrier')
+                                        <div class="d-flex justify-content-between align-items-center mt-3">
+                                            <h5 class="card-title"></h5>
+                                            <form action="{{ route('couponArrive') }}" method="post" target="_blank">
+                                                @csrf
+                                                <input type="hidden" name="id" value="{{ $arrive?->id }}">
+                                                <button class="btn btn-outline-primary btn-sm"><i class="fa fa-print"
+                                                        aria-hidden="true"></i>Télécharger
+                                                    coupon</button>
+                                            </form>
+                                        </div>
+                                    @endhasrole
 
                                     <h5 class="card-title">Détails</h5>
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-4 label ">Objet</div>
+                                        <div class="col-lg-9 col-md-8">{{ $arrive?->courrier?->objet }}</div>
+                                    </div>
 
                                     <div class="row">
                                         <div class="col-lg-3 col-md-4 label ">N° courrier arrivé</div>
@@ -159,8 +172,8 @@
                                                 class="col-md-4 col-lg-3 col-form-label">Commentaires</label>
                                             <div class="col-md-8 col-lg-9">
                                                 <div class="form-floating mb-3">
-                                                    <textarea class="form-control @error('commentaire') is-invalid @enderror" placeholder="Ecrire votre commentaire ici..."
-                                                        name="commentaire" id="commentaire" style="height: 100px;"></textarea>
+                                                    <textarea class="form-control @error('commentaire') is-invalid @enderror"
+                                                        placeholder="Ecrire votre commentaire ici..." name="commentaire" id="commentaire" style="height: 100px;"></textarea>
                                                     <label for="floatingTextarea">Ecrire votre commentaire ici</label>
                                                 </div>
                                                 <small id="emailHelp" class="form-text text-muted">
@@ -310,7 +323,7 @@
                                         enctype="multipart/form-data" class="row g-3">
                                         @csrf
                                         @method('PUT')
-                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="date_arrivee" class="form-label">Date arrivée<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="date" name="date_arrivee"
@@ -324,7 +337,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="numero_arrive" class="form-label">Numéro<span
                                                     class="text-danger mx-1">*</span></label>
                                             <div class="input-group has-validation">
@@ -340,7 +353,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="date_correspondance" class="form-label">Date correspondance<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="date" name="date_correspondance"
@@ -354,7 +367,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="numero_courrier" class="form-label">Numéro
                                                 correspondance<span class="text-danger mx-1">*</span></label>
                                             <div class="input-group has-validation">
@@ -370,7 +383,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="annee" class="form-label">Année<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="number" min="2024" name="annee"
@@ -384,7 +397,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="expediteur" class="form-label">Expéditeur<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="text" name="expediteur"
@@ -398,13 +411,20 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="objet" class="form-label">Objet<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="text" name="objet"
+                                            {{-- <input type="text" name="objet"
                                                 value="{{ $arrive?->courrier?->objet ?? old('objet') }}"
                                                 class="form-control form-control-sm @error('objet') is-invalid @enderror"
-                                                id="objet" placeholder="Objet">
+                                                id="objet" placeholder="Objet"> --}}
+                                            <textarea name="objet" id="objet" rows="4"
+                                                class="form-control form-control-sm @error('objet') is-invalid @enderror" placeholder="Objet">{{ old('objet', $arrive?->courrier?->objet) }}</textarea>
+                                            @error('objet')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <div>{{ $message }}</div>
+                                                </span>
+                                            @enderror
                                             @error('objet')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -412,7 +432,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="reference" class="form-label">Référence</label>
                                             <input type="text" name="reference"
                                                 value="{{ $arrive?->courrier?->reference ?? old('reference') }}"
@@ -425,7 +445,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="numero_reponse" class="form-label">Numéro réponse</label>
                                             <input type="number" min="0" name="numero_reponse"
                                                 value="{{ $arrive?->courrier?->numero_reponse ?? old('numero_reponse') }}"
@@ -438,7 +458,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="date_reponse" class="form-label">Date réponse</label>
                                             <input type="date" min="0" name="date_reponse"
                                                 value="{{ $arrive?->courrier?->date_reponse?->format('Y-m-d') ?? old('date_reponse') }}"
@@ -453,7 +473,7 @@
 
                                         <div class="col-12 col-md-12 col-lg-12 col-sm-12 col-xs-12 col-xxl-12">
                                             <label for="observation" class="form-label">Observations </label>
-                                            <textarea name="observation" id="observation" rows="1" class="form-control form-control-sm"
+                                            <textarea name="observation" id="observation" rows="2" class="form-control form-control-sm"
                                                 placeholder="Observations">{{ old('observation', $arrive?->courrier?->observation) }}</textarea>
                                             @error('observation')
                                                 <span class="invalid-feedback" role="alert">
@@ -462,7 +482,7 @@
                                             @enderror
                                         </div>
 
-                                        <div class="col-12 col-md-12 col-lg-6 col-sm-12 col-xs-12 col-xxl-6">
+                                        <div class="col-12 col-md-6 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="legende" class="form-label">Légende</label>
                                             <input type="text" name="legende"
                                                 value="{{ $arrive?->courrier?->legende ?? old('legende') }}"
@@ -477,7 +497,8 @@
 
                                         <div class="col-12 col-md-12 col-lg-5 col-sm-12 col-xs-12 col-xxl-5">
                                             <label for="reference" class="form-label">Joindre courrier</label>
-                                            <input type="file" name="file" id="file" accept=".jpg, .jpeg, .png, .svg, .gif"
+                                            <input type="file" name="file" id="file"
+                                                accept=".jpg, .jpeg, .png, .svg, .gif"
                                                 class="form-control @error('file') is-invalid @enderror btn btn-secondary btn-sm">
                                             @error('file')
                                                 <span class="text-danger">{{ $message }}</span>
@@ -584,7 +605,7 @@
                                         </div>
                                         <hr>
                                         <div class="col-lg-12">
-                                            <form method="post" action="{{ url('arrives/' . $arrive?->id) }}"
+                                            <form method="post" action="{{ route('arrives.update', $arrive?->id) }}"
                                                 enctype="multipart/form-data" class="row g-3">
                                                 @csrf
                                                 @method('PUT')
@@ -654,6 +675,9 @@
                                                                         <option value="M'en parler">
                                                                             M'en parler
                                                                         </option>
+                                                                        <option value="Etudes et Avis">
+                                                                            Etudes et Avis
+                                                                        </option>
                                                                         <option value="Répondre">
                                                                             Répondre
                                                                         </option>
@@ -721,7 +745,7 @@
 
                                                                     <div class="text-center">
                                                                         <button type="submit"
-                                                                            class="btn btn-outline-primary pull-right">Imputer</button>
+                                                                            class="btn btn-outline-primary btn-sm pull-right">Imputer</button>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -795,7 +819,6 @@
                                             </div>
                                         </div>
                                         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-
                                         <link rel="stylesheet"
                                             href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
                                         <script src="//code.jquery.com/jquery.js"></script>

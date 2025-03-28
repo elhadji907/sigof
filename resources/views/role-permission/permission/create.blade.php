@@ -1,9 +1,9 @@
 @extends('layout.user-layout')
-@section('title', 'SIGOF - Enregistrement permission')
+@section('title', 'SIGOF | AJOUTER PERMISSIONS')
 @section('space-work')
     <section class="section">
         <div class="row justify-content-center">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 @if ($message = Session::get('status'))
                     <div class="alert alert-success bg-success text-light border-0 alert-dismissible fade show"
                         role="alert">
@@ -11,10 +11,16 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+                @if ($errors->any())
+                    @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger bg-danger text-light border-0 alert-dismissible fade show"
+                            role="alert">{{ $error }}</div>
+                    @endforeach
+                @endif
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-12 pt-5">
+                            <div class="col-sm-12 pt-1">
                                 <span class="d-flex mt-2 align-items-baseline"><a href="{{ route('permissions.index') }}"
                                         class="btn btn-success btn-sm" title="retour"><i
                                             class="bi bi-arrow-counterclockwise"></i></a>&nbsp;
@@ -27,29 +33,22 @@
                         <form method="post" action="{{ url('permissions') }}" enctype="multipart/form-data"
                             class="row g-3">
                             @csrf
-                            {{--  <div class="row mb-3">
-                                <label for="name" class="form-label"></label>
-                                <input type="text" name="name" value="{{ old('name') }}"
-                                    class="form-control form-control-sm @error('name') is-invalid @enderror" id="name"
-                                    placeholder="Nom permission" autofocus>
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <div>{{ $message }}</div>
-                                    </span>
-                                @enderror
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Ajouter</button>
-                            </div> --}}
                             <table class="table table-bordered" id="dynamicAddRemove">
                                 <tr>
                                     <th>Permissions<span class="text-danger mx-1">*</span></th>
-                                    <th width="15%">Action</th>
+                                    <th width="5%">Action</th>
                                 </tr>
                                 <tr>
-                                    <td><input type="text" name="permissions[0][name]"
+                                    <td>
+                                        <input type="text" name="permissions[0][name]"
                                             placeholder="ajouter une permission" class="form-control form-control-sm"
                                             autofocus />
+
+                                        @error('permissions.0.name')
+                                            <span class="invalid-feedback" role="alert">
+                                                <div>{{ $message }}</div>
+                                            </span>
+                                        @enderror
                                     </td>
                                     <td><button type="button" name="add" id="add-btn" class="btn btn-success btn-sm"
                                             title="Ajouter une ligne">Ajouter</button>
@@ -61,7 +60,8 @@
                                         class="far fa-save"></i>&nbsp;Sauvegarder</button>
                             </div>
 
-                        </form><!-- End Permission -->
+                        </form>
+                        <!-- End Permission -->
                     </div>
                 </div>
             </div>

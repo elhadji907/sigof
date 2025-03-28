@@ -1,5 +1,5 @@
 @extends('layout.user-layout')
-@section('title', 'ONFP - demandes individuelles')
+@section('title', 'ONFP | DEMANDES INDIVIDUELLES')
 @section('space-work')
     @can('individuelle-view')
         <div class="pagetitle">
@@ -38,24 +38,6 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="pt-1">
-                                {{-- @if (isset($demandeur->numero_dossier))
-                                <a href="{{ route('individuelles.create') }}"
-                                    class="btn btn-primary float-end btn-rounded"><i class="fas fa-plus"></i>
-                                    <i class="bi bi-person-plus" title="Ajouter"></i> </a>
-                            @else
-                                <a class="btn btn-primary float-end btn-rounded"
-                                    href="{{ route('demandeurs.show', Auth::user()->id) }}"><i
-                                        class="bi bi-person-plus" title="Ajouter"></i> </a></a>
-                            @endif --}}
-                                {{--  <button type="button" class="btn btn-primary float-end btn-rounded" data-bs-toggle="modal"
-                                data-bs-target="#AddIndividuelModal">
-                                <i class="bi bi-person-plus" title="Ajouter"></i>
-                            </button> --}}
-
-                                {{-- <button type="button" class="btn btn-outline-primary btn-sm float-end" data-bs-toggle="modal"
-                                data-bs-target="#AddIndividuelModal">
-                                <i class="bi bi-plus" title="Ajouter une nouvelle demande"></i>
-                            </button> --}}
                                 <div class="d-flex justify-content-between align-items-center">
                                     @can('individuelle-create')
                                         <h5 class="card-title">{{ $title }}</h5>
@@ -81,20 +63,19 @@
                             </div>
                             {{-- <p>Le tableau des demandes individuelles</p> --}}
                             <!-- Table with stripped rows -->
-
-                            @foreach ($individuelles as $individuelle)
-                            @endforeach
-                            @if (!empty($individuelle))
+                            @if ($individuelles->isNotEmpty())
                                 <table class="table datatables align-middle" id="table-individuelles">
                                     <thead>
                                         <tr>
                                             <th class="text-center">N°</th>
-                                            <th class="text-center">CIN</th>
-                                            <th>Prénom</th>
-                                            <th>NOM</th>
-                                            <th>Date naissance</th>
-                                            <th>Lieu naissance</th>
+                                            <th width="15%" class="text-center">N° CIN (NIN)</th>
+                                            {{-- <th>Prénom</th>
+                                            <th>NOM</th> --}}
+                                            <th width="20%">Prénom & NOM</th>
+                                            <th width="15%">Date nais.</th>
+                                            <th width="15%">Lieu nais.</th>
                                             <th width="20%">Module</th>
+                                            <th width="15%" class="text-center">Dépôt</th>
                                             <th class="text-center">Statut</th>
                                             <th class="text-center">#</th>
                                         </tr>
@@ -106,11 +87,20 @@
                                                 <tr>
                                                     <td style="text-align: center">{{ $individuelle?->numero }}</td>
                                                     <td style="text-align: center">{{ $individuelle?->user?->cin }}</td>
-                                                    <td>{{ $individuelle?->user?->firstname }}</td>
-                                                    <td>{{ $individuelle?->user?->name }}</td>
+                                                    {{-- <td>{{ $individuelle?->user?->firstname }}</td>
+                                                    <td>{{ $individuelle?->user?->name }}</td> --}}
+                                                    <td>{{ $individuelle?->user?->firstname . ' ' . $individuelle?->user?->name }}
+                                                    </td>
                                                     <td>{{ $individuelle?->user?->date_naissance?->format('d/m/Y') }}</td>
                                                     <td>{{ $individuelle?->user?->lieu_naissance }}</td>
                                                     <td>{{ $individuelle?->module?->name }}</td>
+                                                    <td class="text-center">
+                                                        @if ($individuelle?->date_depot)
+                                                            {{ $individuelle?->date_depot?->diffForHumans(null, false) }}
+                                                        @else
+                                                            Aucun
+                                                        @endif
+                                                    </td>
                                                     {{-- <td>{{ $individuelle?->departement?->nom }}</td> --}}
                                                     <td>
                                                         <span class="{{ $individuelle?->statut }}">
@@ -157,9 +147,9 @@
 
                                     </tbody>
                                 </table>
-                                @else
-                                    <div class="alert alert-info">Aucune demande individuelle reçue pour l'instant !</div>
-                                @endif
+                            @else
+                                <div class="alert alert-info">Aucune demande individuelle reçue pour l'instant !</div>
+                            @endif
                             <!-- End Table with stripped rows -->
 
                         </div>
@@ -177,21 +167,14 @@
                                 <div class="card-header text-center bg-gradient-default">
                                     <h1 class="h4 text-black mb-0">Ajouter une nouvelle demande individuelle</h1>
                                 </div>
-                                {{-- <div class="modal-header">
-                                    <h5 class="modal-title"><i class="bi bi-plus" title="Ajouter"></i> Ajouter une nouvelle
-                                        demande
-                                        individuelle</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div> --}}
                                 <div class="modal-body">
                                     <div class="row g-3">
                                         <div class="col-12 col-md-12 col-lg-8 col-sm-12 col-xs-12 col-xxl-8">
-                                            <label for="module" class="form-label">Formation sollicitée<span
+                                            <label for="module" class="form-label">Formation sollicitée (module)<span
                                                     class="text-danger mx-1">*</span></label>
                                             <input type="text" name="module" value="{{ old('module_name') }}"
                                                 class="form-control form-control-sm @error('module_name') is-invalid @enderror"
-                                                id="module_name" placeholder="Nom du module" autofocus>
+                                                id="module_name" placeholder="Formation sollicitée" autofocus>
                                             <div id="countryList"></div>
                                             {{ csrf_field() }}
                                             @error('module')
@@ -249,10 +232,10 @@
                                         <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="cin" class="form-label">N° CIN<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input minlength="13" maxlength="14" type="text" name="cin"
-                                                value="{{ old('cin') }}"
+                                            <input name="cin" type="text"
                                                 class="form-control form-control-sm @error('cin') is-invalid @enderror"
-                                                id="cin" placeholder="Numéro carte d'identité nationale">
+                                                id="cin" value="{{ old('cin') }}" autocomplete="off"
+                                                placeholder="Ex: 1 099 2005 00012" minlength="16" maxlength="17" required>
                                             @error('cin')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -289,9 +272,9 @@
                                         <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="date_naissance" class="form-label">Date naissance<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="date" name="date_naissance" value="{{ old('date_naissance') }}"
-                                                class="datepicker form-control form-control-sm @error('date_naissance') is-invalid @enderror"
-                                                id="date_naissance" placeholder="jj/mm/aaaa">
+                                            <input type="text" name="date_naissance" value="{{ old('date_naissance') }}"
+                                                class="form-control form-control-sm @error('date_naissance') is-invalid @enderror"
+                                                id="datepicker" placeholder="JJ/MM/AAAA" autocomplete="bday">
                                             @error('date_naissance')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -345,10 +328,10 @@
                                         <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="telephone" class="form-label">Téléphone personnel<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="number" min="0" name="telephone"
-                                                value="{{ old('telephone') }}"
+                                            <input name="telephone" type="text" maxlength="12"
                                                 class="form-control form-control-sm @error('telephone') is-invalid @enderror"
-                                                id="telephone" placeholder="7xxxxxxxx">
+                                                id="telephone" value="{{ old('telephone') }}" autocomplete="tel"
+                                                placeholder="XX:XXX:XX:XX">
                                             @error('telephone')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -359,10 +342,10 @@
                                         <div class="col-12 col-md-12 col-lg-4 col-sm-12 col-xs-12 col-xxl-4">
                                             <label for="telephone_secondaire" class="form-label">Téléphone secondaire<span
                                                     class="text-danger mx-1">*</span></label>
-                                            <input type="number" min="0" name="telephone_secondaire"
-                                                value="{{ old('telephone_secondaire') }}"
+                                            <input name="telephone_secondaire" type="text" maxlength="12"
                                                 class="form-control form-control-sm @error('telephone_secondaire') is-invalid @enderror"
-                                                id="telephone_secondaire" placeholder="7xxxxxxxx">
+                                                id="telephone_secondaire" value="{{ old('telephone_secondaire') }}"
+                                                autocomplete="tel" placeholder="XX:XXX:XX:XX">
                                             @error('telephone_secondaire')
                                                 <span class="invalid-feedback" role="alert">
                                                     <div>{{ $message }}</div>
@@ -734,8 +717,8 @@
                                             <label for="projetprofessionnel" class="form-label">Informations complémentaires
                                                 sur
                                                 le projet
-                                                professionnel</label>
-                                            <textarea name="projetprofessionnel" id="projetprofessionnel" rows="2"
+                                                professionnel<span class="text-danger mx-1">*</span></label>
+                                            <textarea name="projetprofessionnel" id="projetprofessionnel" rows="5"
                                                 class="form-control form-control-sm @error('projetprofessionnel') is-invalid @enderror"
                                                 placeholder="Si vous disposez déjà d'un projet professionnel, merci d'écrire son résumé en quelques lignes">{{ old('projetprofessionnel') }}</textarea>
                                             @error('projetprofessionnel')
@@ -748,8 +731,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary btn-sm"
                                             data-bs-dismiss="modal">Fermer</button>
-                                        <button type="submit" class="btn btn-primary btn-sm"><i class="bi bi-printer"></i>
-                                            Enregistrer</button>
+                                        <button type="submit" class="btn btn-primary btn-sm">Enregistrer</button>
                                     </div>
                                 </div>
                             </form>
@@ -886,7 +868,7 @@
                 }
             },
             "order": [
-                [0, 'desc']
+                [0, 'DESC']
             ],
             language: {
                 "sProcessing": "Traitement en cours...",

@@ -175,11 +175,22 @@
                         <b>{{ __('TITRE OU NIVEAU DE QUALIFICATION CORRESPONDANT ') }}</b>
                     </td>
                 </tr>
-                @foreach ($operateur?->operateurmodules?->where('statut', 'agréer') as $operateurmodule)
+                {{-- @foreach ($operateur?->operateurmodules?->where('statut', 'agréer') as $operateurmodule)
                     <tr class="item" style="text-align: center;">
                         <td colspan="2">{{ $operateurmodule?->domaine }}</td>
                         <td colspan="2">{{ $operateurmodule?->module }}</td>
                         <td colspan="5">{{ $operateurmodule?->categorie }}</td>
+                    </tr>
+                @endforeach --}}
+                <?php
+                $operateurmodules = $operateur?->operateurmodules?->where('statut', 'agréer') ?? collect();
+                ?>
+
+                @foreach ($operateurmodules as $operateurmodule)
+                    <tr class="item" style="text-align: center;">
+                        <td colspan="2">{{ $operateurmodule->domaine ?? 'Domaine non défini' }}</td>
+                        <td colspan="2">{{ $operateurmodule->module ?? 'Module non défini' }}</td>
+                        <td colspan="5">{{ $operateurmodule->categorie ?? 'Catégorie non définie' }}</td>
                     </tr>
                 @endforeach
             </tbody>
