@@ -26,7 +26,7 @@ class CollectiveController extends Controller
     {
         // examples:
         $this->middleware('auth');
-        $this->middleware(['role:super-admin|admin|Demandeur|DIOF|ADIOF']);
+        $this->middleware(['role:super-admin|admin|Demandeur|DIOF|ADIOF|DEC|ADEC']);
         /* $this->middleware("permission:user-view", ["only" => ["index"]]); */
         $this->middleware("permission:collective-view", ["only" => ["index"]]);
         /* $this->middleware(['permission:arrive-show']); */
