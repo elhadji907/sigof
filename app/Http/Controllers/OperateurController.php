@@ -136,6 +136,12 @@ class OperateurController extends Controller
             ));
 
     }
+    
+    public function create()
+    {
+        $departements = Departement::get();
+        return view('operateurs.create', compact('departements'));
+    }
 
     public function agrement()
     {
